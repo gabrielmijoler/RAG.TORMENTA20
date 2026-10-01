@@ -1,0 +1,22 @@
+name: rag-tormenta20
+
+services:
+  qdrant:
+    image: docker.io/qdrant/qdrant:v1.19.1
+    container_name: qdrant-t20
+    restart: unless-stopped
+    ports:
+      - "6335:6333"
+      - "6336:6334"
+    volumes:
+      - ./qdrant_storage:/qdrant/storage:Z
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "bash -c 'exec 3<>/dev/tcp/127.0.0.1/6333 && printf \"GET /readyz HTTP/1.1\\r\\nHost: q\\r\\nConnection: close\\r\\n\\r\\n\" >&3'",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 15s

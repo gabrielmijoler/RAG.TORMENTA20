@@ -1,0 +1,13 @@
+.env
+.venv/
+.pip-tmp/
+__pycache__/
+*.egg-info/
+qdrant_t20_local/
+qdrant_storage/
+avaliacao_*.json
+traducoes_cache.json
+
+# Derivados de dados (regenerados do JSON de origem)
+*.md
+!README.md
