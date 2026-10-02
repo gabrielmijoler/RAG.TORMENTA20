@@ -11,6 +11,7 @@ Mede 3 dimensões sobre as MESMAS queries, usando o mesmo pipeline que
 Uso:
     ./.venv/bin/python avaliar.py --etapa baseline
     ./.venv/bin/python avaliar.py --etapa depois
+    ./.venv/bin/python avaliar.py --etapa baseline --continuar   # retoma o parcial
     ./.venv/bin/python avaliar.py --so-recuperacao      # sem chamar o LLM final
 
 A reformulação da pergunta é cacheada em traducoes_cache.json para que a
@@ -63,8 +64,8 @@ CONSULTAS = [
      "consulta": "O que a perícia Furtividade faz e quando é usada?",
      "entidades": ["furtividade", "perícia"]},
     {"id": "04_custo_circulo",
-     "consulta": "Quanto custa em PM conjurar uma magia de 3º círculo?",
-     "entidades": ["pontos de mana", "círculo", "magia"]},
+     "consulta": "Quanto custa aprender uma magia de 3º círculo pelo método do Escriba Arcano?",
+     "entidades": ["escriba arcano", "círculo", "magia"]},
     {"id": "05_curar_ferimentos",
      "consulta": "O que faz a magia Curar Ferimentos?",
      "entidades": ["curar ferimentos", "cura"]},
@@ -110,8 +111,8 @@ CONSULTAS = [
 ]
 
 # Citações no formato exigido pelo SYSTEM_PROMPT: Nome [Fonte] — ex.:
-# "Fogueirada [Magias > Arcanas]". A fonte entre colchetes é o que liga a
-# resposta ao contexto (formato genérico de domínio, sem siglas fixas).
+# "Caído [Condições > Tormenta20 - Jogo do Ano]". A fonte entre colchetes é o
+# que liga a resposta ao contexto (formato genérico de domínio, sem siglas).
 PADRAO_CITACAO = re.compile(r"\[([^\]]{3,60})\]")
 
 
@@ -139,8 +140,13 @@ def salvar_cache(cache: dict) -> None:
 
 
 def reformular(llm, consulta: str, cache: dict) -> str:
-    """Reformula para termos do sistema, cacheando para manter o A/B estável."""
-    if consulta in cache:
+    """Reformula para termos do sistema, cacheando para manter o A/B estável.
+
+    Entrada inválida (preâmbulo/cotação do LLM) nunca entra no cache: lida
+    antiga ruim é regenerada na hora; se todos os modelos falharem, a busca
+    recebe a pergunta original.
+    """
+    if consulta in cache and rag_core.reformulacao_valida(cache[consulta]):
         return cache[consulta]
 
     chain = PROMPT_TRADUCAO | llm
@@ -149,7 +155,7 @@ def reformular(llm, consulta: str, cache: dict) -> str:
         for _ in range(2):
             try:
                 texto = chain.invoke({"queixa": consulta}).content.strip()
-                if rag_core.e_recusa(texto):
+                if rag_core.e_recusa(texto) or not rag_core.reformulacao_valida(texto):
                     raise rag_core.RecusaTraducao(texto[:60])
                 cache[consulta] = texto
                 salvar_cache(cache)
@@ -185,10 +191,11 @@ def responder(llm, rag_chain, pergunta: str) -> str:
     return ""
 
 
-def buscar(retriever, consulta: str):
+def buscar(retriever, consulta: str, consulta_real: str | None = None):
+    """Top-8: ensemble com a reformulada, rerank com as duas juntas na query."""
     for i in range(4):
         try:
-            return retriever.invoke(consulta)
+            return rag_core.recuperar(retriever, consulta, consulta_real)
         except Exception as e:
             if e_transitorio(e) and i < 3:
                 print(f"  429 no rerank, aguardando {ESPERA_429}s...")
@@ -198,11 +205,17 @@ def buscar(retriever, consulta: str):
     return []
 
 
-def avaliar(llm, so_recuperacao: bool = False, saida: str | None = None) -> dict:
+def avaliar(
+    llm,
+    so_recuperacao: bool = False,
+    saida: str | None = None,
+    continuar: bool = False,
+) -> dict:
     """Roda as CONSULTAS e devolve o resultado.
 
     Quando `saida` é informado, grava o JSON a cada query: uma falha de rede na
-    última consulta não joga fora o trabalho das anteriores.
+    última consulta não joga fora o trabalho das anteriores. `continuar` relê o
+    `saida` parcial e pula as queries ja registradas (retomada em vez de zero).
     """
     chunks = rag_core.montar_chunks()
     retriever = rag_core.montar_retriever(chunks)
@@ -212,14 +225,18 @@ def avaliar(llm, so_recuperacao: bool = False, saida: str | None = None) -> dict
         rag_chain = rag_core.montar_rag_chain(retriever, SYSTEM_PROMPT, llm)
 
     cache = carregar_cache()
-    registros = []
+    registros = carregar_parcial(saida) if continuar else []
+    feitos = {r.get("id") for r in registros}
+    pendentes = [c for c in CONSULTAS if c["id"] not in feitos]
+    if feitos:
+        print(f"↻ retomando {saida}: {len(registros)} queries prontas, {len(pendentes)} restantes")
 
-    for caso in CONSULTAS:
+    for caso in pendentes:
         print(f"\n[{caso['id']}] {caso['consulta'][:70]}...")
         reformulada = reformular(llm, caso["consulta"], cache)
         print(f"  reformulação: {reformulada[:95]}")
 
-        top = buscar(retriever, reformulada)
+        top = buscar(retriever, reformulada, caso["consulta"])
 
         # --- 1. cobertura de entidades ---
         esperadas = {normalizar(e) for e in caso["entidades"]}
@@ -297,6 +314,19 @@ def gravar(saida: str, resultado: dict) -> None:
         json.dump(resultado, f, ensure_ascii=False, indent=2)
 
 
+def carregar_parcial(saida: str | None) -> list:
+    """Registros ja gravados no `saida` (base para --continuar)."""
+    if not saida or not os.path.exists(saida):
+        return []
+    try:
+        with open(saida, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (ValueError, OSError):
+        return []
+    registros = dados.get("registros", [])
+    return [r for r in registros if r.get("id")]
+
+
 def _pontos_colecao() -> int:
     conexao = rag_core.escolher_conexao_qdrant()
     cliente = QdrantClient(**conexao)
@@ -336,11 +366,14 @@ def main():
     ap.add_argument("--etapa", default="baseline", help="nome do arquivo de saída")
     ap.add_argument("--so-recuperacao", action="store_true",
                     help="não chama o LLM final (só métricas de recuperação)")
+    ap.add_argument("--continuar", action="store_true",
+                    help="retoma o arquivo de saída em vez de começar do zero")
     args = ap.parse_args()
 
     llm = rag_core.criar_llm()
     saida = f"avaliacao_{args.etapa}.json"
-    resultado = avaliar(llm, so_recuperacao=args.so_recuperacao, saida=saida)
+    resultado = avaliar(llm, so_recuperacao=args.so_recuperacao, saida=saida,
+                        continuar=args.continuar)
     resultado["etapa"] = args.etapa
     gravar(saida, resultado)
     print(f"\nResultado salvo em {saida}")

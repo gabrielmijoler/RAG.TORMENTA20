@@ -16,6 +16,7 @@ from rag_core import (
     e_recusa,
     e_transitorio,
     eh_saudacao_pura,
+    reformulacao_valida,
     reformular_pergunta,
     trocar_modelo,
 )
@@ -123,6 +124,8 @@ def traduzir_para_t20(consulta: str) -> str:
         texto = cadeia.invoke({"queixa": consulta}).content.strip()
         if e_recusa(texto):
             raise RecusaTraducao(f"bloqueio de segurança: {texto[:60]}")
+        if not reformulacao_valida(texto):
+            raise RecusaTraducao(f"saída não é uma pergunta: {texto[:60]}")
         return texto
 
     # com_fallback ja engole RecusaTraducao (proximo modelo); se todos
@@ -134,9 +137,9 @@ def traduzir_para_t20(consulta: str) -> str:
     return traducao
 
 
-def buscar(pergunta_t20: str):
-    """BM25 + denso + reranker, recebendo a pergunta JÁ reformulada."""
-    docs = retriever_comprimido.invoke(pergunta_t20)
+def buscar(pergunta_t20: str, pergunta_real: str | None = None):
+    """Ensemble com a reformulada; rerank com a junção das duas formulações."""
+    docs = rag_core.recuperar(retriever_comprimido, pergunta_t20, pergunta_real)
     for i, doc in enumerate(docs, 1):
         score = doc.metadata.get("relevance_score", 0)
         fonte = doc.metadata.get("Fonte") or doc.metadata.get("Tabela") or "Geral"
@@ -213,7 +216,7 @@ def processar(entrada: str) -> None:
     print(f"    -> {pergunta_t20}")
 
     print("  [3/4] recuperando (BM25 + denso + reranker)")
-    docs = buscar(pergunta_t20)
+    docs = buscar(pergunta_t20, reescrita)
 
     print("  [4/4] gerando resposta")
     resposta = gerar_resposta(entrada, docs)

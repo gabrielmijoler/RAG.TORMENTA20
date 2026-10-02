@@ -35,6 +35,10 @@ py-modules = [
     "avaliar",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
 [tool.uv]
 dev-dependencies = [
     "pytest>=7.0.0",

@@ -49,34 +49,36 @@ make lint && make fmt  # ruff
 
 No chat: `/salvar` arquiva a sessão, `/novo` limpa histórico, `/sair` encerra.
 
-## Fase 2 — Ingestão dos dados JSON (aguardando)
+## Fase 2 — Ingestão (implementada)
 
-A ingestão está formalmente definida em `rag_core.montar_chunks()`, que hoje
-falha com instrução clara enquanto não há dados. Quando você passar os JSONs
-(estilo banco de dados) eles vão em `./data/*.json` e o loader será
-implementado para:
+Os dados vêm das **fontes `.ts` vivas** do app
+[aTormenta](https://github.com/oClaus/aTormenta), esperado como irmão deste
+repositório (`../aTormenta/data`, 74 arquivos / 110 exports / ~5.000
+registros). Nada é convertido para `.md` nem copiado: a cada ingestão o
+extrator Node `tools/ts_para_registros.mjs` lê os `export const` direto de lá.
 
-1. Ler cada arquivo/tabela JSON;
-2. Converter cada registro em `Document` com:
-   - `page_content` — texto legível (registro renderizado, anexos juntos);
-   - `metadata` — `Tabela`, `id`, `Nome`, `Tipo`, `Fonte` (usadas pelo
-     filtro, pelo BM25, pelo rerank e pela exibição no chat);
-3. Aplicar `mesclar_pequenos()` (já pronto, genérico) e indexar no Qdrant.
+Fluxo em `rag_core.montar_chunks()`:
 
-Contrato mínimo esperado por registro (sujeito a ajuste quando os dados
-chegarem):
+1. `node tools/ts_para_registros.mjs --dir ../aTormenta/data` → JSON de
+   registros (precisa de Node 20+ no PATH; ~0,4 s);
+2. cada registro vira um `Document`:
+   - `page_content` — registro renderizado em texto legível (cabeçalho
+     `# Nome`, campos rotulados em português, listas aninhadas), **não** JSON;
+   - `metadata` — `Tabela`, `Fonte`, `Nome`, `Tipo`, `id`, `arquivo`,
+     `export` (alimentam BM25, rerank, exibição e a métrica de cobertura);
+3. fatiamento por parágrafo (`_fatiar`) sem deixar cabeçalho órfão →
+   `mesclar_pequenos()` → prefixo de procedência `[Tabela > Fonte]` que abre
+   cada bloco (é dele que a citação `Nome [Fonte]` é copiada);
+4. embeddings locais + Qdrant (coleção `tormenta20`).
 
-```json
-{
-  "tabela": "magias",
-  "registros": [
-    {"id": 1, "nome": "Fogueirada", "circulo": 1, "custo_pm": 1, "...": "..."}
-  ]
-}
+Diagnóstico impresso a cada ingestão: registros por tabela, fontes
+(`origin`/`source`/`//#region`), blocos antes/depois da fusão e prefixos.
+
+Para reindexar do zero após mudanças no loader/dados:
+
+```bash
+REINDEXAR=1 make chat
 ```
-
-Enquanto isso, `montar_chunks()` imprime os JSONs que encontrar em `data/` e
-aborta — nada é indexado em silêncio.
 
 ## Avaliação
 
@@ -88,15 +90,41 @@ aborta — nada é indexado em silêncio.
 | `groundedness` | % das citações `Nome [Fonte]` da resposta que estão no contexto |
 | `scores_rerank` | faixa de relevância do reranker |
 
-As `CONSULTAS` no topo de `avaliar.py` são **placeholders** — troque pelas
-queries do seu dataset após a Fase 2.
+As `CONSULTAS` são **18 perguntas reais** cobrindo regras, condições,
+perícias, magias, classes, raças, itens, ameaças, deuses, origens e
+distinções — com as `entidades` verificadas contra o corpus indexado.
+
+```bash
+make avaliar ETAPA=baseline                         # primeira medição
+.venv/bin/python avaliar.py --etapa depois --continuar  # retoma o parcial
+.venv/bin/python avaliar.py --so-recuperacao        # sem chamar o LLM
+```
+
+Baseline (2026-10-01, `avaliacao_baseline.json`): **cobertura 95%**,
+**groundedness 81%**, rerank até 0,91 — 16/18 queries com cobertura total.
+
+Etapa "depois" (2026-10-01, `avaliacao_depois.json`) — mesmas 18 queries e
+mesmo cache de reformulações, após as correções (exemplos reais no
+`SYSTEM_PROMPT`, query `04` reescopada para o Escriba Arcano, rerank com a
+query combinada reformulada + original):
+
+| Métrica | baseline | depois |
+|---|---|---|
+| cobertura_entidades | 95% | **100%** (18/18) |
+| groundedness | 81% | **88%** |
+
+Regressão conhecida: `08` groundedness 100%→0% (doc `[Ameaças > …]` no rank 10
+do rerank combinado; trade-off medido contra `12`, que a união de candidatos
+quebraria) — detalhes em `CONTEXTO_SESSAO.md`.
 
 ## Estrutura
 
 ```
-rag_core.py           # core: LLM fallback, busca híbrida, Qdrant, prompts
-meu_primeiro_rag.py   # chat CLI com memória de sessão
-avaliar.py            # suite de avaliação (baseline/depois)
-data/                 # JSONs de origem (Fase 2)
-compose.yaml          # Qdrant na porta 6335
+rag_core.py                    # core: LLM fallback, busca híbrida, Qdrant, prompts
+meu_primeiro_rag.py            # chat CLI com memória de sessão
+avaliar.py                     # suite de avaliação (baseline/depois)
+tools/ts_para_registros.mjs    # extrator dos .ts do aTormenta → JSON
+tests/                         # pytest (make test)
+avaliacao_baseline.json        # resultado da medição inicial
+compose.yaml                   # Qdrant na porta 6335
 ```

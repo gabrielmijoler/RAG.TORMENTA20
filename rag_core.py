@@ -185,6 +185,22 @@ def e_recusa(texto: str) -> bool:
     return any(t.startswith(p) or p in t[:120] for p in _E_COMECO_RECUSA)
 
 
+def reformulacao_valida(texto: str) -> bool:
+    """True só para UMA pergunta completa — descarta preâmbulo/cotação do LLM.
+
+    Um LLM gratuito já devolveu `Quoting: "Qualcomm\\nThe user's query is...`
+    no meio da resposta; usar isso como query de busca derruba o rerank
+    inteiro, então lixo assim é regenerado (nunca cacheado) ou ignorado.
+    """
+    t = texto.strip()
+    return (
+        8 <= len(t) <= 300
+        and "\n" not in t
+        and t.endswith("?")
+        and not t.lower().startswith(("quoting", "resposta"))
+    )
+
+
 # ---------------------------------------------------------------------------
 # Prompts (fonte unica: meu_primeiro_rag.py e avaliar.py usam os mesmos)
 # ---------------------------------------------------------------------------
@@ -211,8 +227,8 @@ SYSTEM_PROMPT = (
     "base não cobre o ponto, sem inventar.\n"
     "2. **Citação da Fonte:** Todo fato citado DEVE ser acompanhado da origem no "
     "formato: Nome [Fonte] — copiando o prefixo que abre cada bloco do contexto "
-    "(ex: 'Fogueirada [Magias > Arcanas]', 'Goblin [Bestiário > Criaturas "
-    "Pequenas]').\n"
+    "(ex: 'Caído [Condições > Tormenta20 - Jogo do Ano]', 'Basilisco "
+    "[Ameaças > Tormenta20 - Jogo do Ano]').\n"
     "3. **Mestre de Mesa:** Quando o usuário trouxer uma situação de jogo "
     "(encontro, dúvida de construção de personagem, regra de combate), use o "
     "contexto para resolver a situação citando a regra exata, e depois, se "
@@ -243,7 +259,12 @@ PROMPT_TRADUCAO = ChatPromptTemplate.from_messages([
      "4. Exemplo de saída esperada: 'Quais as regras de flanco e cobertura "
      "em combate corpo a corpo em Tormenta 20?'\n"
      "5. Responda APENAS com a pergunta formulada, sem aspas e sem "
-     "introduções."),
+     "introduções.\n"
+     "6. Se a entrada já for uma pergunta técnica clara, completa e "
+     "autossuficiente, devolva-a praticamente intacta: preserve a estrutura, o "
+     "verbo inicial e as palavras-chave (nomes próprios e termos técnicos). "
+     "NÃO reescreva por reescrever — ex.: 'O que concede X?' NUNCA vira 'Quais "
+     "as regras e efeitos de X?' — e não troque pergunta por rótulo de tópico."),
     ("human", "{queixa}")
 ])
 
@@ -1235,6 +1256,27 @@ def montar_retriever(
         base_compressor=CohereRerank(top_n=8, model=MODELO_RERANK),
         base_retriever=retriever_hibrido,
     )
+
+
+def recuperar(
+    retriever: ContextualCompressionRetriever,
+    consulta: str,
+    consulta_real: str | None = None,
+) -> list[Document]:
+    """Ensemble (BM25+denso) com `consulta`; rerank com `consulta` + `consulta_real`.
+
+    O CohereRerank mede query×documento e erra quando depende de UMA redação:
+    só a reformulada, 'Dom do Psicopompo' caía para a 19ª posição (fora do
+    top-8); só a original, 'Perícias', 'Símbolo sagrado' e 'Cavalo' saíam.
+    A query de rerank junta as duas formulações (técnica + intenção do
+    usuário) e o recall do ensemble fica intacto. `consulta_real` deve ser
+    autossuficiente (sem anafórico do histórico).
+    """
+    docs = retriever.base_retriever.invoke(consulta)
+    consulta_rerank = consulta
+    if consulta_real and consulta_real.strip() and consulta_real != consulta:
+        consulta_rerank = f"{consulta} {consulta_real}"
+    return retriever.base_compressor.compress_documents(docs, consulta_rerank)
 
 
 def montar_cadeia_resposta(system_prompt: str, llm, com_historico: bool = False):
