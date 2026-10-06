@@ -37,10 +37,10 @@ qdrant-status: ## verifica se o Qdrant está respondendo (porta 6335)
 	@curl -sf http://localhost:6335/readyz >/dev/null && echo "QDRANT OK" || echo "QDRANT FORA DO AR"
 
 chat: ## chat interativo do RAG
-	$(PY) meu_primeiro_rag.py
+	$(PY) index.py
 
-avaliar: ## roda a suite de avaliação (ETAPA=nome --ex.: make avaliar ETAPA=depois)
-	$(PY) avaliar.py --etapa $(ETAPA)
+avaliar: ## roda a suite de avaliação (ETAPA=nome -- ARGS="--estrategia hyde --limiar 0.7 --juiz")
+	$(PY) avaliar.py --etapa $(ETAPA) $(ARGS)
 
 lint: ## analisa o código com ruff (make dev primeiro)
 	$(PY) -m ruff check .

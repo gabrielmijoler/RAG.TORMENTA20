@@ -13,6 +13,7 @@ dependencies = [
     "langchain-cohere>=0.0.1",
     "sentence-transformers>=2.2.0",
     "cohere>=4.0.0",
+    "flashrank>=0.1.0",
     "python-dotenv>=1.0.0",
     "rank-bm25>=0.2.0",
     "qdrant-client>=1.19.0",
@@ -21,7 +22,7 @@ dependencies = [
 ]
 
 [project.scripts]
-rag-chat = "meu_primeiro_rag:main"
+rag-chat = "index:main"
 rag-avaliar = "avaliar:main"
 
 [build-system]
@@ -31,7 +32,7 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 py-modules = [
     "rag_core",
-    "meu_primeiro_rag",
+    "index",
     "avaliar",
 ]
 

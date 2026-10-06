@@ -1,0 +1,164 @@
+Extraindo registros de /home/gabrielsousamijoler/Documentos/aTormenta/data ...
+  extracao: 74 arquivos, 110 exports, 4997 registros, 0 avisos
+  registros: 4997 em 105 tabelas | vazios: 0 | divididos: 493
+  maiores tabelas: Ameaças (708) · Magias (264) · Poderes Concedidos (230) · Armas (157) · Acessórios (146) · Alimentos (109)
+  fontes: Tormenta20 - Jogo do Ano (1186) · Herois de Arton (1060) · Compendio T20 (737) · Ameaças de Arton (646) · Deuses de Arton (393) · Dragão Brasil - 199 (78)
+  blocos: 5953 -> 5674 após fusão de pequenos (279 anexados ao vizinho)
+  com prefixo de procedencia: 5674/5674
+🔗 Qdrant servidor: http://localhost:6335
+   Dashboard: http://localhost:6335/dashboard
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9188.31it/s]
+Configurando embeddings multilingues locais...
+⚡ Coleção 'tormenta20' já existe com 5674 pontos — carregando...
+   Para reindexar do zero: REINDEXAR=1 ./.venv/bin/python index.py
+Criando índice de termos exatos (BM25)...
+Configurando o Filtro de Qualidade (Reranker)...
+  modo: auto — FlashRank local, escalada Cohere se top-1 < 0.35
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 1/28 02_condicao_agarrado       ground=None (31.9s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 2/28 06_cavaleiro_proficiencias ground=1.0 (16.2s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 3/28 07_espada_longa            ground=None (36.9s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 4/28 08_basilisco               ground=None (70.3s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 5/28 10_ladrao_de_tumulos       ground=1.0 (47.8s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 6/28 11_ataque_vs_defesa        ground=None (32.7s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 7/28 14_poder_psicopompo        ground=None (37.0s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 8/28 15_xerife_azgher           ground=None (48.6s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ 9/28 16_anao_habilidades        ground=None (18.0s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+10/28 21_magia_silencio          ground=None (24.9s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+11/28 23_magia_conjurar_monstro  ground=1.0 (27.1s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+12/28 24_ameaca_goblin           ground=None (21.5s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+13/28 26_ameaca_lobo             ground=None (15.3s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+14/28 27_ameaca_hobgoblin        ground=None (20.4s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+15/28 30_deus_azgher             ground=None (22.6s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+16/28 32_raca_hynne              ground=None (44.0s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+17/28 34_origem_heroi_campones   ground=None (34.9s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+18/28 38_poder_vitalidade        ground=None (92.2s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+19/28 40_arma_besta_pesada       ground=1.0 (16.3s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+20/28 42_cd_escapar              ground=1.0 (16.4s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+21/28 43_dinheiro_inicial_n5     ground=None (14.0s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+22/28 44_pericia_ladinagem       ground=1.0 (40.0s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+23/28 49_condicao_exausto        ground=None (17.3s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+24/28 52_pericia_jogatina        ground=None (69.2s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+25/28 53_parceiro_grifo          ground=1.0 (21.4s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+26/28 54_tamanho_colossal        ground=None (18.7s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 503 Service Unavailable"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 503 Service Unavailable"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+27/28 57_comida_batata           ground=1.0 (75.2s)
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+28/28 59_poder_codigo_honra      ground=None (13.8s)
+
+RESUMO
+  n=28  grd_media=100.0%  zeros=0
+  n/a=20  erros=0  sem_resposta=0

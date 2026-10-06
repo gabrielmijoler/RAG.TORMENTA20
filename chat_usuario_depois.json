@@ -1,0 +1,317 @@
+{
+ "etapa": "chat_usuario_depois.json",
+ "amostra": [
+  "02",
+  "06",
+  "07",
+  "08",
+  "10",
+  "11",
+  "14",
+  "15",
+  "16",
+  "21",
+  "23",
+  "24",
+  "26",
+  "27",
+  "30",
+  "32",
+  "34",
+  "38",
+  "40",
+  "42",
+  "43",
+  "44",
+  "49",
+  "52",
+  "53",
+  "54",
+  "57",
+  "59"
+ ],
+ "pausa_s": 10.0,
+ "data_inicio": "2026-10-06T11:17:57",
+ "respostas": [
+  {
+   "id": "02_condicao_agarrado",
+   "consulta": "Como funciona a condição Agarrado durante o combate?",
+   "reformulacao": "Quais as regras da condição Agarrado em combate em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 24.6,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras da condição Agarrado em combate em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.952  [Dragão Brasil - 227]\n     2. 0.859  [DB - 227]\n     3. 0.742  [Ameaças de Arton]\n     4. 0.696  [DB - 229]\n     5. 0.577  [DB - 227]\n     6. 0.481  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 2675 (prompt 2317 / resposta 358)\n\n==============================================================================\nA condição **Agarrado** funciona da seguinte forma, conforme as regras de Tormenta 20:\n\n1. **Manutenção da Condição:** Se duas criaturas diferentes agarram o mesmo alvo, este alvo mantém a condição *agarrado* enquanto permanecer agarrado por qualquer uma das criaturas. O alvo deve se livrar de cada manobra *agarrar* separadamente. ([Regreiro (Perguntas e Respostas) > DB - 227], Número da Revista: 227)\n\n2. **Não há Acúmulo:** Um mesmo personagem agarrar mais de uma vez um alvo seria irrelevante, pois a condição *agarrado* já foi aplicada e não será agravada por isso (não há acúmulo nem nenhuma outra consequência). ([Regreiro (Perguntas e Respostas) > DB - 227], Número da Revista: 227)\n\n3. **Teste de Resistência:** Para se livrar da condição, o alvo deve realizar um teste de resistência contra a manobra de agarrar do agressor, devendo superar o resultado do agressor. ([Regreiro (Perguntas e Respostas) > DB - 227], Número da Revista: 227)\n\n**Sugestão do Mestre:** Em situações de combate, lembre que o personagem agarrado tem suas ações limitadas e pode ser deslocado junto com o agressor. Coordenar ataques contra um alvo agarrado pode ser uma tática eficaz, mas cada agressor requer um teste separado para a libertação.\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "06_cavaleiro_proficiencias",
+   "consulta": "Quais perícias e proficiências a classe Cavaleiro possui?",
+   "reformulacao": "Quais perícias e proficiências a classe Cavaleiro possui em Tormenta 20?",
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 18.1,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais perícias e proficiências a classe Cavaleiro possui em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.967  [tormenta20 - jogo do ano]\n     2. 0.917  [Deuses de Arton]\n     3. 0.894  [tormenta20 - jogo do ano]\n     4. 0.783  [tormenta20 - jogo do ano]\n     5. 0.771  [Tormenta20 - Jogo do Ano]\n     6. 0.723  [tormenta20 - jogo do ano]\n     7. 0.687  [Duelo de Dragões]\n     8. 0.397  [tormenta20 - jogo do ano]\n     9. 0.905  [tormenta20 - jogo do ano]\n  [4/4] gerando resposta\n    tokens: 14184 (prompt 14064 / resposta 120)\n\n==============================================================================\nPerícias Obrigatórias: Luta (For) ou Pontaria (Des), Sobrevivência (Sab)\nPerícias Opcionais: Adestramento (Car), Atletismo (For), Cavalgar (Des), Cura (Sab), Fortitude (Con), Furtividade (Des), Iniciativa (Des), Investigação (Int), Luta (For), Ofício (Int), Percepção (Sab), Pontaria (Des), Reflexos (Des); Quantidade: 6\nProficiência: Armas marciais e escudos\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "07_espada_longa",
+   "consulta": "Qual o preço e o dano de uma Espada Longa?",
+   "reformulacao": "Qual o preço e o dano de uma espada longa em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 17.2,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Qual o preço e o dano de uma espada longa em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.998  [Dragão Brasil - 183]\n     2. 0.996  [Tormenta20 - Jogo do Ano]\n     3. 0.992  [Tormenta20 - Jogo do Ano]\n     4. 0.992  [Tormenta20 - Jogo do Ano]\n     5. 0.992  [Herois de Arton]\n     6. 0.991  [Herois de Arton]\n     7. 0.990  [Tormenta20 - Jogo do Ano]\n     8. 0.986  [Dragão Brasil - 183]\n     9. 0.984  [Tormenta20 - Jogo do Ano]\n    10. 0.983  [Deuses de Arton]\n    11. 0.979  [Herois de Arton]\n    12. 0.972  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 3873 (prompt 3837 / resposta 36)\n\n==============================================================================\nEspada Longa: Preço T$ 15, Dano 1d8. [Armas > Tormenta20 - Jogo do Ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "08_basilisco",
+   "consulta": "Qual o ND, a defesa e o deslocamento de um Basilisco?",
+   "reformulacao": "Quais as regras para determinar o ND, a defesa e o deslocamento de um basilisco em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 23.7,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras para determinar o ND, a defesa e o deslocamento de um basilisco em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.962  [Compendio T20]\n     2. 0.958  [Tormenta20 - Jogo do Ano]\n     3. 0.852  [Compendio T20]\n     4. 0.663  [Tormenta20 - Jogo do Ano]\n     5. 0.595  [Herois de Arton]\n     6. 0.590  [DB - 228]\n     7. 0.708  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 5424 (prompt 5181 / resposta 243)\n\n==============================================================================\n# Basilisco\n\nCom base no contexto fornecido, as informações solicitadas são:\n\n- **ND**: 5 (conforme \"Basilisco - Dungeon Meshi\" em [Chefes > Compendio T20])\n- **Defesa**: 25 (conforme \"Basilisco - Dungeon Meshi\" em [Chefes > Compendio T20])\n- **Deslocamento**: 9m (6q) (conforme \"Basilisco - Dungeon Meshi\" em [Chefes > Compendio T20])\n\nObservação: O contexto apresenta duas entradas para \"Basilisco\" com valores ligeiramente diferentes. A primeira (Dungeon Meshi) apresenta ND 5, Defesa 25 e Deslocamento 9m (6q). A segunda entrada genérica (Ameaças > Tormenta20 - Jogo do Ano) apresenta ND 4, Defesa 23 e Deslocamento 9m (6q), além de incluir natação 9m (6q). As respostas acima seguem a primeira entrada listada.\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "10_ladrao_de_tumulos",
+   "consulta": "O que a origem Ladrão de Túmulos oferece como benefício?",
+   "reformulacao": "Quais os benefícios da origem Ladrão de Túmulos em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 15.6,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais os benefícios da origem Ladrão de Túmulos em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.976  [Herois de Arton]\n     2. 0.861  [A Lenda de Ghanor]\n     3. 0.515  [Tormenta20 - Jogo do Ano]\n     4. 0.366  [Herois de Arton]\n  [4/4] gerando resposta\n    tokens: 2214 (prompt 2136 / resposta 78)\n\n==============================================================================\nVocê é treinado em Ladinagem e Sobrevivência, e recebe +2 na Defesa e em testes de perícia contra mortos-vivos. Além disso, recebe redução de trevas 5 (ou, se for um morto-vivo, recupera +1 PV por dado de dano de trevas). [Origens > Herois de Arton]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "11_ataque_vs_defesa",
+   "consulta": "Como é resolvido um teste de ataque contra a Defesa do alvo?",
+   "reformulacao": "Quais as regras e passos para a resolução de um teste de ataque contra a Defesa do alvo em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 22.8,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras e passos para a resolução de um teste de ataque contra a Defesa do alvo em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.999  [Dragão Brasil - 227]\n     2. 0.999  [Dragão Brasil - 227]\n     3. 0.998  [Dragão Brasil - 227]\n     4. 0.995  [Herois de Arton]\n     5. 0.994  [Guia dos Deuses Menores]\n     6. 0.993  [Tormenta20 - Jogo do Ano]\n     7. 0.992  [Tormenta20 - Jogo do Ano]\n     8. 0.989  [DB - 229]\n     9. 0.987  [Tormenta20 - Jogo do Ano]\n    10. 0.986  [DB - 227]\n    11. 0.977  [Ameaças de Arton]\n    12. 0.975  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 3546 (prompt 3306 / resposta 240)\n\n==============================================================================\nUm teste de ataque contra a Defesa do alvo é resolvido através de uma **rolagem de 1d20** mais o **modificador de ataque** do atacante, totalizando o resultado final. Para acertar, esse resultado deve ser **igual ou superior** à **Defesa (Def)** do alvo.\n\nSe o teste de ataque for **oposto** (como nas manobras de Defesa Desarmada), o atacante deve vencer o teste de defesa do oponente (teste de ataque desarmado ou perícia correspondente), sendo que, se vencer, o ataque não conta como tendo vencido a Defesa do alvo.\n\nCitação: \"[Regreiro (Perguntas e Respostas) > DB - 227] Resposta: > Saudações honradas, conselheiro! Conforme visto na página 220 de *Tormenta20*, um teste é 'uma rolagem de 1d20 + modificador'. Já o ataque, propriamente dito, é a espadada, chute, desarme, etc., resolvido com este teste.\"\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "14_poder_psicopompo",
+   "consulta": "O que concede o poder Dom do Psicopompo?",
+   "reformulacao": "Quais os efeitos e mecânicas do poder Dom do Psicopompo em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 21.4,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais os efeitos e mecânicas do poder Dom do Psicopompo em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.993  [Dragão Brasil - 183]\n     2. 0.980  [Tormenta20 - Jogo do Ano]\n     3. 0.943  [Dragão Brasil - 228]\n     4. 0.895  [Tormenta20 - Jogo do Ano]\n     5. 0.769  [Guia dos Deuses Menores]\n     6. 0.748  [Tormenta20 - Jogo do Ano]\n     7. 0.668  [Tormenta20 - Jogo do Ano]\n     8. 0.620  [Deuses de Arton]\n     9. 0.602  [Guia dos Deuses Menores]\n    10. 0.385  [Dragão Brasil]\n  [4/4] gerando resposta\n    tokens: 3369 (prompt 3211 / resposta 158)\n\n==============================================================================\nO poder **Dom do Psicopompo** concede imortalidade ao personagem, removendo os limites de longevidade da raça e modificadores de idade. Sempre que o personagem morre, ele volta à vida após 3d6 dias. Além disso:\n\n- Se for humanoide, ressuscita como um **osteon**.\n- Se for monstro, ressuscita normalmente, mas seu tipo de criatura muda para **morto-vivo**.\n- Se for construto, espírito ou já for morto-vivo, volta à vida, mas **perde 2 PM permanentemente**.\n\nApenas **clérigos e paladinos** podem obter esse poder.\n\n[Poderes Concedidos > Dragão Brasil - 183]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "15_xerife_azgher",
+   "consulta": "Como obtenho a distinção Xerife de Azgher?",
+   "reformulacao": "Quais as regras para obter a distinção Xerife de Azgher em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 19.2,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras para obter a distinção Xerife de Azgher em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.984  [Dragão Brasil - 205]\n     2. 0.717  [Tormenta20 - Jogo do Ano]\n     3. 0.572  [Compendio T20]\n     4. 0.484  [tormenta20 - jogo do ano]\n     5. 0.396  [Dragão Brasil]\n     6. 0.954  [Dragão Brasil - 205]\n  [4/4] gerando resposta\n    tokens: 10285 (prompt 9930 / resposta 355)\n\n==============================================================================\nPara obter a distinção **Xerife de Azgher**, o processo segue um ritual sagrado e testes de conduta, conforme descrito no contexto. Abaixo estão os passos obrigatórios:\n\n1.  **Missão de Admissão:** O candidato deve encontrar, prender e entregar um criminoso que tenha cometido um crime grave contra um inocente. A entrega deve ocorrer **às claras, sob a luz de Azgher**.\n2.  **Sonho Direcional:** Após cumprir a missão e dormir, o candidato terá um sonho mostrando o caminho para a sede dos xerifes, localizada no **Império de Tauron**.\n3.  **Prova de Valor na Sede:** Ao chegar na sede, o candidato deve se identificar e provar seu valor. Se a notoriedade do criminoso preso for suficiente, isso pode ser o suficiente. Caso contrário, a ordem designará testes locais para avaliar sua habilidade.\n4.  **Acompanhamento de Caso:** Mesmo após ser considerado apto, o candidato precisa **ajudar um xerife em um caso** antes de ser oficialmente sagrado. Essa aventura testa principalmente a **conduta** do candidato, com o xerife atuando como observador.\n5.  **Sagração e Oferta:** Se for considerado digno, o candidato recebe o **Sol Vigilante** e é sagrado xerife de Azgher. É de bom tom que o candidato faça uma oferenda de **pelo menos T$ 2.000** aos xerifes antes de partir.\n\n**Fonte:** [Distinções > Dragão Brasil - 205]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "16_anao_habilidades",
+   "consulta": "Quais as habilidades raciais do Anão e qual seu deslocamento?",
+   "reformulacao": "Quais as habilidades raciais e o deslocamento base do anão em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 26.6,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as habilidades raciais e o deslocamento base do anão em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.954  [Herois de Arton]\n     2. 0.943  [Tormenta20 - jogo do ano]\n     3. 0.931  [Tormenta20 - jogo do ano]\n     4. 0.929  [Ameaças de Arton]\n     5. 0.911  [Dragão Brasil - 200]\n     6. 0.901  [Herois de Arton]\n     7. 0.846  [Ameaças de Arton]\n     8. 0.844  [Dragão Brasil - 215]\n     9. 0.781  [Dragão Brasil - God of War Ragnarok]\n    10. 0.709  [Dragão Brasil - 224]\n    11. 0.675  [Compendio T20]\n    12. 0.617  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 13680 (prompt 13405 / resposta 275)\n\n==============================================================================\n# Anão - Habilidades Raciais e Deslocamento\n\nCom base no contexto fornecido, aqui estão as informações solicitadas:\n\n## Habilidades Raciais do Anão\n\n- **Visão no escuro:** O anão recebe visão no escuro.\n- **Testes de Percepção e Sobrevivência:** +2 em testes de Percepção e Sobrevivência realizados no subterrâneo.\n- **Deslocamento:** 6m (em vez de 9m). Porém, seu deslocamento não é reduzido por uso de armadura ou excesso de carga.\n- **Pontos de Vida:** +3 pontos de vida no 1º nível e +1 por nível seguinte.\n- **Perito em armas tradicionais:** Para o anão, todos os machados, martelos, marretas e picaretas são armas simples. Ele recebe +2 em ataques com essas armas.\n\n## Modificadores de Atributo\n\n- Con: +2\n- Sab: +1\n- Des: -1\n\n## Deslocamento\n\n- **6m** (em vez do padrão de 9m), com a característica de não ser reduzido por uso de armadura ou excesso de carga.\n\n[Raças > Tormenta20 - jogo do ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "21_magia_silencio",
+   "consulta": "O que a magia Silêncio faz com a área e com lançamentos de magia?",
+   "reformulacao": "Quais as regras da magia Silêncio sobre a interrupção de lançamentos e a criação de área de efeito silenciosa em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 20.1,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras da magia Silêncio sobre a interrupção de lançamentos e a criação de área de efeito silenciosa em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.983  [Tormenta20 - Jogo do Ano]\n     2. 0.967  [Tormenta20 - Jogo do Ano]\n     3. 0.942  [A Lenda de Ghanor]\n     4. 0.927  [Tormenta20 - Jogo do Ano]\n     5. 0.895  [Tormenta20 - Jogo do Ano]\n     6. 0.878  [Deuses de Arton]\n     7. 0.861  [DB - 228]\n     8. 0.715  [Herois de Arton]\n     9. 0.709  [Tormenta20 - Jogo do Ano]\n    10. 0.693  [Tormenta20 - Jogo do Ano]\n    11. 0.691  [Deuses de Arton]\n    12. 0.666  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 5172 (prompt 5020 / resposta 152)\n\n==============================================================================\nAqui está o que a magia Silêncio faz, com as citações exatas do contexto:\n\n- **Sobre a área:** \"Um silêncio sepulcral recai sobre a área e nenhum som é produzido nela.\" (Alcance: Médio; Alvo: Esfera com 6m de raio)\n\n- **Sobre o efeito nas criaturas:** \"Enquanto estiverem na área, todas as criaturas ficam surdas.\"\n\n- **Sobre o lançamento de magias:** \"Além disso, como lançar magias exige palavras mágicas, normalmente nenhuma magia pode ser lançada dentro da área.\"\n\n**Fonte:** [Magias > Tormenta20 - Jogo do Ano] # Silêncio\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "23_magia_conjurar_monstro",
+   "consulta": "O que a magia Conjurar Monstro cria e quais suas limitações?",
+   "reformulacao": "Quais as regras de criação e limitações da magia Conjurar Monstro em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 38.2,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras de criação e limitações da magia Conjurar Monstro em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.992  [Herois de Arton]\n     2. 0.987  [Tormenta20 - Jogo do Ano]\n     3. 0.984  [Deuses de Arton]\n     4. 0.945  [DB - 228]\n     5. 0.936  [Ameaças de Arton]\n     6. 0.913  [Herois de Arton]\n     7. 0.908  [Tormenta20 - Jogo do Ano]\n     8. 0.901  [Herois de Arton]\n     9. 0.879  [Tormenta20 - Jogo do Ano]\n    10. 0.858  [Tormenta20 - Jogo do Ano]\n    11. 0.856  [Tormenta20 - Jogo do Ano]\n    12. 0.834  [DB - 227]\n  [4/4] gerando resposta\n    tokens: 9663 (prompt 8960 / resposta 703)\n\n==============================================================================\nCom base no contexto fornecido, aqui estão as informações sobre a magia Conjurar Monstro:\n\n**O que a magia cria:**\n- Conjura um monstro Pequeno feito de energia (construto), não uma criatura real.\n- O monstro ataca os inimigos do conjurador.\n- Você escolhe a aparência do monstro e o tipo de dano que ele pode causar (corte, impacto ou perfuração).\n- O monstro surge em um espaço desocupado a sua escolha dentro do alcance.\n- O monstro tem deslocamento 9m e pode fazer uma ação de movimento por rodada.\n\n**Limitações:**\n- O monstro não é uma criatura real; se for destruído ou quando a magia acaba, desaparece com um brilho, sem deixar nada para trás.\n- Você só pode ter um monstro conjurado por esta magia por vez.\n- O monstro age no início de cada um de seus turnos, a partir da próxima rodada, mas **não age sem receber uma ordem**.\n- Para efeitos de jogo, o monstro conjurado tem For 2, Des 3 e todos os outros atributos nulos. Ele tem Defesa igual a sua, 20 pontos de vida e usa o seu valor para teste de Reflexos. Ele é imune a efeitos que pedem um teste de Fortitude ou Vontade.\n\n**Ordens disponíveis (gastando ação padrão):**\n- Mover: o monstro se movimenta o dobro do deslocamento nessa rodada.\n- Atacar: o monstro causa 2d4+2 pontos de dano a uma criatura adjacente.\n- Lançar Magia: o monstro pode servir como ponto de origem para uma magia lançada por você com execução de uma ação padrão ou menor.\n\n**Aprimoramentos (custo em PM):**\n- +1 PM: O monstro ganha deslocamento de escalada ou natação igual ao seu deslocamento terrestre; ou aumenta o deslocamento em +3m; ou muda o tipo de dano do ataque para ácido, fogo, frio ou eletricidade.\n- +2 PM: Aumenta os PV do monstro (+10 por categoria de tamanho a partir de Pequeno) ou aumenta o tamanho do monstro para Médio (For 4, Des 3, 45 PV, deslocamento 12m, ataque causa 2d6+6 pontos de dano).\n- +2 PM: O monstro ganha resistência 5 contra dois tipos de dano.\n- +4 PM: O monstro ganha nova ordem: Arma de Sopro (causa dobro de dano em cone de 6m, gasta 1 PM).\n- +5 PM: Aumenta o tamanho do monstro para Grande (requer 2º círculo).\n- +9 PM: O monstro ganha deslocamento de voo igual ao dobro do deslocamento; ou ganha imunidade contra dois tipos de dano; ou aumenta o tamanho para Enorme (requer 4º círculo).\n- +14 PM: Aumenta o tamanho do monstro para Colossal (requer 5º círculo).\n\nFonte: [Magias > Tormenta20 - Jogo do Ano] # Conjurar Monstro\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "24_ameaca_goblin",
+   "consulta": "Qual o ND, a Defesa e o tamanho de um Goblin Salteador?",
+   "reformulacao": "Quais as regras para determinar o ND, a Defesa e o tamanho de um Goblin Salteador em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 152.5,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras para determinar o ND, a Defesa e o tamanho de um Goblin Salteador em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.987  [Tormenta20 - Jogo do Ano]\n     2. 0.974  [Tormenta20 - Jogo do Ano]\n     3. 0.897  [Tormenta20 - Jogo do Ano]\n     4. 0.864  [Herois de Arton]\n     5. 0.860  [Ameaças de Arton]\n     6. 0.859  [Ameaças de Arton]\n     7. 0.700  [Ameaças de Arton]\n     8. 0.629  [Ameaças de Arton]\n     9. 0.619  [Ameaças de Arton]\n    10. 0.588  [Ameaças de Arton]\n    11. 0.543  [Ameaças de Arton]\n    12. 0.432  [Ameaças de Arton]\n  [4/4] gerando resposta\n    [nvidia/nemotron-3.5-lightning-30b-a3b] sobrecarregado (Request timed out.), aguardando 5s...\n    tokens: 16227 (prompt 16157 / resposta 70)\n\n==============================================================================\nAqui estão os dados solicitados para o Goblin Salteador, extraídos diretamente do contexto:\n\n- **ND:** 1/4\n- **Defesa:** 13\n- **Tamanho:** Pequeno\n\nFonte: [Ameaças > Tormenta20 - Jogo do Ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "26_ameaca_lobo",
+   "consulta": "Quais as estatísticas de combate de um Lobo (ND, Defesa e PV)?",
+   "reformulacao": "Quais as estatísticas de combate de um Lobo em Tormenta 20, incluindo seu Nível de Desafio, Defesa e Pontos de Vida?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 16.9,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as estatísticas de combate de um Lobo em Tormenta 20, incluindo seu Nível de Desafio, Defesa e Pontos de Vida?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.956  [DB - 228]\n     2. 0.778  [Duelo de Dragões]\n     3. 0.454  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 3463 (prompt 3369 / resposta 94)\n\n==============================================================================\nCom base no contexto fornecido, as estatísticas de combate do Lobo Branco são:\n\n- **ND (Nível de Desafio):** 1/2\n- **Defesa:** 14\n- **PV (Pontos de Vida):** 14\n\nEsses valores são extraídos diretamente da ficha do Lobo Branco no bloco \"[Ameaças > Duelo de Dragões] # Lobo Branco\" do contexto.\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "27_ameaca_hobgoblin",
+   "consulta": "Qual o ND e a Defesa de um Hobgoblin Soldado?",
+   "reformulacao": "Quais as regras para determinar o ND e a Defesa de um Hobgoblin Soldado em Tormenta 20?",
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 38.9,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras para determinar o ND e a Defesa de um Hobgoblin Soldado em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.974  [Ameaças de Arton]\n     2. 0.955  [Ameaças de Arton]\n     3. 0.947  [Ameaças de Arton]\n     4. 0.944  [Tormenta20 - Jogo do Ano]\n     5. 0.938  [Tormenta20 - Jogo do Ano]\n     6. 0.894  [A Lenda de Ghanor]\n     7. 0.824  [Guia de Deuses Menores]\n     8. 0.745  [Dragão Brasil - 212]\n     9. 0.727  [Ameaças de Arton]\n    10. 0.716  [Compendio T20]\n    11. 0.591  [Ameaças de Arton]\n    12. 0.588  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 15970 (prompt 15958 / resposta 12)\n\n==============================================================================\nND: 2; Defesa: 19\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "30_deus_azgher",
+   "consulta": "Quais os domínios e o símbolo sagrado do deus Azgher?",
+   "reformulacao": "Quais as regras dos domínios e do símbolo sagrado do deus Azgher em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 26.1,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras dos domínios e do símbolo sagrado do deus Azgher em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.981  [Compendio T20]\n     2. 0.978  [Tormenta20 - Jogo do Ano]\n     3. 0.974  [Tormenta20 - Jogo do Ano]\n     4. 0.974  [Tormenta20 - Jogo do Ano]\n     5. 0.970  [tormenta20 - jogo do ano]\n     6. 0.969  [Tormenta20 - Jogo do Ano]\n     7. 0.968  [Deuses de Arton]\n     8. 0.959  [Dragão Brasil - 205]\n     9. 0.958  [Deuses de Arton]\n    10. 0.935  [Tormenta20 - Jogo do Ano]\n    11. 0.911  [tormenta20 - jogo do ano]\n    12. 0.909  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 15970 (prompt 15495 / resposta 475)\n\n==============================================================================\n# Domínios e Símbolo Sagrado de Azgher\n\n## Domínios Concedidos\n- **Espada Solar**: Concede poder sobre armas flamejantes e combate divino\n- **Fulgor Solar**: Relacionado à luz e ao brilho do deus-sol\n- **Habitante do Deserto**: Domínio sobre sobrevivência e condições áridas\n- **Inimigo de Tenebra**: Foco na luta contra as trevas e mortos-vivos\n\n## Obrigações e Restrições\n> \"O devoto de Azgher deve manter o rosto sempre coberto (com uma máscara, capuz ou trapos). Sua face pode ser revelada apenas ao sumo-sacerdote ou em seu funeral. Devotos do Sol também devem doar para a igreja de Azgher 20% de qualquer tesouro obtido. Essa doação deve ser feita em ouro, seja na forma de moedas ou itens.\"  \n> *[Deuses > Tormenta20 - Jogo do Ano]*\n\n## Símbolo Sagrado\n> \"Um medalhão de madeira ou metal com o símbolo de uma divindade. Se você estiver vestindo (normalmente com uma corrente ao redor do pescoço) ou empunhando o símbolo sagrado de um deus do qual é devoto, recebe +1 em testes de resistência.\"  \n> Preço: T$ 5 | Espaços: 1  \n> *[Equipamentos > Tormenta20 - Jogo do Ano]*\n\n## Insígnia dos Xerifes (Distinção Específica)\n> \"**Sol Vigilante**  \n> A insígnia dos xerifes de Azgher é um broche de ouro em formato de sol. Mais do que a marca de uma ordem religiosa, o Sol Vigilante é um símbolo de autoridade, lei e ordem.\"  \n> Recebe +2 em testes de Diplomacia com devotos de Azgher e agentes da lei, e +2 em Intimidação com criminosos. Autorização para portar armas de fogo no Reinado.  \n> *[Distinções > Dragão Brasil - 205]*\nground: 100% (3/3 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "32_raca_hynne",
+   "consulta": "Quais as habilidades raciais do Hynne?",
+   "reformulacao": "Quais as habilidades raciais do povo Hynne em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 24.7,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as habilidades raciais do povo Hynne em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.915  [Dragão Brasil - 212]\n     2. 0.752  [Tormenta20 - jogo do ano]\n     3. 0.731  [Deuses de Arton]\n     4. 0.719  [Tormenta20 - Jogo do Ano]\n     5. 0.421  [tormenta20 - jogo do ano]\n     6. 0.368  [Herois de Arton]\n  [4/4] gerando resposta\n    tokens: 7858 (prompt 7638 / resposta 220)\n\n==============================================================================\n# Habilidades Raciais do Hynne\n\n- Quando faz um ataque à distância com uma funda ou uma arma de arremesso, seu dano aumenta em um passo. [Raças > Tormenta20 - jogo do ano]\n- Seu tamanho é Pequeno e seu deslocamento é 6m. Você recebe +2 em Enganação e pode usar Destreza como atributo-chave de Atletismo (em vez de Força). [Raças > Tormenta20 - jogo do ano]\n- Quando faz um teste de resistência, você pode gastar 1 PM para rolar este teste novamente. [Raças > Tormenta20 - jogo do ano]\n\n**Sugestão do Mestre:** Essas habilidades tornam o Hynne excelente em combate à distância (com dano aumentado) e em testes de resistência, onde pode rerolar gastando Pontos de Mana. A habilidade de usar Destreza em Atletismo também ajuda em manobras de esquiva.\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "34_origem_heroi_campones",
+   "consulta": "Que benefícios a origem Herói Camponês concede?",
+   "reformulacao": "Quais os benefícios da origem Herói Camponês em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 19.6,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais os benefícios da origem Herói Camponês em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.790  [Tormenta20 - Jogo do Ano]\n     2. 0.683  [A Lenda de Ghanor]\n     3. 0.417  [DB - 227]\n  [4/4] gerando resposta\n    tokens: 1941 (prompt 1781 / resposta 160)\n\n==============================================================================\nA origem **Herói Camponês** concede os seguintes benefícios, conforme descrito no contexto:\n\n- **Adestramento, Ofício (perícias):** Concessão de perícias relacionadas ao ofício e adestramento.\n- **Coração Heroico, Sortudo, Surto Heroico, Torcida (poderes):** Concessão de poderes específicos.\n- **Poder único:** \"Você recebe +3 pontos de mana. Quando atinge um novo patamar (no 5º, 11º e 17º níveis), recebe +3 PM.\" [Origens > Tormenta20 - Jogo do Ano]\n\n**Citação obrigatória:** [Origens > Tormenta20 - Jogo do Ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "38_poder_vitalidade",
+   "consulta": "O que o poder Vitalidade concede ao personagem?",
+   "reformulacao": "Quais as regras e efeitos do poder Vitalidade em Tormenta 20?",
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 21.1,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras e efeitos do poder Vitalidade em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.984  [Dragão Brasil - 219]\n     2. 0.925  [Tormenta20 - Jogo do Ano]\n     3. 0.784  [Tormenta20 - Jogo do Ano]\n     4. 0.701  [Tormenta20 - Jogo do Ano]\n     5. 0.643  [Tormenta20 - Jogo do Ano]\n     6. 0.586  [Dragão Brasil]\n     7. 0.539  [Tormenta20 - jogo do ano]\n     8. 0.429  [tormenta20 - jogo do ano]\n     9. 0.370  [Herois de Arton]\n  [4/4] gerando resposta\n    tokens: 3900 (prompt 3814 / resposta 86)\n\n==============================================================================\nO poder **Vitalidade** concede ao personagem os seguintes benefícios:\n\n- **+1 PV por nível de personagem**: O personagem recebe um ponto de vida adicional para cada nível que possuir.\n- **+2 em Fortitude**: O personagem recebe um bônus de +2 nos testes de resistência de Fortitude.\n\nEssas são as únicas informações disponíveis no contexto sobre o poder Vitalidade.\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "40_arma_besta_pesada",
+   "consulta": "Qual o dano, o alcance e o preço da Besta Pesada?",
+   "reformulacao": "Qual o dano, o alcance e o preço da besta pesada em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 19.0,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Qual o dano, o alcance e o preço da besta pesada em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.992  [Tormenta20 - Jogo do Ano]\n     2. 0.930  [Tormenta20 - Jogo do Ano]\n     3. 0.903  [Tormenta20 - Jogo do Ano]\n     4. 0.857  [Tormenta20 - Jogo do Ano]\n     5. 0.825  [Herois de Arton]\n     6. 0.823  [Ameaças de Arton]\n     7. 0.709  [Uma visita a Vectora]\n     8. 0.658  [Tormenta20 - Jogo do Ano]\n     9. 0.509  [Herois de Arton]\n    10. 0.435  [Herois de Arton]\n    11. 0.391  [Dragão Brasil - 183]\n    12. 0.383  [Dragão Brasil - 227]\n  [4/4] gerando resposta\n    tokens: 5631 (prompt 5584 / resposta 47)\n\n==============================================================================\n- **Dano:** 1d12\n- **Alcance:** Médio\n- **Preço:** T$ 50\n\n[Armas > Tormenta20 - Jogo do Ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "42_cd_escapar",
+   "consulta": "Qual a CD para escapar de amarras com a perícia Acrobacia?",
+   "reformulacao": "Quis a CD para escapar de amarras com a perícia Acrobacia?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 16.2,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quis a CD para escapar de amarras com a perícia Acrobacia?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.992  [Herois de Arton]\n     2. 0.990  [Compendio T20]\n     3. 0.917  [Tormenta20 - Jogo do Ano]\n     4. 0.748  [Herois de Arton]\n     5. 0.720  [Compendio T20]\n     6. 0.642  [Compendio T20]\n     7. 0.638  [Herois de Arton]\n     8. 0.623  [Tormenta20 - Jogo do Ano]\n     9. 0.540  [tormenta20 - jogo do ano]\n    10. 0.521  [Compendio T20]\n    11. 0.518  [Ameaças de Arton]\n    12. 0.471  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 7464 (prompt 7423 / resposta 41)\n\n==============================================================================\nA CD para escapar de amarras com Acrobacia é igual ao resultado do teste de Destreza de quem amarrou +10. [Perícias > Compendio T20]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "43_dinheiro_inicial_n5",
+   "consulta": "Quanto dinheiro inicial um personagem de nível 5 deve receber?",
+   "reformulacao": "Quanto dinheiro inicial um personagem de nível 5 deve receber em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 13.7,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quanto dinheiro inicial um personagem de nível 5 deve receber em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.959  [tormenta20 - jogo do ano]\n     2. 0.897  [Tormenta20 - Jogo do Ano]\n     3. 0.826  [Compendio T20]\n     4. 0.699  [Herois de Arton]\n     5. 0.699  [Herois de Arton]\n     6. 0.652  [Herois de Arton]\n     7. 0.614  [Herois de Arton]\n     8. 0.449  [Herois de Arton]\n     9. 0.447  [Deuses de Arton]\n    10. 0.441  [Tormenta20 - Jogo do Ano]\n    11. 0.498  [Compendio T20]\n    12. 0.427  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 8018 (prompt 7996 / resposta 22)\n\n==============================================================================\nT$ 2.000 [Dinheiro Inicial > Compendio T20]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "44_pericia_ladinagem",
+   "consulta": "Quais as CD para abrir fechaduras com a perícia Ladinagem?",
+   "reformulacao": "Quais as regras de CD para abrir fechaduras com a perícia Ladinagem em Tormenta 20?",
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 38.8,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras de CD para abrir fechaduras com a perícia Ladinagem em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.996  [Compendio T20]\n     2. 0.961  [tormenta20 - jogo do ano]\n     3. 0.947  [Herois de Arton]\n     4. 0.905  [Compendio T20]\n     5. 0.887  [Compendio T20]\n     6. 0.805  [Compendio T20]\n     7. 0.755  [Herois de Arton]\n     8. 0.649  [Compendio T20]\n     9. 0.638  [Compendio T20]\n    10. 0.613  [Compendio T20]\n    11. 0.572  [Herois de Arton]\n    12. 0.520  [Compendio T20]\n  [4/4] gerando resposta\n    tokens: 8239 (prompt 8189 / resposta 50)\n\n==============================================================================\nCD 20 para fechaduras simples (porta de loja). CD 25 para fechaduras médias (prisão, baú). CD 30 para fechaduras superiores (cofre, câmara do tesouro).\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "49_condicao_exausto",
+   "consulta": "O que a condição Exausto faz e o que acontece se ela se repetir?",
+   "reformulacao": null,
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 70.0,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    [nvidia/nemotron-3.5-lightning-30b-a3b] recusou a reformulação, próximo modelo...\n    [nvidia/nemotron-3-ultra-550b-a55b] sobrecarregado (Error code: 503 - {'error': {'message': 'Service temporarily overloaded', 'type'), aguardando 5s...\n    [nvidia/nemotron-3-ultra-550b-a55b] sobrecarregado (Error code: 503 - {'error': {'message': 'Service temporarily overloaded', 'type'), aguardando 5s...\n    -> O que a condição Exausto faz e o que acontece se ela se repetir?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.929  [Herois de Arton]\n     2. 0.907  [Tormenta20 - jogo do ano]\n     3. 0.860  [Tormenta20 - Jogo do Ano]\n     4. 0.859  [Herois de Arton]\n     5. 0.747  [Tormenta20 - Jogo do Ano]\n     6. 0.734  [DB - 229]\n     7. 0.707  [Deuses de Arton]\n     8. 0.683  [Tormenta20 - Jogo do Ano]\n     9. 0.600  [Tormenta20 - Jogo do Ano]\n    10. 0.535  [Dragão Brasil - 227]\n    11. 0.465  [Deuses de Arton]\n    12. 0.452  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 7458 (prompt 7356 / resposta 102)\n\n==============================================================================\n**Condição Exausto**\nO personagem fica debilitado, lento e vulnerável. Se ficar exausto novamente, em vez disso fica inconsciente.\nEfeito: Cansaço\n\n**O que acontece se ela se repetir?**\nSe o personagem já estiver na condição Exausto e sofrer outro efeito que o deixaria Exausto, ele cai imediatamente em estado de **inconsciente** e não pode ser acordado até dormir por pelo menos oito horas.\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "52_pericia_jogatina",
+   "consulta": "Como funciona apostar na perícia Jogatina?",
+   "reformulacao": "Quais as regras para apostar na perícia Jogatina em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 67.9,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras para apostar na perícia Jogatina em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.990  [Compendio T20]\n     2. 0.915  [Tormenta20 - Jogo do Ano]\n     3. 0.807  [Deuses de Arton]\n     4. 0.775  [Tormenta20 - Jogo do Ano]\n     5. 0.675  [Tormenta20 - Jogo do Ano]\n     6. 0.658  [Ameaças de Arton]\n     7. 0.528  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 3271 (prompt 2515 / resposta 756)\n\n==============================================================================\nA perícia **Jogatina** funciona da seguinte forma, conforme o contexto fornecido:\n\n1. **Teste Básico (Funções):**\n   - Para resolver uma noite de jogatina, pague T$ 1d10 (aposta básica), faça um teste de perícia e consulte a tabela de ganhos.\n   - A aposta básica pode variar conforme o local: o mestre pode alterar de T$ 1d3 (taverna no porto) a 1d10 × T$ 1.000 (cassino de luxo em Valkaria).\n   - **Resultado do teste vs. Ganho:**\n     - 9 ou menos: Nenhum.\n     - 10 a 14: Metade da aposta (você \"empata\").\n     - 15 a 19: Valor da aposta (você \"empata\" totalmente).\n     - 20 a 29: Dobro da aposta.\n     - 30 a 39: Triplo da aposta.\n     - 40 ou mais: Quíntuplo da aposta.\n   - *Fonte: [Perícias > Compendio T20] # Jogatina*\n\n2. **Poder \"Apostador\" (Poderes Concedidos):**\n   - Você pode gastar um dia para encontrar e participar de uma mesa de wyrt ou outro jogo de azar.\n   - Escolha um valor e faça um teste de Jogatina contra a CD correspondente:\n     - T$ 100 (CD 15)\n     - T$ 200 (CD 20)\n     - T$ 400 (CD 25)\n     - T$ 800 (CD 30)\n     - T$ 1.600 (CD 35)\n     - E assim por diante (progressão de CD +5 a cada T$ 200).\n   - **Se passar no teste:** Você ganha o valor escolhido (ou um item/favor equivalente, a critério do mestre).\n   - **Se falhar no teste:** Você perde o mesmo valor escolhido.\n   - A critério do mestre, o local pode limitar ou impossibilitar o uso deste poder.\n   - **Requisito:** treinado em Jogatina.\n   - *Fonte: [Poderes Concedidos > Tormenta20 - Jogo do Ano] # Apostador*\n\n3. **Poder \"Apostar com o Trapaceiro(Hyninn)\":**\n   - Quando faz um teste de perícia, você pode gastar 1 PM para apostar com Hyninn.\n   - Você e o mestre rolam 1d20, mas o mestre mantém o resultado dele em segredo.\n   - Você então escolhe entre usar seu próprio resultado ou o resultado oculto do mestre (neste caso, ele revela o resultado).\n   - *Fonte: [Poderes Concedidos > Tormenta20 - Jogo do Ano] # Apostar com o Trapaceiro(Hyninn)*\n\n4. **Poder \"Foco em Perícia\":**\n   - Escolha a perícia Jogatina. Quando fizer um teste dessa perícia, pode gastar 1 PM para rolar dois dados e usar o melhor resultado.\n   - *Fonte: [Poderes de Destino > Tormenta20 - Jogo do Ano] # Foco em Perícia*\nground: 100% (3/3 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "53_parceiro_grifo",
+   "consulta": "O que o parceiro Grifo concede nos níveis iniciante, veterano e mestre?",
+   "reformulacao": "Quais as regras do poder parceiro Grifo nos níveis iniciante, veterano e mestre em Tormenta 20?",
+   "ground": null,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 15.8,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras do poder parceiro Grifo nos níveis iniciante, veterano e mestre em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.993  [Tormenta20 - Jogo do Ano]\n     2. 0.990  [Herois de Arton]\n     3. 0.985  [Ameaças de Arton]\n     4. 0.985  [Duelo de Dragões]\n     5. 0.984  [Tormenta20 - Jogo do Ano]\n     6. 0.981  [Ameaças de Arton]\n     7. 0.981  [Dragão Brasil - 212]\n     8. 0.978  [Ameaças de Arton]\n     9. 0.975  [Dragão Brasil]\n    10. 0.974  [A Lenda de Ghanor]\n    11. 0.972  [Ameaças de Arton]\n    12. 0.972  [Deuses de Arton]\n  [4/4] gerando resposta\n    tokens: 4342 (prompt 4264 / resposta 78)\n\n==============================================================================\nNão há informações sobre um parceiro \"Grifo\" no contexto fornecido. O contexto lista os seguintes tipos de parceiros: ajudante, assassino, atirador, combatente, guardião, montaria, vigilante, fortão e besta de carga. Cada um possui descrições específicas no texto, mas não existe um parceiro denominado \"Grifo\".\nground: n/a (resposta sem citações)\n==============================================================================\n"
+  },
+  {
+   "id": "54_tamanho_colossal",
+   "consulta": "Qual o espaço que uma criatura Colossal ocupa?",
+   "reformulacao": "Quais as regras de ocupação de espaço e deslocamento para criaturas Colossais em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 23.4,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras de ocupação de espaço e deslocamento para criaturas Colossais em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.997  [Compendio T20]\n     2. 0.992  [Herois de Arton]\n     3. 0.906  [Compendio T20]\n     4. 0.904  [Compendio T20]\n     5. 0.902  [Compendio T20]\n     6. 0.881  [Ameaças de Arton]\n     7. 0.881  [Tormenta20 - Jogo do Ano]\n     8. 0.788  [Guia dos Deuses Menores]\n     9. 0.688  [Tormenta20 - Jogo do Ano]\n    10. 0.682  [Tormenta20 - Jogo do Ano]\n    11. 0.582  [Tormenta20 - Jogo do Ano]\n    12. 0.549  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 8293 (prompt 8247 / resposta 46)\n\n==============================================================================\n9m (um quadrado de 3m x 3m, equivalente a 9 quadrados de 1,5m no mapa) [Tamanho de Criaturas > Compendio T20]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "57_comida_batata",
+   "consulta": "O que a Batata Valkariana concede a quem come?",
+   "reformulacao": "Quais os efeitos e benefícios concedidos ao consumir uma batata valkariana em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 23.6,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais os efeitos e benefícios concedidos ao consumir uma batata valkariana em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.605  [Tormenta20 - Jogo do Ano]\n  [4/4] gerando resposta\n    tokens: 1072 (prompt 1036 / resposta 36)\n\n==============================================================================\nVocê recebe +1d6 em um teste a sua escolha realizado até o fim do dia. [Alimentos > Tormenta20 - Jogo do Ano]\nground: 100% (1/1 citações no contexto)\n==============================================================================\n"
+  },
+  {
+   "id": "59_poder_codigo_honra",
+   "consulta": "O que é o Código de Honra do Cavaleiro e qual a penalidade de quebrá-lo?",
+   "reformulacao": "Quais as regras do Código de Honra do Cavaleiro e qual a penalidade por quebrá-lo em Tormenta 20?",
+   "ground": 1.0,
+   "sem_resposta": false,
+   "erro": null,
+   "duracao_s": 38.0,
+   "log": "\n  [1/4] reformulando com o histórico\n    janela de memória: 0/0 mensagens\n    -> sem histórico, pergunta mantida\n  [2/4] traduzindo para termos do sistema\n    -> Quais as regras do Código de Honra do Cavaleiro e qual a penalidade por quebrá-lo em Tormenta 20?\n  [3/4] recuperando (BM25 + denso + reranker)\n     1. 0.987  [Herois de Arton]\n     2. 0.984  [Deuses de Arton]\n     3. 0.976  [Deuses de Arton]\n     4. 0.972  [Herois de Arton]\n     5. 0.951  [Herois de Arton]\n     6. 0.919  [Dragão Brasil - 183]\n     7. 0.894  [DB - 227]\n     8. 0.878  [Deuses de Arton]\n     9. 0.859  [tormenta20 - jogo do ano]\n    10. 0.780  [Tormenta20 - Jogo do Ano]\n    11. 0.778  [Herois de Arton]\n    12. 0.713  [Herois de Arton]\n  [4/4] gerando resposta\n    tokens: 8256 (prompt 7841 / resposta 415)\n\n==============================================================================\n**Código de Honra do Cavaleiro**\n\nO Código de Honra é uma habilidade inerente à classe Cavaleiro (conforme descrito no contexto de *Tormenta20 - Jogo do Ano*), que representa o compromisso do cavaleiro com a virtude da honra. Embora o texto completo da habilidade não esteja detalhado no excerto fornecido, ela é mencionada como um requisito para outras habilidades e como uma condição perdida ao se tornar Cavaleiro Bandido.\n\n**Penalidade de Quebrá-lo**\n\nA consequência explícita de violar o Código de Honra está descrita no contexto de *Herois de Arton*, sob a distinção **Código da Norma** (relacionada a Khalmyr, mas aplicável como referência de perda de poderes):\n\n> \"Se violar o código, você perde todos os seus PM e só pode recuperá-los a partir do próximo dia.\"\n\nAlém disso, no contexto de *Herois de Arton*, a admissão para Cavaleiro do Corvo explicitamente menciona que o candidato \"abre mão de seu senso de honra\", indicando que a perda do Código de Honra é um efeito mecânico significativo que afeta a elegibilidade para certas distinções e a recuperação de Pontos de Mana.\n\n**Fonte:** [Classes > tormenta20 - jogo do ano] e [Distinções > Herois de Arton]\n\n**Sugestão do Mestre:** Em campanhas de Tormenta20, o Código de Honra funciona frequentemente como um \"combustível\" para poderes como *Paixão: Honra* e *Exaltar Honra*. Quebrá-lo não apenas impede a recuperação de PM pelo período indicado, mas pode tornar o personagem inepto para poderes que exigem a habilidade como pré-requisito, além de alterar a interação com facções como a Ordem da Luz.\nground: 100% (2/2 citações no contexto)\n==============================================================================\n"
+  }
+ ]
+}

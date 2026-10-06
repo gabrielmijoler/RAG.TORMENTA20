@@ -12,7 +12,8 @@ pergunta do usuário
   → [1/4] reformulação com histórico (resolve "desse monstro", "ele"...)
   → [2/4] tradução para termos do sistema (PROMPT_TRADUCAO)
   → [3/4] recuperação: Qdrant (k=50) + BM25 (k=50) → ensemble 0.5/0.5
-          → CohereRerank (top 8)
+          → filtro por metadados (se /filtro ativo) → CohereRerank (top 8)
+          → 1 chunk por registro (_diversificar)
   → [4/4] síntese: SYSTEM_PROMPT (anti-alucinação) + contexto + histórico
 ```
 
@@ -47,7 +48,9 @@ make avaliar           # suite de avaliação (ETAPA=baseline|depois)
 make lint && make fmt  # ruff
 ```
 
-No chat: `/salvar` arquiva a sessão, `/novo` limpa histórico, `/sair` encerra.
+No chat: `/filtro tabela=Magias` restringe a busca por metadados (`/filtro`
+lista os valores disponíveis com contagem; `/filtro limpar` desliga; vale até
+`/novo`), `/salvar` arquiva a sessão, `/novo` limpa histórico, `/sair` encerra.
 
 ## Fase 2 — Ingestão (implementada)
 
@@ -104,24 +107,30 @@ Baseline (2026-10-01, `avaliacao_baseline.json`): **cobertura 95%**,
 **groundedness 81%**, rerank até 0,91 — 16/18 queries com cobertura total.
 
 Etapa "depois" (2026-10-01, `avaliacao_depois.json`) — mesmas 18 queries e
-mesmo cache de reformulações, após as correções (exemplos reais no
-`SYSTEM_PROMPT`, query `04` reescopada para o Escriba Arcano, rerank com a
-query combinada reformulada + original):
+mesmo cache de reformulações, após as correções (exemplos e citação integral
+no `SYSTEM_PROMPT`, query `04` reescopada para o Escriba Arcano, e recuperação
+em 3 estágios: candidatos das duas formulações → rerank com query combinada →
+`_diversificar` com 1 chunk por registro).
+Em 2026-10-06 o rerank passou a usar só a query original: com o FlashRank
+(`ms-marco-MiniLM-L-12`, inglês) a query combinada em português enterrava os
+alvos nas posições 12–31 — medido nas 61 queries (cobertura 72,4% → 95,9%);
+ver `CONTEXTO_SESSAO.md`.
 
 | Métrica | baseline | depois |
 |---|---|---|
-| cobertura_entidades | 95% | **100%** (18/18) |
-| groundedness | 81% | **88%** |
+| cobertura_entidades | 95% | **100%** (18/18, estável em 3 rodadas) |
+| groundedness | 81% | 88–94% (média ~90%) |
 
-Regressão conhecida: `08` groundedness 100%→0% (doc `[Ameaças > …]` no rank 10
-do rerank combinado; trade-off medido contra `12`, que a união de candidatos
-quebraria) — detalhes em `CONTEXTO_SESSAO.md`.
+A groundedness oscila entre rodadas (falhas de formato de citação do LLM
+gratuito pulam de query a query — 08/13, depois 03/04, depois 11/12); o
+retrieval fica 100% em todas. A query `08` (regressão do 1º A/B) foi
+consertada: o registro real do Basilisco agora entra no rank 1 do top-8.
 
 ## Estrutura
 
 ```
 rag_core.py                    # core: LLM fallback, busca híbrida, Qdrant, prompts
-meu_primeiro_rag.py            # chat CLI com memória de sessão
+index.py                       # chat CLI com memória de sessão
 avaliar.py                     # suite de avaliação (baseline/depois)
 tools/ts_para_registros.mjs    # extrator dos .ts do aTormenta → JSON
 tests/                         # pytest (make test)

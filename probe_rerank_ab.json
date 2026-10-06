@@ -1,0 +1,612 @@
+[
+ {
+  "id": "01_condicao_caido",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 11,
+  "original": 1.0,
+  "original_pos": 4,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "02_condicao_agarrado",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 8,
+  "original": 1.0,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "03_pericia_furtividade",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 3,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "04_custo_circulo",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 3,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "05_curar_ferimentos",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 2,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "06_cavaleiro_proficiencias",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "07_espada_longa",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "08_basilisco",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "09_hyninn",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 6,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "10_ladrao_de_tumulos",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "11_ataque_vs_defesa",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.667,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "12_dificuldade_teste",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 7
+ },
+ {
+  "id": "13_tamanho_criaturas",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.667,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 7,
+  "reformulada": 1.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "14_poder_psicopompo",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 0.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "15_xerife_azgher",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "16_anao_habilidades",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.333,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "17_cavalo_deslocamento",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 2,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "18_bomba_alquimica",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 12,
+  "original": 1.0,
+  "original_pos": 4,
+  "reformulada": 1.0,
+  "reformulada_pos": 9
+ },
+ {
+  "id": "19_magia_bola_de_fogo",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "20_magia_voo",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 4,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 5
+ },
+ {
+  "id": "21_magia_silencio",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 5
+ },
+ {
+  "id": "22_magia_dissipar",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 9,
+  "original": 1.0,
+  "original_pos": 3,
+  "reformulada": 1.0,
+  "reformulada_pos": 8
+ },
+ {
+  "id": "23_magia_conjurar_monstro",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.333,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "24_ameaca_goblin",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.333,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "25_ameaca_zumbi",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 8,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "26_ameaca_lobo",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "27_ameaca_hobgoblin",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 4,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "28_deusa_lena",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 5,
+  "original": 0.5,
+  "original_pos": null,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "29_deus_megalokk",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 2,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "30_deus_azgher",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 0.5,
+  "original_pos": null,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "31_deus_thyatis",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "32_raca_hynne",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 0.5,
+  "original_pos": null,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "33_raca_lefou",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "34_origem_heroi_campones",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "35_origem_aristocrata",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 4,
+  "original": 0.5,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "36_poder_ataque_poderoso",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "37_poder_esquiva",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 8,
+  "original": 1.0,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "38_poder_vitalidade",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "39_arma_machado",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "40_arma_besta_pesada",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 9,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "41_armadura_cota",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 2,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "42_cd_escapar",
+  "sem_reformulacao_cache": true,
+  "combinada": 0.333,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "43_dinheiro_inicial_n5",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": null,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "44_pericia_ladinagem",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "45_pericia_diplomacia",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 0.5,
+  "reformulada_pos": null
+ },
+ {
+  "id": "46_pericia_intimidacao",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 7,
+  "original": 1.0,
+  "original_pos": 3,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "47_condicao_enfeitico",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "48_condicao_petrificado",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 9,
+  "original": 1.0,
+  "original_pos": 6,
+  "reformulada": 1.0,
+  "reformulada_pos": 5
+ },
+ {
+  "id": "49_condicao_exausto",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 9,
+  "original": 1.0,
+  "original_pos": 8,
+  "reformulada": 0.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "50_condicao_sangrando",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "51_pericia_cavalgar",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 12,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "52_pericia_jogatina",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 8
+ },
+ {
+  "id": "53_parceiro_grifo",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 0.5,
+  "original_pos": null,
+  "reformulada": 1.0,
+  "reformulada_pos": 8
+ },
+ {
+  "id": "54_tamanho_colossal",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 5,
+  "reformulada": 1.0,
+  "reformulada_pos": null
+ },
+ {
+  "id": "55_comida_gorad",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 1,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "56_comida_macarrao",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 5,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "57_comida_batata",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 8
+ },
+ {
+  "id": "58_item_bomba_fumaca",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 7,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ },
+ {
+  "id": "59_poder_codigo_honra",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 2,
+  "reformulada": 1.0,
+  "reformulada_pos": 2
+ },
+ {
+  "id": "60_pericia_cura",
+  "sem_reformulacao_cache": false,
+  "combinada": 1.0,
+  "combinada_pos": 5,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 4
+ },
+ {
+  "id": "61_pericia_misticismo_aura",
+  "sem_reformulacao_cache": false,
+  "combinada": 0.5,
+  "combinada_pos": null,
+  "original": 1.0,
+  "original_pos": 1,
+  "reformulada": 1.0,
+  "reformulada_pos": 1
+ }
+]

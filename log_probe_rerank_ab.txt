@@ -1,0 +1,76 @@
+🔗 Qdrant servidor: http://localhost:6335
+   Dashboard: http://localhost:6335/dashboard
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9622.85it/s]
+⚡ Coleção 'tormenta20' já existe com 5674 pontos — carregando...
+   Para reindexar do zero: REINDEXAR=1 ./.venv/bin/python index.py
+ 1/61 01_condicao_caido          comb=100% orig=100% refor=100%
+ 2/61 02_condicao_agarrado       comb=100% orig=100% refor=100%
+ 3/61 03_pericia_furtividade     comb=100% orig=100% refor=100%
+ 4/61 04_custo_circulo           comb=100% orig=100% refor=100%
+ 5/61 05_curar_ferimentos        comb=100% orig=100% refor=100%
+ 6/61 06_cavaleiro_proficiencias comb=100% orig=100% refor=100%
+ 7/61 07_espada_longa            comb=100% orig=100% refor=100%
+ 8/61 08_basilisco               comb=50% orig=100% refor=50%
+ 9/61 09_hyninn                  comb=100% orig=100% refor=100%
+10/61 10_ladrao_de_tumulos       comb=0% orig=100% refor=100%
+11/61 11_ataque_vs_defesa        comb=67% orig=100% refor=100%
+12/61 12_dificuldade_teste       comb=100% orig=100% refor=100%
+13/61 13_tamanho_criaturas       comb=67% orig=100% refor=100%
+14/61 14_poder_psicopompo        comb=0% orig=100% refor=0%
+15/61 15_xerife_azgher           comb=50% orig=100% refor=100%
+16/61 16_anao_habilidades        comb=33% orig=100% refor=100%
+17/61 17_cavalo_deslocamento     comb=100% orig=100% refor=100%
+18/61 18_bomba_alquimica         comb=100% orig=100% refor=100%
+19/61 19_magia_bola_de_fogo      comb=100% orig=100% refor=100%
+20/61 20_magia_voo               comb=100% orig=100% refor=100%
+21/61 21_magia_silencio          comb=0% orig=100% refor=100%
+22/61 22_magia_dissipar          comb=100% orig=100% refor=100%
+23/61 23_magia_conjurar_monstro  comb=33% orig=100% refor=100%
+24/61 24_ameaca_goblin           comb=33% orig=100% refor=100%
+25/61 25_ameaca_zumbi            comb=100% orig=100% refor=100%
+26/61 26_ameaca_lobo             comb=100% orig=100% refor=100%
+27/61 27_ameaca_hobgoblin        comb=50% orig=100% refor=100%
+28/61 28_deusa_lena              comb=100% orig=50% refor=50%
+29/61 29_deus_megalokk           comb=100% orig=100% refor=100%
+30/61 30_deus_azgher             comb=50% orig=50% refor=50%
+31/61 31_deus_thyatis            comb=50% orig=100% refor=100%
+32/61 32_raca_hynne              comb=0% orig=50% refor=50%
+33/61 33_raca_lefou              comb=100% orig=100% refor=100%
+34/61 34_origem_heroi_campones   comb=50% orig=100% refor=100%
+35/61 35_origem_aristocrata      comb=100% orig=50% refor=100%
+36/61 36_poder_ataque_poderoso   comb=50% orig=100% refor=100%
+37/61 37_poder_esquiva           comb=100% orig=100% refor=100%
+38/61 38_poder_vitalidade        comb=0% orig=100% refor=100%
+39/61 39_arma_machado            comb=100% orig=100% refor=100%
+40/61 40_arma_besta_pesada       comb=100% orig=100% refor=100%
+41/61 41_armadura_cota           comb=100% orig=100% refor=100%
+42/61 42_cd_escapar              comb=33% orig=100% refor=100% (sem cache de reformulação)
+43/61 43_dinheiro_inicial_n5     comb=0% orig=100% refor=50%
+44/61 44_pericia_ladinagem       comb=50% orig=100% refor=100%
+45/61 45_pericia_diplomacia      comb=50% orig=100% refor=50%
+46/61 46_pericia_intimidacao     comb=100% orig=100% refor=100%
+47/61 47_condicao_enfeitico      comb=100% orig=100% refor=100%
+48/61 48_condicao_petrificado    comb=100% orig=100% refor=100%
+49/61 49_condicao_exausto        comb=100% orig=100% refor=0%
+50/61 50_condicao_sangrando      comb=100% orig=100% refor=100%
+51/61 51_pericia_cavalgar        comb=100% orig=100% refor=100%
+52/61 52_pericia_jogatina        comb=50% orig=100% refor=100%
+53/61 53_parceiro_grifo          comb=50% orig=50% refor=100%
+54/61 54_tamanho_colossal        comb=50% orig=100% refor=100%
+55/61 55_comida_gorad            comb=100% orig=100% refor=100%
+56/61 56_comida_macarrao         comb=100% orig=100% refor=100%
+57/61 57_comida_batata           comb=0% orig=100% refor=100%
+58/61 58_item_bomba_fumaca       comb=100% orig=100% refor=100%
+59/61 59_poder_codigo_honra      comb=100% orig=100% refor=100%
+60/61 60_pericia_cura            comb=100% orig=100% refor=100%
+61/61 61_pericia_misticismo_aura comb=50% orig=100% refor=100%
+
+RESUMO (61 queries)
+  combinada    cob_media=72.4% cob_100%=35/61 pos_alvo_mediana=5
+  original     cob_media=95.9% cob_100%=56/61 pos_alvo_mediana=1
+  reformulada  cob_media=91.8% cob_100%=53/61 pos_alvo_mediana=1
+
+REGRESSÕES (original < combinada): 28_deusa_lena 100%->50%, 35_origem_aristocrata 100%->50%
+GANHOS (original > combinada): 24
+detalhe: probe_rerank_ab.json

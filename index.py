@@ -1,6 +1,14 @@
 import json
+import os
 import sys
 import time
+from collections import Counter
+
+# Proteção de CPU (igual rag_core): numpy (via langchain_community) carrega
+# ANTES do rag_core aqui — as variáveis precisam valer desde o primeiro import.
+os.environ["OMP_NUM_THREADS"] = "2"
+os.environ["MKL_NUM_THREADS"] = "2"
+os.environ["OPENBLAS_NUM_THREADS"] = "2"
 
 from langchain_community.callbacks.manager import get_openai_callback
 from langchain_core.messages import AIMessage, HumanMessage
@@ -11,11 +19,15 @@ from rag_core import (
     PROMPT_TRADUCAO,
     SYSTEM_PROMPT,
     RecusaTraducao,
+    SaidaDegenerada,
+    _e_degenerado,
     e_cota_esgotada,
     e_modelo_indisponivel,
     e_recusa,
     e_transitorio,
     eh_saudacao_pura,
+    linha_ground,
+    precisa_de_historico,
     reformulacao_valida,
     reformular_pergunta,
     trocar_modelo,
@@ -51,6 +63,10 @@ cadeia = rag_core.montar_cadeia_resposta(SYSTEM_PROMPT, llm, com_historico=True)
 # Nunca o texto do {context} — o contexto é descartado a cada rodada.
 chat_history = []
 
+# Filtro por metadados ativo (/filtro tabela=Magias ...) — vale até /filtro
+# limpar ou /novo; None/vazio = busca ampla (mesmo comportamento do A/B).
+filtros_ativos: dict = {}
+
 # O histórico completo fica na sessão, mas só a janela vai ao LLM: sem isso o
 # prompt cresce um pouco a cada turno e estoura o limite de tokens.
 JANELA_MEMORIA = 4  # últimas 4 mensagens = 2 perguntas + 2 respostas
@@ -74,7 +90,9 @@ def eh_relato_sucesso(texto: str) -> bool:
     t = texto.lower()
     return any(p in t for p in PALAVRAS_SUCESSO) and len(t.split()) > 3
 
-COMANDOS = ("/salvar  arquiva a sessão atual (relato opcional)  |  "
+COMANDOS = ("/filtro tabela=X [fonte=Y tipo=Z]  restringe a busca por metadados ("
+            "'/filtro' lista valores, 'limpar' desliga)  |  "
+            "/salvar  arquiva a sessão atual (relato opcional)  |  "
             "/novo  limpa o histórico e começa outra sessão  |  /sair  encerra")
 BANNER = """
 ==============================================================================
@@ -105,6 +123,10 @@ def com_fallback(rodar, descricao):
                 elif isinstance(e, RecusaTraducao):
                     print(f"    [{modelo}] recusou a reformulação, próximo modelo...")
                     break
+                elif isinstance(e, SaidaDegenerada):
+                    # degeneração é não-determinística: 1 retry no MESMO
+                    # modelo (2ª tentativa do loop) e depois o próximo.
+                    print(f"    [{modelo}] saída degenerada, nova tentativa...")
                 else:
                     raise
     print(f"    todos os modelos falharam em: {descricao}")
@@ -126,6 +148,11 @@ def traduzir_para_t20(consulta: str) -> str:
             raise RecusaTraducao(f"bloqueio de segurança: {texto[:60]}")
         if not reformulacao_valida(texto):
             raise RecusaTraducao(f"saída não é uma pergunta: {texto[:60]}")
+        if _e_degenerado(texto):
+            # 'Quellsellsellsells deep overtells…?' — pergunta com formato
+            # válido mas com repetição quebrada: o com_fallback tenta o
+            # próximo modelo em vez de buscar com a query envenenada.
+            raise RecusaTraducao(f"saída degenerada: {texto[:60]}")
         return texto
 
     # com_fallback ja engole RecusaTraducao (proximo modelo); se todos
@@ -138,8 +165,13 @@ def traduzir_para_t20(consulta: str) -> str:
 
 
 def buscar(pergunta_t20: str, pergunta_real: str | None = None):
-    """Ensemble com a reformulada; rerank com a junção das duas formulações."""
-    docs = rag_core.recuperar(retriever_comprimido, pergunta_t20, pergunta_real)
+    """Candidatos (reformulada + real), rerank com a query real, 1 chunk/reg."""
+    docs = rag_core.recuperar(
+        retriever_comprimido, pergunta_t20, pergunta_real, filtros=filtros_ativos
+    )
+    if filtros_ativos:
+        ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())
+        print(f"    filtro: {ativo} -> {len(docs)} docs no top final")
     for i, doc in enumerate(docs, 1):
         score = doc.metadata.get("relevance_score", 0)
         fonte = doc.metadata.get("Fonte") or doc.metadata.get("Tabela") or "Geral"
@@ -165,9 +197,49 @@ def gerar_resposta(entrada: str, docs):
             f"    tokens: {cb.total_tokens} "
             f"(prompt {cb.prompt_tokens} / resposta {cb.completion_tokens})"
         )
+        if _e_degenerado(saida):
+            # loop de lista (ex.: 49x 'T$ X [Alquímicos > …]') — nunca
+            # imprimir nem anexar ao histórico; o com_fallback tenta de novo.
+            raise SaidaDegenerada(f"saída degenerada: {saida[:60]!r}")
         return saida
 
     return com_fallback(rodar, "resposta final")
+
+
+def tratar_filtro(arg: str) -> None:
+    """Aplica, lista ou limpa o filtro de metadados (/filtro ...)."""
+    if not arg:
+        if filtros_ativos:
+            ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())
+            print(f"Filtro ativo: {ativo}")
+        else:
+            print("Sem filtro — busca ampla.")
+        for chave in rag_core.CHAVES_FILTRO:
+            valores = Counter(
+                str(d.metadata.get(chave)) for d in chunks if d.metadata.get(chave)
+            )
+            top = ", ".join(f"{v}({n})" for v, n in valores.most_common(8))
+            print(f"  {chave}: {top}")
+        print('Uso: /filtro tabela=Magias  |  /filtro fonte="Tormenta20 - Jogo do Ano"'
+              "  |  /filtro tipo=Arcana  |  /filtro limpar")
+        return
+
+    if arg.lower() in ("limpar", "off", "desligar"):
+        filtros_ativos.clear()
+        print("Filtro removido — busca ampla.")
+        return
+
+    novos = rag_core.parsear_filtros(arg)
+    if not novos:
+        print(f"Não entendi: {arg!r}")
+        print('Uso: /filtro tabela=Magias  |  /filtro fonte="Tormenta20 - Jogo do Ano"'
+              "  |  /filtro tipo=Arcana  |  /filtro limpar")
+        return
+    filtros_ativos.clear()
+    filtros_ativos.update(novos)
+    ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())
+    print(f"Filtro aplicado: {ativo}")
+    print("Vale para as próximas perguntas até /filtro limpar ou /novo.")
 
 
 def processar(entrada: str) -> None:
@@ -205,11 +277,21 @@ def processar(entrada: str) -> None:
     print("\n  [1/4] reformulando com o histórico")
     janela = historico_recente()
     print(f"    janela de memória: {len(janela)}/{len(chat_history)} mensagens")
-    reescrita = reformular_pergunta(entrada, janela, llm)
-    if reescrita != entrada:
-        print(f"    -> {reescrita}")
-    else:
+    if not janela:
+        reescrita = entrada
         print("    -> sem histórico, pergunta mantida")
+    elif not precisa_de_historico(entrada):
+        # sem anáfora a reescrita não agrega — e já devolveu card de resposta
+        # fabricado (T$ 100 [Alquímicos > …]) que envenenou a busca do turno
+        # seguinte; pular o LLM aqui é ao mesmo tempo barato e seguro.
+        reescrita = entrada
+        print("    -> sem anáfora, pergunta mantida")
+    else:
+        reescrita = reformular_pergunta(entrada, janela, llm)
+        if reescrita != entrada:
+            print(f"    -> {reescrita}")
+        else:
+            print("    -> reformulação inválida, pergunta original mantida")
 
     print("  [2/4] traduzindo para termos do sistema")
     pergunta_t20 = traduzir_para_t20(reescrita)
@@ -221,10 +303,13 @@ def processar(entrada: str) -> None:
     print("  [4/4] gerando resposta")
     resposta = gerar_resposta(entrada, docs)
     if resposta is None:
+        print("\nNão consegui gerar uma resposta estável agora — "
+              "tente reformular a pergunta.")
         return
 
     print("\n" + "=" * 78)
     print(resposta)
+    print(linha_ground(resposta, docs))
     print("=" * 78)
 
     chat_history.append(HumanMessage(entrada))
@@ -249,7 +334,11 @@ def main() -> None:
             break
         if cmd == "/novo":
             chat_history.clear()
+            filtros_ativos.clear()
             print("Histórico limpo — nova sessão de RPG.")
+            continue
+        if cmd == "/filtro" or cmd.startswith("/filtro "):
+            tratar_filtro(entrada[len("/filtro"):].strip())
             continue
         if cmd == "/salvar" or cmd.startswith("/salvar "):
             # Fallback manual do arquivamento: usa o histórico atual e o resto

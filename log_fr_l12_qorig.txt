@@ -1,0 +1,708 @@
+/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/avaliar.py:40: DeprecationWarning: `langchain-community` is being sunset and is no longer actively maintained. See https://github.com/langchain-ai/langchain-community/issues/674 for details and migration guidance toward standalone integration packages.
+  from langchain_community.callbacks.manager import get_openai_callback
+Extraindo registros de /home/gabrielsousamijoler/Documentos/aTormenta/data ...
+  extracao: 74 arquivos, 110 exports, 4997 registros, 0 avisos
+  registros: 4997 em 105 tabelas | vazios: 0 | divididos: 493
+  maiores tabelas: Ameaças (708) · Magias (264) · Poderes Concedidos (230) · Armas (157) · Acessórios (146) · Alimentos (109)
+  fontes: Tormenta20 - Jogo do Ano (1186) · Herois de Arton (1060) · Compendio T20 (737) · Ameaças de Arton (646) · Deuses de Arton (393) · Dragão Brasil - 199 (78)
+  blocos: 5953 -> 5674 após fusão de pequenos (279 anexados ao vizinho)
+  com prefixo de procedencia: 5674/5674
+🔗 Qdrant servidor: http://localhost:6335
+   Dashboard: http://localhost:6335/dashboard
+Configurando embeddings multilingues locais...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9868.02it/s]
+⚡ Coleção 'tormenta20' já existe com 5674 pontos — carregando...
+   Para reindexar do zero: REINDEXAR=1 ./.venv/bin/python index.py
+Criando índice de termos exatos (BM25)...
+Configurando o Filtro de Qualidade (Reranker)...
+  modo: auto — FlashRank local, escalada Cohere se top-1 < 0.35
+
+[01_condicao_caido] Quais as penalidades da condição Caído em Tormenta 20?...
+  reformulação: Quais as penalidades e efeitos da condição Caído em combate em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[02_condicao_agarrado] Como funciona a condição Agarrado durante o combate?...
+  reformulação: Quais as regras da condição Agarrado em combate em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 6/10 aprovado
+
+[03_pericia_furtividade] O que a perícia Furtividade faz e quando é usada?...
+  reformulação: Quais as regras da perícia Furtividade e em quais situações ela deve ser utilizada em Tormenta 
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[04_custo_circulo] Quanto custa aprender uma magia de 3º círculo pelo método do Escriba A...
+  reformulação: Quais as regras e o custo em pontos de magia para aprender uma magia de 3º círculo pelo método 
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 10/10 aprovado
+
+[05_curar_ferimentos] O que faz a magia Curar Ferimentos?...
+  reformulação: Quais as regras do poder Curar Ferimentos em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[06_cavaleiro_proficiencias] Quais perícias e proficiências a classe Cavaleiro possui?...
+  reformulação: Quais perícias e proficiências a classe Cavaleiro possui em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[07_espada_longa] Qual o preço e o dano de uma Espada Longa?...
+  reformulação: Qual o custo em PM e o dano base de uma espada longa em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[08_basilisco] Qual o ND, a defesa e o deslocamento de um Basilisco?...
+  reformulação: Quais as regras para teste de resistência contra petrificação, valores de ND, defesa e deslocam
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 50% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 7/10 aprovado
+
+[09_hyninn] Quem é o deus Hyninn e qual é seu símbolo sagrado?...
+  reformulação: Quais as regras e informações sobre o deus Hyninn e seu símbolo sagrado em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[10_ladrao_de_tumulos] O que a origem Ladrão de Túmulos oferece como benefício?...
+  reformulação: Quais as regras e benefícios da origem Ladrão de Túmulos em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[11_ataque_vs_defesa] Como é resolvido um teste de ataque contra a Defesa do alvo?...
+  reformulação: Quais as regras para a resolução de um teste de ataque contra a Defesa do alvo em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[12_dificuldade_teste] Como funcionam os graus de dificuldade de um teste?...
+  reformulação: Quais as regras dos graus de dificuldade em testes de perícia e atributo em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[13_tamanho_criaturas] Quais são os tamanhos de criatura e qual espaço cada um ocupa?...
+  reformulação: Quais as regras de tamanhos de criatura e espaçamento de quadrados em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 4/10 reprovado
+
+[14_poder_psicopompo] O que concede o poder Dom do Psicopompo?...
+  reformulação: Quais as regras e efeitos do poder Dom do Psicopompo em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 0/10 reprovado
+
+[15_xerife_azgher] Como obtenho a distinção Xerife de Azgher?...
+  reformulação: Quais as regras para obter a distinção Xerife de Azgher em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[16_anao_habilidades] Quais as habilidades raciais do Anão e qual seu deslocamento?...
+  reformulação: Quais as habilidades raciais e o deslocamento base do anão em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[17_cavalo_deslocamento] Qual o deslocamento de um Cavalo e quanto ele custa?...
+  reformulação: Quais as regras de deslocamento e custo de aquisição de um cavalo em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 67% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[18_bomba_alquimica] Quais os efeitos e o preço de uma Bomba alquímica?...
+  reformulação: Quais as regras de efeito e o custo em PM de uma bomba alquímica em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[19_magia_bola_de_fogo] Qual o dano, a área e a resistência da magia Bola de Fogo?...
+  reformulação: Qual o dano, a área e a resistência da magia Bola de Fogo?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[20_magia_voo] Quanto deslocamento de voo a magia Voo concede e por quanto tempo?...
+  reformulação: Quais as regras de deslocamento e duração do poder Voo em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[21_magia_silencio] O que a magia Silêncio faz com a área e com lançamentos de magia?...
+  reformulação: Quais as regras da magia Silêncio sobre a interrupção de lançamentos e a criação de área de efe
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[22_magia_dissipar] Como funciona a magia Dissipar Magia e o que ela não consegue dissipar...
+  reformulação: Quais as regras para o uso do poder Dissipar Magia e quais são as limitações ou tipos de magia 
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[23_magia_conjurar_monstro] O que a magia Conjurar Monstro cria e quais suas limitações?...
+  reformulação: Quais as regras de criação e limitações da magia Conjurar Monstro em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 503 Service Unavailable"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 503 Service Unavailable"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[24_ameaca_goblin] Qual o ND, a Defesa e o tamanho de um Goblin Salteador?...
+  reformulação: Quais as regras para determinar o ND, a Defesa e o tamanho de um Goblin Salteador em Tormenta 2
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 10/10 aprovado
+
+[25_ameaca_zumbi] Qual o ND, o tipo e a Defesa de um Zumbi?...
+  reformulação: Quais as regras para o ND, tipo e Defesa de um zumbi em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[26_ameaca_lobo] Quais as estatísticas de combate de um Lobo (ND, Defesa e PV)?...
+  reformulação: Quais as estatísticas de combate de um Lobo em Tormenta 20, incluindo seus valores de Destreza 
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[27_ameaca_hobgoblin] Qual o ND e a Defesa de um Hobgoblin Soldado?...
+  reformulação: Quais o ND e a Defesa de um Hobgoblin Soldado em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[28_deusa_lena] Quem é a deusa Lena e qual é seu símbolo sagrado?...
+  reformulação: Quem é a deusa Lena e qual é seu símbolo sagrado?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 50% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[29_deus_megalokk] Quem é o deus Megalokk e qual energia seus devotos canalizam?...
+  reformulação: Quais as regras de canalização de energia para devotos de Megalokk em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[30_deus_azgher] Quais os domínios e o símbolo sagrado do deus Azgher?...
+  reformulação: Quais as regras dos domínios e do símbolo sagrado do deus Azgher em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 50% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[31_deus_thyatis] Quem é o deus Thyatis e qual é seu símbolo sagrado?...
+  reformulação: Quem é o deus Thyatis e qual é o significado e a descrição do seu símbolo sagrado em Tormenta 2
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[32_raca_hynne] Quais as habilidades raciais do Hynne?...
+  reformulação: Quais as habilidades raciais do povo Hynne em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 50% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[33_raca_lefou] O que é a raça Lefou em Tormenta 20?...
+  reformulação: Quais as características raciais e atributos da raça Lefou em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[34_origem_heroi_campones] Que benefícios a origem Herói Camponês concede?...
+  reformulação: Quais os benefícios da origem Herói Camponês em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 6/10 aprovado
+
+[35_origem_aristocrata] O que a origem Aristocrata oferece a um personagem?...
+  reformulação: Quais as regras e benefícios da origem Aristocrata em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 50% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 4/10 reprovado
+
+[36_poder_ataque_poderoso] O que faz o poder Ataque Poderoso e qual seu pré-requisito?...
+  reformulação: Quais as regras e efeito do poder Ataque Poderoso e qual seu pré-requisito em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[37_poder_esquiva] O que o poder Esquiva concede ao personagem?...
+  reformulação: Quais as regras e efeitos do poder Esquiva em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[38_poder_vitalidade] O que o poder Vitalidade concede ao personagem?...
+  reformulação: Quais as regras e efeitos do poder Vitalidade em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[39_arma_machado] Qual o preço, o dano e o crítico do Machado de Batalha?...
+  reformulação: Quais as regras de preço, dano e crítico do Machado de Batalha em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[40_arma_besta_pesada] Qual o dano, o alcance e o preço da Besta Pesada?...
+  reformulação: Qual o dano, o alcance e o preço da besta pesada em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[41_armadura_cota] Qual a Defesa, a penalidade e o preço da Cota de Malha?...
+  reformulação: Quais as regras da Cota de Malha em Tormenta 20, especificamente sua Defesa, penalidade de Furt
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 6/10 aprovado
+
+[42_cd_escapar] Qual a CD para escapar de amarras com a perícia Acrobacia?...
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  reformulação: Quais as regras para escapar de amarras usando a perícia Acrobacia em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[43_dinheiro_inicial_n5] Quanto dinheiro inicial um personagem de nível 5 deve receber?...
+  reformulação: Quanto dinheiro inicial um personagem de nível 5 deve receber em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[44_pericia_ladinagem] Quais as CD para abrir fechaduras com a perícia Ladinagem?...
+  reformulação: Quais as regras de CD para abrir fechaduras com a perícia Ladinagem em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[45_pericia_diplomacia] Como funciona o uso de Barganha da perícia Diplomacia?...
+  reformulação: Quais as regras de uso da perícia Barganha para negociações em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: n/a | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[46_pericia_intimidacao] O que acontece quando se usa Intimidação para Assustar?...
+  reformulação: Quais as regras e efeitos do uso da perícia Intimidação para causar Assustar em combate em Torm
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[47_condicao_enfeitico] O que a condição Enfeitiçado faz com o personagem?...
+  reformulação: Quais as regras da condição Enfeitiçado em Tormenta 20, especialmente seus efeitos sobre ações,
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[48_condicao_petrificado] O que a condição Petrificado causa?...
+  reformulação: Quais as regras da condição Petrificado em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[49_condicao_exausto] O que a condição Exausto faz e o que acontece se ela se repetir?...
+  reformulação: Quais as regras da condição Exausto e seus efeitos ao acumular múltiplas instâncias em Tormenta
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 7/10 aprovado
+
+[50_condicao_sangrando] Como funciona a condição Sangrando?...
+  reformulação: Quais as regras da condição Sangrando em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 6/10 aprovado
+
+[51_pericia_cavalgar] O que a perícia Cavalgar exige e qual a penalidade sem sela?...
+  reformulação: Quais as regras da perícia Cavalgar e qual a penalidade de teste sem sela em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[52_pericia_jogatina] Como funciona apostar na perícia Jogatina?...
+  reformulação: Quais as regras para apostar na perícia Jogatina em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 8/10 aprovado
+
+[53_parceiro_grifo] O que o parceiro Grifo concede nos níveis iniciante, veterano e mestre...
+  reformulação: Quais os benefícios do parceria Grifo nos níveis iniciante, veterano e mestre ememberto?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 50% | groundedness: 0% | citações fora: 1
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 6/10 aprovado
+
+[54_tamanho_colossal] Qual o espaço que uma criatura Colossal ocupa?...
+  reformulação: Quais as regras de ocupação de espaço para uma criatura Colossal em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 3/10 reprovado
+
+[55_comida_gorad] Quanto custa o Gorad Quente e o que ele concede?...
+  reformulação: Quais as regras e efeitos do Gorad Quente em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[56_comida_macarrao] O que o Macarrão de Yuvalin concede e quanto custa?...
+  reformulação: Quais as regras e o custo em PM do Macarrão de Yuvalin em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[57_comida_batata] O que a Batata Valkariana concede a quem come?...
+  reformulação: Quais os efeitos e benefícios concedidos ao consumir uma batata valkariana em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[58_item_bomba_fumaca] Para que serve a Bomba de Fumaça?...
+  reformulação: Quais as regras de uso e efeitos da bomba de fumaça em Tormenta 20?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 33% | citações fora: 2
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[59_poder_codigo_honra] O que é o Código de Honra do Cavaleiro e qual a penalidade de quebrá-l...
+  reformulação: Quais as regras do Código de Honra do Cavaleiro e qual a penalidade por quebrá-lo em Tormenta 2
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 7/10 aprovado
+
+[60_pericia_cura] O que a perícia Cura exige e o que faz Cuidados Prolongados?...
+  reformulação: Quais as regras e efeitos da perícia Cura e o que faz o uso de Cuidados Prolongados em Tormenta
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+
+[61_pericia_misticismo_aura] O que a perícia Misticismo revela ao detectar magias e o que significa...
+  reformulação: O que a perícia Misticismo revela ao detectar magias e o que significa a intensidade da aura?
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  cobertura entidades: 100% | groundedness: 100% | citações fora: 0
+INFO:httpx2:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+  juiz: 9/10 aprovado
+INFO:httpx:HTTP Request: GET http://localhost:6335/collections/tormenta20 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6335 "HTTP/1.1 200 OK"
+
+Resultado salvo em avaliacao_fr_l12_qorig.json
+
+==============================================================================
+RESUMO — fr_l12_qorig — 2026-10-06T12:46:27
+==============================================================================
+id                      cob.Ent   ground  score max  cit fora
+------------------------------------------------------------------------------
+01_condicao_caido         100%    100%     0.9918         0
+02_condicao_agarrado      100%      0%     0.9518         1
+03_pericia_furtividade    100%    100%     0.9875         0
+04_custo_circulo          100%    100%     0.9986         0
+05_curar_ferimentos       100%    100%     0.9960         0
+06_cavaleiro_proficiencias    100%    100%     0.9672         0
+07_espada_longa           100%    100%     0.9986         0
+08_basilisco              100%     50%     0.9561         1
+09_hyninn                 100% n/a     0.9893         0
+10_ladrao_de_tumulos      100%    100%     0.9814         0
+11_ataque_vs_defesa       100% n/a     0.9986         0
+12_dificuldade_teste      100%    100%     0.9496         0
+13_tamanho_criaturas      100% n/a     0.9977         0
+14_poder_psicopompo       100% n/a     0.9949         0
+15_xerife_azgher          100%    100%     0.9839         0
+16_anao_habilidades       100% n/a     0.9540         0
+17_cavalo_deslocamento    100%     67%     0.9739         1
+18_bomba_alquimica        100%      0%     0.9911         1
+19_magia_bola_de_fogo     100%    100%     0.9914         0
+20_magia_voo              100%    100%     0.9917         0
+21_magia_silencio         100%    100%     0.9829         0
+22_magia_dissipar         100%    100%     0.9865         0
+23_magia_conjurar_monstro    100%    100%     0.9919         0
+24_ameaca_goblin          100%    100%     0.9871         0
+25_ameaca_zumbi           100%    100%     0.9898         0
+26_ameaca_lobo            100%    100%     0.9575         0
+27_ameaca_hobgoblin       100%    100%     0.9714         0
+28_deusa_lena              50% n/a     0.9878         0
+29_deus_megalokk          100%    100%     0.9831         0
+30_deus_azgher             50% n/a     0.9811         0
+31_deus_thyatis           100%    100%     0.9876         0
+32_raca_hynne              50%    100%     0.9153         0
+33_raca_lefou             100%    100%     0.9945         0
+34_origem_heroi_campones    100%    100%     0.7899         0
+35_origem_aristocrata      50%      0%     0.8048         1
+36_poder_ataque_poderoso    100%    100%     0.9977         0
+37_poder_esquiva          100%      0%     0.8450         1
+38_poder_vitalidade       100%    100%     0.9843         0
+39_arma_machado           100%    100%     0.9946         0
+40_arma_besta_pesada      100%    100%     0.9918         0
+41_armadura_cota          100%    100%     0.9947         0
+42_cd_escapar             100% n/a     0.9916         0
+43_dinheiro_inicial_n5    100% n/a     0.9594         0
+44_pericia_ladinagem      100%    100%     0.9964         0
+45_pericia_diplomacia     100% n/a     0.9910         0
+46_pericia_intimidacao    100%    100%     0.9890         0
+47_condicao_enfeitico     100%    100%     0.9982         0
+48_condicao_petrificado    100%    100%     0.9855         0
+49_condicao_exausto       100%      0%     0.9529         1
+50_condicao_sangrando     100%    100%     0.9976         0
+51_pericia_cavalgar       100%    100%     0.9950         0
+52_pericia_jogatina       100%    100%     0.9895         0
+53_parceiro_grifo          50%      0%     0.9936         1
+54_tamanho_colossal       100%    100%     0.9972         0
+55_comida_gorad           100%    100%     0.9081         0
+56_comida_macarrao        100%    100%     0.9170         0
+57_comida_batata          100%    100%     0.6050         0
+58_item_bomba_fumaca      100%     33%     0.9378         2
+59_poder_codigo_honra     100%    100%     0.9875         0
+60_pericia_cura           100%    100%     0.9865         0
+61_pericia_misticismo_aura    100%    100%     0.9923         0
+------------------------------------------------------------------------------
+MÉDIA                      96%     85%     0.9986
+JUIZ: 7.39/10 de média | 84% aprovado | 61 vereditos
+RERANK (modo por query): flashrank 61
+==============================================================================

@@ -1,0 +1,27 @@
+Extraindo registros de /home/gabrielsousamijoler/Documentos/aTormenta/data ...
+  extracao: 74 arquivos, 110 exports, 4997 registros, 0 avisos
+  registros: 4997 em 105 tabelas | vazios: 0 | divididos: 493
+  maiores tabelas: Ameaças (708) · Magias (264) · Poderes Concedidos (230) · Armas (157) · Acessórios (146) · Alimentos (109)
+  fontes: Tormenta20 - Jogo do Ano (1186) · Herois de Arton (1060) · Compendio T20 (737) · Ameaças de Arton (646) · Deuses de Arton (393) · Dragão Brasil - 199 (78)
+  blocos: 5953 -> 5674 após fusão de pequenos (279 anexados ao vizinho)
+  com prefixo de procedencia: 5674/5674
+🔗 Qdrant servidor: http://localhost:6335
+   Dashboard: http://localhost:6335/dashboard
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9557.61it/s]
+⚡ Coleção 'tormenta20' já existe com 5674 pontos — carregando...
+   Para reindexar do zero: REINDEXAR=1 ./.venv/bin/python index.py
+carregando modelos...
+INFO:flashrank.Ranker:Downloading ms-marco-TinyBERT-L-2-v2...
+ms-marco-TinyBERT-L-2-v2.zip:   0%|          | 0.00/3.26M [00:00<?, ?iB/s]ms-marco-TinyBERT-L-2-v2.zip:   1%|          | 24.0k/3.26M [00:00<00:23, 142kiB/s]ms-marco-TinyBERT-L-2-v2.zip:   2%|▏         | 64.0k/3.26M [00:00<00:14, 232kiB/s]ms-marco-TinyBERT-L-2-v2.zip:   4%|▎         | 120k/3.26M [00:00<00:09, 344kiB/s] ms-marco-TinyBERT-L-2-v2.zip:   7%|▋         | 232k/3.26M [00:00<00:05, 588kiB/s]ms-marco-TinyBERT-L-2-v2.zip:  12%|█▏        | 408k/3.26M [00:00<00:03, 953kiB/s]ms-marco-TinyBERT-L-2-v2.zip:  21%|██▏       | 712k/3.26M [00:00<00:01, 1.61MiB/s]ms-marco-TinyBERT-L-2-v2.zip:  37%|███▋      | 1.20M/3.26M [00:00<00:00, 2.69MiB/s]ms-marco-TinyBERT-L-2-v2.zip:  63%|██████▎   | 2.05M/3.26M [00:00<00:00, 4.57MiB/s]ms-marco-TinyBERT-L-2-v2.zip: 100%|██████████| 3.26M/3.26M [00:01<00:00, 3.35MiB/s]
+INFO:flashrank.Ranker:Downloading rank-T5-flan...
+rank-T5-flan.zip:   0%|          | 0.00/73.7M [00:00<?, ?iB/s]rank-T5-flan.zip:   0%|          | 24.0k/73.7M [00:00<11:19, 114kiB/s]rank-T5-flan.zip:   0%|          | 56.0k/73.7M [00:00<06:59, 184kiB/s]rank-T5-flan.zip:   0%|          | 120k/73.7M [00:00<03:57, 324kiB/s] rank-T5-flan.zip:   0%|          | 232k/73.7M [00:00<02:17, 561kiB/s]rank-T5-flan.zip:   1%|          | 408k/73.7M [00:00<01:23, 918kiB/s]rank-T5-flan.zip:   1%|          | 712k/73.7M [00:00<00:49, 1.56MiB/s]rank-T5-flan.zip:   2%|▏         | 1.20M/73.7M [00:00<00:28, 2.64MiB/s]rank-T5-flan.zip:   3%|▎         | 2.04M/73.7M [00:00<00:16, 4.48MiB/s]rank-T5-flan.zip:   5%|▍         | 3.37M/73.7M [00:01<00:10, 7.29MiB/s]rank-T5-flan.zip:   8%|▊         | 5.85M/73.7M [00:01<00:05, 12.9MiB/s]rank-T5-flan.zip:  13%|█▎        | 9.62M/73.7M [00:01<00:03, 20.8MiB/s]rank-T5-flan.zip:  22%|██▏       | 16.0M/73.7M [00:01<00:01, 34.6MiB/s]rank-T5-flan.zip:  36%|███▌      | 26.3M/73.7M [00:01<00:00, 56.5MiB/s]rank-T5-flan.zip:  43%|████▎     | 31.7M/73.7M [00:01<00:00, 44.2MiB/s]rank-T5-flan.zip:  73%|███████▎  | 54.0M/73.7M [00:01<00:00, 84.7MiB/s]rank-T5-flan.zip:  85%|████████▍ | 62.3M/73.7M [00:02<00:00, 63.2MiB/s]rank-T5-flan.zip: 100%|██████████| 73.7M/73.7M [00:02<00:00, 36.0MiB/s]
+INFO:flashrank.Ranker:Downloading ce-esci-MiniLM-L12-v2...
+ce-esci-MiniLM-L12-v2.zip:   0%|          | 0.00/21.8M [00:00<?, ?iB/s]ce-esci-MiniLM-L12-v2.zip:   0%|          | 24.0k/21.8M [00:00<02:41, 142kiB/s]ce-esci-MiniLM-L12-v2.zip:   0%|          | 56.0k/21.8M [00:00<01:43, 219kiB/s]ce-esci-MiniLM-L12-v2.zip:   0%|          | 104k/21.8M [00:00<01:10, 323kiB/s] ce-esci-MiniLM-L12-v2.zip:   1%|          | 200k/21.8M [00:00<00:42, 530kiB/s]ce-esci-MiniLM-L12-v2.zip:   2%|▏         | 344k/21.8M [00:00<00:27, 824kiB/s]ce-esci-MiniLM-L12-v2.zip:   3%|▎         | 600k/21.8M [00:00<00:16, 1.38MiB/s]ce-esci-MiniLM-L12-v2.zip:   5%|▍         | 1.01M/21.8M [00:00<00:09, 2.30MiB/s]ce-esci-MiniLM-L12-v2.zip:   8%|▊         | 1.74M/21.8M [00:00<00:05, 3.93MiB/s]ce-esci-MiniLM-L12-v2.zip:  13%|█▎        | 2.91M/21.8M [00:01<00:03, 6.45MiB/s]ce-esci-MiniLM-L12-v2.zip:  23%|██▎       | 4.95M/21.8M [00:01<00:01, 10.9MiB/s]ce-esci-MiniLM-L12-v2.zip:  38%|███▊      | 8.38M/21.8M [00:01<00:00, 18.4MiB/s]ce-esci-MiniLM-L12-v2.zip:  65%|██████▍   | 14.1M/21.8M [00:01<00:00, 30.9MiB/s]ce-esci-MiniLM-L12-v2.zip: 100%|██████████| 21.8M/21.8M [00:01<00:00, 16.4MiB/s]
+pronto
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6335/collections/tormenta20/points/query "HTTP/1.1 200 OK"
+/usr/lib64/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-279612-7z15x3n4'}
+  warnings.warn(

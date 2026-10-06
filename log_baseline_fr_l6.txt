@@ -1,0 +1,54 @@
+/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/avaliar.py:34: DeprecationWarning: `langchain-community` is being sunset and is no longer actively maintained. See https://github.com/langchain-ai/langchain-community/issues/674 for details and migration guidance toward standalone integration packages.
+  from langchain_community.callbacks.manager import get_openai_callback
+Extraindo registros de /home/gabrielsousamijoler/Documentos/aTormenta/data ...
+  extracao: 74 arquivos, 110 exports, 4997 registros, 0 avisos
+  registros: 4997 em 105 tabelas | vazios: 0 | divididos: 493
+  maiores tabelas: Ameaças (708) · Magias (264) · Poderes Concedidos (230) · Armas (157) · Acessórios (146) · Alimentos (109)
+  fontes: Tormenta20 - Jogo do Ano (1186) · Herois de Arton (1060) · Compendio T20 (737) · Ameaças de Arton (646) · Deuses de Arton (393) · Dragão Brasil - 199 (78)
+  blocos: 5953 -> 5674 após fusão de pequenos (279 anexados ao vizinho)
+  com prefixo de procedencia: 5674/5674
+🔗 Qdrant servidor: http://localhost:6335
+   Dashboard: http://localhost:6335/dashboard
+Configurando embeddings multilingues locais...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  52%|█████▏    | 104/199 [00:00<00:00, 1031.33it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 986.97it/s] 
+⚡ Coleção 'tormenta20' já existe com 5674 pontos — carregando...
+   Para reindexar do zero: REINDEXAR=1 ./.venv/bin/python index.py
+Criando índice de termos exatos (BM25)...
+INFO:flashrank.Ranker:Downloading ms-marco-MiniLM-L-6-v2...
+Traceback (most recent call last):
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/avaliar.py", line 629, in <module>
+    main()
+    ~~~~^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/avaliar.py", line 618, in main
+    resultado = avaliar(llm, so_recuperacao=args.so_recuperacao, saida=saida,
+                        continuar=args.continuar, estrategia=args.estrategia,
+                        limiar=args.limiar, juiz=args.juiz)
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/avaliar.py", line 405, in avaliar
+    retriever = rag_core.montar_retriever(
+        chunks,
+        estrategia="hyde" if estrategia == "hyde" else "hibrida",
+        llm=llm,
+    )
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/rag_core.py", line 1667, in montar_retriever
+    reranker = criar_reranker()
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/rag_core.py", line 1595, in criar_reranker
+    primario=FlashrankRerank(top_n=top_n, model=MODELO_FLASHRANK),
+             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/pydantic/main.py", line 263, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/langchain_community/document_compressors/flashrank_rerank.py", line 57, in validate_environment
+    values["client"] = Ranker(model_name=values["model"])
+                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/flashrank/Ranker.py", line 53, in __init__
+    self._prepare_model_dir(model_name)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/flashrank/Ranker.py", line 83, in _prepare_model_dir
+    self._download_model_files(model_name)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/flashrank/Ranker.py", line 95, in _download_model_files
+    r.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/home/gabrielsousamijoler/Documentos/RAG-Tormenta20/.venv/lib64/python3.14/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/prithivida/flashrank/resolve/main/ms-marco-MiniLM-L-6-v2.zip
