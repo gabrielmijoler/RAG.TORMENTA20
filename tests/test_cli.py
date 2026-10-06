@@ -31,7 +31,7 @@ def test_buscar_repassa_limiar_para_recuperar(monkeypatch):
     capturado = {}
 
     def fake_recuperar(retriever, consulta, consulta_real=None, filtros=None,
-                       limiar=None):
+                       limiar=None, decompor=False):
         capturado["consulta"] = consulta
         capturado["limiar"] = limiar
         return []
@@ -45,10 +45,29 @@ def test_buscar_sem_limiar_passa_none(monkeypatch):
     capturado = {}
 
     def fake_recuperar(retriever, consulta, consulta_real=None, filtros=None,
-                       limiar=None):
+                       limiar=None, decompor=False):
         capturado["limiar"] = limiar
         return []
 
     monkeypatch.setattr(avaliar.rag_core, "recuperar", fake_recuperar)
     buscar(None, "q")
     assert capturado["limiar"] is None
+
+
+def test_parser_aceita_estrategia_decompor():
+    args = criar_parser().parse_args(
+        ["--etapa", "decompor", "--estrategia", "decompor"]
+    )
+    assert args.estrategia == "decompor"
+
+
+def test_avaliar_buscar_nao_decompoe_sem_flag(monkeypatch):
+    import rag_core
+    from tests.test_decompor import _BuscaFalsa, _RerankFalso
+
+    def _explode(q, llm=None):
+        raise AssertionError("avaliar baseline não pode decompôr")
+
+    monkeypatch.setattr(rag_core, "decompor_consultas", _explode)
+    monkeypatch.setenv("ESTRATEGIA", "decompor")
+    buscar(_RerankFalso(_BuscaFalsa()), "consulta reformulada", "consulta real")

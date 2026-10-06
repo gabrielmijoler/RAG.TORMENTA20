@@ -167,7 +167,8 @@ def traduzir_para_t20(consulta: str) -> str:
 def buscar(pergunta_t20: str, pergunta_real: str | None = None):
     """Candidatos (reformulada + real), rerank com a query real, 1 chunk/reg."""
     docs = rag_core.recuperar(
-        retriever_comprimido, pergunta_t20, pergunta_real, filtros=filtros_ativos
+        retriever_comprimido, pergunta_t20, pergunta_real, filtros=filtros_ativos,
+        decompor=rag_core.modo_estrategia() == "decompor",
     )
     if filtros_ativos:
         ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())

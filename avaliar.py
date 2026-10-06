@@ -361,12 +361,12 @@ def responder(llm, rag_chain, pergunta: str) -> str:
 
 
 def buscar(retriever, consulta: str, consulta_real: str | None = None,
-           limiar: float | None = None):
+           limiar: float | None = None, decompor: bool = False):
     """Top-8: candidatos das duas formulações, rerank com a query original."""
     for i in range(4):
         try:
             return rag_core.recuperar(retriever, consulta, consulta_real,
-                                      limiar=limiar)
+                                      limiar=limiar, decompor=decompor)
         except Exception as e:
             if e_transitorio(e) and i < 3:
                 print(f"  429 no rerank, aguardando {ESPERA_429}s...")
@@ -432,7 +432,8 @@ def avaliar(
         reformulada = reformular(llm, caso["consulta"], cache)
         print(f"  reformulação: {reformulada[:95]}")
 
-        top = buscar(retriever, reformulada, caso["consulta"], limiar=limiar)
+        top = buscar(retriever, reformulada, caso["consulta"], limiar=limiar,
+                     decompor=estrategia == "decompor")
 
         # --- 1. cobertura de entidades ---
         esperadas = {normalizar(e) for e in caso["entidades"]}
@@ -499,6 +500,9 @@ def avaliar(
 
         if estrategia == "hyde":
             registro["hyde_doc"] = _hyde_doc_do(retriever, reformulada)
+
+        if estrategia == "decompor":
+            registro["variantes"] = rag_core.decompor_consultas(caso["consulta"])
 
         if juiz:
             registro["juiz"] = juizar(
@@ -604,9 +608,10 @@ def criar_parser() -> argparse.ArgumentParser:
                     help="não chama o LLM final (só métricas de recuperação)")
     ap.add_argument("--continuar", action="store_true",
                     help="retoma o arquivo de saída em vez de começar do zero")
-    ap.add_argument("--estrategia", choices=("baseline", "hyde"),
+    ap.add_argument("--estrategia", choices=("baseline", "hyde", "decompor"),
                     default="baseline",
-                    help="estratégia de recuperação (Passo 2): baseline ou hyde")
+                    help="estratégia de recuperação: baseline, hyde ou "
+                         "decompor (3 variações da query por LLM, opt-in)")
     ap.add_argument("--limiar", type=float, default=None,
                     help="corta candidatos com score de rerank abaixo deste "
                          "valor (ex.: 0.70); sem flag = sem corte")
