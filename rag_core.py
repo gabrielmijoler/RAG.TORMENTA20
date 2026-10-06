@@ -1859,6 +1859,7 @@ def recuperar(
     consulta_real: str | None = None,
     filtros: dict | None = None,
     limiar: float | None = None,
+    decompor: bool = False,
 ) -> list[Document]:
     """Recall com as DUAS formulações; rerank só com a query ORIGINAL; top-8.
 
@@ -1892,6 +1893,10 @@ def recuperar(
     o mesmo vale no modo RERANK=desligado. `compressor.ultimo_modo` registra
     o que aconteceu ("flashrank", "cohere_escalado", "cohere", "desligado",
     "ensemble_fallback") para o avaliar gravar como `reranker_usado`.
+    `decompor=True` (opt-in, `ESTRATEGIA=decompor`) gera 3 variações da query
+    original via `decompor_consultas()` e as une aos candidatos ANTES do
+    rerank; o rerank continua só com a query original (bloco acima) e uma
+    falha da decomposição vira busca normal (nunca piora).
     """
     docs = retriever.base_retriever.invoke(consulta)
     consulta_rerank = consulta
@@ -1902,6 +1907,14 @@ def recuperar(
                 vistos.add(extra.page_content)
                 docs.append(extra)
         consulta_rerank = consulta_real
+
+    if decompor and consulta_rerank.strip():
+        vistos = {d.page_content for d in docs}
+        for variante in decompor_consultas(consulta_rerank):
+            for extra in retriever.base_retriever.invoke(variante):
+                if extra.page_content not in vistos:
+                    vistos.add(extra.page_content)
+                    docs.append(extra)
 
     filtrados = aplicar_filtros(docs, filtros)
     if filtrados:

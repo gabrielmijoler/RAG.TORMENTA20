@@ -45,3 +45,70 @@ def test_decompor_cacheia_por_query():
     rag_core.decompor_consultas(q, llm=llm)
     rag_core.decompor_consultas(q, llm=llm)
     assert llm.chamadas == 1
+
+
+def _doc(chave, corpo):
+    from langchain_core.documents import Document
+    return Document(page_content=corpo, metadata={"chave": chave})
+
+
+class _BuscaFalsa:
+    def __init__(self):
+        self.consultas = []
+
+    def invoke(self, query):
+        self.consultas.append(query)
+        if query == "consulta real":
+            return [_doc("real", "corpo real")]
+        if query == "variante inutil":
+            return [_doc("extra", "corpo da variante")]
+        return []
+
+
+class _CompressorFalso:
+    """Espelha o CascataReranker: top_n setável + compress_documents(docs, query)."""
+
+    def __init__(self):
+        self.top_n = 8
+        self.ultimo_modo = None
+        self.queries_rerank = []
+
+    def compress_documents(self, docs, query, callbacks=None):
+        self.queries_rerank.append(query)
+        return list(docs)
+
+
+class _RerankFalso:
+    def __init__(self, base):
+        self.base_retriever = base
+        self.base_compressor = _CompressorFalso()
+
+
+def test_recuperar_com_decompor_reune_variantes(monkeypatch):
+    base = _BuscaFalsa()
+    monkeypatch.setattr(
+        rag_core, "decompor_consultas", lambda q, llm=None: ["variante inutil"]
+    )
+    rerank = _RerankFalso(base)
+    docs = rag_core.recuperar(
+        rerank, "consulta reformulada", "consulta real", decompor=True
+    )
+    assert {d.page_content for d in docs} == {"corpo real", "corpo da variante"}
+    assert base.consultas == [
+        "consulta reformulada", "consulta real", "variante inutil",
+    ]
+    assert rerank.base_compressor.queries_rerank == ["consulta real"]
+
+
+def test_recuperar_por_padrao_nao_decompoe(monkeypatch):
+    def _explode(q, llm=None):
+        raise AssertionError("decompor não pode rodar por padrão")
+
+    monkeypatch.setattr(rag_core, "decompor_consultas", _explode)
+    monkeypatch.setenv("ESTRATEGIA", "decompor")  # env ligada não muda o default
+    base = _BuscaFalsa()
+    rerank = _RerankFalso(base)
+    docs = rag_core.recuperar(rerank, "consulta reformulada", "consulta real")
+    assert base.consultas == ["consulta reformulada", "consulta real"]
+    assert rerank.base_compressor.queries_rerank == ["consulta real"]
+    assert {d.page_content for d in docs} == {"corpo real"}
