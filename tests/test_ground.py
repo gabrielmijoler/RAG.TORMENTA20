@@ -33,8 +33,14 @@ def test_groundedness_parcial():
     assert groundedness(resposta, contexto) == 0.5
 
 
-def test_groundedness_sem_citacoes_na_resposta_e_n_a():
-    assert groundedness("resposta sem citação", "contexto com [magias > x]") is None
+def test_groundedness_sem_citacoes_na_resposta_zera():
+    # Contrato novo (matar n/a): sem citação = 0.0 (não fundamentada);
+    # None ficou reservado para resposta VAZIA (falha de geração).
+    assert groundedness("resposta sem citação", "contexto com [magias > x]") == 0.0
+
+
+def test_groundedness_resposta_vazia_continua_n_a():
+    assert groundedness("", "contexto com [magias > x]") is None
 
 
 def test_linha_ground_percentual():
@@ -52,10 +58,15 @@ def test_linha_ground_parcial():
     assert linha_ground(resposta, docs) == "ground: 50% (1/2 citações no contexto)"
 
 
-def test_linha_ground_n_a_sem_citacoes():
+def test_linha_ground_sem_citacoes_zera():
     docs = [Document(page_content="trecho [Magias > Tormenta20 - Jogo do Ano]")]
     assert linha_ground("resposta sem fonte", docs) == \
-        "ground: n/a (resposta sem citações)"
+        "ground: 0% (resposta sem citações)"
+
+
+def test_linha_ground_resposta_vazia_continua_n_a():
+    docs = [Document(page_content="trecho [Magias > Tormenta20 - Jogo do Ano]")]
+    assert linha_ground("", docs) == "ground: n/a (sem resposta)"
 
 
 def test_linha_ground_com_docs_vazios_e_citacao():

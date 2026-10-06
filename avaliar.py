@@ -43,6 +43,7 @@ from qdrant_client import QdrantClient
 
 import rag_core
 from rag_core import (
+    AVISO_CITACAO,
     MODELOS_GRATUITOS,
     PROMPT_TRADUCAO,
     SYSTEM_PROMPT,
@@ -52,6 +53,7 @@ from rag_core import (
     e_transitorio,
     groundedness,
     normalizar,
+    resposta_sem_citacoes,
     trocar_modelo,
 )
 
@@ -341,13 +343,26 @@ def reformular(llm, consulta: str, cache: dict) -> str:
     return consulta
 
 
-def responder(llm, rag_chain, pergunta: str) -> str:
+def responder(llm, rag_chain, sintese, pergunta: str) -> str:
+    """Guard da Regra 2: se vier sem citação, 2ª passada SÓ na síntese.
+
+    A re-invocação usa o MESMO `contexto` recuperado pela 1ª passada (nunca
+    refaz a busca com a entrada carimbada — query poluída derrubaria o recall
+    e mascararia o groundedness, que compara com o `top` de buscar()).
+    """
     for modelo in MODELOS_GRATUITOS:
         trocar_modelo(llm, modelo)
         for _ in range(2):
             try:
                 with get_openai_callback():
-                    return rag_chain.invoke({"input": pergunta})["answer"]
+                    resultado = rag_chain.invoke({"input": pergunta})
+                    resposta = resultado["answer"]
+                    if resposta_sem_citacoes(resposta):
+                        resposta = sintese.invoke({
+                            "input": pergunta + AVISO_CITACAO,
+                            "context": resultado["context"],
+                        })
+                return resposta
             except Exception as e:
                 if e_cota_esgotada(e):
                     break
@@ -415,8 +430,12 @@ def avaliar(
     )
 
     rag_chain = None
+    sintese = None
     if not so_recuperacao:
         rag_chain = rag_core.montar_rag_chain(retriever, SYSTEM_PROMPT, llm)
+        # cadeia de síntese avulsa: o guard da Regra 2 re-invoca SÓ ela
+        # (mesmo contexto) quando a resposta vem sem citação.
+        sintese = rag_core.montar_cadeia_resposta(SYSTEM_PROMPT, llm)
 
     cache = carregar_cache()
     cache_juiz = carregar_cache_juiz() if juiz else {}
@@ -482,7 +501,7 @@ def avaliar(
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
         if not so_recuperacao:
-            resposta = responder(llm, rag_chain, reformulada)
+            resposta = responder(llm, rag_chain, sintese, reformulada)
             c_resp = citacoes_em(resposta)
             c_ctx = citacoes_em(contexto)
             grounding = groundedness(resposta, contexto)

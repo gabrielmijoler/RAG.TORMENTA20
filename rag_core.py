@@ -1515,21 +1515,78 @@ def citacoes_em(texto: str) -> set[str]:
     return {normalizar(c) for c in PADRAO_CITACAO.findall(texto)}
 
 
+# Carimbo do guard da Regra 2: anexado à entrada quando a 1ª geração saiu
+# sem nenhuma citação — cobre resposta afirmativa E recusa (que deve citar
+# as fontes consultadas, não ficar "n/a").
+AVISO_CITACAO = (
+    "\n\n[INSTRUÇÃO OBRIGATÓRIA: responda citando cada informação no formato "
+    "exato [Caminho > Fonte], copiado literalmente do contexto. É proibido "
+    "afirmar sem citação; se o contexto não cobrir a regra, recuse citando "
+    "as fontes consultadas (ex.: [Condições > Tormenta20 - Jogo do Ano]).]"
+)
+
+
+def resposta_sem_citacoes(resposta: str) -> bool:
+    """Resposta não vazia sem NENHUMA citação [...] — gatilho do guard.
+
+    Vazio não conta: é falha de geração, tratada pelos chamadores.
+    """
+    texto = (resposta or "").strip()
+    return bool(texto) and not citacoes_em(texto)
+
+
+def exigir_citacoes(gerar, entrada: str) -> str:
+    """Guard da Regra 2: no máximo 2 chamadas de `gerar` — nunca loop.
+
+    Se a 1ª geração vier sem citação nenhuma, re-invoca com AVISO_CITACAO
+    anexado à entrada. A 2ª tentativa é devolvida mesmo sem citação (a
+    métrica zera em vez de ficar n/a).
+    """
+    resposta = gerar(entrada)
+    if not resposta_sem_citacoes(resposta):
+        return resposta
+    return gerar(entrada + AVISO_CITACAO)
+
+
+def _fundamentada(citacao: str, c_ctx: set[str]) -> bool:
+    """Citação amarra ao contexto por igualdade ou contenção bidirecional.
+
+    Cobre as duas falhas reais da avaliação sem mascarar alucinação:
+    prefixo de entidade colado pelo modelo ('agarrado > condicoes > …') e
+    fonte truncada ('alquimicos > tormenta20'). Fonte que não se relaciona
+    com nenhuma do contexto continua não fundamentada (0%).
+    """
+    if citacao in c_ctx:
+        return True
+    return any(citacao in c or c in citacao for c in c_ctx)
+
+
 def groundedness(resposta: str, contexto: str) -> float | None:
-    """Fração das citações da resposta amarradas ao contexto (None: não cita)."""
+    """Fração das citações da resposta amarradas ao contexto.
+
+    None: resposta VAZIA (falha de geração — n/a legítimo). Resposta não
+    vazia sem citação nenhuma devolve 0.0: não fundamentada, não n/a.
+    """
+    if not (resposta or "").strip():
+        return None
     c_resp = citacoes_em(resposta)
     if not c_resp:
-        return None
-    return len(c_resp & citacoes_em(contexto)) / len(c_resp)
+        return 0.0
+    c_ctx = citacoes_em(contexto)
+    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx))
+    return ok / len(c_resp)
 
 
 def linha_ground(resposta: str, docs: list) -> str:
     """Rodapé do chat: 'ground: 89% (8/9 citações no contexto)'."""
+    if not (resposta or "").strip():
+        return "ground: n/a (sem resposta)"
     c_resp = citacoes_em(resposta)
     if not c_resp:
-        return "ground: n/a (resposta sem citações)"
+        return "ground: 0% (resposta sem citações)"
     contexto = "\n".join(d.page_content for d in docs)
-    ok = len(c_resp & citacoes_em(contexto))
+    c_ctx = citacoes_em(contexto)
+    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx))
     return (f"ground: {ok / len(c_resp):.0%} "
             f"({ok}/{len(c_resp)} citações no contexto)")
 

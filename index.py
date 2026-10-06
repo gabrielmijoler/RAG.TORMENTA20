@@ -26,6 +26,7 @@ from rag_core import (
     e_recusa,
     e_transitorio,
     eh_saudacao_pura,
+    exigir_citacoes,
     linha_ground,
     precisa_de_historico,
     reformulacao_valida,
@@ -186,11 +187,15 @@ def gerar_resposta(entrada: str, docs):
     `entrada` (o que o usuário digitou) vai para {input} — é ela que carrega
     pedidos de formato ("liste em 3 colunas"); `docs` veio da etapa 3, buscada
     com a pergunta reformulada. Nunca mais de uma busca por pergunta.
+
+    Guard da Regra 2 (exigir_citacoes): se a resposta sair sem nenhuma
+    citação [...], re-invoca UMA vez com AVISO_CITACAO carimbado — recusa
+    sem fonte também aciona. Máx. 2 chamadas por tentativa de modelo.
     """
-    def rodar():
+    def gerar(texto: str) -> str:
         with get_openai_callback() as cb:
             saida = cadeia.invoke({
-                "input": entrada,
+                "input": texto,
                 "context": docs,
                 "chat_history": historico_recente(),
             })
@@ -198,6 +203,10 @@ def gerar_resposta(entrada: str, docs):
             f"    tokens: {cb.total_tokens} "
             f"(prompt {cb.prompt_tokens} / resposta {cb.completion_tokens})"
         )
+        return saida
+
+    def rodar():
+        saida = exigir_citacoes(gerar, entrada)
         if _e_degenerado(saida):
             # loop de lista (ex.: 49x 'T$ X [Alquímicos > …]') — nunca
             # imprimir nem anexar ao histórico; o com_fallback tenta de novo.
