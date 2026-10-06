@@ -2076,17 +2076,18 @@ LIMITE_VARIANTES = 3
 
 
 def _variantes_utilizaveis(bruto: str, consulta: str) -> list[str]:
-    """3 linhas úteis no máximo: limpa marcadores, descarta eco e lixo curto."""
+    """Até 3 queries úteis: limpa marcadores, quebra sub-questões (`;`), descarta eco."""
     saida: list[str] = []
     vistos = {consulta.strip().lower()}
     for linha in bruto.splitlines():
-        limpa = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", linha).strip().strip('"“”')
-        if len(limpa) < 8 or limpa.lower() in vistos:
-            continue
-        vistos.add(limpa.lower())
-        saida.append(limpa)
-        if len(saida) >= LIMITE_VARIANTES:
-            break
+        for pedaco in linha.split(";"):
+            limpa = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", pedaco).strip().strip('"“”')
+            if len(limpa) < 8 or limpa.lower() in vistos:
+                continue
+            vistos.add(limpa.lower())
+            saida.append(limpa)
+            if len(saida) >= LIMITE_VARIANTES:
+                return saida
     return saida
 
 

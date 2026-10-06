@@ -29,7 +29,7 @@ def test_decompor_limpa_marcadores_e_limita_a_3():
     assert var == [
         "qual a penalidade de armadura",
         "armadura pesada",
-        "penalidade de armadura; vestir armadura pesada",
+        "penalidade de armadura",  # a 4ª linha partiu em 2 e o teto de 3 pegou a 1ª
     ]
 
 
@@ -112,3 +112,9 @@ def test_recuperar_por_padrao_nao_decompoe(monkeypatch):
     assert base.consultas == ["consulta reformulada", "consulta real"]
     assert rerank.base_compressor.queries_rerank == ["consulta real"]
     assert {d.page_content for d in docs} == {"corpo real"}
+
+
+def test_decompor_quebra_sub_questoes_por_ponto_e_virgula():
+    llm = FakeChat(respostas=["custo da magia; requisitos; quem ensina"])
+    var = rag_core.decompor_consultas("quem ensina magia de 3 circulo", llm=llm)
+    assert var == ["custo da magia", "requisitos", "quem ensina"]
