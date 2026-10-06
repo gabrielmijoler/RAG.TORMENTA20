@@ -443,6 +443,21 @@ PROMPT_HYDE = ChatPromptTemplate.from_messages([
     ("human", "{consulta}"),
 ])
 
+# Decomposição de query (opt-in, ESTRATEGIA=decompor): 1 chamada LLM gera 3
+# variações da pergunta original para ampliar o recall; o rerank continua
+# rodando só com a query original (ver recuperar()).
+PROMPT_DECOMPOR = ChatPromptTemplate.from_messages([
+    ("system",
+     ("Você gera consultas de busca para uma base técnica de Tormenta 20. "
+      "Responda APENAS com 3 linhas de texto puro, sem markdown, sem numeração "
+      "e sem aspas, cada uma uma forma diferente de perguntar o mesmo assunto: "
+      "1) outra redação da pergunta; 2) termos técnicos alternativos "
+      "(sinônimos do sistema, ex.: PV/pontos de vida, CD/dificuldade); "
+      "3) a pergunta quebrada em sub-questões separadas por ponto e vírgula. "
+      "Não responda a pergunta.")),
+    ("human", "{pergunta}"),
+])
+
 
 # ---------------------------------------------------------------------------
 # Memoria de longo prazo: resumo de sessoes de campanha
@@ -1474,6 +1489,12 @@ def reranker_ativo() -> str:
     return os.environ.get("RERANK", "").strip().lower() or "auto"
 
 
+def modo_estrategia() -> str:
+    """'baseline' (default), 'hyde' ou 'decompor' — opt-in pela env ESTRATEGIA."""
+    valor = os.environ.get("ESTRATEGIA", "").strip().lower()
+    return valor if valor in {"baseline", "hyde", "decompor"} else "baseline"
+
+
 # ---------------------------------------------------------------------------
 # Fidelidade à base: citações Nome [Fonte] (métrica do avaliar + rodapé do chat)
 # ---------------------------------------------------------------------------
@@ -2035,6 +2056,49 @@ def criar_llm() -> ChatComFallback:
 def trocar_modelo(llm, modelo: str) -> None:
     campo = "model" if "model" in type(llm).model_fields else "model_name"
     setattr(llm, campo, modelo)
+
+
+_CACHE_DECOMPOR: dict[str, list[str]] = {}
+LIMITE_VARIANTES = 3
+
+
+def _variantes_utilizaveis(bruto: str, consulta: str) -> list[str]:
+    """3 linhas úteis no máximo: limpa marcadores, descarta eco e lixo curto."""
+    saida: list[str] = []
+    vistos = {consulta.strip().lower()}
+    for linha in bruto.splitlines():
+        limpa = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", linha).strip().strip('"“”')
+        if len(limpa) < 8 or limpa.lower() in vistos:
+            continue
+        vistos.add(limpa.lower())
+        saida.append(limpa)
+        if len(saida) >= LIMITE_VARIANTES:
+            break
+    return saida
+
+
+def decompor_consultas(consulta: str, llm=None) -> list[str]:
+    """3 variações da query para ampliar recall; `[]` em qualquer falha.
+
+    Opt-in: só é chamada quando quem recupera recebe `decompor=True`.
+    Falha (cota, saída vazia, lixo) devolve [] — a busca segue com as
+    formulações de sempre, nunca piora por causa da decomposição.
+    """
+    consulta = consulta.strip()
+    if not consulta:
+        return []
+    if consulta in _CACHE_DECOMPOR:
+        return list(_CACHE_DECOMPOR[consulta])
+    try:
+        cadeia = PROMPT_DECOMPOR | (llm or criar_llm())
+        bruto = cadeia.invoke({"pergunta": consulta}).content
+        if not isinstance(bruto, str) or not bruto.strip():
+            raise ValueError("saída vazia")
+        variantes = _variantes_utilizaveis(bruto, consulta)
+    except Exception:  # noqa: BLE001 — opt-in: qualquer falha vira busca normal (nunca piora)
+        variantes = []
+    _CACHE_DECOMPOR[consulta] = variantes
+    return list(variantes)
 
 
 def reformular_pergunta(query_atual: str, chat_history: list, llm=None) -> str:
