@@ -378,7 +378,8 @@ def responder(llm, rag_chain, sintese, pergunta: str) -> str:
 
 def buscar(retriever, consulta: str, consulta_real: str | None = None,
            limiar: float | None = None, decompor: bool = False):
-    """Top-8: candidatos das duas formulações, rerank com a query original."""
+    """Corte dinâmico: candidatos das duas formulações, rerank com a query
+    original (12 no configurado; 15 em pergunta composta)."""
     for i in range(4):
         try:
             return rag_core.recuperar(retriever, consulta, consulta_real,

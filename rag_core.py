@@ -1958,6 +1958,11 @@ def aplicar_filtros(docs: list[Document], filtros: dict | None) -> list[Document
     return saida
 
 
+# Orçamento dinâmico de contexto: pergunta composta (2+ sub-queries do
+# usuário) abre a janela do corte final para caber as múltiplas tabelas.
+TOP_N_COMPOSTO = 15
+
+
 def recuperar(
     retriever: ContextualCompressionRetriever,
     consulta: str,
@@ -1966,7 +1971,12 @@ def recuperar(
     limiar: float | None = None,
     decompor: bool = False,
 ) -> list[Document]:
-    """Recall com as DUAS formulações; rerank só com a query ORIGINAL; top-8.
+    """Recall com as DUAS formulações; rerank só com a query ORIGINAL.
+
+    Corte final dinâmico: o `top_n` configurado do reranker (12 na
+    produção) para pergunta simples; `TOP_N_COMPOSTO` (15) quando a
+    decomposição devolve 2+ sub-queries — a janela extra acomoda as
+    múltiplas tabelas de uma pergunta multi-tópico.
 
     3 etapas, cada uma consertando a falha da anterior:
     1. ensemble com `consulta` + `consulta_real` — so a formulação tecnica
@@ -1998,10 +2008,12 @@ def recuperar(
     o mesmo vale no modo RERANK=desligado. `compressor.ultimo_modo` registra
     o que aconteceu ("flashrank", "cohere_escalado", "cohere", "desligado",
     "ensemble_fallback") para o avaliar gravar como `reranker_usado`.
-    `decompor=True` (opt-in, `ESTRATEGIA=decompor`) gera 3 variações da query
-    original via `decompor_consultas()` e as une aos candidatos ANTES do
-    rerank; o rerank continua só com a query original (bloco acima) e uma
-    falha da decomposição vira busca normal (nunca piora).
+    `decompor=True` (opt-in, `ESTRATEGIA=decompor`) gera as sub-queries
+    regra-based de `decompor_consulta()` (bypass em pergunta simples) e
+    as une aos candidatos ANTES do rerank; o rerank continua só com a
+    query original (bloco acima), o orçamento final expande para
+    `TOP_N_COMPOSTO` quando há 2+ sub-queries e uma falha da
+    decomposição vira busca normal (nunca piora).
     """
     docs = retriever.base_retriever.invoke(consulta)
     consulta_rerank = consulta
@@ -2013,9 +2025,11 @@ def recuperar(
                 docs.append(extra)
         consulta_rerank = consulta_real
 
+    variantes: list[str] = []
     if decompor and consulta_rerank.strip():
         vistos = {d.page_content for d in docs}
-        for variante in decompor_consulta(consulta_rerank):
+        variantes = decompor_consulta(consulta_rerank)
+        for variante in variantes:
             for extra in retriever.base_retriever.invoke(variante):
                 if extra.page_content not in vistos:
                     vistos.add(extra.page_content)
@@ -2027,6 +2041,10 @@ def recuperar(
 
     compressor = retriever.base_compressor
     top_n = compressor.top_n or 8
+    # Orçamento dinâmico: composta (2+ sub-queries) expande a janela;
+    # simples mantém o configurado. O finally restaura SEMPRE o
+    # configurado — o compressor é compartilhado entre queries.
+    top_n_final = top_n if len(variantes) <= 1 else TOP_N_COMPOSTO
     compressor.top_n = len(docs)
     try:
         ranked = compressor.compress_documents(docs, consulta_rerank)
@@ -2054,7 +2072,7 @@ def recuperar(
         print("⚠️  limiar ignorado: sem relevance_score não há o que cortar")
         efeito = None
     ranked = _aplicar_limiar(ranked, efeito)
-    return _diversificar(ranked, top_n)
+    return _diversificar(ranked, top_n_final)
 
 
 def montar_cadeia_resposta(system_prompt: str, llm, com_historico: bool = False):

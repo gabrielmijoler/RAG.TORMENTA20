@@ -18,7 +18,7 @@
 | Métrica oficial | `avaliacao_fr_l12_multiquery3.json` (07/10, goldenset **68** com 7 compostas, `--estrategia decompor`) — grd **81,8% (recorde)**, **n/a = 0** (4ª rodada seguida), cob **95,6%**, juiz **7,63 · 90%**, 49×100% / 14 parciais / 5 zeros. Anteriores: mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap → 85–90%: resíduo **32/40 citações fora = TABELA_FORA**; gatilho estrito now dispara em só 1/61 da goldenset — ruído de geração domina o delta (contexto idêntico em 60/61) — ver §2.4 |
+| Pendência | gap → 85–90%: resíduo **32/40 citações fora = TABELA_FORA**; atacado agora pelo **orçamento dinâmico** (§2.5: 12 → 15 em pergunta composta) — medir na `fr_l12_multiquery4` |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -195,6 +195,28 @@ com 7,0. `64` tem cob 50% (entidade `caído` fora do top-8).
 **Lições**: o gatilho estrito dispara exatamente onde foi projetado;
 residuo TABELA_FORA migrou para respostas expansivas — próximo
 alvo é o top-8/multi-tabela, não o gatilho.
+
+### 2.5 Orçamento Dinâmico de Contexto (2026-10-07)
+
+- **Premissa corrigida**: o corte NÃO era top-8 — `criar_reranker()`
+  usa `top_n = 12` desde o commit `71de219` (o do ganho cob 72→96%) e
+  a docstring "top-8" estava desatualizada; não há corte a jusante de
+  `_diversificar()`. Produção roda **top-12**.
+- **Implementação** (`rag_core.py`): constante `TOP_N_COMPOSTO = 15`;
+  em `recuperar()`, `top_n_final = configurado (12) se ≤1 sub-query,
+  senão 15` — capturando `variantes = decompor_consulta(...)` no bloco
+  `if decompor`. O `finally` restaura SEMPRE o configurado (compressor
+  compartilhado — restaurar 15 vazaria na próxima query simples);
+  corte final `_diversificar(ranked, top_n_final)`. Docstrings
+  `recuperar()` e `avaliar.buscar()` atualizadas.
+- **Testes** (`tests/test_multiquery.py`): fake `_BuscaFalsaGrande`
+  (pool 18+), 4 novos — simples/bypass `== 12`, composta `== 15`,
+  higiene de restauração `== 12`. Suíte **171 → 175**, lint **6**.
+- **Decisão**: simples mantém 12 (status quo do recorde 81,8%) em vez
+  de rebaixar para 8 — A/B comparável com as rodadas anteriores.
+- **Hipótese a medir na `fr_l12_multiquery4`**: TABELA_FORA de `62`/`63`
+  cai SE as tabelas citadas estavam nas posições 9–15 do pool; se não
+  estavam, o problema é recall, não orçamento.
 
 ---
 

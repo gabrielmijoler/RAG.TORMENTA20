@@ -115,8 +115,8 @@ class _BuscaFalsa:
 class _CompressorFalso:
     """Espelha o CascataReranker: top_n setável + compress_documents(docs, q)."""
 
-    def __init__(self):
-        self.top_n = 8
+    def __init__(self, top_n=8):
+        self.top_n = top_n
         self.ultimo_modo = None
         self.queries_rerank = []
 
@@ -126,9 +126,23 @@ class _CompressorFalso:
 
 
 class _RerankFalso:
-    def __init__(self, base):
+    def __init__(self, base, top_n=8):
         self.base_retriever = base
-        self.base_compressor = _CompressorFalso()
+        self.base_compressor = _CompressorFalso(top_n=top_n)
+
+
+class _BuscaFalsaGrande:
+    """Pool >15 docs únicos para exercitar o corte dinâmico (12 vs 15)."""
+
+    def __init__(self):
+        self.consultas = []
+
+    def invoke(self, query):
+        self.consultas.append(query)
+        if query == "consulta original":
+            return [_doc(f"base{i}", f"corpo base {i}") for i in range(18)]
+        # sub-queries: 6 docs únicos cada
+        return [_doc(f"{query}-{i}", f"corpo {query} {i}") for i in range(6)]
 
 
 def test_recuperar_deduplica_chunks_entre_subqueries(monkeypatch):
@@ -195,3 +209,44 @@ def test_goldenset_compostas_disparam_decompor():
         assert not any("racas com bonus" in s.lower()
                        or "alimentos e pocoes" in s.lower()
                        for s in subs), _id
+
+
+# ---------- orçamento dinâmico de contexto ----------
+
+def test_orcamento_simples_mantem_limite_configurado():
+    """sem decompor: pool de 18 → corte no configurado (12)."""
+    base = _BuscaFalsaGrande()
+    rerank = _RerankFalso(base, top_n=12)
+    docs = rag_core.recuperar(rerank, "consulta original")
+    assert len(docs) == 12, len(docs)
+
+
+def test_orcamento_bypass_mantem_limite_configurado(monkeypatch):
+    """pergunta simples com decompor=True (bypass, 1 sub-query) → 12."""
+    monkeypatch.setattr(rag_core, "decompor_consulta", lambda q: [q])
+    base = _BuscaFalsaGrande()
+    rerank = _RerankFalso(base, top_n=12)
+    docs = rag_core.recuperar(rerank, "consulta original", decompor=True)
+    assert len(docs) == 12, len(docs)
+
+
+def test_orcamento_composto_expande_para_15(monkeypatch):
+    """RED: pergunta composta (3 sub-queries) → janela expandida de 15."""
+    monkeypatch.setattr(
+        rag_core, "decompor_consulta", lambda q: ["sub 1", "sub 2", "sub 3"]
+    )
+    base = _BuscaFalsaGrande()
+    rerank = _RerankFalso(base, top_n=12)
+    docs = rag_core.recuperar(rerank, "consulta original", decompor=True)
+    assert len(docs) == 15, len(docs)
+
+
+def test_orcamento_restaura_topn_configurado(monkeypatch):
+    """higiene: o compressor compartilhado volta ao configurado (12)."""
+    monkeypatch.setattr(
+        rag_core, "decompor_consulta", lambda q: ["sub 1", "sub 2"]
+    )
+    base = _BuscaFalsaGrande()
+    rerank = _RerankFalso(base, top_n=12)
+    rag_core.recuperar(rerank, "consulta original", decompor=True)
+    assert rerank.base_compressor.top_n == 12
