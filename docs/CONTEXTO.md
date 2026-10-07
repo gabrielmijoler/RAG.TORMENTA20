@@ -13,12 +13,12 @@
 
 | Item | Valor |
 |---|---|
-| HEAD | `55ef5e5` — *guard de citacao: n/a vira 0.0 e re-invoca com aviso; containment de fonte* |
-| Suíte | 152 testes ✅ (`tests/` = 16 arquivos, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_final.json` (07/10, prompt calibrado + matching novo) — grd **79,9%**, **n/a = 0**, cob **96%**, juiz **7,62 · 90%**, 43×100% / 11 parciais / 7 zeros. Anterior (`posguard`) = 70,8% |
+| HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
+| Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
+| Métrica oficial | `avaliacao_fr_l12_multiquery.json` (07/10, `--estrategia decompor`) — grd **79,6%**, **n/a = 0**, cob **96%**, juiz **7,64 · 88%**, 43×100% / 13 parciais / 5 zeros. Anterior (`fr_l12_final`) = 79,9% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap 79,9% → 85–90%: resíduo **20/26 citações fora = TABELA_FORA** (cita tabela real que a retrieval não trouxe) + 3 eco literal do placeholder `[Caminho > Fonte]` |
+| Pendência | gap 79,6% → 85–90%: resíduo **30/33 citações fora = TABELA_FORA** (cita tabela real que a retrieval não trouxe); decomposição ativa mas goldenset sem perguntas compostas — ver §2.4 |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -135,9 +135,38 @@ regra-based (sem LLM) ao existente `decompor_consultas()` (LLM-based).
     original, `decompor=False` não dispara nada.
   - Sem regressões: suíte **159 → 167 pass**, lint **6** (baseline).
 
+**Rodada oficial `fr_l12_multiquery` (07/10, `--estrategia decompor`, 61/61):**
+79,9% → **79,6%** (neutro — dentro do ruído de geração: 8 melhoraram /
+9 pioraram, maioria com retrieval idêntico), n/a = **0**, zeros 7 → 5,
+juiz 7,62 → **7,64** (88% aprovado), FONTE_FORA 4 → **0**, mas TABELA_FORA
+20 → 30. A heurística disparou em só **6/61** queries (goldenset é quase
+toda single-topic): `26` melhorou 50→100% (decomposição ajudou), `21`
+caiu 100→50% (misfire: ' e ' na pergunta de magia gerou sub-queries
+genéricas de raça/alimentos que empurraram `Regras > Compendio` para
+fora do top-8). **Lições**: (a) templates classe/raça/alimentos só fazem
+sentido em perguntas de build; (b) sem perguntas compostas no
+goldenset, o ganho real não é mensurável aqui — considerar queries
+compostas no goldenset e/ou sub-queries tópicas (dividir as cláusulas).
+
+**Ajuste do gatilho (07/10, `fix(rag): ajusta gatilho estrito de
+decomposicao e remove templates fixos`):**
+- **Templates fixos eliminados** (`Racas com bonus...`, `Alimentos e
+  pocoes...`) junto com `_extrair_classe()` e o alias
+  `decompor_consulta_single` — sub-queries agora são as **cláusulas do
+  próprio texto do usuário** (split por `?` ou pelo marcador; strip,
+  min 4 chars, teto 3, ordem de leitura; com <2 cláusulas válidas →
+  fallback `[consulta]`).
+- **Gatilho estrito** em `_eh_pergunta_simples()`: decompõe SÓ com
+  **2+ `?`** ou marcador explícito de múltiplos tópicos
+  (`e também` | `e quais` | regex `qual ... e qual ...`). `e`/`ou`
+  comum em pergunta única = bypass — o caso real `21_magia_silencio`
+  passou a bypassar (era o único misfire da rodada).
+- Testes **167 → 170** (cláusulas da spec, bypass da query de magia,
+  bypass de conectivo simples, marcador "e também"), lint **6**
+  (baseline), `recuperar()` e rerank unchanged.
+
 ---
 
-## 3. Infra — operacional
 ## 3. Infra — operacional
 
 - **Qdrant**: podman (`qdrant-t20`, 6335→6333), dados persistentes.

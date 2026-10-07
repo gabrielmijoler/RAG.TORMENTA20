@@ -2372,15 +2372,23 @@ def salvar_sessao_campanha(
         "desfecho": desfecho,
     }
 
+# Marcadores explícitos de múltiplos tópicos (gatilho estrito de
+# decomposição fora do caso de 2+ '?')
+_RE_E_TAMBEM = re.compile(r"\be também\b", re.IGNORECASE)
+_RE_E_QUAIS = re.compile(r"\be quais\b", re.IGNORECASE)
+_RE_QUAL_E_QUAL = re.compile(r"\bqual\b[^?]*\be qual\b", re.IGNORECASE)
+
+
 def decompor_consulta(consulta: str) -> list[str]:
-    """Decompor pergunta composta em até 3 sub-queries focadas.
+    """Decompor pergunta composta fatiando o PRÓPRIO texto do usuário.
 
-    - Perguntas simples/diretas: retorna [consulta] (bypass rápido, zero LLM).
-    - Perguntas compostas/multi-entidade: gera até 3 sub-queries focadas
-      e independentes usando templates de T20 (classe, raça, itens/alimentos).
-
-    A heurística evita chamada de LLM quando a pergunta tem aparência de
-    única intenção, mantendo a busca original intacta.
+    - Pergunta simples (única intenção): retorna [consulta] — bypass
+      rápido, zero LLM, busca original intacta.
+    - Pergunta composta (2+ '?') ou com marcador multi-tópico explícito:
+      as sub-queries são as cláusulas do próprio texto do usuário
+      (teto de 3, na ordem de leitura). NUNCA injeta template fixo
+      alheio à pergunta; com menos de 2 cláusulas válidas volta para
+      [consulta] (fallback seguro — nunca piora).
     """
     consulta = consulta.strip()
     if not consulta:
@@ -2390,77 +2398,59 @@ def decompor_consulta(consulta: str) -> list[str]:
     if _eh_pergunta_simples(consulta):
         return [consulta]
 
-    # ---- Decompor pergunta composta ----
-    sub: list[str] = []
-    texto = consulta.lower()
-
-    # 1. Extrair classe/mencão de personagem
-    classe = _extrair_classe(texto)
-    if classe and len(sub) < 3:
-        sub.append(f"Atributos, pericias e habilidades da classe {classe.title()}")
-
-    # 2. Tópico raça (sempre que houver pergunta de raça no original)
-    if len(sub) < 3:
-        sub.append("Racas com bonus em Inteligencia ou Oficio")
-
-    # 3. Tópico itens/alimentos para a classe
-    if len(sub) < 3:
-        nome = classe.title() if classe else "personagem"
-        sub.append(f"Alimentos e pocoes com bonus para {nome}")
-
-    # Preencher o restante com a consulta original para garantir 3 itens
-    while len(sub) < 3:
-        sub.append(consulta)
-
-    return sub[:3]
+    # ---- Fatiar o próprio texto nas cláusulas ----
+    if consulta.count("?") >= 2:
+        partes = consulta.split("?")
+    else:
+        partes = _fatiar_por_marcador(consulta)
+    clausulas = _clausulas_validas(
+        partes, com_interrogacao="?" in consulta
+    )
+    return clausulas if len(clausulas) >= 2 else [consulta]
 
 
 def _eh_pergunta_simples(consulta: str) -> bool:
-    """Heurística: retorna True se a pergunta parecer de único tópico.
+    """Heurística estrita de bypass: True = NÃO decompor.
 
-    Critérios:
-    - No máximo 1 interrogação final e não há conectores lógicos
-      ('e', 'ou') ligando tópicos distintos.
-    - Padrões de pergunta direta: 'qual a', 'como funciona', 'onde está'
+    Decompor SOMENTE quando:
+    - há 2+ pontos de interrogação ('Qual melhor classe? Qual melhor
+      raça?'); OU
+    - há marcador explícito de múltiplos tópicos ('e também', 'e quais',
+      'qual ... e qual ...').
+
+    Um 'e'/'ou' comum dentro de uma única pergunta NÃO decompõe — caso
+    real da rodada fr_l12_multiquery: pergunta de magia com
+    'e com lançamentos de magia?' que recebia templates de raça/alimento.
     """
-    if consulta.count("?") <= 1:
-        lower = consulta.lower()
-        if " e " in lower or " ou " in lower:
-            return not any(
-                conn in lower for conn in ["com", "sem", "possui", "tem"]
-            )
-        return True
-    return False
+    if consulta.count("?") >= 2:
+        return False
+    return not (
+        _RE_E_TAMBEM.search(consulta)
+        or _RE_E_QUAIS.search(consulta)
+        or _RE_QUAL_E_QUAL.search(consulta)
+    )
 
 
-def _extrair_classe(texto: str) -> str | None:
-    """Extrair o nome da classe de personagem do texto em minúsculas.
-
-    Padrões procurados (ordem de prioridade):
-    - 'para um <classe>'
-    - 'classe <nome>'
-    - '<Nome> inventor' (ex: 'inventor' após nome próprio)
-    - Padrões capitalizados no início de frase
-    """
-    import re as _re
-    padroes = [
-        r"para um\s+(\w+)",
-        r"classe\s+(\w+)",
-        r"(\w+)\s+inventor",
-        r"\b([A-Z][a-z]{3,10})\s+da\s+classe\b",
-    ]
-    for padrao in padroes:
-        m = _re.search(padrao, texto)
-        if m:
-            return m.group(1)
-    # Fallback: tentar achar a primeira palavra capitalizada que pareça uma classe
-    for palavra in texto.split():
-        if palavra[0].isupper() and len(palavra) > 2:
-            stop = {"e", "ou", "mas", "porém", "então", "pois"}
-            if palavra.lower() not in stop:
-                return palavra
-    return None
+def _fatiar_por_marcador(consulta: str) -> list[str]:
+    """Dividir a consulta no marcador multi-tópico explícito encontrado."""
+    if _RE_E_TAMBEM.search(consulta):
+        return _RE_E_TAMBEM.split(consulta)
+    if _RE_E_QUAIS.search(consulta):
+        return _RE_E_QUAIS.split(consulta)
+    # 'qual X e qual Y' já validado em _eh_pergunta_simples
+    return re.split(r"\s+e\s+", consulta, flags=re.IGNORECASE)
 
 
-# Alias para compatibilidade com eventuais imports diretos
-decompor_consulta_single = decompor_consulta
+def _clausulas_validas(
+    partes: list[str], com_interrogacao: bool
+) -> list[str]:
+    """Sanitizar cláusulas fatiadas: strip, min 4 chars, teto de 3."""
+    saida: list[str] = []
+    for parte in partes:
+        p = parte.strip().rstrip("?").strip()
+        if len(p) < 4:
+            continue
+        saida.append(p + "?" if com_interrogacao else p)
+        if len(saida) == 3:
+            break
+    return saida

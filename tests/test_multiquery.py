@@ -2,7 +2,10 @@
 
 Evolução Multi-Query / Multi-hop Reasoning:
 - bypass em pergunta simples (lista unitária, zero custo);
-- até 3 sub-queries focadas em pergunta composta (classe, raça, itens);
+- gatilho estrito: só decompõe com 2+ '?' ou marcador multi-tópico
+  explícito ('e também', 'e quais', 'qual ... e qual ...');
+- sub-queries derivadas ESTRICTAMENTE do texto do usuário (fatiamento
+  das cláusulas), NUNCA templates fixos de raça/alimento;
 - dedup dos chunks das sub-queries no recuperar();
 - rerank continua usando APENAS a consulta original (precisão FlashRank).
 """
@@ -22,19 +25,56 @@ def test_decompor_simples_bypass():
     assert rag_core.decompor_consulta(consulta) == [consulta]
 
 
-def test_decompor_composto_gera_3_sub_queries():
-    """Exemplo da especificação: classe + raça + alimentos."""
-    resultado = rag_core.decompor_consulta(
+def test_decompor_composto_deriva_clausulas_do_usuario():
+    """Exemplo da spec (3 '?'): as sub-queries são as cláusulas do usuário.
+
+    RED: hoje devolve templates fixos (classe/raça/alimentos) em vez do
+    texto original — precisa falhar por conter conteúdo alheio à pergunta.
+    """
+    consulta = (
         "Para um inventor qual a melhor raça? "
         "fabricar engenhoca ou poção? quais alimentos?"
     )
-    assert len(resultado) == 3, resultado
-    textos = [r.lower() for r in resultado]
-    assert any("classe inventor" in t for t in textos), textos
-    assert any(t.startswith("racas") for t in textos), textos
-    assert any("alimentos" in t for t in textos), textos
-    # spec: "Alimentos e pocoes com bonus para Inventor"
-    assert any("para inventor" in t for t in textos), textos
+    resultado = rag_core.decompor_consulta(consulta)
+    assert resultado == [
+        "Para um inventor qual a melhor raça?",
+        "fabricar engenhoca ou poção?",
+        "quais alimentos?",
+    ], resultado
+
+
+def test_query_magia_com_conector_faz_bypass():
+    """Misfire real da rodada fr_l12_multiquery (21_magia_silencio).
+
+    1 '?' e apenas ' e '/' ou ' comum => BYPASS, sem injetar sub-queries
+    de raça/alimento na pergunta de magia.
+    """
+    consulta = ("O que a magia Silêncio faz com a área "
+                "e com lançamentos de magia?")
+    assert rag_core.decompor_consulta(consulta) == [consulta]
+
+
+def test_conectivo_simples_faz_bypass_sem_templates():
+    """Spec: frase com conectivo sem múltiplas perguntas => bypass puro."""
+    consulta = "Regras sobre magia de silêncio e área de efeito"
+    resultado = rag_core.decompor_consulta(consulta)
+    assert resultado == [consulta]
+    # guarda de regressão: nenhum template de raça/alimento pode aparecer
+    assert not any("raça" in r.lower() or "alimento" in r.lower()
+                   for r in resultado), resultado
+
+
+def test_marcador_e_tambem_decompoe_texto_do_usuario():
+    """1 '?' com marcador explícito de múltiplos tópicos => decompor,
+    fatiando o PRÓPRIO texto do usuário (sem templates)."""
+    consulta = "Quais regras de armadura e também de escudo?"
+    resultado = rag_core.decompor_consulta(consulta)
+    assert len(resultado) >= 2, resultado
+    for pedaco in resultado:
+        base = pedaco.rstrip("?").strip().lower()
+        assert base in consulta.lower(), (pedaco, consulta)
+    assert not any("raça" in r.lower() or "alimento" in r.lower()
+                   for r in resultado), resultado
 
 
 def test_decompor_nunca_mais_que_3():
