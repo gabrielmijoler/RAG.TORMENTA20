@@ -15,10 +15,10 @@
 |---|---|
 | HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
 | Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_multiquery.json` (07/10, `--estrategia decompor`) — grd **79,6%**, **n/a = 0**, cob **96%**, juiz **7,64 · 88%**, 43×100% / 13 parciais / 5 zeros. Anterior (`fr_l12_final`) = 79,9% |
+| Métrica oficial | `avaliacao_fr_l12_multiquery2.json` (07/10, gatilho estrito, `--estrategia decompor`) — grd **77,5%**, **n/a = 0**, cob **96%**, juiz **7,67 · 92% (recorde)**, 41×100% / 14 parciais / 6 zeros. Anteriores: mq(1) 79,6% · final 79,9% — ver §2.4 sobre a banda de ruído |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap 79,6% → 85–90%: resíduo **30/33 citações fora = TABELA_FORA** (cita tabela real que a retrieval não trouxe); decomposição ativa mas goldenset sem perguntas compostas — ver §2.4 |
+| Pendência | gap → 85–90%: resíduo **32/40 citações fora = TABELA_FORA**; gatilho estrito now dispara em só 1/61 da goldenset — ruído de geração domina o delta (contexto idêntico em 60/61) — ver §2.4 |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -164,6 +164,21 @@ decomposicao e remove templates fixos`):**
 - Testes **167 → 170** (cláusulas da spec, bypass da query de magia,
   bypass de conectivo simples, marcador "e também"), lint **6**
   (baseline), `recuperar()` e rerank unchanged.
+
+**Rodada `fr_l12_multiquery2` (07/10, gatilho estrito, 61/61, 0 erros):**
+grd **77,5%** (mq1 79,6% · final 79,9%), n/a = **0** (3ª rodada seguida),
+juiz **7,67 · 92%** (recorde: era 7,64·88% e 7,62·90%). **Validação do
+fix**: `21_magia_silencio` 50% → **100%** (bypass registrado:
+`variantes=[consulta]`), decomposição disparou em só **1/61**
+(`23_magia_conjurar_monstro`, 2 sub-queries, manteve 100%). **Como
+ler o delta de grd**: contextos idênticos em **60/61** vs `final` e
+55/61 vs mq1 — a retrieval praticamente não mudou; 6 melhoraram /
+11 pioraram com contexto igual (ex.: `50_condicao_sangrando`
+100%→0% citando fonte errada com o MESMO contexto) = **ruído de
+amostragem da geração, ±2pp na banda**. Lição: em 61 queries com
+goldenset single-topic, o feature quase não dispara e o delta entre
+rodadas é regido por geração, não por retrieval — para medir o
+multiquery de verdade, acrescentar perguntas compostas ao goldenset.
 
 ---
 
