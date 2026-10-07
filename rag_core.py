@@ -353,15 +353,17 @@ SYSTEM_PROMPT = (
     "   - PROIBIÇÃO DE EXTRAPOLAÇÃO NUMÉRICA: NUNCA crie sequências ou progressões de valores (ex: preços, "
     "dano por nível) que não estejam explicitamente escritas.\n\n"
     "2. **Citação Obrigatória por Item/Linha (REGRA ABSOLUTA):**\n"
-    "   - Sempre que utilizar informação do contexto, É OBRIGATÓRIO citar a fonte no final da frase ou do item.\n"
+    "   - Sempre que utilizar dados numéricos, regras específicas ou tabelas do contexto, insira a "
+    "citação [Caminho > Fonte] ao final daquele bloco lógico. Não é necessário citar a cada frase, "
+    "mas é ESTRITAMENTE PROIBIDO inventar uma fonte para justificar uma resposta.\n"
     "   - Cite no formato exato [Caminho > Fonte], copiando os dois trechos literalmente do contexto, "
     "por exemplo: [Alquímicos > Tormenta20 - Jogo do Ano].\n"
     "   - NUNCA altere, resuma, abrevie ou invente o nome ou caminho da fonte. Você deve copiar EXATAMENTE a string fornecida no contexto.\n"
-    "   - É PROIBIDO gerar respostas afirmativas sem citações anexadas: toda frase que afirma uma regra, "
-    "valor ou preço termina com a citação da fonte usada.\n"
+    "   - Se consolidar dados em uma tabela, cite a fonte uma única vez no rodapé da tabela.\n"
     "   - Exemplo correto:\n"
     "     - Essência de Mana: recupera 1d4 PM. Preço: T$ 50. [Alquímicos > Tormenta20 - Jogo do Ano]\n"
-    "   - NUNCA agrupe citações apenas no final do texto. Cada fato deve ter sua própria citação grudada a ele.\n"
+    "   - NUNCA agrupe citações apenas no final do texto. No texto corrido, cada fato deve ter "
+    "sua própria citação grudada a ele (a tabela é a exceção: cite no rodapé).\n"
     "   - Se não houver contexto útil para a dúvida, declare isso imediatamente e responda sem inventar regras ou citações falsas.\n\n"
     "3. **Respeito Estrito ao Formato Solicitado:**\n"
     "   - Se o usuário pedir um formato específico (ex: 'apenas tabela', '3 colunas', 'sem explicações'), "
@@ -1548,17 +1550,61 @@ def exigir_citacoes(gerar, entrada: str) -> str:
     return gerar(entrada + AVISO_CITACAO)
 
 
-def _fundamentada(citacao: str, c_ctx: set[str]) -> bool:
+LINHA_PROVENIENCIA = re.compile(r"^\[([^\]]{3,60})\]\s*$")
+TITULO_MARKDOWN = re.compile(r"^# (.+)$")
+
+
+def titulos_de_entidade(contexto: str) -> set[str]:
+    """Pares 'entidade > fonte' dos títulos markdown ('# Nome') de cada chunk.
+
+    O chunk abre com '[Tabela > Fonte]' e traz a entidade como '# Nome'; o
+    modelo muitas vezes cita '[Nome > Fonte]' (casos 01/19/20/23/26/50 da
+    rodada fr_l12_posguard). A citação resolve para o chunk real e vale como
+    fundamentada. Título antes de qualquer proveniência não é parado (não há
+    fonte para amarrar — citação solta continuaria 0.0).
+    """
+    titulos: set[str] = set()
+    fonte = ""
+    for linha in (contexto or "").splitlines():
+        prov = LINHA_PROVENIENCIA.match(linha)
+        if prov:
+            _, sep, f = normalizar(prov.group(1)).rpartition(" > ")
+            fonte = f if sep else ""
+            continue
+        tit = TITULO_MARKDOWN.match(linha)
+        if tit and fonte:
+            titulos.add(f"{normalizar(tit.group(1))} > {fonte}")
+    return titulos
+
+
+def _fundamentada(citacao: str, c_ctx: set[str],
+                  c_titulos: set[str] = frozenset()) -> bool:
     """Citação amarra ao contexto por igualdade ou contenção bidirecional.
 
-    Cobre as duas falhas reais da avaliação sem mascarar alucinação:
-    prefixo de entidade colado pelo modelo ('agarrado > condicoes > …') e
-    fonte truncada ('alquimicos > tormenta20'). Fonte que não se relaciona
+    Cobre as três falhas reais da avaliação sem mascarar alucinação: prefixo
+    de entidade colado pelo modelo ('agarrado > condicoes > …'), fonte
+    truncada ('alquimicos > tormenta20') e caminho que é o TÍTULO da entidade
+    ('caido > tormenta20 - jogo do ano' com o chunk '# Caído' no contexto —
+    vale se a fonte do título casar, senão não). Fonte que não se relaciona
     com nenhuma do contexto continua não fundamentada (0%).
     """
-    if citacao in c_ctx:
+    if citacao in c_ctx or citacao in c_titulos:
         return True
-    return any(citacao in c or c in citacao for c in c_ctx)
+    return any(citacao in c or c in citacao for c in c_ctx | c_titulos)
+
+
+def partir_citacoes(resposta: str, contexto: str) -> tuple[set[str], set[str]]:
+    """(fundamentadas, fora) com o MESMO matching do groundedness.
+
+    A avaliação grava os dois conjuntos no registro; sem esta partição o
+    JSON oficial se contradizia (ground 100% com 'citação fora' na mesma
+    query, ex.: caminho = título da entidade).
+    """
+    c_ctx = citacoes_em(contexto)
+    c_titulos = titulos_de_entidade(contexto)
+    c_resp = citacoes_em(resposta)
+    fund = {c for c in c_resp if _fundamentada(c, c_ctx, c_titulos)}
+    return fund, c_resp - fund
 
 
 def groundedness(resposta: str, contexto: str) -> float | None:
@@ -1573,7 +1619,8 @@ def groundedness(resposta: str, contexto: str) -> float | None:
     if not c_resp:
         return 0.0
     c_ctx = citacoes_em(contexto)
-    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx))
+    c_titulos = titulos_de_entidade(contexto)
+    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx, c_titulos))
     return ok / len(c_resp)
 
 
@@ -1586,7 +1633,8 @@ def linha_ground(resposta: str, docs: list) -> str:
         return "ground: 0% (resposta sem citações)"
     contexto = "\n".join(d.page_content for d in docs)
     c_ctx = citacoes_em(contexto)
-    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx))
+    c_titulos = titulos_de_entidade(contexto)
+    ok = sum(1 for c in c_resp if _fundamentada(c, c_ctx, c_titulos))
     return (f"ground: {ok / len(c_resp):.0%} "
             f"({ok}/{len(c_resp)} citações no contexto)")
 

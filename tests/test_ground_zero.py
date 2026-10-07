@@ -71,6 +71,62 @@ def test_groundedness_fonte_fora_do_contexto_continua_zero():
     assert groundedness(resposta, contexto) == 0.0
 
 
+# ---------- métrica: título de entidade ('# Nome' do chunk) ----------
+
+def test_partir_citacoes_separa_por_titulo_da_entidade():
+    """avaliar.py grava fundamentadas/fora do registro — precisa seguir o
+    MESMO matching do groundedness (senão o JSON oficial se contradiz:
+    ground 100% com 'citação fora' na mesma query)."""
+    from rag_core import partir_citacoes
+    resposta = ("Caído sofre –5 [Caído > Tormenta20 - Jogo do Ano] "
+                "e Voo [Voo > Guia dos Deuses Menores] dura 10 min.")
+    contexto = "[Condições > Tormenta20 - Jogo do Ano]\n# Caído\nDescrição: –5."
+    fundamentadas, fora = partir_citacoes(resposta, contexto)
+    assert fundamentadas == {"caido > tormenta20 - jogo do ano"}
+    assert fora == {"voo > guia dos deuses menores"}
+
+
+def test_groundedness_caminho_e_titulo_da_entidade():
+    """Caso 01/19/20/23/26/50: modelo citou '[Caído > Fonte]' (o heading '# Caído'
+    do chunk) em vez de '[Condições > Fonte]' — a citação resolve para um chunk
+    real do contexto: fundamentada."""
+    resposta = ("A condição Caído impõe –5 na Defesa corpo a corpo "
+                "[Caído > Tormenta20 - Jogo do Ano].")
+    contexto = ("[Condições > Tormenta20 - Jogo do Ano]\n"
+                "# Atordoado\nDescrição: fica desprevenido.\n"
+                "# Caído\nDescrição: sofre –5 na Defesa corpo a corpo.")
+    assert groundedness(resposta, contexto) == 1.0
+
+
+def test_groundedness_titulo_certo_fonte_errada_continua_zero():
+    """Heading existe no ctx, mas sob OUTRA fonte -> citação não resolve."""
+    resposta = "Voo [Voo > Guia dos Deuses Menores] dura 10 min."
+    contexto = "[Magias > Tormenta20 - Jogo do Ano]\n# Voo\nDuração: 10 min."
+    assert groundedness(resposta, contexto) == 0.0
+
+
+def test_groundedness_titulo_fora_do_contexto_continua_zero():
+    """Pin de alucinação: heading que não existe no ctx -> 0.0."""
+    resposta = "Bola de Fogo [Bola de Fogo > Tormenta20 - Jogo do Ano] causa 8d6."
+    contexto = "[Perícias > Compendio T20]\n# Furtividade\nRegras da perícia."
+    assert groundedness(resposta, contexto) == 0.0
+
+
+def test_groundedness_titulo_fonte_truncada():
+    """Truncamento de fonte ('tormenta20' sem ' - Jogo do Ano') vale p/ título."""
+    resposta = "Caído [Caído > Tormenta20] sofre –5 na Defesa."
+    contexto = "[Condições > Tormenta20 - Jogo do Ano]\n# Caído\nDescrição: –5."
+    assert groundedness(resposta, contexto) == 1.0
+
+
+def test_linha_ground_reconhece_titulo_da_entidade():
+    docs = [Document(page_content="[Condições > Tormenta20 - Jogo do Ano]\n"
+                                  "# Caído\nDescrição: –5 na Defesa.")]
+    linha = linha_ground("Caído [Caído > Tormenta20 - Jogo do Ano] sofre –5.",
+                         docs)
+    assert linha.startswith("ground: 100%"), linha
+
+
 # ---------- guard de geração ----------
 
 def test_resposta_sem_citacoes_detecta_ausencia():
@@ -116,8 +172,8 @@ def test_exigir_citacoes_recusa_sem_citacao_tambem_reinvoca():
     chamadas = []
     tentativas = iter([
         "Não encontrei essa regra no contexto fornecido.",
-        "Não encontrei a regra [Condições > Tormenta20 - Jogo do Ano] "
-        "nem em nenhuma outra fonte do contexto.",
+        ("Não encontrei a regra [Condições > Tormenta20 - Jogo do Ano] "
+         "nem em nenhuma outra fonte do contexto."),
     ])
 
     def gerar(entrada):

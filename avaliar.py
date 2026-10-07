@@ -53,6 +53,7 @@ from rag_core import (
     e_transitorio,
     groundedness,
     normalizar,
+    partir_citacoes,
     resposta_sem_citacoes,
     trocar_modelo,
 )
@@ -505,17 +506,19 @@ def avaliar(
             c_resp = citacoes_em(resposta)
             c_ctx = citacoes_em(contexto)
             grounding = groundedness(resposta, contexto)
+            # partição com o MESMO matching do groundedness (títulos inclusos)
+            fundamentadas, fora = partir_citacoes(resposta, contexto)
             registro.update({
                 "resposta": resposta,
                 "citacoes_na_resposta": sorted(c_resp),
                 "citacoes_no_contexto": sorted(c_ctx),
-                "citacoes_fundamentadas": sorted(c_resp & c_ctx),
-                "citacoes_fora_do_contexto": sorted(c_resp - c_ctx),
+                "citacoes_fundamentadas": sorted(fundamentadas),
+                "citacoes_fora_do_contexto": sorted(fora),
                 "groundedness": round(grounding, 3) if grounding is not None else None,
             })
             print(f"  cobertura entidades: {hit:.0%} | groundedness: "
                   f"{'n/a' if grounding is None else f'{grounding:.0%}'} "
-                  f"| citações fora: {len(c_resp - c_ctx)}")
+                  f"| citações fora: {len(fora)}")
 
         if estrategia == "hyde":
             registro["hyde_doc"] = _hyde_doc_do(retriever, reformulada)
