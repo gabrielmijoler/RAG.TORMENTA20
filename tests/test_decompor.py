@@ -87,7 +87,7 @@ class _RerankFalso:
 def test_recuperar_com_decompor_reune_variantes(monkeypatch):
     base = _BuscaFalsa()
     monkeypatch.setattr(
-        rag_core, "decompor_consultas", lambda q, llm=None: ["variante inutil"]
+        rag_core, "decompor_consulta", lambda q, llm=None: ["variante inutil"]
     )
     rerank = _RerankFalso(base)
     docs = rag_core.recuperar(

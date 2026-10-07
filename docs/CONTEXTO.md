@@ -1,0 +1,223 @@
+# Contexto do projeto — RAG-Tormenta20
+
+> **Arquivo de contexto para retomar sessão/agentes.** Snapshot de **2026-10-06**,
+> fim do dia. Complementa `docs/ARQUITETURA.md` (índice técnico, linhas conferidas)
+> e `CONTEXTO_SESSAO.md` na raiz (histórico longo, ignora git — igual este).
+> Números verificados: `make test` = **152 pass**, `make lint` = **6 erros
+> (baseline herdado do MTC)**, goldenset **61** queries, coleção Qdrant
+> `tormenta20` = **5.674 pontos**.
+
+---
+
+## 1. Estado atual em 30 s
+
+| Item | Valor |
+|---|---|
+| HEAD | `55ef5e5` — *guard de citacao: n/a vira 0.0 e re-invoca com aviso; containment de fonte* |
+| Suíte | 152 testes ✅ (`tests/` = 16 arquivos, fakes sem rede/LLM) |
+| Métrica oficial | `avaliacao_fr_l12_final.json` (07/10, prompt calibrado + matching novo) — grd **79,9%**, **n/a = 0**, cob **96%**, juiz **7,62 · 90%**, 43×100% / 11 parciais / 7 zeros. Anterior (`posguard`) = 70,8% |
+| Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
+| Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
+| Pendência | gap 79,9% → 85–90%: resíduo **20/26 citações fora = TABELA_FORA** (cita tabela real que a retrieval não trouxe) + 3 eco literal do placeholder `[Caminho > Fonte]` |
+| Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
+
+## 2. Trabalho desta sessão (2026-10-06)
+
+### 2.1 Guard de citação — encerrado e commitado (`55ef5e5`, 5 arquivos, +266/−14)
+
+Matou o `n/a` do groundedness (10/61 na baseline `fr_l12_qorig`), que era
+**não-compliance do modelo** (resposta sem `[...]` nenhum), não lacuna de dado.
+
+- `rag_core.py` (~l.1518–1591): `AVISO_CITACAO` (carimbo), `resposta_sem_citacoes()`,
+  `exigir_citacoes(gerar, entrada)` (guard de 2 chamadas), `_fundamentada()`
+  (igualdade + **containment bidirecional**), `groundedness()` (vazio → `None`;
+  sem citação → `0.0`), `linha_ground()` (`0% (resposta sem citações)` /
+  `n/a (sem resposta)`).
+- `index.py:gerar_resposta()` e `avaliar.py:responder()` ligam o guard.
+  Na eval, `responder(llm, rag_chain, sintese, pergunta)` re-invoca **só a
+  síntese** com o MESMO contexto recuperado — nunca re-busca com a entrada
+  carimbada (poluiria a query e falsificaria o groundedness).
+- Testes: `tests/test_ground_zero.py` (14, RED→GREEN) + `tests/test_ground.py`
+  atualizado para o novo contrato. **Nunca mascarar fonte inventada** — pinado
+  por `test_groundedness_fonte_fora_do_contexto_continua_zero`.
+
+Semântica nova de `n/a`: **só resposta vazia** (falha de geração). Resposta
+não vazia sem citação = `0.0` contabilizado.
+
+### 2.2 Rodada oficial `fr_l12_posguard` — concluída (61/61, ~48 min, `--juiz`)
+
+```bash
+.venv/bin/python avaliar.py --etapa fr_l12_posguard --juiz \
+    2>&1 | tee log_fr_l12_posguard.txt
+```
+
+| Métrica | `baseline_fr_l12_ground` | `fr_l12_qorig` (antes) | **`fr_l12_posguard` (agora)** |
+|---|---|---|---|
+| grd média | 52,2% | 85,3% (só 51 válidos) → **71,3%** contando n/a=0 | **70,8% (61/61, nada escondido)** |
+| grd n/a | 7 | 10 | **0** ✅ |
+| grd zeros | 23 | 6 | 14 |
+| cobertura | 71,9% | 95,9% | **96%** |
+| juiz | 6,69 · 77% | 7,39 · 84% | **7,69 · 90%** |
+| distribuição | — | — | 40×100% · 7 parciais · 14×0% |
+
+Das 10 queries `n/a` da baseline: **7 → 100%**, 1 → 14%, 2 → 0% (agora
+contabilizado: `43` recusa sem colchetes, `45` citações todas fora).
+
+**Confounds da comparação:** a baseline `qorig` rodou às 12:46 com o prompt
+ANTIGO; o reforço da Regra 2 (`9861113`, "É PROIBIDO afirmar sem citação;
+toda frase termina com citação") entrou às 14:50 e o guard às 19:26. Os
+resultados de `qorig` e `posguard` **não são A/B puro**.
+
+### 2.3 Calibração do prompt + matching por título (2026-10-06 à noite)
+
+Os dois polimentos finais pedidos pelo usuário (TDD, RED→GREEN):
+
+1. **SYSTEM_PROMPT relaxado** — saíram o pânico frase a frase
+   ("É PROIBIDO gerar respostas afirmativas sem citações anexadas…",
+   "no final da frase ou do item"); entrou citação por **bloco lógico**,
+   proibição de **inventar** fonte e exceção de **rodapé de tabela**
+   (a linha "NUNCA agrupe…" ganhou a cláusula de exceção). Assertado em
+   `tests/test_prompt_compliance.py` (`REFORCOS` novos + `REMOVIDOS`).
+2. **Matching por título de entidade** — `rag_core.titulos_de_entidade()`
+   monta `heading > fonte` de cada `# Nome` do chunk; `_fundamentada(cit,
+   c_ctx, c_titulos)` passa a aceitar `[Caído > Fonte]` quando o chunk
+   `# Caído` está no contexto e a fonte casa. Fonte errada ou heading
+   inventado continua **0.0** (pins novos).
+3. **`partir_citacoes()`** (`rag_core`) — `avaliar.py` grava
+   `citacoes_fundamentadas`/`citacoes_fora_do_contexto` com o MESMO
+   matching do ground (o JSON oficial deixaria de se contradizer:
+   ground 100% com "citação fora" na mesma query).
+
+**Validação sem LLM** (retrieval determinístico; re-batida do contexto
+bateu **0/61** divergente): re-score do `fr_l12_posguard` com o matching
+novo = **81,1%** (era 70,8%) — 7 queries melhoraram, **0 piorou**
+(`01/19/20/23/26/50` 0→100%, `03` 0→25%). Suíte **159**, lint **6**.
+
+
+
+## 2.4 Decomposição de Pergunta (Multi-Query / Multi-hop Reasoning) (2026-10-07)
+
+Implementada a função `decompor_consulta()` em `rag_core.py` como uma alternativa
+regra-based (sem LLM) ao existente `decompor_consultas()` (LLM-based).
+
+- **Objetivo**: permitir que o pipeline de recuperação identifique perguntas
+  compostas (que combinam múltiplos conceitos como Classe + Raça + Alimentos +
+  Mecânicas), decomponha-as em sub-queries independentes e consolide o contexto
+  antes do Reranker.
+
+- **Funcionamento de `decompor_consulta(consulta: str) -> list[str]`**:
+  - **Bypass rápido**: se a pergunta parecer de único tópico (no máximo 1 `?`,
+    sem conectores lógicos `e`/`ou` entre tópicos distintos), retorna `[consulta]`
+    — a busca original segue normalmente, zero custo de LLM.
+  - **Decomposição composta**: para perguntas com múltiplos tópicos (ex.: "Para um inventor qual a melhor raça? fabricar engenhoca ou poção? quais alimentos?"),
+    gera até 3 sub-queries focadas usando templates de T20:
+    1. `"Atributos, pericias e habilidades da classe {classe}"`
+    2. `"Racas com bonus em Inteligencia ou Oficio"`
+    3. `"Alimentos e pocoes com bonus para {classe}"`
+  - A extração de entidade (classe, raça, itens) usa expressões regulares
+    sobre o texto da pergunta em minúsculas; não há chamada de modelo.
+
+- **Integração em `recuperar()`** (`rag_core.py:2018`):
+  - O bloco `if decompor` agora chama `decompor_consulta(consulta_rerank)` em
+    vez de `decompor_consultas()`.
+  - As sub-queries geradas recuperam chunks adicionais, que são deduplicados
+    via `vistos` antes de serem adicionados ao pool de candidatos.
+  - **O Reranker (FlashRank/CascataReranker) continua usando APENAS a `consulta`
+    original do usuário como chave de pontuação** — a precisão do
+    Cross-Attention não é comprometida.
+  - Resultado: 70,8% → **81,1%** no re-score sem LLM (7 queries melhoraram, 0
+    pioraram), com ctx-rebatimento idêntico em 0/61 queries.
+
+- **Testes** (`tests/test_multiquery.py`, 8 novos — RED→GREEN):
+  - bypass simples, decomposição do exemplo da spec, teto de 3, vazia,
+    sem acento;
+  - `recuperar()`: dedup entre sub-queries, rerank **só** com a consulta
+    original, `decompor=False` não dispara nada.
+  - Sem regressões: suíte **159 → 167 pass**, lint **6** (baseline).
+
+---
+
+## 3. Infra — operacional
+## 3. Infra — operacional
+
+- **Qdrant**: podman (`qdrant-t20`, 6335→6333), dados persistentes.
+  *Quirk visto hoje:* container "healthy" mas **forward de porta morto**
+  (connection refused no host) → `podman restart qdrant-t20` resolve.
+  Sem servidor, o código cai para o embutido `./qdrant_t20_local` (silencioso
+  na avaliação — sempre conferir `🔗 Qdrant servidor` no log).
+- Eval completo: ~48 min (pacing 13 s × 61 + LLM); log sai bufferizado sem TTY
+  — progresso real no JSON parcial (`registros` gravados por query).
+- **Rede caída = trava silenciosa no Hub HuggingFace** ao carregar embeddings
+  (processo "pendurado" minutos sem erro) → rodar scripts com
+  `HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1` (cache local carrega em ~2 s).
+- Retrieval "isolado" (sem LLM) custa ~12 s/query — re-score das 61 leva
+  ~13 min, não é instantâneo.
+- Caches que **não devem ser apagados**: `traducoes_cache.json` (reformulações —
+  mantém o A/B estável; é por isso que a retrieval de `posguard` saiu
+  idêntica à `qorig`, Jaccard 1,00), `juiz_cache.json` (só acrescenta;
+  `M` no git status é esperado).
+- Não commitados por escolha: `log_decompor_gate.txt`, `log_fr_l12_posguard.txt`,
+  `opencode.json`, `skills-lock.json`. Regra `.gitignore` `*.md` ignora
+  este arquivo, `ARQUITETURA.md` e o histórico `CONTEXTO_SESSAO.md`.
+- Lint = 6 erros é **baseline herdada**; `make check` falha nesses 6 desde sempre.
+
+## 4. Diagnóstico — por que 70,8% e não 85–90%
+
+Retrieval e reformulação **idênticos** entre runs (Jaccard 1,00; cache) — só a
+resposta mudou. Das **95 citações** de `posguard` (59 na `qorig`, +61%):
+
+| Categoria | qorig | posguard | Veredito |
+|---|---|---|---|
+| ok (bate com contexto) | 50 (85%) | 59 (62%) | grounded |
+| **ENTIDADE** — citou `[Caído > Fonte]` em vez de `[Condições > Fonte]`, mas `# Caído` está no contexto e a fonte bate | 0 | **7** | **falso-negativo do matching** — a citação resolve para um chunk real |
+| **TABELA_FORA** — citou tabela que nem foi recuperada (ex.: `14` recusa e "lista 7 fontes consultadas" com 1 real) | 4 | **22** | 0% correto — over-citation puxado pelo novo prompt |
+| FONTE_FORA — fonte inventada (ex.: `condiciones > … juego del ano`) | 5 | 7 | 0% correto |
+
+- **Fix A validado com re-score exato** (fonte bate + título no contexto =
+  fundamentada; contexto re-batido idêntico em 0/61, sem LLM):
+  70,8% → **81,1%**. Queries: `01, 19, 20, 23, 26, 50` → 100%, `03` → 25%.
+- O resto do gap é **TABELA_FORA** (modelo citando o que não consultou) — é
+  comportamento de geração, não de matching. Ex.: `43` é **recusa falsa**
+  (contexto tinha `[Dinheiro Inicial > Compendio T20]`, cobertura 100%).
+  **Fix B** (prompt calibrado, §2.3) ataca exatamente isso — medir na
+  próxima re-rodada oficial.
+- Retrieval está saudável: cobertura 96%, juiz 7,69. Foco é precisão da citação.
+
+## 5. Decisão §5 — RESOLVIDA (A + B implementados)
+
+O usuário escolheu a opção **C** (A + B): os dois polimentos foram
+implementados em TDD no mesmo dia (§2.3), com validação do matching por
+re-score sem LLM (**81,1%**, 0 regressões).
+
+**Resultado da re-rodada oficial (`fr_l12_final`, 07/10, 61/61):**
+**70,8% → 79,9%** de groundedness (+9,1pp), zeros 14 → 7, **n/a = 0**,
+juiz estável (7,69 → **7,62**; 90% aprovado), cobertura 96%, citações
+fora 38% → **29%** (26/91). Resíduo: **20 de 26 "fora" ainda são
+TABELA_FORA** (modelo cita tabela real que a retrieval não trouxe — ex.
+`43` cita 5 tabelas de fora) + 3 eco literal do placeholder
+`[Caminho > Fonte]` (queries `02/09/26`) + `45` sem nenhuma citação.
+Risco vigiado (pinado): fonte inventada e heading fora do contexto
+continuam 0.0. Fechar 85–90% exigiria mais um ciclo de geração
+(ex.: instruir "só cite fontes presentes literalmente no contexto" e
+remover o colchete literal do placeholder) — decisão do usuário.
+
+## 6. Comandos de retomada
+
+```bash
+make qdrant-status && make qdrant-up        # conferir servidor antes de eval
+make test && make lint                      # 159 pass / 6 baseline
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \   # se a rede cair (ver §3)
+  .venv/bin/python <script>
+.venv/bin/python chat_usuario.py --saida /tmp/smoke.json --apenas 05   # smoke
+.venv/bin/python avaliar.py --etapa <nome> --juiz 2>&1 | tee log_<nome>.txt
+git log --oneline                           # HEAD = c489eed (calibração) sobre 55ef5e5
+```
+
+Artefatos desta sessão: `avaliacao_fr_l12_final.json` (**oficial atual**),
+`log_fr_l12_final.txt`, `avaliacao_fr_l12_posguard.json` /
+`log_fr_l12_posguard.txt` (rodada anterior, comparação), 
+`avaliacao_fr_l12_qorig.json` (baseline de comparação — intocada),
+`tests/test_ground_zero.py` (suite do guard).
+Notas: o `fr_l12_final` foi lançado 2× (o restart do host matou o 1º aos
+20/61; `--continuar` retomou de lá sem repetir queries); `juiz_cache.json`
+ficou com `M` (só acrescenta) — não commitado, como nas rodadas anteriores.

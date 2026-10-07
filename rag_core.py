@@ -2015,7 +2015,7 @@ def recuperar(
 
     if decompor and consulta_rerank.strip():
         vistos = {d.page_content for d in docs}
-        for variante in decompor_consultas(consulta_rerank):
+        for variante in decompor_consulta(consulta_rerank):
             for extra in retriever.base_retriever.invoke(variante):
                 if extra.page_content not in vistos:
                     vistos.add(extra.page_content)
@@ -2371,3 +2371,96 @@ def salvar_sessao_campanha(
         "assuntos_tratados": assuntos,
         "desfecho": desfecho,
     }
+
+def decompor_consulta(consulta: str) -> list[str]:
+    """Decompor pergunta composta em até 3 sub-queries focadas.
+
+    - Perguntas simples/diretas: retorna [consulta] (bypass rápido, zero LLM).
+    - Perguntas compostas/multi-entidade: gera até 3 sub-queries focadas
+      e independentes usando templates de T20 (classe, raça, itens/alimentos).
+
+    A heurística evita chamada de LLM quando a pergunta tem aparência de
+    única intenção, mantendo a busca original intacta.
+    """
+    consulta = consulta.strip()
+    if not consulta:
+        return []
+
+    # ---- Bypass: pergunta simples (único tópico) ----
+    if _eh_pergunta_simples(consulta):
+        return [consulta]
+
+    # ---- Decompor pergunta composta ----
+    sub: list[str] = []
+    texto = consulta.lower()
+
+    # 1. Extrair classe/mencão de personagem
+    classe = _extrair_classe(texto)
+    if classe and len(sub) < 3:
+        sub.append(f"Atributos, pericias e habilidades da classe {classe.title()}")
+
+    # 2. Tópico raça (sempre que houver pergunta de raça no original)
+    if len(sub) < 3:
+        sub.append("Racas com bonus em Inteligencia ou Oficio")
+
+    # 3. Tópico itens/alimentos para a classe
+    if len(sub) < 3:
+        nome = classe.title() if classe else "personagem"
+        sub.append(f"Alimentos e pocoes com bonus para {nome}")
+
+    # Preencher o restante com a consulta original para garantir 3 itens
+    while len(sub) < 3:
+        sub.append(consulta)
+
+    return sub[:3]
+
+
+def _eh_pergunta_simples(consulta: str) -> bool:
+    """Heurística: retorna True se a pergunta parecer de único tópico.
+
+    Critérios:
+    - No máximo 1 interrogação final e não há conectores lógicos
+      ('e', 'ou') ligando tópicos distintos.
+    - Padrões de pergunta direta: 'qual a', 'como funciona', 'onde está'
+    """
+    if consulta.count("?") <= 1:
+        lower = consulta.lower()
+        if " e " in lower or " ou " in lower:
+            return not any(
+                conn in lower for conn in ["com", "sem", "possui", "tem"]
+            )
+        return True
+    return False
+
+
+def _extrair_classe(texto: str) -> str | None:
+    """Extrair o nome da classe de personagem do texto em minúsculas.
+
+    Padrões procurados (ordem de prioridade):
+    - 'para um <classe>'
+    - 'classe <nome>'
+    - '<Nome> inventor' (ex: 'inventor' após nome próprio)
+    - Padrões capitalizados no início de frase
+    """
+    import re as _re
+    padroes = [
+        r"para um\s+(\w+)",
+        r"classe\s+(\w+)",
+        r"(\w+)\s+inventor",
+        r"\b([A-Z][a-z]{3,10})\s+da\s+classe\b",
+    ]
+    for padrao in padroes:
+        m = _re.search(padrao, texto)
+        if m:
+            return m.group(1)
+    # Fallback: tentar achar a primeira palavra capitalizada que pareça uma classe
+    for palavra in texto.split():
+        if palavra[0].isupper() and len(palavra) > 2:
+            stop = {"e", "ou", "mas", "porém", "então", "pois"}
+            if palavra.lower() not in stop:
+                return palavra
+    return None
+
+
+# Alias para compatibilidade com eventuais imports diretos
+decompor_consulta_single = decompor_consulta

@@ -524,7 +524,8 @@ def avaliar(
             registro["hyde_doc"] = _hyde_doc_do(retriever, reformulada)
 
         if estrategia == "decompor":
-            registro["variantes"] = rag_core.decompor_consultas(caso["consulta"])
+            # as MESMAS sub-queries que o recuperar usou (regra-based, sem LLM)
+            registro["variantes"] = rag_core.decompor_consulta(caso["consulta"])
 
         if juiz:
             registro["juiz"] = juizar(
@@ -633,7 +634,8 @@ def criar_parser() -> argparse.ArgumentParser:
     ap.add_argument("--estrategia", choices=("baseline", "hyde", "decompor"),
                     default="baseline",
                     help="estratégia de recuperação: baseline, hyde ou "
-                         "decompor (3 variações da query por LLM, opt-in)")
+                         "decompor (sub-queries regra-based em perguntas "
+                         "compostas, opt-in)")
     ap.add_argument("--limiar", type=float, default=None,
                     help="corta candidatos com score de rerank abaixo deste "
                          "valor (ex.: 0.70); sem flag = sem corte")
