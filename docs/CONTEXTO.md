@@ -15,7 +15,7 @@
 |---|---|
 | HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
 | Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_multiquery2.json` (07/10, gatilho estrito, `--estrategia decompor`) — grd **77,5%**, **n/a = 0**, cob **96%**, juiz **7,67 · 92% (recorde)**, 41×100% / 14 parciais / 6 zeros. Anteriores: mq(1) 79,6% · final 79,9% — ver §2.4 sobre a banda de ruído |
+| Métrica oficial | `avaliacao_fr_l12_multiquery3.json` (07/10, goldenset **68** com 7 compostas, `--estrategia decompor`) — grd **81,8% (recorde)**, **n/a = 0** (4ª rodada seguida), cob **95,6%**, juiz **7,63 · 90%**, 49×100% / 14 parciais / 5 zeros. Anteriores: mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
 | Pendência | gap → 85–90%: resíduo **32/40 citações fora = TABELA_FORA**; gatilho estrito now dispara em só 1/61 da goldenset — ruído de geração domina o delta (contexto idêntico em 60/61) — ver §2.4 |
@@ -179,6 +179,22 @@ amostragem da geração, ±2pp na banda**. Lição: em 61 queries com
 goldenset single-topic, o feature quase não dispara e o delta entre
 rodadas é regido por geração, não por retrieval — para medir o
 multiquery de verdade, acrescentar perguntas compostas ao goldenset.
+
+**Rodada `fr_l12_multiquery3` (07/10, goldenset 68, 68/68, 0 erros):**
+grd **81,8%** (recorde; só as 61 clássicas: **82,0%**, vs 77,5% no
+mq2 — 10 melhoraram/4 pioraram, ruído de geração favorável), n/a =
+**0** (4ª seguida), juiz **7,63 · 90%**, 49×100% (recorde). **Multi-Query
+pela primeira vez exercitado de verdade**: decomposição em **8/68**
+(a 23 + as 7 novas, todas 2–3 sub-queries do texto do usuário).
+**Das 7 compostas novas: 5 a 100% grd + cob 100% e juiz aprovou
+7/7 (média 7,6)** — `67_soldado` score 9. Fraques: `62` (29%) e `63`
+(33%) — cob 100% mas o modelo citou tabelas de seção não trazidas
+(`classes`, `origens`, `magias`, `poderes...` = TABELA_FORA clássico
+em resposta multi-tabela opinião+dados); juiz ainda aprovou os dois
+com 7,0. `64` tem cob 50% (entidade `caído` fora do top-8).
+**Lições**: o gatilho estrito dispara exatamente onde foi projetado;
+residuo TABELA_FORA migrou para respostas expansivas — próximo
+alvo é o top-8/multi-tabela, não o gatilho.
 
 ---
 
