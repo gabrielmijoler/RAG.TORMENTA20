@@ -164,3 +164,34 @@ def test_recuperar_por_padrao_nao_decompoe(monkeypatch):
     docs = rag_core.recuperar(rerank, "consulta original")
     assert base.consultas == ["consulta original"]
     assert {d.page_content for d in docs} == {"corpo base"}
+
+
+# ---------- goldenset enriquecido com perguntas compostas ----------
+
+def test_goldenset_compostas_disparam_decompor():
+    """As perguntas compostas do goldenset acionam o gatilho estrito e
+    geram sub-queries derivadas do texto do usuário (sem templates)."""
+    import json as _json
+    from pathlib import Path
+
+    caminho = Path(__file__).resolve().parent.parent / "goldenset.jsonl"
+    casos = [_json.loads(l) for l in
+             caminho.read_text(encoding="utf-8").splitlines() if l.strip()]
+    compostas = []
+    for caso in casos:
+        subs = rag_core.decompor_consulta(caso["consulta"])
+        if len(subs) > 1:
+            compostas.append((caso["id"], subs, caso["consulta"]))
+
+    # 1 pré-existente (23_magia_conjurar_monstro) + 5..8 novas compostas
+    assert 6 <= len(compostas) <= 9, sorted(c[0] for c in compostas)
+
+    for _id, subs, consulta in compostas:
+        # toda sub-query é um trecho do próprio texto do usuário
+        for s in subs:
+            base = s.rstrip("?").strip().lower()
+            assert base and base in consulta.lower(), (_id, s)
+        # nenhum template fixo de raça/alimento pode aparecer
+        assert not any("racas com bonus" in s.lower()
+                       or "alimentos e pocoes" in s.lower()
+                       for s in subs), _id
