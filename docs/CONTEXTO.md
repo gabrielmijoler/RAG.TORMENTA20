@@ -15,10 +15,10 @@
 |---|---|
 | HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
 | Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_multiquery4.json` (07/10, goldenset **68**, `--estrategia decompor`, **orçamento dinâmico 12→15**) — grd **80,7%**, **n/a = 0** (5ª rodada seguida), cob **95,6%**, juiz **7,62 · 93% (recorde de aprovação)**, 49×100% / 13 parciais / 6 zeros; citações fora **35/116 (30%, era 37%)**. Anteriores: mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
+| Métrica oficial | `avaliacao_fr_l12_multiquery5.json` (08/10, goldenset **68**, `--estrategia decompor`, **cota de tabelas + guard de reparo**) — grd **81,7%**, **n/a = 0** (6ª rodada seguida), cob **95,6%**, juiz **7,47 · 87%**, 49×100% / 14 parciais / 5 zeros; citações fora **31/112 (28%, recorde)**, **TABELA_FORA 28 (recorde)**. Anteriores: mq(4) 80,7% · 7,62·93% · mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap → 85–90%: TABELA_FORA atacado por **cota de tabelas + guard de reparo** (§2.6) — sonda provou que as tabelas-alvo JÁ estão no pool (corte é pós-rerank/rank 65–142); medir na `fr_l12_multiquery5` |
+| Pendência | gap → 85–90%: guard de reparo **validado** na mq5 (TABELA_FORA 31→28 recorde) mas com **colateral** — prompt do `aviso_reparo` induziu recusa indevida na `64` (juiz 6→0); corrigir prompt + adicionar telemetria dos 2 flags do guard (§2.7), medir na `fr_l12_multiquery6` |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -275,6 +275,49 @@ TABELA_FORA **44 → 31**.
   (reparo pós-geração — 62 tem 4 fora, 63 tem 2); a **Parte A** é
   diversidade estrutural (no-op em 62/63, que já tinham 11–14 tabelas
   distintas no top-15). Medir na `fr_l12_multiquery5`.
+
+### 2.7 Rodada `fr_l12_multiquery5` + diagnóstico do colateral no guard (2026-10-08)
+
+**Rodada `fr_l12_multiquery5` (08/10, 68/68, 0 erros, ~68 min, `--estrategia decompor --juiz`):**
+
+| Métrica | mq(3) | mq(4) | **mq(5)** |
+|---|---|---|---|
+| Groundedness | 81,8% | 80,7% | **81,7%** |
+| Cobertura | 95,6% | 95,6% | **95,6%** |
+| n/a | 0 | 0 | **0** (6ª seguida) |
+| 100% / parciais / zeros | 49/14/5 | 49/13/6 | **49/14/5** |
+| Citações fora | 48/131 (37%) | 35/116 (30%) | **31/112 (28%)** 📉 recorde |
+| TABELA_FORA | 44 | 31 | **28** 📉 recorde |
+| Juiz | 7,63 · 90% | 7,62 · 93% | 7,47 · 87% ⚠️ |
+
+**Atribuição:**
+
+- **Parte B (guard de reparo) validada no alvo**: TABELA_FORA **31 → 28**,
+  cit_fora **30% → 28%**; 10 queries melhoraram / 6 pioraram. Reparações
+  grandes com **contexto byte a byte idêntico** ao da mq4 (⇒ efeito do
+  guard): `14_psicopompo` fora **6→1**, `05_curar` **4→1**, `62` **4→3**
+  (origens ancorada), `60/49/26/23` → 0. Clássicas (61): grd **83,0%**
+  (recorde das 3 rodadas; era 80,8%), fora **24/97** (recorde), juiz
+  **7,64** (empatado com mq4).
+- **Parte A (cota) — efeito medido: ZERO nesta rodada**: os contextos das
+  7 decompostas são idênticos aos da mq4 (já tinham ≥5 tabelas distintas
+  = no-op previsto; o registro `_REGISTRO_PAI`/cota só age onde falta).
+- **Colateral detectado (bug de qualidade no prompt do guard)**:
+  `64_magia_voo` — resposta virou **recusa** ("Não encontrei a magia Voo")
+  com o contexto **idêntico que CONTÉM Voo** → juiz **6→0** (grd ficou
+  100% — recusa fundamentada). Causa: cláusula
+  `"se o contexto não cobrir a regra, recuse..."` do `aviso_reparo`.
+  `68`: repair disparou mas não converteu (2 fora no final — teto de 2
+  chamadas), grd 100%→33% por 2 citações novas com contexto idêntico.
+- **Queda do juiz (7,62 → 7,47) 100% nas 7 novas**: juiz das clássicas
+  7,64 → **7,64** (idêntico); das novas 7,43 → **6,0** (`64`: 0 pela
+  recusa, `63`: 4, `68`: grd 100→33) = ruído de geração + colateral.
+
+**Ações derivadas (esta sessão)**: (1) reescrever `aviso_reparo` para
+preservar conteúdo e proibir recusa quando a informação está nos trechos;
+(2) telemetria no avaliador — `guard_reparo_disparado` e
+`guard_sem_citacao_disparado` no registro de cada query (hoje o disparo
+é inferido, não medido). Medir o delta na `fr_l12_multiquery6`.
 
 ---
 
