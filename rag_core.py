@@ -1878,7 +1878,9 @@ def montar_retriever(
     )
 
 
-def _diversificar(ranked: list[Document], top_n: int) -> list[Document]:
+def _diversificar(
+    ranked: list[Document], top_n: int, cota_tabelas: int = 0
+) -> list[Document]:
     """Top-`top_n` com no maximo 1 chunk por registro (Tabela+Nome).
 
     O rerank puro devolveva 2 chunks do mesmo registro (ex.: 'Habilidades'
@@ -1887,19 +1889,42 @@ def _diversificar(ranked: list[Document], top_n: int) -> list[Document]:
     no rank 10; o registro com a entidade 'sucesso' na 12, no 9). Chunk
     repetido de um registro ja representado nao acrescenta nada a resposta;
     as vagas liberadas sao preenchidas em ordem de score.
+
+    `cota_tabelas` (0 = desligada) garante no minimo N tabelas DISTINTAS:
+    o melhor chunk de cada tabela ausente entra ANTES do preenchimento por
+    score, mesmo estando fora do top — o rerank em ingles (ms-marco)
+    enterrava tabelas de secao nos ranks 60+. Best-effort: pool com menos
+    tabelas que a cota devolve o topo completo, sem crash.
     """
     vistos: set = set()
-    sel: list[Document] = []
-    resto: list[Document] = []
+    prim: list[Document] = []   # 1o chunk por registro, ordem de score
+    resto: list[Document] = []  # duplicatas, ordem de score
     for d in ranked:
         chave = (d.metadata.get("Tabela"), d.metadata.get("Nome"))
         if chave not in vistos:
             vistos.add(chave)
-            sel.append(d)
+            prim.append(d)
         else:
             resto.append(d)
-        if len(sel) >= top_n:
+
+    sel_ids: set = set()
+    if cota_tabelas > 0:
+        tabelas: set = set()
+        for d in prim:
+            tabela = d.metadata.get("Tabela")
+            if tabela in tabelas:
+                continue
+            tabelas.add(tabela)
+            sel_ids.add(id(d))
+            if len(tabelas) >= cota_tabelas:
+                break
+
+    for d in prim:
+        if len(sel_ids) >= top_n:
             break
+        sel_ids.add(id(d))
+
+    sel = [d for d in prim if id(d) in sel_ids][:top_n]
     if len(sel) < top_n:
         sel.extend(resto[: top_n - len(sel)])
     return sel[:top_n]
@@ -1961,6 +1986,11 @@ def aplicar_filtros(docs: list[Document], filtros: dict | None) -> list[Document
 # Orçamento dinâmico de contexto: pergunta composta (2+ sub-queries do
 # usuário) abre a janela do corte final para caber as múltiplas tabelas.
 TOP_N_COMPOSTO = 15
+
+# Cota mínima de tabelas distintas na seleção final de uma pergunta
+# composta: o rerank (ms-marco, inglês) enterrava tabelas de seção nos
+# ranks 60+; a cota puxa o melhor chunk de cada tabela ausente.
+COTA_TABELAS_COMPOSTA = 5
 
 
 def recuperar(
@@ -2045,6 +2075,7 @@ def recuperar(
     # simples mantém o configurado. O finally restaura SEMPRE o
     # configurado — o compressor é compartilhado entre queries.
     top_n_final = top_n if len(variantes) <= 1 else TOP_N_COMPOSTO
+    cota_tabelas = COTA_TABELAS_COMPOSTA if len(variantes) > 1 else 0
     compressor.top_n = len(docs)
     try:
         ranked = compressor.compress_documents(docs, consulta_rerank)
@@ -2072,7 +2103,7 @@ def recuperar(
         print("⚠️  limiar ignorado: sem relevance_score não há o que cortar")
         efeito = None
     ranked = _aplicar_limiar(ranked, efeito)
-    return _diversificar(ranked, top_n_final)
+    return _diversificar(ranked, top_n_final, cota_tabelas=cota_tabelas)
 
 
 def montar_cadeia_resposta(system_prompt: str, llm, com_historico: bool = False):

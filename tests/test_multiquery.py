@@ -250,3 +250,56 @@ def test_orcamento_restaura_topn_configurado(monkeypatch):
     rerank = _RerankFalso(base, top_n=12)
     rag_core.recuperar(rerank, "consulta original", decompor=True)
     assert rerank.base_compressor.top_n == 12
+
+
+# ---------- cota mínima de tabelas no diversificar ----------
+
+def _doc_tabela(tabela, nome, corpo):
+    from langchain_core.documents import Document
+    return Document(page_content=corpo, metadata={"Tabela": tabela, "Nome": nome})
+
+
+class _BuscaTabelas:
+    """Pool com o topo (15 primeiros) colapsado em 3 tabelas + 4 depois.
+
+    Simula o rerank que enterra tabelas de seção: sem cota, o top-15
+    pega só Regras/Magias/Chefes mesmo com Origens/Alimentos no pool.
+    """
+
+    def __init__(self):
+        self.docs = []
+        for tabela in ("Regras", "Magias", "Chefes"):
+            for i in range(5):
+                self.docs.append(
+                    _doc_tabela(tabela, f"{tabela}-n{i}", f"corpo {tabela} {i}")
+                )
+        for tabela in ("Origens", "Alimentos", "Ameaças", "Poderes"):
+            for i in range(2):
+                self.docs.append(
+                    _doc_tabela(tabela, f"{tabela}-n{i}", f"corpo {tabela} {i}")
+                )
+
+    def invoke(self, query):
+        return self.docs
+
+
+def test_recuperar_composto_garante_cota_de_tabelas(monkeypatch):
+    """RED: pergunta composta -> cota 5 no _diversificar, mesmo com o
+    topo colapsado em 3 tabelas."""
+    monkeypatch.setattr(rag_core, "decompor_consulta", lambda q: ["sub 1", "sub 2"])
+    base = _BuscaTabelas()
+    rerank = _RerankFalso(base, top_n=12)
+    docs = rag_core.recuperar(rerank, "consulta original", decompor=True)
+    tabelas = {d.metadata["Tabela"] for d in docs}
+    assert len(docs) <= 15, len(docs)
+    assert len(tabelas) >= 5, tabelas
+
+
+def test_recuperar_simples_nao_aplica_cota():
+    """guard: decompor=False -> cota 0, seleção de hoje (3 tabelas no top)."""
+    base = _BuscaTabelas()
+    rerank = _RerankFalso(base, top_n=12)
+    docs = rag_core.recuperar(rerank, "consulta original")
+    tabelas = {d.metadata["Tabela"] for d in docs}
+    assert len(docs) == 12, len(docs)
+    assert len(tabelas) == 3, tabelas

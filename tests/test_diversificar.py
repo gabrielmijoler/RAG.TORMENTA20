@@ -35,3 +35,34 @@ def test_dedup_preserva_ordem_de_score_no_top():
     ]
     sel = _diversificar(docs, top_n=3)
     assert [d.page_content for d in sel] == ["1", "2", "4"]
+
+
+def test_cota_minima_de_tabelas_puxa_tabelas_ausentes_do_score():
+    """RED: topo colapsado numa tabela -> cota=4 garante 4 tabelas distintas.
+
+    Sem a cota, o top-4 seria Regras×3 + Magias (2 tabelas) mesmo com
+    Origens e Ameaças disponíveis no pool.
+    """
+    docs = [
+        _doc("Regras", "A", "r1"),
+        _doc("Regras", "B", "r2"),
+        _doc("Regras", "C", "r3"),
+        _doc("Magias", "M", "m1"),
+        _doc("Origens", "O", "o1"),
+        _doc("Ameaças", "X", "a1"),
+    ]
+    sel = _diversificar(docs, top_n=4, cota_tabelas=4)
+    tabelas = {d.metadata["Tabela"] for d in sel}
+    assert len(sel) == 4, len(sel)
+    assert len(tabelas) == 4, tabelas
+
+
+def test_cota_maior_que_o_pool_e_best_effort():
+    """cota impossível (pool só tem 1 tabela) -> devolve o topo, sem crash."""
+    docs = [
+        _doc("Regras", "A", "r1"),
+        _doc("Regras", "B", "r2"),
+        _doc("Regras", "C", "r3"),
+    ]
+    sel = _diversificar(docs, top_n=3, cota_tabelas=5)
+    assert [d.page_content for d in sel] == ["r1", "r2", "r3"]
