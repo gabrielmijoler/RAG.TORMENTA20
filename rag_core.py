@@ -96,6 +96,10 @@ FERRAMENTA_TS = os.path.join(RAIZ_PROJETO, "tools", "ts_para_registros.mjs")
 CHUNK_SIZE = 3500
 CHUNK_OVERLAP = 400
 
+# Teto do pai na expansão parent-child (98% dos 493 registros fatiados
+# medidos cabem intactos; o maior tem 59.279 chars).
+EXPANSAO_PAI_MAX = 15_000
+
 COLECAO = "tormenta20"
 # Memoria de longo prazo: resumos de sessoes de campanha arquivados pelo chat
 # (dado derivado, independente do REINDEXAR=1 da colecao principal).
@@ -1129,6 +1133,63 @@ def _fatiar(texto: str) -> list[str]:
     return saida or [texto]
 
 
+# Registro PAI por chave (arquivo, export, id | "Tabela|Nome") — populado por
+# montar_chunks() em memória (sem reindex do Qdrant: o payload indexado já
+# carrega arquivo/export/id). Vazio = expansão é no-op bit a bit.
+_REGISTRO_PAI: dict[tuple, str] = {}
+
+
+def _chave_pai(metadata: dict) -> tuple | None:
+    """Chave do registro PAI de um chunk: (arquivo, export, id | Tabela|Nome).
+
+    id vazio cai no par Tabela|Nome (0 colisões medidas nos 493 fatiados).
+    Sem arquivo/export não há como localizar o pai, e sem identificador
+    (sem id e sem Tabela/Nome) não há registro — ambos devolvem None (no-op).
+    """
+    arquivo = str(metadata.get("arquivo") or "")
+    export = str(metadata.get("export") or "")
+    if not arquivo and not export:
+        return None
+    ident = str(metadata.get("id") or "")
+    if not ident:
+        tabela = str(metadata.get("Tabela") or "")
+        nome = str(metadata.get("Nome") or "")
+        if not tabela or not nome:
+            return None
+        ident = f"{tabela}|{nome}"
+    return (arquivo, export, ident)
+
+
+def _expandir_pais(docs: list[Document]) -> list[Document]:
+    """Troca o chunk FILHO recuperado pelo registro PAI completo.
+
+    O fatiamento (CHUNK_SIZE) corta registros grandes e o groundedness mede
+    a citação contra o trecho no contexto — a resposta citando o registro
+    inteiro (correto) "fica de fora" e vira TABELA_FORA. Aqui o filho vira o
+    pai COM o prefixo de procedência `[Tabela > Fonte]`, truncado em
+    EXPANSAO_PAI_MAX; o Document novo herda a metadata (relevance_score do
+    rerank inclusive). Dois filhos do mesmo pai deduplicam para UMA cópia;
+    chave ausente, pai fora do registro ou registro vazio = no-op bit a bit.
+    """
+    saida: list[Document] = []
+    expandidos: set[str] = set()
+    for doc in docs:
+        chave = _chave_pai(doc.metadata)
+        pai = _REGISTRO_PAI.get(chave) if chave is not None else None
+        if pai is None:
+            saida.append(doc)
+            continue
+        prefixo = (f"[{doc.metadata.get('Tabela', '')} > "
+                   f"{doc.metadata.get('Fonte', '')}]\n")
+        conteudo = (prefixo + pai)[:EXPANSAO_PAI_MAX]
+        if conteudo in expandidos:
+            continue
+        expandidos.add(conteudo)
+        saida.append(Document(page_content=conteudo,
+                              metadata=dict(doc.metadata)))
+    return saida
+
+
 def montar_chunks(verbose: bool = True) -> list[Document]:
     """Le os .ts do aTormenta e devolve os blocos indexaveis.
 
@@ -1137,6 +1198,7 @@ def montar_chunks(verbose: bool = True) -> list[Document]:
     usadas pelo filtro, pelo BM25, pelo rerank e pela citacao `Nome [Fonte]`.
     """
     dados = _extrair_fonte_ts(verbose=verbose)
+    _REGISTRO_PAI.clear()  # reingestão não deixa chave órfã da versão anterior
     chunks: list[Document] = []
     contagem: Counter = Counter()
     fontes: Counter = Counter()
@@ -1155,6 +1217,12 @@ def montar_chunks(verbose: bool = True) -> list[Document]:
             fonte = _fonte_do_registro(reg)
             nome = _nome_do_registro(reg)
             tipo = str(reg.get("type") or reg.get("tipo") or "")
+            # registro PAI completo para a expansão parent-child
+            chave = _chave_pai({"arquivo": arquivo, "export": export,
+                                "id": str(reg.get("id") or ""),
+                                "Tabela": tabela, "Nome": nome})
+            if chave is not None:
+                _REGISTRO_PAI[chave] = corpo
             metadata = {
                 "Tabela": tabela,
                 "Fonte": fonte,
@@ -2135,6 +2203,9 @@ def recuperar(
         print("⚠️  limiar ignorado: sem relevance_score não há o que cortar")
         efeito = None
     ranked = _aplicar_limiar(ranked, efeito)
+    # Parent-child: filho -> pai completo ANTES da diversificação (herda o
+    # relevance_score do rerank; dedup/cota/preenchimento seguem valendo).
+    ranked = _expandir_pais(ranked)
     return _diversificar(ranked, top_n_final, cota_tabelas=cota_tabelas)
 
 

@@ -319,6 +319,42 @@ preservar conteúdo e proibir recusa quando a informação está nos trechos;
 `guard_sem_citacao_disparado` no registro de cada query (hoje o disparo
 é inferido, não medido). Medir o delta na `fr_l12_multiquery6`.
 
+### 2.8 Parent-Child Chunking — filho recuperado expandido ao pai completo (2026-10-08)
+
+**Problema**: o fatiamento (`CHUNK_SIZE = 3500`) corta registros grandes —
+493 registros (9,9%) viram 2+ chunks; pai mediano 5.394 chars, máximo
+59.279. O groundedness compara a citação com o chunk **filho** no contexto:
+a resposta citando o registro inteiro (correto) "fica de fora" e vira
+`TABELA_FORA` — cit_fora das mq4/mq5 (30%/28%) tem uma parcela disso.
+
+**Solução (`rag_core.py`, TDD — `tests/test_parent_child.py`, 10 testes)**:
+
+- `_REGISTRO_PAI: dict` — chave `(arquivo, export, id | "Tabela|Nome")`,
+  populado por `montar_chunks()` em memória (clear no início — sem reindex
+  do Qdrant: o payload indexado já carrega `arquivo/export/id`; 0 colisões
+  medidas nos 493 fatiados). Fallback `Tabela|Nome` cobre registro sem `id`.
+- `_expandir_pais(docs)` — troca o filho pelo **pai completo** com o
+  prefixo de procedência `[Tabela > Fonte]`, truncado em
+  `EXPANSAO_PAI_MAX = 15_000` chars (98% dos pais cabem intactos); o novo
+  `Document` herda a metadata (**relevance_score do rerank inclusive**).
+- **Dedup**: dois filhos do mesmo pai → **UMA** cópia do pai no contexto
+  (sem isso, o preenchimento do `_diversificar` re-injetaria o 2º filho).
+- **No-op bit a bit**: registro vazio, metadata incompleta ou chave fora →
+  doc passa intacto (A/B das 61 clássicas preservado).
+- Wiring em `recuperar()`: `ranked = _expandir_pais(ranked)` **antes** de
+  `_diversificar()` (limiar → expansão → diversificação/cota).
+- `avaliar.responder()` agora devolve `(resposta, guarda)` com
+  `guard_reparo_disparado` + `guard_sem_citacao_disparado` (gatilhos:
+  citação fora → aviso_reparo; sem citação → AVISO_CITACAO) — gravação no
+  registro de cada query em `avaliar.py`.
+- `aviso_reparo` reescrito: preserva as informações úteis, manda corrigir
+  **APENAS** as citações e **proíbe recusa** quando a informação está nos
+  trechos (regressão da `64` na mq5).
+
+**Gates**: suíte **197 passed** (187 + 10 novos), lint **6** (baseline).
+**Medir o efeito combinado** (prompt corrigido + telemetria + expansão) na
+`fr_l12_multiquery6`.
+
 ---
 
 ## 3. Infra — operacional
