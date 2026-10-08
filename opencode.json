@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "build",
+  "model": "openrouter/nvidia/nemotron-3.5-lightning:free",
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+  "skills": {
+    "paths": [
+      ".opencode/skills/rag-evaluation",
+      ".opencode/skills/prompt-engineering",
+      ".opencode/skills/embedding-experimentation"
+    ]
+  },
+  "agent": {
+    "rag-code-reviewer": {
+      "description": "Reviews RAG/ML code for retrieval quality, generation guards, and production readiness",
+      "mode": "subagent"
+    },
+    "experiment-runner": {
+      "description": "Runs controlled RAG experiments (A/B tests, component swaps, hyperparameter sweeps)",
+      "mode": "subagent"
+    }
+  },
+  "permission": {
+    "skill": { "*": "allow" },
+    "task": {
+      "rag-code-reviewer": "allow",
+      "experiment-runner": "allow"
+    }
+  }
+}

@@ -10,7 +10,15 @@ Decisões do plano:
 - teto `EXPANSAO_PAI_MAX = 15_000` chars (98% dos 493 pais medidos cabem);
 - `_REGISTRO_PAI` vazio = no-op bit a bit (A/B das 61 clássicas intacto);
 - deduplicação: 2 filhos do mesmo pai -> UMA cópia do pai no contexto;
-- expansão ANTES de `_diversificar` (herda o relevance_score do rerank).
+- expansão ANTES de `_diversificar` (herda o relevance_score do rerank);
+- pai não cabe -> JANELA de EXPANSAO_PAI_MAX posicionada no filho (o corte
+  de cabeça perdia o trecho que o reranker ranqueou no fim do registro);
+- sanidade filho⊂pai: a chave (arquivo, export, id|Tabela|Nome) pode colidir
+  -> se o trecho do filho não existe no pai, o doc passa INTACTO (nunca o
+  pai de outro registro entra no contexto com a nota alta do filho);
+- dedup pela CHAVE do pai (não pelo texto): com janelas diferentes, 2 filhos
+  gerariam 2 textos parciais distintos — a janela fica centrada no 1º filho
+  (maior rank) e filhos seguintes fora da janela perdem a evidência.
 """
 
 import os
@@ -74,7 +82,9 @@ def test_chave_pai_metadata_incompleta_retorna_none():
 # ---------- _expandir_pais ----------
 
 def test_expandir_pais_devolve_pai_completo_com_prefixo(registro_pai):
-    corpo = ("# Bola de Fogo\nDescrição: esfera de fogo.\n"
+    # o filho precisa EXISTIR dentro do pai (formato real: o pedaço vem do
+    # _fatiar do próprio corpo) — fixture fiel à ingestão, assertions iguais
+    corpo = ("# Bola de Fogo\n…parte 1…\nDescrição: esfera de fogo.\n"
              "Efeito: d8 de dano de fogo.")
     registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
     filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n"
@@ -109,20 +119,26 @@ def test_expandir_pais_com_registro_vazio_e_noop_bit_a_bit(registro_pai):
 
 
 def test_expandir_pais_trunca_pai_no_teto(registro_pai):
-    """Pai gigante (max medido = 59.279 chars) truncado em EXPANSAO_PAI_MAX."""
-    registro_pai[rc._chave_pai(METADATA_FILHO)] = "x" * (
-        rc.EXPANSAO_PAI_MAX + 5_000)
+    """Pai gigante (max medido = 59.279 chars) truncado em EXPANSAO_PAI_MAX.
 
-    saida = rc._expandir_pais([_filho("[Magias > T20]\nparte 1")])
+    O trecho fica no MEIO do pai: a janela precisa alcançá-lo (o corte de
+    cabeça antigo perdia qualquer coisa além do teto).
+    """
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = (
+        "x" * 40_000 + "parte 1" + "y" * 20_000)
+
+    saida = rc._expandir_pais([
+        _filho("[Magias > Tormenta20 - Jogo do Ano]\nparte 1")])
 
     assert len(saida[0].page_content) <= rc.EXPANSAO_PAI_MAX
 
 
 def test_expandir_pais_deduplica_dois_filhos_do_mesmo_pai(registro_pai):
-    corpo = "# Bola de Fogo\n" + "corpo do registro. " * 50
+    corpo = ("# Bola de Fogo\nparte 1 do registro. "
+             + "corpo do registro. " * 45 + "\nparte 2 do registro.")
     registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
-    filho_1 = _filho("[Magias > Tormenta20 - Jogo do Ano]\nparte 1")
-    filho_2 = _filho("[Magias > Tormenta20 - Jogo do Ano]\nparte 2")
+    filho_1 = _filho("[Magias > Tormenta20 - Jogo do Ano]\nparte 1 do registro.")
+    filho_2 = _filho("[Magias > Tormenta20 - Jogo do Ano]\nparte 2 do registro.")
 
     saida = rc._expandir_pais([filho_1, filho_2])
 
@@ -185,12 +201,13 @@ def test_recuperar_expande_pais_antes_do_diversificar(registro_pai):
     Sem a expansão+dedup, o _diversificar preencheria as vagas com o 2o
     filho (chunk duplicado do mesmo registro); com ela, só o pai completo.
     """
-    corpo = "# Bola de Fogo\n" + "corpo do registro completo. " * 50
+    corpo = ("# Bola de Fogo\nparte 1\n\n"
+             + "corpo do registro completo. " * 50 + "\n\nparte 2 final")
     registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
     filho_1 = _filho(
         "[Magias > Tormenta20 - Jogo do Ano]\n# Bola de Fogo\nparte 1")
     filho_2 = _filho(
-        "[Magias > Tormenta20 - Jogo do Ano]\n# Bola de Fogo\nparte 2")
+        "[Magias > Tormenta20 - Jogo do Ano]\nparte 2 final")
     retriever = SimpleNamespace(
         base_retriever=_BaseFalsa([filho_1, filho_2]),
         base_compressor=_CompressorFalso(),
