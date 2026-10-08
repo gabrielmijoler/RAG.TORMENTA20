@@ -47,6 +47,7 @@ from rag_core import (
     MODELOS_GRATUITOS,
     PROMPT_TRADUCAO,
     SYSTEM_PROMPT,
+    aviso_reparo,
     citacoes_em,
     e_cota_esgotada,
     e_modelo_indisponivel,
@@ -345,7 +346,8 @@ def reformular(llm, consulta: str, cache: dict) -> str:
 
 
 def responder(llm, rag_chain, sintese, pergunta: str) -> str:
-    """Guard da Regra 2: se vier sem citação, 2ª passada SÓ na síntese.
+    """Guard da Regra 2: sem citação OU com citação fora -> 2ª passada SÓ
+    na síntese (AVISO_CITACAO ou aviso_reparo listando as fontes inválidas).
 
     A re-invocação usa o MESMO `contexto` recuperado pela 1ª passada (nunca
     refaz a busca com a entrada carimbada — query poluída derrubaria o recall
@@ -358,11 +360,27 @@ def responder(llm, rag_chain, sintese, pergunta: str) -> str:
                 with get_openai_callback():
                     resultado = rag_chain.invoke({"input": pergunta})
                     resposta = resultado["answer"]
+                    contexto = resultado["context"]
                     if resposta_sem_citacoes(resposta):
                         resposta = sintese.invoke({
                             "input": pergunta + AVISO_CITACAO,
-                            "context": resultado["context"],
+                            "context": contexto,
                         })
+                    else:
+                        texto_ctx = (
+                            "\n".join(
+                                getattr(d, "page_content", str(d))
+                                for d in contexto
+                            )
+                            if isinstance(contexto, list) else str(contexto)
+                        )
+                        _, fora = partir_citacoes(resposta, texto_ctx)
+                        if fora:
+                            resposta = sintese.invoke({
+                                "input": pergunta + aviso_reparo(
+                                    fora, citacoes_em(texto_ctx)),
+                                "context": contexto,
+                            })
                 return resposta
             except Exception as e:
                 if e_cota_esgotada(e):

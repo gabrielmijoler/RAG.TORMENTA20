@@ -210,3 +210,64 @@ def test_exigir_citacoes_sem_laco_na_segunda_tentativa():
 
     assert exigir_citacoes(gerar, "p") == "insiste sem fonte"
     assert len(chamadas) == 2
+
+
+# ---------- guard de reparo: citação FORA do contexto ----------
+
+def test_aviso_reparo_lista_citacoes_fora_e_fontes_do_contexto():
+    from rag_core import aviso_reparo
+    aviso = aviso_reparo(
+        {"classes > fonte errada"},
+        {"classes > tormenta20 - jogo do ano"},
+    )
+    assert "classes > fonte errada" in aviso
+    assert "classes > tormenta20 - jogo do ano" in aviso
+    assert "[INSTRUÇÃO OBRIGATÓRIA" in aviso
+
+
+def test_exigir_citacoes_repara_citacao_fora_do_contexto():
+    """RED: resposta cita fonte inexistente -> 2ª passada com o aviso de
+    reparo listando a citação inválida (máx. 2 chamadas, como hoje)."""
+    from rag_core import exigir_citacoes
+    chamadas = []
+    tentativas = iter([
+        "Inventor é bom [Classes > Fonte Errada].",
+        "Inventor é bom [Classes > Tormenta20 - Jogo do Ano].",
+    ])
+
+    def gerar(entrada):
+        chamadas.append(entrada)
+        return next(tentativas)
+
+    contexto = "[Classes > Tormenta20 - Jogo do Ano]\n# Inventor\nDescrição"
+    final = exigir_citacoes(gerar, "pergunta", contexto=contexto)
+    assert len(chamadas) == 2, len(chamadas)
+    assert "classes > fonte errada" in chamadas[1].lower()
+    assert "classes > tormenta20 - jogo do ano" in chamadas[1].lower()
+    assert final.startswith("Inventor é bom [Classes >")
+
+
+def test_exigir_citacoes_com_contexto_nao_reinvoca_quando_fundamentado():
+    from rag_core import exigir_citacoes
+    chamadas = []
+
+    def gerar(entrada):
+        chamadas.append(entrada)
+        return "regra [Classes > Tormenta20 - Jogo do Ano] aplicada."
+
+    contexto = "[Classes > Tormenta20 - Jogo do Ano]\n# Inventor"
+    exigir_citacoes(gerar, "pergunta", contexto=contexto)
+    assert len(chamadas) == 1, chamadas
+
+
+def test_exigir_citacoes_sem_contexto_nao_toca_no_fora():
+    """compat: contexto=None -> comportamento antigo intacto (1 chamada)."""
+    from rag_core import exigir_citacoes
+    chamadas = []
+
+    def gerar(entrada):
+        chamadas.append(entrada)
+        return "regra [Classes > Fonte Errada]."
+
+    exigir_citacoes(gerar, "pergunta")
+    assert len(chamadas) == 1, chamadas

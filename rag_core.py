@@ -1528,6 +1528,24 @@ AVISO_CITACAO = (
 )
 
 
+def aviso_reparo(fora: set[str], citacoes_contexto: set[str]) -> str:
+    """Carimbo da 2ª passada: as citações `fora` não existem no contexto.
+
+    Lista as inválidas E as fontes realmente presentes — o modelo reescreve
+    a síntese amarrando cada afirmação a uma fonte que o groundedness
+    reconhece, SEM refazer a busca (mesmo contexto da 1ª passada).
+    """
+    invalidas = ", ".join(f"[{c}]" for c in sorted(fora))
+    validas = ", ".join(f"[{c}]" for c in sorted(citacoes_contexto))
+    return (
+        f"\n\n[INSTRUÇÃO OBRIGATÓRIA: suas citações {invalidas} NÃO existem "
+        f"no contexto. Reescreva citando SOMENTE fontes presentes: "
+        f"{validas or '(nenhuma)'}. É proibido afirmar sem citação; se o "
+        f"contexto não cobrir a regra, recuse citando só as fontes do "
+        f"contexto.]"
+    )
+
+
 def resposta_sem_citacoes(resposta: str) -> bool:
     """Resposta não vazia sem NENHUMA citação [...] — gatilho do guard.
 
@@ -1537,15 +1555,23 @@ def resposta_sem_citacoes(resposta: str) -> bool:
     return bool(texto) and not citacoes_em(texto)
 
 
-def exigir_citacoes(gerar, entrada: str) -> str:
+def exigir_citacoes(gerar, entrada: str, contexto: str | None = None) -> str:
     """Guard da Regra 2: no máximo 2 chamadas de `gerar` — nunca loop.
 
     Se a 1ª geração vier sem citação nenhuma, re-invoca com AVISO_CITACAO
-    anexado à entrada. A 2ª tentativa é devolvida mesmo sem citação (a
-    métrica zera em vez de ficar n/a).
+    anexado à entrada. Com `contexto`, a 2ª passada também dispara quando a
+    resposta citar fonte INEXISTENTE no contexto (`partir_citacoes` ->
+    `aviso_reparo`) — mesma contagem máxima de chamadas. A 2ª tentativa é
+    devolvida mesmo sem conserto (métrica zera em vez de ficar n/a).
     """
     resposta = gerar(entrada)
     if not resposta_sem_citacoes(resposta):
+        if contexto is not None:
+            _, fora = partir_citacoes(resposta, contexto)
+            if fora:
+                resposta = gerar(
+                    entrada + aviso_reparo(fora, citacoes_em(contexto))
+                )
         return resposta
     return gerar(entrada + AVISO_CITACAO)
 

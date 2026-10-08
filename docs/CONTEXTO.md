@@ -18,7 +18,7 @@
 | Métrica oficial | `avaliacao_fr_l12_multiquery4.json` (07/10, goldenset **68**, `--estrategia decompor`, **orçamento dinâmico 12→15**) — grd **80,7%**, **n/a = 0** (5ª rodada seguida), cob **95,6%**, juiz **7,62 · 93% (recorde de aprovação)**, 49×100% / 13 parciais / 6 zeros; citações fora **35/116 (30%, era 37%)**. Anteriores: mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap → 85–90%: **hipótese do orçamento REFUTADA** (§2.5) — `62`/`63` citam tabelas de seção que não entram nem no top-15; TABELA_FORA é **recall**, não capacidade. Próximo alvo: cobertura de tabelas de seção (`classes`, `origens`, `magias`, `poderes`) no pool |
+| Pendência | gap → 85–90%: TABELA_FORA atacado por **cota de tabelas + guard de reparo** (§2.6) — sonda provou que as tabelas-alvo JÁ estão no pool (corte é pós-rerank/rank 65–142); medir na `fr_l12_multiquery5` |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -241,6 +241,40 @@ TABELA_FORA **44 → 31**.
   Próximo alvo: trazer tabelas de seção ao pool — ex.: busca dedicada
   por tabela quando a pergunta é expansiva, ou fazer `_diversificar`
   aceitar cota por TABELA nos compostos.
+
+### 2.6 Cota de Tabelas + Guard de Reparo de Citação (2026-10-07)
+
+- **Sonda read-only** (`montar_retriever` real, `RERANK=flashrank`) nas
+  queries 62/63: as tabelas-alvo **JÁ estão no pool pré-rerank** (62:
+  `classes` 11, `origens` 14, `magias` 2, `poderes da tormenta` 2 de
+  ~200; 63: `poderes de destino` 3, `poderes de magia` 2) — o
+  **fallback de busca dedicada do plano original foi dispensado**. O
+  corte é pós-pool: FlashRank (ms-marco inglês) enterra os alvos nos
+  ranks **65–142**, o limiar 0.35 matou `classes>jgoa` (rank 15) da 62,
+  e rerank por sub-query também não resgata (união top-5/sub sem os
+  alvos). Consequência: cota de score ≤15 não alcança os alvos — o
+  conserto tem de ser **na geração**.
+- **Parte A — cota** (`rag_core.py`): `_diversificar(ranked, top_n,
+  cota_tabelas=0)`; `0` = comportamento de hoje bit a bit (1/registro +
+  preenchimento por score); com cota, o **melhor chunk de cada Tabela
+  distinta** é reservado antes do preenchimento (best-effort se o pool
+  tem menos tabelas). `recuperar()` aplica `COTA_TABELAS_COMPOSTA = 5`
+  **só quando `len(variantes) > 1`** — as 61 clássicas ficam intactas
+  (A/B comparável).
+- **Parte B — guard** (`rag_core.aviso_reparo` +
+  `exigir_citacoes(gerar, entrada, contexto=None)`): a 2ª passada agora
+  também dispara quando `partir_citacoes` achar citação **fora** do
+  contexto, listando as inválidas e as fontes válidas; **máx. 2
+  chamadas preservado**; `contexto=None` mantém o comportamento
+  antigo. Chamadores: `index.py` (chat, contexto = join dos docs) e
+  `avaliar.responder` (eval, mesmo `resultado["context"]` da 1ª passada).
+- **Testes**: 8 novos (4 cota: `test_diversificar` ×2 +
+  `test_multiquery` ×2; 4 guard: `test_ground_zero`) — **175 → 183**,
+  lint **6**.
+- **Expectativa honesta**: alavanco no TABELA_FORA = **Parte B**
+  (reparo pós-geração — 62 tem 4 fora, 63 tem 2); a **Parte A** é
+  diversidade estrutural (no-op em 62/63, que já tinham 11–14 tabelas
+  distintas no top-15). Medir na `fr_l12_multiquery5`.
 
 ---
 

@@ -190,7 +190,9 @@ def gerar_resposta(entrada: str, docs):
 
     Guard da Regra 2 (exigir_citacoes): se a resposta sair sem nenhuma
     citação [...], re-invoca UMA vez com AVISO_CITACAO carimbado — recusa
-    sem fonte também aciona. Máx. 2 chamadas por tentativa de modelo.
+    sem fonte também aciona. Com o contexto dos docs, uma citação FORA do
+    contexto também re-invoca (aviso_reparo com as fontes inválidas e as
+    válidas). Máx. 2 chamadas por tentativa de modelo.
     """
     def gerar(texto: str) -> str:
         with get_openai_callback() as cb:
@@ -206,7 +208,8 @@ def gerar_resposta(entrada: str, docs):
         return saida
 
     def rodar():
-        saida = exigir_citacoes(gerar, entrada)
+        contexto = "\n".join(getattr(d, "page_content", str(d)) for d in docs)
+        saida = exigir_citacoes(gerar, entrada, contexto=contexto)
         if _e_degenerado(saida):
             # loop de lista (ex.: 49x 'T$ X [Alquímicos > …]') — nunca
             # imprimir nem anexar ao histórico; o com_fallback tenta de novo.
