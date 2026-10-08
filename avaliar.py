@@ -71,6 +71,14 @@ CAMPOS_OBRIGATORIOS = ("id", "consulta", "entidades", "resposta_esperada")
 # veredito pago uma única vez, independente de quantas estratégias rodarem.
 ARQUIVO_CACHE_JUIZ = "juiz_cache.json"
 
+# Régua do contexto entregue ao juiz: cota POR DOCUMENTO (todos os docs do
+# top entram, cada um truncado na cota) em vez de cortar a string
+# concatenada nos primeiros N chars — com a expansão parent-child (contexto
+# médio ~20k, pico ~76k) o corte antigo escondia docs inteiros do juiz
+# (Lena rank 2, Exausto rank 8, Voo rank 11 reprovados por "contexto não
+# tem X").
+JUIZ_COTA_DOC = 1_500
+
 # O pacing protege o rerank Cohere (chave Trial: 10 chamadas por minuto; cada
 # query gasta 1) e também a cota diária dos LLMs gratuitos.
 INTERVALO_QUERY = 13
@@ -263,13 +271,62 @@ def _chave_juiz(pergunta: str, top: list, resposta: str | None) -> str:
     return hashlib.sha256(base.encode("utf-8")).hexdigest()[:32]
 
 
+def _cabecalho_e_corpo(doc) -> tuple[str, str]:
+    """(cabecalho, corpo) do doc: primeira linha `[Tabela > Fonte]` se houver."""
+    primeira, _, resto = doc.page_content.partition("\n")
+    primeira = primeira.strip()
+    if re.fullmatch(r"\[[^\]]+\]", primeira):
+        return primeira, resto
+    return "", doc.page_content
+
+
+def _cortar_corpo(corpo: str, cota: int) -> tuple[str, bool]:
+    """Trunca `corpo` na `cota`, no fim de linha/parágrafo (nunca no meio)."""
+    if len(corpo) <= cota:
+        return corpo, False
+    janela = corpo[:cota]
+    corte = janela.rfind("\n")
+    if corte <= 0:
+        corte = janela.rfind(" ")  # sem quebra na janela: fim de palavra
+    if corte <= 0:
+        corte = cota               # linha monstro: único caso de corte duro
+    return corpo[:corte], True
+
+
+def montar_contexto_juiz(top: list, cota: int | None = None) -> tuple[str, dict]:
+    """Contexto do juiz com cota POR DOCUMENTO (todos os docs, rank intacto).
+
+    Cada doc do `top` entra com o cabeçalho de procedência `[Tabela > Fonte]`
+    e no máximo `cota` chars de corpo (`JUIZ_COTA_DOC`), cortado no fim de
+    linha/parágrafo. Diferente do corte antigo (`join(...)[:6000]`), nenhum
+    doc some por ocupar a janela — a amostra é justa em TODOS os ranks.
+
+    Devolve (texto, resumo) com `resumo = {docs, chars, truncados, cota}`;
+    o `juizar` registra o resumo no log da rodada para auditoria.
+    """
+    cota = JUIZ_COTA_DOC if cota is None else cota
+    partes: list[str] = []
+    truncados = 0
+    for doc in top:
+        cabecalho, corpo = _cabecalho_e_corpo(doc)
+        corpo, cortou = _cortar_corpo(corpo, cota)
+        truncados += int(cortou)
+        partes.append("\n".join(p for p in (cabecalho, corpo) if p))
+    texto = "\n---\n".join(partes)
+    return texto, {"docs": len(top), "chars": len(texto),
+                   "truncados": truncados, "cota": cota}
+
+
 def juizar(llm, pergunta: str, top: list, resposta: str | None = None,
            cache: dict | None = None) -> dict | None:
     """LLM-as-Judge: score 0-10 + True/False sobre o `top` recuperado.
 
-    Cacheia por conteúdo (pergunta+contexto+resposta). Resposta inválida do
-    juiz (JSON fora do contrato) pula direto para o próximo modelo; falha
-    total devolve None (o registro fica sem juiz em vez de abortar a rodada).
+    O contexto vai com cota POR DOCUMENTO (`montar_contexto_juiz`) — todos
+    os ranks visíveis, truncados na `JUIZ_COTA_DOC` — e o resumo (docs,
+    chars, truncados) é impresso no log da rodada. Cacheia por conteúdo
+    (pergunta+contexto+resposta). Resposta inválida do juiz (JSON fora do
+    contrato) pula direto para o próximo modelo; falha total devolve None
+    (o registro fica sem juiz em vez de abortar a rodada).
     """
     cache = cache if cache is not None else {}
     chave = _chave_juiz(pergunta, top, resposta)
@@ -277,7 +334,10 @@ def juizar(llm, pergunta: str, top: list, resposta: str | None = None,
     if isinstance(cached, dict) and "score" in cached and "aprovado" in cached:
         return cached
 
-    contexto = "\n---\n".join(d.page_content for d in top)[:6000]
+    contexto, resumo_ctx = montar_contexto_juiz(top)
+    print(f"  juiz contexto: {resumo_ctx['docs']} docs | "
+          f"{resumo_ctx['chars']} chars | cota {resumo_ctx['cota']} chars/doc"
+          f" | truncados {resumo_ctx['truncados']}")
     cadeia = PROMPT_JUIZ | llm
     for modelo in MODELOS_GRATUITOS:
         trocar_modelo(llm, modelo)
