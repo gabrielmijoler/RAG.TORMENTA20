@@ -635,6 +635,9 @@ def avaliar(
 
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
+        # Contexto completo por query (lista de page_content, cabeçalho de
+        # procedência incluso): insumo para re-julgar sem regerar recuperação.
+        registro["contexto"] = [d.page_content for d in top]
         if not so_recuperacao:
             resposta, guarda = responder(llm, top, sintese, reformulada)
             c_resp = citacoes_em(resposta)
