@@ -1138,6 +1138,12 @@ def _fatiar(texto: str) -> list[str]:
 # carrega arquivo/export/id). Vazio = expansão é no-op bit a bit.
 _REGISTRO_PAI: dict[tuple, str] = {}
 
+# Telemetria da ÚLTIMA chamada de _expandir_pais (o avaliar congela uma cópia
+# por pergunta). Baldes: entrada == expandidos + duplicados + sem_pai +
+# chave_divergente; truncados ⊆ expandidos (janela usada, pai > teto);
+# registro == len(_REGISTRO_PAI) — 0 = expansão desativada no processo.
+ULTIMA_EXPANSAO: dict[str, int] = {}
+
 
 def _chave_pai(metadata: dict) -> tuple | None:
     """Chave do registro PAI de um chunk: (arquivo, export, id | Tabela|Nome).
@@ -1185,13 +1191,22 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
     filhos gerariam 2 parciais distintos): a janela fica centrada no 1º
     filho da lista (maior rank) e filhos seguintes fora da janela perdem a
     evidência — aceito, pois o _diversificar já limita 1 chunk por registro.
+
+    A cada chamada limpa e preenche `ULTIMA_EXPANSAO` (telemetria que o
+    avaliar grava por pergunta; a definição dos baldes está na declaração).
     """
     saida: list[Document] = []
     chaves_expandidas: set[tuple] = set()
+    ULTIMA_EXPANSAO.clear()
+    ULTIMA_EXPANSAO.update({"entrada": len(docs), "expandidos": 0,
+                            "sem_pai": 0, "chave_divergente": 0,
+                            "truncados": 0, "duplicados": 0,
+                            "registro": len(_REGISTRO_PAI)})
     for doc in docs:
         chave = _chave_pai(doc.metadata)
         pai = _REGISTRO_PAI.get(chave) if chave is not None else None
         if pai is None:
+            ULTIMA_EXPANSAO["sem_pai"] += 1
             saida.append(doc)
             continue
         prefixo = (f"[{doc.metadata.get('Tabela', '')} > "
@@ -1199,6 +1214,7 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
         corpo = doc.page_content.removeprefix(prefixo)
         alvo = corpo.strip()
         if not alvo:
+            ULTIMA_EXPANSAO["sem_pai"] += 1
             saida.append(doc)
             continue
         # sanidade filho⊂pai (1ª ocorrência): exata, senão âncora de ~80
@@ -1207,9 +1223,11 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
         if not exato:
             pos = pai.find(alvo[:80])
             if pos < 0:
+                ULTIMA_EXPANSAO["chave_divergente"] += 1
                 saida.append(doc)  # chave divergente: intacto
                 continue
         if chave in chaves_expandidas:
+            ULTIMA_EXPANSAO["duplicados"] += 1
             continue  # 2º filho do mesmo pai: UMA cópia (a do 1º rankeado)
         chaves_expandidas.add(chave)
         if len(prefixo) + len(pai) <= EXPANSAO_PAI_MAX:
@@ -1219,6 +1237,8 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
             inicio = pos - max(0, (tam - len(alvo)) // 2)
             inicio = max(0, min(inicio, len(pai) - tam))
             janela = pai[inicio:inicio + tam]
+            ULTIMA_EXPANSAO["truncados"] += 1
+        ULTIMA_EXPANSAO["expandidos"] += 1
         saida.append(Document(page_content=prefixo + janela,
                               metadata=dict(doc.metadata)))
     return saida

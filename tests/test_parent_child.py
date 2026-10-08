@@ -328,3 +328,121 @@ def test_montar_chunks_real_expande_pequeno_e_grande(registro_pai):
     assert len(saida[1].page_content) <= rc.EXPANSAO_PAI_MAX
     assert saida[1].page_content.startswith(prefixo_gr)
     assert alvo_gr[:80] in saida[1].page_content
+
+
+# ---------- ULTIMA_EXPANSAO: telemetria da última expansão ----------
+
+def test_ultima_expansao_conta_chave_divergente(registro_pai):
+    """Colisão Tabela|Nome: intacto + `chave_divergente` = 1."""
+    chave = rc._chave_pai(dict(METADATA_FILHO, id=""))
+    registro_pai[chave] = "# Guerra: outro registro com o mesmo nome"
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n"
+                   "# Bola de Fogo\nesfera de fogo que causa d8", id="")
+
+    rc._expandir_pais([filho])
+
+    s = rc.ULTIMA_EXPANSAO
+    assert s["entrada"] == 1
+    assert s["chave_divergente"] == 1
+    assert s["expandidos"] == 0
+    assert s["registro"] == 1
+
+
+def test_ultima_expansao_registro_vazio_marca_zero(registro_pai):
+    """Registro vazio: saída idêntica e `registro` == 0 (sem expansão)."""
+    docs = [
+        _filho("[Magias > Tormenta20 - Jogo do Ano]\nfilho A"),
+        _filho("[Magias > Tormenta20 - Jogo do Ano]\nfilho B",
+               arquivo="outros.ts", export="regras", id="outro"),
+    ]
+
+    saida = rc._expandir_pais(docs)
+
+    assert saida == docs
+    s = rc.ULTIMA_EXPANSAO
+    assert s["registro"] == 0
+    assert s["entrada"] == 2
+    assert s["sem_pai"] == 2
+    assert s["expandidos"] == 0
+
+
+def test_ultima_expansao_sem_chave_valida_conta_sem_pai(registro_pai):
+    """Metadata sem chave (None) passa intacto e conta em `sem_pai`."""
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = "# pai completo"
+    orfao = Document(page_content="filho órfão", metadata={})
+
+    saida = rc._expandir_pais([orfao])
+
+    assert saida[0] is orfao
+    s = rc.ULTIMA_EXPANSAO
+    assert s["sem_pai"] == 1
+    assert s["expandidos"] == 0
+    assert s["chave_divergente"] == 0
+
+
+def test_ultima_expansao_prefixo_do_filho_nao_conta_divergente(registro_pai):
+    """Filho já prefixado `[Tabela > Fonte]`: prefixo é removido ANTES do
+    find — a expansão funciona e não vira chave divergente."""
+    corpo = "# Bola de Fogo\nd8 de dano de fogo."
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n# Bola de Fogo")
+
+    saida = rc._expandir_pais([filho])
+
+    assert saida[0].page_content == (
+        "[Magias > Tormenta20 - Jogo do Ano]\n" + corpo)
+    s = rc.ULTIMA_EXPANSAO
+    assert s["chave_divergente"] == 0
+    assert s["expandidos"] == 1
+    assert s["truncados"] == 0
+
+
+def test_ultima_expansao_pai_que_cabe_nao_trunca(registro_pai):
+    """Pai dentro do teto: conteúdo = prefixo + pai INTEIRO, truncados 0."""
+    corpo = "# Bola de Fogo\n" + "corpo do registro. " * 100
+    assert len(corpo) < rc.EXPANSAO_PAI_MAX
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n# Bola de Fogo")
+
+    saida = rc._expandir_pais([filho])
+
+    assert saida[0].page_content == (
+        "[Magias > Tormenta20 - Jogo do Ano]\n" + corpo)
+    s = rc.ULTIMA_EXPANSAO
+    assert s["truncados"] == 0
+    assert s["expandidos"] == 1
+
+
+def test_ultima_expansao_janela_conta_truncado_e_invariante(registro_pai):
+    """Janela usada -> truncados 1 (subconjunto de expandidos) e a soma
+    dos baldes fecha com `entrada` (invariante da rodada)."""
+    trecho = "Bola de Fogo causa d10 de dano por rodada."
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = "z" * 40_000 + trecho
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho)
+
+    rc._expandir_pais([filho])
+
+    s = rc.ULTIMA_EXPANSAO
+    assert s["truncados"] == 1
+    assert s["expandidos"] == 1
+    assert s["entrada"] == (s["expandidos"] + s["duplicados"]
+                            + s["sem_pai"] + s["chave_divergente"])
+
+
+def test_ultima_expansao_dedup_por_chave_conta_duplicado(registro_pai):
+    """2 filhos do mesmo pai: 1º expandido, 2º contado como duplicado."""
+    trecho_1 = "trecho do filho ranqueado primeiro"
+    trecho_2 = "trecho do filho ranqueado depois"
+    corpo = ("a" * 20_000 + trecho_1 + "b" * 12_000
+             + trecho_2 + "c" * 12_000)
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
+    filho_1 = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho_1)
+    filho_2 = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho_2)
+
+    rc._expandir_pais([filho_1, filho_2])
+
+    s = rc.ULTIMA_EXPANSAO
+    assert s["entrada"] == 2
+    assert s["expandidos"] == 1
+    assert s["duplicados"] == 1
+    assert s["registro"] == 1

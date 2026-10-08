@@ -312,6 +312,27 @@ def resumo_juiz(registros: list) -> dict:
     }
 
 
+def resumo_expansao(registros: list) -> dict:
+    """Totais da expansão parent-child da rodada (cópias de ULTIMA_EXPANSAO).
+
+    Registros antigos de `--continuar` sem o campo `expansao` são ignorados
+    na soma. `sem_registro` conta as queries em que a expansão estava
+    DESATIVADA (`_REGISTRO_PAI` vazio — processo sem montar_chunks);
+    `maiores` são as 5 queries com maior contexto (chars) gerado.
+    """
+    stats = [r["expansao"] for r in registros if r.get("expansao")]
+    ctx = [(r["id"], r["contexto_chars"]) for r in registros
+           if "contexto_chars" in r]
+    baldes = ("entrada", "expandidos", "sem_pai", "chave_divergente",
+              "truncados", "duplicados")
+    return {
+        "n": len(stats),
+        "sem_registro": sum(1 for s in stats if s.get("registro", 0) == 0),
+        **{b: sum(s.get(b, 0) for s in stats) for b in baldes},
+        "maiores": sorted(ctx, key=lambda p: p[1], reverse=True)[:5],
+    }
+
+
 def reformular(llm, consulta: str, cache: dict) -> str:
     """Reformula para termos do sistema, cacheando para manter o A/B estável.
 
@@ -420,6 +441,21 @@ def buscar(retriever, consulta: str, consulta_real: str | None = None,
     return []
 
 
+def anotar_expansao(registro: dict, top: list) -> None:
+    """Grava a telemetria da expansão parent-child NO registro da query.
+
+    `dict(...)` copia: ULTIMA_EXPANSAO é reescrito a cada chamada de
+    `_expandir_pais`, e no processo de avaliação quem o escreve é só
+    `buscar → recuperar → _expandir_pais` — UMA vez por query, single-thread
+    (a retentativa de 429 do buscar substitui o dict pelo da tentativa que
+    devolveu o `top`). Por isso a chamada logo após a construção do
+    `registro`, antes de responder()/juizar(). `contexto_chars` mede o
+    tamanho do contexto que geração, métricas e juiz consomem.
+    """
+    registro["expansao"] = dict(rag_core.ULTIMA_EXPANSAO)
+    registro["contexto_chars"] = sum(len(d.page_content) for d in top)
+
+
 def _hyde_doc_do(retriever, consulta: str) -> str | None:
     """Documento hipotético gerado para `consulta` (observabilidade do HyDE)."""
     try:
@@ -526,6 +562,7 @@ def avaliar(
                 "trecho": d.page_content[:220],
             } for d in top],
         }
+        anotar_expansao(registro, top)
 
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
@@ -588,6 +625,7 @@ def avaliar(
         "limiar": limiar,
         "n_consultas": len(registros),
         "resumo_juiz": resumo_juiz(registros) if juiz else None,
+        "resumo_expansao": resumo_expansao(registros),
         "registros": registros,
     }
 
@@ -649,6 +687,19 @@ def resumir(resultado: dict) -> None:
                   f"{rj['taxa_aprovacao']:.0%} aprovado | {rj['n']} vereditos")
         else:
             print("JUIZ: nenhum veredito registrado")
+    rexp = resultado.get("resumo_expansao")
+    if rexp and rexp["n"]:
+        print(f"EXPANSÃO: {rexp['expandidos']} pais expandidos | "
+              f"{rexp['truncados']} truncados | "
+              f"{rexp['chave_divergente']} divergentes | "
+              f"{rexp['duplicados']} duplicados | {rexp['sem_pai']} sem_pai")
+        if rexp["maiores"]:
+            print("MAIOR CONTEXTO: "
+                  + " | ".join(f"{i} {c} chars" for i, c in rexp["maiores"]))
+        if rexp["sem_registro"]:
+            print(f"⚠️  EXPANSÃO PARENT-CHILD DESATIVADA: "
+                  f"{rexp['sem_registro']} queries com _REGISTRO_PAI vazio "
+                  "(a expansão não está ativa no processo)")
     modos = Counter(r.get("reranker_usado") or "?" for r in regs)
     print("RERANK (modo por query): "
           + " | ".join(f"{m} {n}" for m, n in modos.most_common()))
