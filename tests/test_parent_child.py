@@ -219,3 +219,112 @@ def test_recuperar_expande_pais_antes_do_diversificar(registro_pai):
     assert saida[0].page_content == (
         "[Magias > Tormenta20 - Jogo do Ano]\n" + corpo
     )
+
+
+# ---------- janela centrada no filho + sanidade de chave (2026-10-08) ----------
+
+def test_expandir_pais_janela_centralizada_no_filho_final(registro_pai):
+    """Pai de 40k com o filho no FINAL: a janela segue o filho, não a cabeça.
+
+    O corte `[:EXPANSAO_PAI_MAX]` mantinha só o começo do pai e descartava
+    exatamente o trecho que o reranker ranqueou.
+    """
+    trecho = "Bola de Fogo causa d10 de dano por rodada."
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = "z" * 40_000 + trecho
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho)
+
+    saida = rc._expandir_pais([filho])
+
+    assert len(saida) == 1
+    assert len(saida[0].page_content) <= rc.EXPANSAO_PAI_MAX
+    assert saida[0].page_content.startswith(
+        "[Magias > Tormenta20 - Jogo do Ano]\n")
+    # o trecho do filho está dentro da janela
+    assert trecho in saida[0].page_content
+
+
+def test_expandir_pais_recusa_pai_de_chave_fallback_divergente(registro_pai):
+    """Colisão no fallback Tabela|Nome: o pai de OUTRO registro não é usado.
+
+    O registro guarda o último elemento da chave; o filho do registro
+    anterior tem o MESMO Tabela|Nome mas outro corpo -> passa intacto em
+    vez de entrar no contexto com a nota alta do rerank do filho.
+    """
+    chave = rc._chave_pai(dict(METADATA_FILHO, id=""))  # fallback Tabela|Nome
+    registro_pai[chave] = "# Guerra: outro registro com o mesmo nome"
+    filho = _filho("[Magias > Tormenta20 - Jogo do Ano]\n"
+                   "# Bola de Fogo\nesfera de fogo que causa d8",
+                   id="")  # mesmo fallback -> mesma chave colidida
+
+    saida = rc._expandir_pais([filho])
+
+    assert saida[0] is filho  # intacto: o trecho do filho não está no pai
+
+
+def test_expandir_pais_dedup_centraliza_janela_no_primeiro_filho(registro_pai):
+    """2 filhos do mesmo pai grande em posições distantes -> UMA cópia.
+
+    A janela ancora no 1º filho (maior rank); o 2º, fora da janela, perde a
+    evidência — dedup pela CHAVE do pai, não pelo texto (com janelas
+    diferentes, o texto seria distinto e viriam 2 parciais).
+    """
+    trecho_1 = "trecho do filho ranqueado primeiro"
+    trecho_2 = "trecho do filho ranqueado depois"
+    corpo = ("a" * 20_000 + trecho_1 + "b" * 12_000
+             + trecho_2 + "c" * 12_000)
+    registro_pai[rc._chave_pai(METADATA_FILHO)] = corpo
+    filho_1 = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho_1)
+    filho_2 = _filho("[Magias > Tormenta20 - Jogo do Ano]\n" + trecho_2)
+
+    saida = rc._expandir_pais([filho_1, filho_2])
+
+    assert len(saida) == 1
+    assert len(saida[0].page_content) <= rc.EXPANSAO_PAI_MAX
+    assert trecho_1 in saida[0].page_content
+    assert trecho_2 not in saida[0].page_content  # fora da janela: perde
+
+
+def test_montar_chunks_real_expande_pequeno_e_grande(registro_pai):
+    """Filhos REAIS da ingestão (registro pequeno + grande) pela expansão.
+
+    Pequeno: o pai inteiro, sem cortar. Grande: janela de no máximo
+    EXPANSAO_PAI_MAX que mantém o PRÓPRIO filho — o corte de cabeça perdia
+    o último pedaço dos pais maiores que o teto.
+    """
+    if shutil.which("node") is None or not os.path.isdir(rc.PASTA_DADOS):
+        pytest.skip("Node ou ../aTormenta/data indisponivel")
+    docs = rc.montar_chunks(verbose=False)
+
+    pequeno = None
+    grande = None
+    for doc in docs:
+        chave = rc._chave_pai(doc.metadata)
+        pai = rc._REGISTRO_PAI.get(chave)
+        if pai is None:
+            continue
+        prefixo = (f"[{doc.metadata.get('Tabela', '')} > "
+                   f"{doc.metadata.get('Fonte', '')}]\n")
+        corpo = doc.page_content.removeprefix(prefixo)
+        alvo = corpo.strip()
+        if not alvo or pai.find(alvo[:80]) < 0:
+            continue  # sanidade: filho precisa existir no próprio pai
+        if len(pai) <= rc.CHUNK_SIZE and pequeno is None:
+            pequeno = (doc, pai, prefixo)
+        # filho ALEM do que o corte de cabeça mantinha: o antigo o perdia
+        if (len(pai) > rc.EXPANSAO_PAI_MAX and grande is None
+                and pai.find(alvo[:80]) > rc.EXPANSAO_PAI_MAX - len(prefixo)):
+            grande = (doc, alvo, prefixo)
+
+    assert pequeno is not None, "nenhum filho de registro pequeno no corpus"
+    assert grande is not None, "nenhum filho alem do corte de cabeca"
+    doc_peq, pai_peq, prefixo_peq = pequeno
+    doc_gr, alvo_gr, prefixo_gr = grande
+
+    saida = rc._expandir_pais([doc_peq, doc_gr])
+
+    # pequeno: pai completo, idêntico ao registro renderizado
+    assert saida[0].page_content == prefixo_peq + pai_peq
+    # grande: <= teto e com o próprio filho dentro da janela
+    assert len(saida[1].page_content) <= rc.EXPANSAO_PAI_MAX
+    assert saida[1].page_content.startswith(prefixo_gr)
+    assert alvo_gr[:80] in saida[1].page_content

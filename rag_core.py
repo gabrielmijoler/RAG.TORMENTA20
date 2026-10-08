@@ -1166,13 +1166,28 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
     O fatiamento (CHUNK_SIZE) corta registros grandes e o groundedness mede
     a citação contra o trecho no contexto — a resposta citando o registro
     inteiro (correto) "fica de fora" e vira TABELA_FORA. Aqui o filho vira o
-    pai COM o prefixo de procedência `[Tabela > Fonte]`, truncado em
-    EXPANSAO_PAI_MAX; o Document novo herda a metadata (relevance_score do
-    rerank inclusive). Dois filhos do mesmo pai deduplicam para UMA cópia;
-    chave ausente, pai fora do registro ou registro vazio = no-op bit a bit.
+    pai COM o prefixo de procedência `[Tabela > Fonte]`; o Document novo
+    herda a metadata (relevance_score do rerank inclusive). Dois filhos do
+    mesmo pai deduplicam para UMA cópia; chave ausente, pai fora do
+    registro ou registro vazio = no-op bit a bit.
+
+    Quando o pai não cabe em EXPANSAO_PAI_MAX, em vez do corte de cabeça
+    (que perdia o trecho do fim — o que o reranker ranqueou), entra uma
+    JANELA do mesmo tamanho posicionada no filho. A posição vem de
+    `pai.find(...)`, que SEMPRE devolve a 1ª ocorrência: primeiro o corpo
+    inteiro do filho (sem o prefixo, com strip); se não casar (whitespace
+    do `mesclar_pequenos` ou filho mergeado), a âncora dos primeiros ~80
+    chars. Âncora também não existe = chave divergente: o filho não pertence
+    a este pai (colisão do fallback Tabela|Nome) e o doc passa INTACTO —
+    nunca o pai de outro registro entra no contexto com a nota do filho.
+
+    O dedup é pela CHAVE do pai, não pelo texto (com janelas diferentes, 2
+    filhos gerariam 2 parciais distintos): a janela fica centrada no 1º
+    filho da lista (maior rank) e filhos seguintes fora da janela perdem a
+    evidência — aceito, pois o _diversificar já limita 1 chunk por registro.
     """
     saida: list[Document] = []
-    expandidos: set[str] = set()
+    chaves_expandidas: set[tuple] = set()
     for doc in docs:
         chave = _chave_pai(doc.metadata)
         pai = _REGISTRO_PAI.get(chave) if chave is not None else None
@@ -1181,11 +1196,30 @@ def _expandir_pais(docs: list[Document]) -> list[Document]:
             continue
         prefixo = (f"[{doc.metadata.get('Tabela', '')} > "
                    f"{doc.metadata.get('Fonte', '')}]\n")
-        conteudo = (prefixo + pai)[:EXPANSAO_PAI_MAX]
-        if conteudo in expandidos:
+        corpo = doc.page_content.removeprefix(prefixo)
+        alvo = corpo.strip()
+        if not alvo:
+            saida.append(doc)
             continue
-        expandidos.add(conteudo)
-        saida.append(Document(page_content=conteudo,
+        # sanidade filho⊂pai (1ª ocorrência): exata, senão âncora de ~80
+        pos = pai.find(alvo)
+        exato = pos >= 0
+        if not exato:
+            pos = pai.find(alvo[:80])
+            if pos < 0:
+                saida.append(doc)  # chave divergente: intacto
+                continue
+        if chave in chaves_expandidas:
+            continue  # 2º filho do mesmo pai: UMA cópia (a do 1º rankeado)
+        chaves_expandidas.add(chave)
+        if len(prefixo) + len(pai) <= EXPANSAO_PAI_MAX:
+            janela = pai
+        else:
+            tam = EXPANSAO_PAI_MAX - len(prefixo)
+            inicio = pos - max(0, (tam - len(alvo)) // 2)
+            inicio = max(0, min(inicio, len(pai) - tam))
+            janela = pai[inicio:inicio + tam]
+        saida.append(Document(page_content=prefixo + janela,
                               metadata=dict(doc.metadata)))
     return saida
 
