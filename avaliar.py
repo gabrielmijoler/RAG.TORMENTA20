@@ -76,7 +76,9 @@ ARQUIVO_CACHE_JUIZ = "juiz_cache.json"
 # concatenada nos primeiros N chars — com a expansão parent-child (contexto
 # médio ~20k, pico ~76k) o corte antigo escondia docs inteiros do juiz
 # (Lena rank 2, Exausto rank 8, Voo rank 11 reprovados por "contexto não
-# tem X").
+# tem X"). A versão da régua entra na chave do cache (ver _chave_juiz):
+# mudou a régua, o veredito antigo não é reutilizado.
+JUIZ_REGUA_VERSAO = "juiz_v2"
 JUIZ_COTA_DOC = 1_500
 
 # O pacing protege o rerank Cohere (chave Trial: 10 chamadas por minuto; cada
@@ -262,11 +264,18 @@ def salvar_cache_juiz(cache: dict, caminho: str | None = None) -> None:
 
 
 def _chave_juiz(pergunta: str, top: list, resposta: str | None) -> str:
-    """Chave de conteúdo: contexto identico => veredito identico (cache seguro)."""
+    """Chave de conteúdo + régua: contexto/régua idênticos => mesmo veredito.
+
+    O campo `regra` (`JUIZ_REGUA_VERSAO:JUIZ_COTA_DOC`) versiona a montagem
+    do contexto — trocou a régua, a chave muda e as entradas antigas do
+    `juiz_cache.json` ficam órfãs sem serem reutilizadas (o arquivo não é
+    apagado).
+    """
     base = json.dumps({
         "pergunta": pergunta,
         "contexto": [d.page_content for d in top],
         "resposta": resposta or "",
+        "regra": f"{JUIZ_REGUA_VERSAO}:{JUIZ_COTA_DOC}",
     }, ensure_ascii=False, sort_keys=True)
     return hashlib.sha256(base.encode("utf-8")).hexdigest()[:32]
 

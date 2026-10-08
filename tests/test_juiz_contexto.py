@@ -6,6 +6,9 @@ que o juiz via (28: Lena no rank 2; 49: Exausto no rank 8; 64: Voo no rank
 11 — todos reprovados com justificativa "contexto não tem X").
 """
 
+import hashlib
+import json
+
 from langchain_core.documents import Document
 
 import avaliar
@@ -91,3 +94,36 @@ def test_juizar_registra_resumo_do_contexto_no_log(capsys):
     assert "juiz contexto" in saida
     assert "docs" in saida
     assert str(avaliar.JUIZ_COTA_DOC) in saida
+
+
+def test_chave_do_cache_inclui_a_cota_da_regua(monkeypatch):
+    docs = [_doc_com_header("Deuses", "GoA", "# Lena")]
+
+    chave = avaliar._chave_juiz("Quem é Lena?", docs, None)
+    monkeypatch.setattr(avaliar, "JUIZ_COTA_DOC", 999)
+    chave_cota_diferente = avaliar._chave_juiz("Quem é Lena?", docs, None)
+
+    assert chave != chave_cota_diferente, "cota mudou e a chave nao mudou"
+
+
+def test_chave_do_cache_inclui_a_versao_da_regua(monkeypatch):
+    docs = [_doc_com_header("Deuses", "GoA", "# Lena")]
+
+    chave = avaliar._chave_juiz("Quem é Lena?", docs, None)
+    monkeypatch.setattr(avaliar, "JUIZ_REGUA_VERSAO", "juiz_v9")
+    chave_versao_diferente = avaliar._chave_juiz("Quem é Lena?", docs, None)
+
+    assert chave != chave_versao_diferente, "versao da regua nao entrou na chave"
+
+
+def test_entradas_antigas_do_cache_nao_sao_reutilizadas():
+    """A chave v1 (sem o campo da régua) não casa com a chave da régua nova."""
+    docs = [_doc_com_header("Deuses", "GoA", "# Lena")]
+    base = json.dumps({
+        "pergunta": "Quem é Lena?",
+        "contexto": [d.page_content for d in docs],
+        "resposta": "",
+    }, ensure_ascii=False, sort_keys=True)
+    chave_v1 = hashlib.sha256(base.encode("utf-8")).hexdigest()[:32]
+
+    assert avaliar._chave_juiz("Quem é Lena?", docs, None) != chave_v1
