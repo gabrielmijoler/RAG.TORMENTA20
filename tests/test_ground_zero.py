@@ -225,6 +225,32 @@ def test_aviso_reparo_lista_citacoes_fora_e_fontes_do_contexto():
     assert "[INSTRUÇÃO OBRIGATÓRIA" in aviso
 
 
+def test_aviso_reparo_preserva_conteudo_e_proibe_recusa():
+    """RED: o aviso da 2ª passada manda PRESERVAR o conteúdo útil e corrigir
+    SÓ as citações — nunca emitir recusa quando a informação está nos trechos.
+
+    Regressão da mq5: a cláusula "se o contexto não cobrir a regra, recuse"
+    induziu recusa indevida na 64 ("Não encontrei a magia Voo") com o
+    contexto idêntico CONTENDO a magia (juiz 6→0).
+    """
+    from rag_core import aviso_reparo
+    aviso = aviso_reparo(
+        {"magias > fonte errada"},
+        {"magias > tormenta20 - jogo do ano"},
+    )
+    # preserva o texto bom, corrige só as fontes inválidas
+    assert "informações úteis" in aviso.lower()
+    assert "apenas as citações" in aviso.lower() or "somente as citações" in aviso.lower()
+    # proíbe recusa quando a informação existe no contexto
+    assert "nunca" in aviso.lower() and "recusa" in aviso.lower()
+    assert "presente" in aviso.lower()
+    # cláusula antiga (induceora da recusa) removida
+    assert "se o contexto não cobrir a regra, recuse" not in aviso
+    # listagem de inválidas/validas preservada (contrato do teste acima)
+    assert "magias > fonte errada" in aviso
+    assert "magias > tormenta20 - jogo do ano" in aviso
+
+
 def test_exigir_citacoes_repara_citacao_fora_do_contexto():
     """RED: resposta cita fonte inexistente -> 2ª passada com o aviso de
     reparo listando a citação inválida (máx. 2 chamadas, como hoje)."""
@@ -271,3 +297,87 @@ def test_exigir_citacoes_sem_contexto_nao_toca_no_fora():
 
     exigir_citacoes(gerar, "pergunta")
     assert len(chamadas) == 1, chamadas
+
+
+# ---------- telemetria do guard no avaliador (responder) ----------
+
+class _ChainFalso:
+    """Rag chain de teste: devolve uma resposta fixa com um contexto dado."""
+
+    def __init__(self, resposta: str, contexto: list):
+        self._resposta = resposta
+        self._contexto = contexto
+        self.chamadas = 0
+
+    def invoke(self, entrada: dict) -> dict:
+        self.chamadas += 1
+        return {"answer": self._resposta, "context": self._contexto}
+
+
+class _SinteseFalsa:
+    """Síntese de teste: registra as re-invocações e devolve o reparo."""
+
+    def __init__(self, reparo: str):
+        self._reparo = reparo
+        self.entradas: list[dict] = []
+
+    def invoke(self, entrada: dict) -> str:
+        self.entradas.append(entrada)
+        return self._reparo
+
+
+def _llm_falso():
+    from tests.fakes import FakeChat
+    return FakeChat(respostas=["não deveria ser chamado"])
+
+
+def test_responder_marca_guard_reparo_disparado():
+    """RED: citação FORA do contexto -> 2ª passada no aviso_reparo e
+    guard_reparo_disparado=True no dicionário de telemetria."""
+    from avaliar import responder
+
+    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
+    chain = _ChainFalso("Inventor é bom [Classes > Fonte Errada].", contexto)
+    sintese = _SinteseFalsa("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].")
+
+    resposta, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+
+    assert chain.chamadas == 1
+    assert len(sintese.entradas) == 1, sintese.entradas
+    assert "classes > fonte errada" in sintese.entradas[0]["input"].lower()
+    assert resposta.startswith("Inventor é bom [Classes >")
+    assert guarda["guard_reparo_disparado"] is True
+    assert guarda["guard_sem_citacao_disparado"] is False
+
+
+def test_responder_sem_reparo_quando_fundamentada():
+    """RED: resposta já fundamentada -> nenhuma re-invocação, os dois flags
+    ficam False (mede exatamente quantas 2ª passadas NÃO houve)."""
+    from avaliar import responder
+
+    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
+    chain = _ChainFalso("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].", contexto)
+    sintese = _SinteseFalsa("não deveria ser chamado")
+
+    _, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+
+    assert len(sintese.entradas) == 0, sintese.entradas
+    assert guarda["guard_reparo_disparado"] is False
+    assert guarda["guard_sem_citacao_disparado"] is False
+
+
+def test_responder_marca_guard_sem_citacao_disparado():
+    """RED: resposta sem NENHUMA citação -> 2ª passada com AVISO_CITACAO e
+    guard_sem_citacao_disparado=True (o reparo continua False)."""
+    from avaliar import responder
+
+    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
+    chain = _ChainFalso("Inventor é bom sem fonte nenhuma.", contexto)
+    sintese = _SinteseFalsa("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].")
+
+    _, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+
+    assert len(sintese.entradas) == 1, sintese.entradas
+    assert "[INSTRUÇÃO OBRIGATÓRIA" in sintese.entradas[0]["input"]
+    assert guarda["guard_sem_citacao_disparado"] is True
+    assert guarda["guard_reparo_disparado"] is False

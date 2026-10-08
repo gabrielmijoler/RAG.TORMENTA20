@@ -1532,17 +1532,23 @@ def aviso_reparo(fora: set[str], citacoes_contexto: set[str]) -> str:
     """Carimbo da 2ª passada: as citações `fora` não existem no contexto.
 
     Lista as inválidas E as fontes realmente presentes — o modelo reescreve
-    a síntese amarrando cada afirmação a uma fonte que o groundedness
-    reconhece, SEM refazer a busca (mesmo contexto da 1ª passada).
+    a síntese PRESERVANDO as informações úteis do texto original e trocando
+    APENAS as citações inválidas pelas fontes do contexto, SEM refazer a
+    busca (mesmo contexto da 1ª passada). Recusa só quando a informação
+    realmente não está nos trechos (cláusula condicional — na mq5 a versão
+    antiga induziu recusa indevida na 64 com a magia no contexto).
     """
     invalidas = ", ".join(f"[{c}]" for c in sorted(fora))
     validas = ", ".join(f"[{c}]" for c in sorted(citacoes_contexto))
     return (
         f"\n\n[INSTRUÇÃO OBRIGATÓRIA: suas citações {invalidas} NÃO existem "
-        f"no contexto. Reescreva citando SOMENTE fontes presentes: "
-        f"{validas or '(nenhuma)'}. É proibido afirmar sem citação; se o "
-        f"contexto não cobrir a regra, recuse citando só as fontes do "
-        f"contexto.]"
+        f"no contexto. Mantenha as informações úteis do texto original e "
+        f"corrija APENAS as citações: substitua cada fonte inválida pelas "
+        f"fontes presentes no contexto ({validas or '(nenhuma)'}), copiadas "
+        f"literalmente. É proibido afirmar sem citação; NUNCA emita recusa "
+        f"se a informação estiver presente nos trechos — só recuse se o "
+        f"contexto realmente não contiver a regra, citando as fontes "
+        f"consultadas.]"
     )
 
 

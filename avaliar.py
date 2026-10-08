@@ -345,23 +345,33 @@ def reformular(llm, consulta: str, cache: dict) -> str:
     return consulta
 
 
-def responder(llm, rag_chain, sintese, pergunta: str) -> str:
+def responder(llm, rag_chain, sintese, pergunta: str) -> tuple[str, dict]:
     """Guard da Regra 2: sem citação OU com citação fora -> 2ª passada SÓ
     na síntese (AVISO_CITACAO ou aviso_reparo listando as fontes inválidas).
 
     A re-invocação usa o MESMO `contexto` recuperado pela 1ª passada (nunca
     refaz a busca com a entrada carimbada — query poluída derrubaria o recall
     e mascararia o groundedness, que compara com o `top` de buscar()).
+
+    Telemetria: devolve `(resposta, guarda)` com `guard_reparo_disparado`
+    (citação fora -> aviso_reparo) e `guard_sem_citacao_disparado` (sem
+    nenhuma citação -> AVISO_CITACAO) — mede por rodada quantas 2ª passadas
+    cada gatilho acionou, em vez de inferir pelo histórico.
     """
+    guarda = {"guard_reparo_disparado": False,
+              "guard_sem_citacao_disparado": False}
     for modelo in MODELOS_GRATUITOS:
         trocar_modelo(llm, modelo)
         for _ in range(2):
             try:
+                guarda = {"guard_reparo_disparado": False,
+                          "guard_sem_citacao_disparado": False}
                 with get_openai_callback():
                     resultado = rag_chain.invoke({"input": pergunta})
                     resposta = resultado["answer"]
                     contexto = resultado["context"]
                     if resposta_sem_citacoes(resposta):
+                        guarda["guard_sem_citacao_disparado"] = True
                         resposta = sintese.invoke({
                             "input": pergunta + AVISO_CITACAO,
                             "context": contexto,
@@ -376,12 +386,13 @@ def responder(llm, rag_chain, sintese, pergunta: str) -> str:
                         )
                         _, fora = partir_citacoes(resposta, texto_ctx)
                         if fora:
+                            guarda["guard_reparo_disparado"] = True
                             resposta = sintese.invoke({
                                 "input": pergunta + aviso_reparo(
                                     fora, citacoes_em(texto_ctx)),
                                 "context": contexto,
                             })
-                return resposta
+                return resposta, guarda
             except Exception as e:
                 if e_cota_esgotada(e):
                     break
@@ -391,7 +402,8 @@ def responder(llm, rag_chain, sintese, pergunta: str) -> str:
                     break
                 else:
                     raise
-    return ""
+    return "", {"guard_reparo_disparado": False,
+                "guard_sem_citacao_disparado": False}
 
 
 def buscar(retriever, consulta: str, consulta_real: str | None = None,
@@ -521,7 +533,7 @@ def avaliar(
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
         if not so_recuperacao:
-            resposta = responder(llm, rag_chain, sintese, reformulada)
+            resposta, guarda = responder(llm, rag_chain, sintese, reformulada)
             c_resp = citacoes_em(resposta)
             c_ctx = citacoes_em(contexto)
             grounding = groundedness(resposta, contexto)
@@ -534,6 +546,9 @@ def avaliar(
                 "citacoes_fundamentadas": sorted(fundamentadas),
                 "citacoes_fora_do_contexto": sorted(fora),
                 "groundedness": round(grounding, 3) if grounding is not None else None,
+                # telemetria do guard: quantas 2ª passadas cada gatilho deu
+                "guard_reparo_disparado": guarda["guard_reparo_disparado"],
+                "guard_sem_citacao_disparado": guarda["guard_sem_citacao_disparado"],
             })
             print(f"  cobertura entidades: {hit:.0%} | groundedness: "
                   f"{'n/a' if grounding is None else f'{grounding:.0%}'} "
