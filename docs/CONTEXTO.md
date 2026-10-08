@@ -15,10 +15,10 @@
 |---|---|
 | HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
 | Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_multiquery3.json` (07/10, goldenset **68** com 7 compostas, `--estrategia decompor`) — grd **81,8% (recorde)**, **n/a = 0** (4ª rodada seguida), cob **95,6%**, juiz **7,63 · 90%**, 49×100% / 14 parciais / 5 zeros. Anteriores: mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
+| Métrica oficial | `avaliacao_fr_l12_multiquery4.json` (07/10, goldenset **68**, `--estrategia decompor`, **orçamento dinâmico 12→15**) — grd **80,7%**, **n/a = 0** (5ª rodada seguida), cob **95,6%**, juiz **7,62 · 93% (recorde de aprovação)**, 49×100% / 13 parciais / 6 zeros; citações fora **35/116 (30%, era 37%)**. Anteriores: mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% · final 79,9% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap → 85–90%: resíduo **32/40 citações fora = TABELA_FORA**; atacado agora pelo **orçamento dinâmico** (§2.5: 12 → 15 em pergunta composta) — medir na `fr_l12_multiquery4` |
+| Pendência | gap → 85–90%: **hipótese do orçamento REFUTADA** (§2.5) — `62`/`63` citam tabelas de seção que não entram nem no top-15; TABELA_FORA é **recall**, não capacidade. Próximo alvo: cobertura de tabelas de seção (`classes`, `origens`, `magias`, `poderes`) no pool |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -217,6 +217,30 @@ alvo é o top-8/multi-tabela, não o gatilho.
 - **Hipótese a medir na `fr_l12_multiquery4`**: TABELA_FORA de `62`/`63`
   cai SE as tabelas citadas estavam nas posições 9–15 do pool; se não
   estavam, o problema é recall, não orçamento.
+
+**Rodada `fr_l12_multiquery4` (07/10, 68/68, 0 erros, ~60 min):**
+grd **80,7%** (vs 81,8% mq3 — dentro da banda de ruído ±2pp), cob
+**95,6%** (idêntico), n/a = **0** (5ª seguida), 49×100% (empatado),
+juiz **7,62 · 93% aprovado (recorde; era 90%)**, 63/68 vereditos
+aprovados. Citações fora: **35/116 (30%)** vs 48/131 (37%) —
+TABELA_FORA **44 → 31**.
+
+- **Hipótese REFUTADA onde deveria funcionar**: nas 8 decompostas
+  (orçamento 15) vs mq3 — **0 melhorou / 2 pioraram / 6 iguais**.
+  `62` fora 5→4 e `63` fora 2→2: as tabelas de seção citadas
+  (`classes`, `origens`, `magias`, `poderes da tormenta/de
+  destino/de magia`) **continuam fora até do top-15** → não estão
+  no pool; o gargalo é **recall** (ensemble+rerank não trazem a
+  tabela de seção inteira), não capacidade de corte. `23` caiu
+  100%→0% (ruído de geração — zeros agora: 02, 23, 35, 37, 45, 53).
+- **Queda de TABELA_FORA (44→31) veio das clássicas**: 60 queries de
+  orçamento inalterado (12) com contexto idêntico — 7↑/7↓/47= em grd
+  = variação de geração (citação é texto gerado), não do orçamento.
+- **Conclusão**: orçamento dinâmico **seguro** (zero regressão;
+  aprovado pelo juiz em 93%) mas **não é a alavanca do resíduo**.
+  Próximo alvo: trazer tabelas de seção ao pool — ex.: busca dedicada
+  por tabela quando a pergunta é expansiva, ou fazer `_diversificar`
+  aceitar cota por TABELA nos compostos.
 
 ---
 
