@@ -148,6 +148,31 @@ def test_aviso_citacao_cobra_formato_e_recusa():
     assert "fontes consultadas" in AVISO_CITACAO.lower()
 
 
+def test_aviso_citacao_preserva_conteudo_e_proibe_recusa():
+    """PASSO 2 (RED): a 2ª passada sem citação manda PRESERVAR as informações
+    úteis e ADICIONAR as citações das fontes do contexto — nunca recusar
+    quando a informação está presente nos trechos.
+
+    Regressão mq5/mq6: a cláusula "se o contexto não cobrir a regra,
+    recuse..." induziu recusa indevida (64_magia_voo: juiz 0 em ambas as
+    rodadas — na mq6 pelo gatilho sem-citação, que este prompt carimbava).
+    """
+    from rag_core import AVISO_CITACAO
+    aviso = AVISO_CITACAO.lower()
+    # preserva as informações úteis da resposta original
+    assert "informações úteis" in aviso
+    # adiciona as citações correspondentes às fontes do contexto
+    assert "fontes do contexto" in aviso
+    # proíbe expressamente a recusa quando a informação está presente
+    assert "nunca" in aviso and "recusa" in aviso and "presente" in aviso
+    # cláusula antiga (indutora da recusa) removida
+    assert "se o contexto não cobrir a regra, recuse" not in aviso
+    # contrato dos testes existentes preservado
+    assert "[Caminho > Fonte]" in AVISO_CITACAO
+    assert "fontes consultadas" in aviso
+    assert "[INSTRUÇÃO OBRIGATÓRIA" in AVISO_CITACAO
+
+
 def test_exigir_citacoes_reinvoca_uma_vez_com_aviso():
     from rag_core import AVISO_CITACAO, exigir_citacoes
     chamadas = []
@@ -301,29 +326,19 @@ def test_exigir_citacoes_sem_contexto_nao_toca_no_fora():
 
 # ---------- telemetria do guard no avaliador (responder) ----------
 
-class _ChainFalso:
-    """Rag chain de teste: devolve uma resposta fixa com um contexto dado."""
-
-    def __init__(self, resposta: str, contexto: list):
-        self._resposta = resposta
-        self._contexto = contexto
-        self.chamadas = 0
-
-    def invoke(self, entrada: dict) -> dict:
-        self.chamadas += 1
-        return {"answer": self._resposta, "context": self._contexto}
-
-
 class _SinteseFalsa:
-    """Síntese de teste: registra as re-invocações e devolve o reparo."""
+    """Síntese de teste: registra cada invocação (input e context) e devolve
+    as respostas na ordem — a 1ª é a geração inicial, as demais são os
+    avisos do guard. Invocação a mais que o previsto derruba o teste."""
 
-    def __init__(self, reparo: str):
-        self._reparo = reparo
+    def __init__(self, respostas: list[str]):
+        self._respostas = list(respostas)
         self.entradas: list[dict] = []
 
     def invoke(self, entrada: dict) -> str:
+        assert self._respostas, "síntese invocada mais vezes que o previsto"
         self.entradas.append(entrada)
-        return self._reparo
+        return self._respostas.pop(0)
 
 
 def _llm_falso():
@@ -331,53 +346,81 @@ def _llm_falso():
     return FakeChat(respostas=["não deveria ser chamado"])
 
 
+def _top_falso():
+    return [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n"
+                                  "# Inventor")]
+
+
+def test_responder_gera_e_valida_sobre_o_mesmo_top():
+    """PASSO 1 (RED): a 1ª geração e o guard consomem EXATAMENTE a lista
+    `top` do recuperar() (parent-child/decompor/limiar) — a mesma que
+    alimenta métricas e juiz; sem retriever próprio na cadeia de geração."""
+    from avaliar import responder
+
+    top = _top_falso()
+    sintese = _SinteseFalsa([
+        "Inventor é bom [Classes > Fonte Errada].",
+        "Inventor é bom [Classes > Tormenta20 - Jogo do Ano].",
+    ])
+
+    resposta, guarda = responder(_llm_falso(), top, sintese, "pergunta")
+
+    assert resposta.startswith("Inventor é bom [Classes >")
+    assert sintese.entradas[0]["context"] is top   # 1ª geração: MESMA lista
+    assert sintese.entradas[1]["context"] is top   # re-invocação: mesmo contexto
+    assert len(sintese.entradas) == 2, sintese.entradas
+    assert guarda["guard_reparo_disparado"] is True
+
+
 def test_responder_marca_guard_reparo_disparado():
-    """RED: citação FORA do contexto -> 2ª passada no aviso_reparo e
+    """Citação FORA do `top` -> 2ª passada no aviso_reparo e
     guard_reparo_disparado=True no dicionário de telemetria."""
     from avaliar import responder
 
-    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
-    chain = _ChainFalso("Inventor é bom [Classes > Fonte Errada].", contexto)
-    sintese = _SinteseFalsa("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].")
+    sintese = _SinteseFalsa([
+        "Inventor é bom [Classes > Fonte Errada].",
+        "Inventor é bom [Classes > Tormenta20 - Jogo do Ano].",
+    ])
 
-    resposta, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+    resposta, guarda = responder(_llm_falso(), _top_falso(), sintese,
+                                 "pergunta")
 
-    assert chain.chamadas == 1
-    assert len(sintese.entradas) == 1, sintese.entradas
-    assert "classes > fonte errada" in sintese.entradas[0]["input"].lower()
+    assert len(sintese.entradas) == 2, sintese.entradas
+    assert "classes > fonte errada" in sintese.entradas[1]["input"].lower()
     assert resposta.startswith("Inventor é bom [Classes >")
     assert guarda["guard_reparo_disparado"] is True
     assert guarda["guard_sem_citacao_disparado"] is False
 
 
 def test_responder_sem_reparo_quando_fundamentada():
-    """RED: resposta já fundamentada -> nenhuma re-invocação, os dois flags
-    ficam False (mede exatamente quantas 2ª passadas NÃO houve)."""
+    """Resposta já fundamentada no `top` -> UMA invocação só (a geração),
+    os dois flags False (mede quantas 2ª passadas NÃO houve)."""
     from avaliar import responder
 
-    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
-    chain = _ChainFalso("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].", contexto)
-    sintese = _SinteseFalsa("não deveria ser chamado")
+    sintese = _SinteseFalsa([
+        "Inventor é bom [Classes > Tormenta20 - Jogo do Ano].",
+    ])
 
-    _, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+    _, guarda = responder(_llm_falso(), _top_falso(), sintese, "pergunta")
 
-    assert len(sintese.entradas) == 0, sintese.entradas
+    assert len(sintese.entradas) == 1, sintese.entradas
     assert guarda["guard_reparo_disparado"] is False
     assert guarda["guard_sem_citacao_disparado"] is False
 
 
 def test_responder_marca_guard_sem_citacao_disparado():
-    """RED: resposta sem NENHUMA citação -> 2ª passada com AVISO_CITACAO e
+    """Resposta sem NENHUMA citação -> 2ª passada com AVISO_CITACAO e
     guard_sem_citacao_disparado=True (o reparo continua False)."""
     from avaliar import responder
 
-    contexto = [Document(page_content="[Classes > Tormenta20 - Jogo do Ano]\n# Inventor")]
-    chain = _ChainFalso("Inventor é bom sem fonte nenhuma.", contexto)
-    sintese = _SinteseFalsa("Inventor é bom [Classes > Tormenta20 - Jogo do Ano].")
+    sintese = _SinteseFalsa([
+        "Inventor é bom sem fonte nenhuma.",
+        "Inventor é bom [Classes > Tormenta20 - Jogo do Ano].",
+    ])
 
-    _, guarda = responder(_llm_falso(), chain, sintese, "pergunta")
+    _, guarda = responder(_llm_falso(), _top_falso(), sintese, "pergunta")
 
-    assert len(sintese.entradas) == 1, sintese.entradas
-    assert "[INSTRUÇÃO OBRIGATÓRIA" in sintese.entradas[0]["input"]
+    assert len(sintese.entradas) == 2, sintese.entradas
+    assert "[INSTRUÇÃO OBRIGATÓRIA" in sintese.entradas[1]["input"]
     assert guarda["guard_sem_citacao_disparado"] is True
     assert guarda["guard_reparo_disparado"] is False

@@ -345,19 +345,24 @@ def reformular(llm, consulta: str, cache: dict) -> str:
     return consulta
 
 
-def responder(llm, rag_chain, sintese, pergunta: str) -> tuple[str, dict]:
+def responder(llm, top: list, sintese, pergunta: str) -> tuple[str, dict]:
     """Guard da Regra 2: sem citação OU com citação fora -> 2ª passada SÓ
     na síntese (AVISO_CITACAO ou aviso_reparo listando as fontes inválidas).
 
-    A re-invocação usa o MESMO `contexto` recuperado pela 1ª passada (nunca
-    refaz a busca com a entrada carimbada — query poluída derrubaria o recall
-    e mascararia o groundedness, que compara com o `top` de buscar()).
+    A 1ª geração e as re-invocações usam EXATAMENTE a lista `top` — os docs
+    do rag_core.recuperar() (parent-child, decompor e limiar ativos) — o
+    mesmo contexto das métricas e do juiz; a geração nunca refaz a busca
+    (query poluída derrubaria o recall e mascararia o groundedness, que
+    compara com o `top` de buscar()). Espelha o chat: index.gerar_resposta
+    também sintetiza sobre os docs já recuperados ("nunca mais de uma
+    busca por pergunta").
 
     Telemetria: devolve `(resposta, guarda)` com `guard_reparo_disparado`
     (citação fora -> aviso_reparo) e `guard_sem_citacao_disparado` (sem
     nenhuma citação -> AVISO_CITACAO) — mede por rodada quantas 2ª passadas
     cada gatilho acionou, em vez de inferir pelo histórico.
     """
+    contexto = "\n".join(d.page_content for d in top)
     guarda = {"guard_reparo_disparado": False,
               "guard_sem_citacao_disparado": False}
     for modelo in MODELOS_GRATUITOS:
@@ -367,30 +372,22 @@ def responder(llm, rag_chain, sintese, pergunta: str) -> tuple[str, dict]:
                 guarda = {"guard_reparo_disparado": False,
                           "guard_sem_citacao_disparado": False}
                 with get_openai_callback():
-                    resultado = rag_chain.invoke({"input": pergunta})
-                    resposta = resultado["answer"]
-                    contexto = resultado["context"]
+                    resposta = sintese.invoke({"input": pergunta,
+                                               "context": top})
                     if resposta_sem_citacoes(resposta):
                         guarda["guard_sem_citacao_disparado"] = True
                         resposta = sintese.invoke({
                             "input": pergunta + AVISO_CITACAO,
-                            "context": contexto,
+                            "context": top,
                         })
                     else:
-                        texto_ctx = (
-                            "\n".join(
-                                getattr(d, "page_content", str(d))
-                                for d in contexto
-                            )
-                            if isinstance(contexto, list) else str(contexto)
-                        )
-                        _, fora = partir_citacoes(resposta, texto_ctx)
+                        _, fora = partir_citacoes(resposta, contexto)
                         if fora:
                             guarda["guard_reparo_disparado"] = True
                             resposta = sintese.invoke({
                                 "input": pergunta + aviso_reparo(
-                                    fora, citacoes_em(texto_ctx)),
-                                "context": contexto,
+                                    fora, citacoes_em(contexto)),
+                                "context": top,
                             })
                 return resposta, guarda
             except Exception as e:
@@ -461,12 +458,12 @@ def avaliar(
         llm=llm,
     )
 
-    rag_chain = None
     sintese = None
     if not so_recuperacao:
-        rag_chain = rag_core.montar_rag_chain(retriever, SYSTEM_PROMPT, llm)
-        # cadeia de síntese avulsa: o guard da Regra 2 re-invoca SÓ ela
-        # (mesmo contexto) quando a resposta vem sem citação.
+        # síntese AVULSA sobre o `top` do recuperar() — geração, guard,
+        # métricas e juiz consomem rigorosamente o MESMO contexto (unificação
+        # exposta pela telemetria da mq6); o chat faz o mesmo
+        # (index.gerar_resposta: "nunca mais de uma busca por pergunta").
         sintese = rag_core.montar_cadeia_resposta(SYSTEM_PROMPT, llm)
 
     cache = carregar_cache()
@@ -533,7 +530,7 @@ def avaliar(
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
         if not so_recuperacao:
-            resposta, guarda = responder(llm, rag_chain, sintese, reformulada)
+            resposta, guarda = responder(llm, top, sintese, reformulada)
             c_resp = citacoes_em(resposta)
             c_ctx = citacoes_em(contexto)
             grounding = groundedness(resposta, contexto)

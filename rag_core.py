@@ -1589,10 +1589,14 @@ def citacoes_em(texto: str) -> set[str]:
 # sem nenhuma citação — cobre resposta afirmativa E recusa (que deve citar
 # as fontes consultadas, não ficar "n/a").
 AVISO_CITACAO = (
-    "\n\n[INSTRUÇÃO OBRIGATÓRIA: responda citando cada informação no formato "
-    "exato [Caminho > Fonte], copiado literalmente do contexto. É proibido "
-    "afirmar sem citação; se o contexto não cobrir a regra, recuse citando "
-    "as fontes consultadas (ex.: [Condições > Tormenta20 - Jogo do Ano]).]"
+    "\n\n[INSTRUÇÃO OBRIGATÓRIA: sua resposta saiu sem NENHUMA citação. "
+    "Reescreva PRESERVANDO as informações úteis da resposta e ADICIONE as "
+    "citações correspondentes às fontes do contexto, no formato exato "
+    "[Caminho > Fonte] copiado literalmente do contexto (ex.: "
+    "[Condições > Tormenta20 - Jogo do Ano]). É proibido afirmar sem "
+    "citação; NUNCA emita recusa se a informação estiver presente nos "
+    "trechos — só recuse se o contexto realmente não contiver a regra, "
+    "citando as fontes consultadas.]"
 )
 
 
