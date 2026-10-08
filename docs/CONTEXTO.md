@@ -1,10 +1,10 @@
 # Contexto do projeto — RAG-Tormenta20
 
-> **Arquivo de contexto para retomar sessão/agentes.** Snapshot de **2026-10-06**,
+> **Arquivo de contexto para retomar sessão/agentes.** Snapshot de **2026-10-08**,
 > fim do dia. Complementa `docs/ARQUITETURA.md` (índice técnico, linhas conferidas)
 > e `CONTEXTO_SESSAO.md` na raiz (histórico longo, ignora git — igual este).
-> Números verificados: `make test` = **152 pass**, `make lint` = **6 erros
-> (baseline herdado do MTC)**, goldenset **61** queries, coleção Qdrant
+> Números verificados: `make test` = **215 pass**, `make lint` = **6 erros
+> (baseline herdado do MTC)**, goldenset **68** queries, coleção Qdrant
 > `tormenta20` = **5.674 pontos**.
 
 ---
@@ -13,12 +13,12 @@
 
 | Item | Valor |
 |---|---|
-| HEAD | `df28fb6` — *feat(rag): adiciona decomposicao de consulta e deduplicacao no recuperar* |
-| Suíte | 170 testes ✅ (`tests/` = 18 arquivos de teste, fakes sem rede/LLM) |
-| Métrica oficial | `avaliacao_fr_l12_multiquery5.json` (08/10, goldenset **68**, `--estrategia decompor`, **cota de tabelas + guard de reparo**) — grd **81,7%**, **n/a = 0** (6ª rodada seguida), cob **95,6%**, juiz **7,47 · 87%**, 49×100% / 14 parciais / 5 zeros; citações fora **31/112 (28%, recorde)**, **TABELA_FORA 28 (recorde)**. Anteriores: mq(4) 80,7% · 7,62·93% · mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% |
+| HEAD | `e9bc4f8` — *feat(avaliar): telemetria da expansao (ULTIMA_EXPANSAO, contexto_chars, resumo)* |
+| Suíte | 215 testes ✅ (`tests/` = 20 arquivos de teste, fakes sem rede/LLM) |
+| Métrica oficial | `avaliacao_fr_l12_multiquery7.json` (08/10, goldenset **68**, `--estrategia decompor`, **contexto unificado + parent-child com janela centrada no filho**) — grd **98,5% (recorde histórico)**, cob **97,1%**, **n/a = 0** (8ª rodada seguida), juiz **7,68 · 88,2% (recorde)**; citações fora **0 (recorde)**, **TABELA_FORA 0 (recorde)**. Anteriores: mq(6) 82,1% · 7,35·85% · mq(5) 81,7% · 7,47·87% · mq(4) 80,7% · mq(3) 81,8% · mq(2) 77,5% · mq(1) 79,6% |
 | Groundedness = | fração das citações `[Caminho > Fonte]` da resposta que amarram ao contexto (containment + **título da entidade** `# Nome`); `None` (n/a) **só** em resposta vazia |
 | Guard da Regra 2 | ativo em `index.py` (chat) e `avaliar.py` (eval): 1ª geração sem citação → re-invoca SÓ a síntese com `AVISO_CITACAO` (máx. 2 chamadas) |
-| Pendência | gap → 85–90%: guard de reparo **validado** na mq5 (TABELA_FORA 31→28 recorde) mas com **colateral** — prompt do `aviso_reparo` induziu recusa indevida na `64` (juiz 6→0); corrigir prompt + adicionar telemetria dos 2 flags do guard (§2.7), medir na `fr_l12_multiquery6` |
+| Pendência | gap 85–90% **fechado na mq7** (grd 98,5%, cit_fora 0) — residual: 8 reprovações do juiz (3 novas com `semcit`: `28`/`49`/`53`; `64` subiu 0→4) e a `13_tamanho_criaturas` (grd 0,0 com fora 0 = resposta final sem citação) — diagnóstico somente-leitura das 5 queries antes de qualquer ajuste fino (§2.9) |
 | Decisão §5 | **A (matching) + B (prompt) implementados** em TDD — ver §2.3 |
 
 ## 2. Trabalho desta sessão (2026-10-06)
@@ -354,6 +354,65 @@ a resposta citando o registro inteiro (correto) "fica de fora" e vira
 **Gates**: suíte **197 passed** (187 + 10 novos), lint **6** (baseline).
 **Medir o efeito combinado** (prompt corrigido + telemetria + expansão) na
 `fr_l12_multiquery6`.
+
+### 2.9 mq6 diagnóstica → mq7 recorde — contexto unificado zera TABELA_FORA (2026-10-08)
+
+**mq6 (`fr_l12_multiquery6`, 68 queries) — a rodada que expôs o dual-path:**
+grd **82,1%** (n/a = 0 pela 7ª vez), cob **97,1%**, juiz **7,35 · 85,3%**,
+mas **45 citações fora em 20 queries** (TABELA_FORA na régua uniforme: **40**)
+e a telemetria do guard mostrou que `avaliar.responder()` gerava com o
+`retriever.get_relevant_documents` **cru** (sem rerank, sem expansão, sem
+cota) enquanto as métricas liam o `top` do `recuperar()` — **13 queries**
+tinham citações fora com **os dois flags desligados** (o guard só enxergava a
+metade correta do pipeline).
+
+**Correções (`0bbdeca`)**:
+
+- `responder()` passou a gerar sobre o **mesmo `top`** que `recuperar()`
+  devolveu → um só caminho para métricas, guard e geração (contexto unificado);
+- `AVISO_CITACAO` perdeu a cláusula de recusa ("outra fonte da base") que
+  derrubou a `64_magia_voo` na mq5 (juiz 6→0), sem mudar assinaturas.
+
+**mq7 (`fr_l12_multiquery7`) — efeito combinado**: unificação + **janela da
+expansão centrada no filho** (`2f84a4d`) + `AVISO_CITACAO` novo + **telemetria
+da expansão** (`e9bc4f8`). Gates: suíte **215 passed** (199 + 16), lint **6**.
+
+| métrica | mq6 | mq7 |
+|---|---|---|
+| groundedness | 82,1% | **98,5%** (recorde) |
+| n/a | 0 | 0 (8ª seguida) |
+| cobertura | 97,1% | 97,1% (ranking intacto) |
+| citações fora (total / queries) | 45 / 20 | **0 / 0** (recorde) |
+| TABELA_FORA (régua uniforme) | 40 | **0** (recorde) |
+| juiz | 7,35 · 85,3% | **7,68 · 88,2%** (recorde) |
+| guard reparo / sem-citação | 5 / 8 | 2 / 6 |
+| fora>0 com flags desligadas (dual-path) | 13 | **0** |
+| pareado mq6→mq7 (grd) | — | 19 ↑ · 1 ↓ · 48 = |
+
+Régua uniforme histórica (rótulo exato da tabela): mq3 41 · mq4 28 · mq5 29 ·
+mq6 40 · **mq7 0**.
+
+**Por que zerou**: a janela (`EXPANSAO_PAI_MAX − len(prefixo)`) mantém o
+**corpo exato do filho** no contexto — antes, truncar na cabeça do pai
+destruía o trecho citado; agora, com o mesmo `top` na geração, toda citação
+tem o trecho correspondente à mão. A cobertura não se moveu (retrieval
+idêntico): é o mecanismo amarrando as citações, não ranking novo.
+
+**Telemetria da expansão (soma das 68 queries)**: `entrada 1373 → expandidos
+1285 (93,6%) · duplicados 44 · chave_divergente 27 (2,0%) · sem_pai 17 ·
+truncados 28`; `registro` = **4.544 chaves** constantes (aviso "expansão
+desativada" nunca disparou). Contexto médio **20,4k chars**, máx **86,7k**
+(`30_deus_azgher`).
+
+**Casos-termostmetro**: `14_poder_psicopompo` grd 0,143→1,0 e juiz 0→9 ✅;
+`45_pericia_diplomacia` 13 forás→0 e juiz 3→8 ✅; `64_magia_voo` juiz 0→4
+(melhorou, ainda reprovado). Reprovados do juiz: 10 → **8** — curaram `02`,
+`14`, `43`, `45`; entraram `28_deusa_lena`, `49_condicao_exausto`,
+`53_parceiro_grifo` (os três com `semcit` disparado). Resíduo para diagnóstico
+somente-leitura no JSON (sem código): os 3 novos + `64` + `13_tamanho_criaturas`
+(grd 0,0 com fora 0 = resposta final sem citação nenhuma — dedução fechada
+pelo `groundedness()`: `c_resp = ∅` devolve 0,0 e `partir_citacoes` devolve
+`fora = ∅`).
 
 ---
 
