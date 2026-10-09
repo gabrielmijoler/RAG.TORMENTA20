@@ -1644,13 +1644,18 @@ def citacoes_em(texto: str) -> set[str]:
 # as fontes consultadas, não ficar "n/a").
 AVISO_CITACAO = (
     "\n\n[INSTRUÇÃO OBRIGATÓRIA: sua resposta saiu sem NENHUMA citação. "
-    "Reescreva PRESERVANDO as informações úteis da resposta e ADICIONE as "
-    "citações correspondentes às fontes do contexto, no formato exato "
-    "[Caminho > Fonte] copiado literalmente do contexto (ex.: "
-    "[Condições > Tormenta20 - Jogo do Ano]). É proibido afirmar sem "
-    "citação; NUNCA emita recusa se a informação estiver presente nos "
-    "trechos — só recuse se o contexto realmente não contiver a regra, "
-    "citando as fontes consultadas.]"
+    "A saída DEVE conter pelo menos UMA citação no formato exato "
+    "Nome [Tabela > Fonte] copiada literalmente do contexto. "
+    "Reescrever em prosa sem esse formato é INVÁLIDO. "
+    "Exemplo de saída VÁLIDA: 'A condição Caído é descrita em "
+    "[Condições > Tormenta20 - Jogo do Ano].' "
+    "Exemplo de saída INVÁLIDA: 'Segundo o Compêndio T20, a condição "
+    "Caído impede movimento.' (prosa sem colchete = inválida). "
+    "Reescreva PRESERVANDO as informações úteis e ADICIONE as citações "
+    "correspondentes às fontes do contexto. "
+    "É proibido afirmar sem citação; NUNCA emita recusa se a informação "
+    "estiver presente nos trechos — só recuse se o contexto realmente "
+    "não contiver a regra, citando as fontes consultadas.]"
 )
 
 

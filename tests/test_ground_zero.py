@@ -144,7 +144,7 @@ def test_resposta_sem_citacoes_vazia_nao_e_gatilho():
 
 def test_aviso_citacao_cobra_formato_e_recusa():
     from rag_core import AVISO_CITACAO
-    assert "[Caminho > Fonte]" in AVISO_CITACAO
+    assert "[Tabela > Fonte]" in AVISO_CITACAO
     assert "fontes consultadas" in AVISO_CITACAO.lower()
 
 
@@ -168,7 +168,7 @@ def test_aviso_citacao_preserva_conteudo_e_proibe_recusa():
     # cláusula antiga (indutora da recusa) removida
     assert "se o contexto não cobrir a regra, recuse" not in aviso
     # contrato dos testes existentes preservado
-    assert "[Caminho > Fonte]" in AVISO_CITACAO
+    assert "[Tabela > Fonte]" in AVISO_CITACAO
     assert "fontes consultadas" in aviso
     assert "[INSTRUÇÃO OBRIGATÓRIA" in AVISO_CITACAO
 
@@ -189,6 +189,23 @@ def test_exigir_citacoes_reinvoca_uma_vez_com_aviso():
     assert "Magias" in final
     assert chamadas[0] == "quais regras de flanco?"
     assert AVISO_CITACAO in chamadas[1]
+
+
+def test_aviso_citacao_reforcado_exige_formato_e_exemplos():
+    """Contrato do AVISO_CITACAO reforçado: exige ≥1 citação no formato
+    Nome [Tabela > Fonte], proíbe prosa sem colchete, traz exemplo
+    válido e inválido (sem inventar fontes fora do corpus)."""
+    from rag_core import AVISO_CITACAO
+    # exige formato exato e pelo menos uma citação
+    assert "pelo menos UMA citação" in AVISO_CITACAO
+    assert "Nome [Tabela > Fonte]" in AVISO_CITACAO
+    # proíbe prosa sem colchete
+    assert "prosa sem esse formato é INVÁLIDO" in AVISO_CITACAO
+    # exemplo válido (fonte real do corpus)
+    assert "[Condições > Tormenta20 - Jogo do Ano]" in AVISO_CITACAO
+    # exemplo inválido (prosa sem colchete)
+    assert "Segundo o Compêndio T20" in AVISO_CITACAO
+    assert "sem colchete" in AVISO_CITACAO
 
 
 def test_exigir_citacoes_recusa_sem_citacao_tambem_reinvoca():
