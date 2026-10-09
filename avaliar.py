@@ -719,6 +719,16 @@ def avaliar(
             grounding = groundedness(resposta, contexto)
             # partição com o MESMO matching do groundedness (títulos inclusos)
             fundamentadas, fora = partir_citacoes(resposta, contexto)
+            # estado explícito: ok | fora | sem_citacao | vazia
+            # (computado das variáveis locais ANTES do update)
+            if not (resposta or "").strip():
+                estado = "vazia"
+            elif not c_resp:
+                estado = "sem_citacao"
+            elif fora:
+                estado = "fora"
+            else:
+                estado = "ok"
             registro.update({
                 "resposta": resposta,
                 "citacoes_na_resposta": sorted(c_resp),
@@ -729,8 +739,7 @@ def avaliar(
                 # telemetria do guard: quantas 2ª/3ª passadas cada gatilho
                 "guard_reparo_disparado": guarda["guard_reparo_disparado"],
                 "guard_sem_citacao_disparado": guarda["guard_sem_citacao_disparado"],
-                # estado explícito: ok | fora | sem_citacao | vazia
-                "estado_citacao": estado_citacao(registro),
+                "estado_citacao": estado,
                 # passadas do guard: [{n, motivo, citacoes, fora}, ...]
                 "passadas": guarda.get("passadas", []),
             })
