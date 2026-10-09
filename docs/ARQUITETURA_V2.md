@@ -49,6 +49,9 @@ Dataclasses congeladas, sem lógica:
 - A semelhança vem do `difflib.SequenceMatcher`, da biblioteca padrão (sem dependência nova).
 - **Limiares fixados:** 0,80 para nomes de 2+ palavras e 0,90 para nomes de 1 palavra com 6+ letras.
 - Palavras comuns do português ("cura", "grande", "ácido"...) só ligam por nome exato e com uma pista da tabela por perto ("magia", "condição", "perícia").
+- Palavras de categoria ("magia", "condição", "habilidades", "parceiro"...) são **pista, nunca nome**, quando aparecem sozinhas. No corpus real elas também são nomes: Arcanista > Magias, Regras > Habilidades, Magias > Condição.
+- A ligação aproximada não atravessa pontuação nem usa palavra comum: no corpus real, "dano, a área" ficou parecido com "Dança da Areia" (0,80).
+- Tabelas de categoria ("Categorias de Poder", "Categorias de Equipamento") perdem o empate para a entidade: "bárbaro" é a classe, não a categoria.
 - Medido no caso semente: "machado toureo" contra "Machado Táurico" dá 0,828; "bugber" contra "bugbear" dá 0,923; "machado taurino" dá 0,933.
 
 **Empates e nomes repetidos** (160 nomes se repetem no corpus: 155 entre tabelas diferentes, 5 na mesma tabela com fontes diferentes). A política decide nesta ordem e para no primeiro critério que desempata:
@@ -86,10 +89,10 @@ Dataclasses congeladas, sem lógica:
 - **Orçamento de chunks** (valores iniciais, constantes nomeadas, a calibrar): `direta` 8; `multiparte` 4 por necessidade, de 8 a 15; `build` 15; confiança baixa 12, como na v1.
 
 ## 6. Confiança e uso do LLM (opção C, fixada)
-Regra determinística:
-- **alta:** pelo menos 1 ligação exata ou por apelido, nenhuma aproximada abaixo de 0,85 e nenhum empate sem desempate;
-- **média:** só ligações aproximadas acima do limiar, ou ambiguidade resolvida pela política;
-- **baixa:** `sem_nome`, `fora_de_escopo`, empate sem desempate, ou trecho ligado só por palavra comum.
+Regra determinística (`rag_v2/leitura.py`):
+- **alta:** todas as ligações exatas ou por apelido e nenhum empate sem desempate;
+- **média:** alguma aproximada abaixo de 0,85, só ligações aproximadas, ou empate sem desempate. No empate, a política traz **todas** as alternativas como necessidades, cada uma com vaga, em vez de descartar a leitura;
+- **baixa:** `sem_nome`, `fora_de_escopo`, ou trecho ligado só por palavra comum.
 
 | Confiança | Reformulação e tradução por LLM |
 |---|---|
