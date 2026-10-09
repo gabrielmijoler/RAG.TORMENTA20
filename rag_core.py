@@ -41,6 +41,7 @@ from langchain_cohere import CohereRerank
 from langchain_community.document_compressors import FlashrankRerank
 from langchain_community.retrievers import BM25Retriever
 from langchain_core.documents import BaseDocumentCompressor, Document
+from langchain_core.embeddings import Embeddings
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.outputs import ChatResult
 from langchain_core.prompts import ChatPromptTemplate
@@ -102,7 +103,22 @@ CHUNK_OVERLAP = 400
 # medidos cabem intactos; o maior tem 59.279 chars).
 EXPANSAO_PAI_MAX = 15_000
 
-COLECAO = "tormenta20"
+COLECAO_PADRAO = "tormenta20"
+# Coleção paralela, indexada com os prefixos do e5 (EMBEDDING_PREFIXOS=e5): vetores
+# com e sem prefixo não podem dividir a mesma coleção.
+COLECAO_E5_PREFIXOS = "tormenta20_e5p"
+
+
+def embedding_prefixos_ativo() -> bool:
+    """EMBEDDING_PREFIXOS=e5 liga os prefixos `query: `/`passage: ` (padrão: desligado)."""
+    return os.environ.get("EMBEDDING_PREFIXOS", "").strip().lower() == "e5"
+
+
+def nome_da_colecao() -> str:
+    return COLECAO_E5_PREFIXOS if embedding_prefixos_ativo() else COLECAO_PADRAO
+
+
+COLECAO = nome_da_colecao()
 # Memoria de longo prazo: resumos de sessoes de campanha arquivados pelo chat
 # (dado derivado, independente do REINDEXAR=1 da colecao principal).
 COLECAO_HISTORICO = "sessoes_campanha"
@@ -1404,14 +1420,38 @@ def escolher_conexao_qdrant() -> dict:
     return _CONEXAO_CACHE
 
 
-_EMBEDDINGS_CACHE: HuggingFaceEmbeddings | None = None
+_EMBEDDINGS_CACHE: Embeddings | None = None
 
 
-def obter_embeddings() -> HuggingFaceEmbeddings:
+class EmbeddingsComPrefixo(Embeddings):
+    """Embrulha um modelo e5: `passage: ` nos trechos indexados, `query: ` nas perguntas.
+
+    O multilingual-e5 foi treinado com esses prefixos; sem eles a similaridade
+    densa perde precisão. Um prefixo já presente não é repetido.
+    """
+
+    PREFIXO_DOCUMENTO = "passage: "
+    PREFIXO_CONSULTA = "query: "
+
+    def __init__(self, base: Embeddings):
+        self.base = base
+
+    def _com(self, prefixo: str, texto: str) -> str:
+        return texto if texto.startswith(prefixo) else prefixo + texto
+
+    def embed_documents(self, textos: list[str]) -> list[list[float]]:
+        return self.base.embed_documents([self._com(self.PREFIXO_DOCUMENTO, t) for t in textos])
+
+    def embed_query(self, texto: str) -> list[float]:
+        return self.base.embed_query(self._com(self.PREFIXO_CONSULTA, texto))
+
+
+def obter_embeddings() -> Embeddings:
     """Instância única do modelo de embeddings (carregada 1x por processo)."""
     global _EMBEDDINGS_CACHE
     if _EMBEDDINGS_CACHE is None:
-        _EMBEDDINGS_CACHE = HuggingFaceEmbeddings(model_name=MODELO_EMBEDDING)
+        base = HuggingFaceEmbeddings(model_name=MODELO_EMBEDDING)
+        _EMBEDDINGS_CACHE = EmbeddingsComPrefixo(base) if embedding_prefixos_ativo() else base
     return _EMBEDDINGS_CACHE
 
 
