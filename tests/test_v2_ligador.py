@@ -208,3 +208,51 @@ def test_pronome_no_fim_da_janela_nao_forma_nome_aproximado(texto):
 def test_nome_real_com_a_mesma_palavra_continua_ligando():
     ligs = ligar("o que faz a resistência elemental do qareen?", _d_resistencia())
     assert {lig.chave.sub for lig in ligs} >= {"Resistência Elemental"}
+
+
+# --- achados da rodada sintética (semente 7) ---
+
+def _d_sint():
+    return construir({"tabelas": [
+        {"arquivo": "deuses.ts", "export": "gods", "elementos": [
+            {"name": "Valkaria", "origin": JA}, {"name": "Thyatis", "origin": JA}]},
+        {"arquivo": "conditions.ts", "export": "conditions", "elementos": [
+            {"name": "Confuso", "origin": JA}, {"name": "Fraco", "origin": JA}]},
+        {"arquivo": "spells.ts", "export": "spells", "elementos": [
+            {"name": "Arma Espiritual", "origin": JA}, {"name": "Santuário", "origin": JA}]},
+    ]})
+
+
+@pytest.mark.parametrize("digitado,esperado", [
+    ("vlakaria", "Valkaria"),      # transposição
+    ("cofnuso", "Confuso"),        # transposição
+    ("valkria", "Valkaria"),       # letra a menos
+    ("santario", "Santuário"),     # letra trocada
+    ("thyatiss", "Thyatis"),       # letra a mais
+])
+def test_erro_de_uma_edicao_em_palavra_longa_liga_como_aproximada(digitado, esperado):
+    lig = ligar(f"qual o efeito de {digitado}", _d_sint())[0]
+    assert lig.chave.nome == esperado and lig.tipo == "aproximada"
+    assert 0.80 <= lig.score < 1.0
+
+
+def test_transposicao_com_ratio_abaixo_de_090_liga_pela_regra_de_uma_edicao():
+    # 'vlakaria' x 'valkaria': ratio 0,875 (< 0,90), mas é UMA transposição de letras vizinhas
+    from difflib import SequenceMatcher
+    assert SequenceMatcher(None, "vlakaria", "valkaria").ratio() < 0.90
+    assert ligar("qual o efeito de vlakaria", _d_sint())[0].chave.nome == "Valkaria"
+
+
+def test_palavra_curta_com_uma_edicao_nao_liga():
+    assert ligar("o que e fracp", _d_sint()) == ()   # 5 letras: abaixo do mínimo
+
+
+def test_nome_que_contem_palavra_comum_pode_ligar_por_aproximacao():
+    lig = ligar("qual o alcance da magia arma espiitual", _d_sint())[0]
+    assert lig.chave.nome == "Arma Espiritual" and lig.tipo == "aproximada"
+
+
+def test_janela_so_de_palavras_comuns_ou_de_categoria_continua_barrada():
+    d = construir({"tabelas": [{"arquivo": "spells.ts", "export": "spells", "elementos": [
+        {"name": "Arma Mágica", "origin": JA}]}]})
+    assert ligar("quais as armas e a defesa", d) == ()

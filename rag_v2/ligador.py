@@ -148,10 +148,28 @@ def _janela_utilizavel(normas: list[str]) -> bool:
 
 
 def _janela_aproximavel(tokens, i: int, j: int) -> bool:
-    """Aproximada só dentro de um trecho sem pontuação e sem palavra comum ou de categoria."""
+    """Aproximada só dentro de um trecho sem pontuação e com ao menos uma palavra
+    própria: 'arma espiitual' pode ser Arma Espiritual, mas 'a arma' sozinha não."""
     if len({t[3] for t in tokens[i:j]}) > 1:
         return False
-    return not any(t[0] in PALAVRAS_COMUNS or _e_categoria(t[0]) for t in tokens[i:j])
+    return any(t[0] not in PALAVRAS_COMUNS and not _e_categoria(t[0])
+               and t[0] not in PALAVRAS_VAZIAS for t in tokens[i:j])
+
+
+def distancia_edicao(a: str, b: str) -> int:
+    """Edições (inserir, apagar, trocar, transpor letras vizinhas) entre duas palavras."""
+    d = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
+    for i in range(len(a) + 1):
+        d[i][0] = i
+    for j in range(len(b) + 1):
+        d[0][j] = j
+    for i in range(1, len(a) + 1):
+        for j in range(1, len(b) + 1):
+            custo = 0 if a[i - 1] == b[j - 1] else 1
+            d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + custo)
+            if i > 1 and j > 1 and a[i - 1] == b[j - 2] and a[i - 2] == b[j - 1]:
+                d[i][j] = min(d[i][j], d[i - 2][j - 2] + 1)
+    return d[len(a)][len(b)]
 
 
 def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
@@ -166,12 +184,17 @@ def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
     comparador.set_seq2(frase)
     pontuados = []
     for nome in dicionario.nomes_com_palavras(n_palavras):
+        # uma só edição (inclusive transposição) é erro de digitação, mesmo que o
+        # ratio() fique abaixo do limiar: 'vlakaria' x 'valkaria' dá 0,875
+        uma_edicao = (n_palavras == 1 and abs(len(nome) - len(frase)) <= 1
+                      and distancia_edicao(nome, frase) <= 1)
         comparador.set_seq1(nome)
         # filtros baratos primeiro: só calcula o ratio() de quem pode passar
-        if comparador.real_quick_ratio() < limiar or comparador.quick_ratio() < limiar:
+        if not uma_edicao and (comparador.real_quick_ratio() < limiar
+                               or comparador.quick_ratio() < limiar):
             continue
         score = comparador.ratio()
-        if score >= limiar:
+        if score >= limiar or uma_edicao:
             pontuados.append((score, nome))
     if not pontuados:
         return None
