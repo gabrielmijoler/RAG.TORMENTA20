@@ -43,6 +43,18 @@ def _atende(doc: Document, necessidade: Necessidade) -> bool:
     return necessidade.registro is None or doc.metadata.get("Nome") == necessidade.registro
 
 
+def _id(doc: Document) -> str:
+    """'Tabela|Nome': identifica o registro nos rastros (JSON-friendly)."""
+    return f"{doc.metadata.get('Tabela')}|{doc.metadata.get('Nome')}"
+
+
+def _unicos(docs) -> list[str]:
+    vistos: dict[str, None] = {}
+    for doc in docs:
+        vistos.setdefault(_id(doc), None)
+    return list(vistos)
+
+
 def _limiar_efetivo(limiar: float | None, compressor) -> float | None:
     """Mesma precedência da v1: argumento > LIMIAR_RELEVANCIA > padrão do reranker."""
     if limiar is not None:
@@ -105,8 +117,8 @@ def recuperar_v2(retriever, leitura: Leitura, registros: dict, consulta_busca: s
                 vagas -= 1
 
     efeito = _limiar_efetivo(limiar, compressor) if com_rerank else None
-    preenchimento = [d for d in rag_core._aplicar_limiar(ranked, efeito)
-                     if _registro(d) not in escolhidos]
+    aprovados = rag_core._aplicar_limiar(ranked, efeito)
+    preenchimento = [d for d in aprovados if _registro(d) not in escolhidos]
     k = max(leitura.k, len(garantidos))
     final = garantidos + rag_core._diversificar(preenchimento, k - len(garantidos))
     final.sort(key=lambda d: d.metadata.get("relevance_score") or 0, reverse=True)
@@ -116,6 +128,15 @@ def recuperar_v2(retriever, leitura: Leitura, registros: dict, consulta_busca: s
         "garantidos": len(garantidos),
         "k": k,
         "reranker": getattr(compressor, "ultimo_modo", None),
+        # onde cada registro estava em cada etapa (ordem = ordem da etapa):
+        # candidatos -> rerank -> limiar -> garantidos -> final
+        "rastro": {
+            "candidatos": _unicos(candidatos),
+            "rerank": _unicos(ranked) if com_rerank else [],
+            "limiar": _unicos(aprovados) if com_rerank else [],
+            "garantidos": _unicos(garantidos),
+            "final": _unicos(final),
+        },
         "necessidades": [{"descricao": n.descricao, "obrigatoria": n.obrigatoria,
                           "atendida": any(_atende(d, n) for d in final)}
                          for n in leitura.necessidades],

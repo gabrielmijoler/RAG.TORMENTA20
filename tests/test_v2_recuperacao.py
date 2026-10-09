@@ -137,3 +137,24 @@ def test_garantidos_podem_passar_do_k_mas_nao_o_preenchimento(k):
     ret = RetrieverFalso(BuscaFalsa(padrao=OUTROS), RerankFalso({}))
     top, _ = recuperar_v2(ret, _leitura(a, b, c, k=k), REGISTROS, "q", "q")
     assert len(top) == max(k, 3)
+
+
+def test_telemetria_traz_o_rastro_por_etapa():
+    scores = {f"Parceiro {i}": 0.99 for i in range(20)} | {"Grifo": 0.05}
+    ret = RetrieverFalso(BuscaFalsa(padrao=OUTROS), RerankFalso(scores))
+    _, tele = recuperar_v2(ret, _leitura(_grifo(), k=5), REGISTROS, "q", "q", limiar=0.5)
+    rastro = tele["rastro"]
+    assert "Montarias|Grifo" in rastro["candidatos"]           # entrou direto
+    assert "Montarias|Grifo" in rastro["rerank"]               # foi reordenado
+    assert "Montarias|Grifo" not in rastro["limiar"]           # caiu no corte de score
+    assert "Montarias|Grifo" in rastro["garantidos"]           # mas a vaga garantida o salvou
+    assert "Montarias|Grifo" in rastro["final"]
+    assert len(rastro["final"]) == len(set(rastro["final"]))
+    assert rastro["rerank"][0].startswith("Poderes de Destino|Parceiro")
+
+
+def test_rastro_sem_rerank_nao_tem_etapa_limiar():
+    ret = RetrieverFalso(BuscaFalsa(padrao=OUTROS), RerankFalso({}, falhar=True))
+    _, tele = recuperar_v2(ret, _leitura(k=5), REGISTROS, "q", "q")
+    assert tele["rastro"]["rerank"] == []
+    assert len(tele["rastro"]["final"]) == 5
