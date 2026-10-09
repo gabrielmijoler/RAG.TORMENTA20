@@ -6,6 +6,7 @@ da metadata dos chunks. Não toca o Qdrant nem LLM.
 """
 
 import re
+from collections import Counter
 from dataclasses import dataclass, field
 
 import rag_core
@@ -26,6 +27,9 @@ PRIORIDADE_FONTES = (
 )
 
 MAX_PALAVRAS = 5
+# Uma palavra que aparece no texto do corpus pelo menos este número de vezes é
+# uma palavra real, não erro de digitação (typos reais aparecem 0 vezes).
+VOCAB_MIN_OCORRENCIAS = 3
 
 _RE_PALAVRA = re.compile(r"[a-z0-9]+")
 _RE_PARENTESE = re.compile(r"\s*\([^)]*\)\s*")
@@ -76,6 +80,7 @@ class Dicionario:
     apelidos: dict[str, tuple[Chave, ...]] = field(default_factory=dict)
     max_palavras: int = 1
     tabelas: frozenset[str] = frozenset()
+    vocabulario: frozenset[str] = frozenset()
     _por_palavras: dict[int, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def exato(self, frase: str) -> tuple[Chave, ...]:
@@ -118,6 +123,18 @@ def _subnomes(habilidades) -> list[str]:
     return nomes
 
 
+def _textos(valor):
+    """Todas as strings (recursivamente) de um registro."""
+    if isinstance(valor, str):
+        yield valor
+    elif isinstance(valor, list):
+        for item in valor:
+            yield from _textos(item)
+    elif isinstance(valor, dict):
+        for item in valor.values():
+            yield from _textos(item)
+
+
 def _ordenar(chaves: list[Chave]) -> tuple[Chave, ...]:
     return tuple(sorted(chaves, key=lambda c: prioridade_fonte(c.fonte)))
 
@@ -126,12 +143,15 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
     """Monta o dicionário a partir dos registros crus da extração."""
     indice: dict[str, list[Chave]] = {}
     tabelas: set[str] = set()
+    palavras: Counter = Counter()
     for bloco in dados["tabelas"]:
         tabela = rag_core._rotulo_tabela(bloco["arquivo"], bloco["export"])
         tabelas.add(tabela)
         if tabela in TABELAS_IGNORADAS:
             continue
         for reg in bloco["elementos"]:
+            palavras.update(_RE_PALAVRA.findall(
+                rag_core.normalizar(" ".join(_textos(reg)))))
             nome = rag_core._nome_do_registro(reg)
             if not nome:
                 continue
@@ -153,7 +173,9 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
     maior = max((len(k.split()) for k in todas), default=1)
     return Dicionario(exatos=exatos, apelidos=dic_apelidos,
                       max_palavras=min(maior, MAX_PALAVRAS),
-                      tabelas=frozenset(tabelas))
+                      tabelas=frozenset(tabelas),
+                      vocabulario=frozenset(p for p, n in palavras.items()
+                                            if n >= VOCAB_MIN_OCORRENCIAS))
 
 
 def do_corpus(apelidos: dict[str, Chave] | None = None) -> Dicionario:

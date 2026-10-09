@@ -172,6 +172,38 @@ def distancia_edicao(a: str, b: str) -> int:
     return d[len(a)][len(b)]
 
 
+def _so_erro_de_digitacao(frase: str, nome: str, dicionario: Dicionario) -> bool:
+    """Toda palavra da pergunta que difere da palavra do nome tem de ser um erro
+    de digitação, isto é, NÃO uma palavra que existe no corpus ('preciso' não é
+    erro de 'Precisa'; 'crítico' não é erro de 'Acrobático')."""
+    for escrita, esperada in zip(frase.split(), nome.split(), strict=True):
+        if singular(escrita) == singular(esperada):
+            continue
+        if escrita in dicionario.vocabulario or singular(escrita) in dicionario.vocabulario:
+            return False
+    return True
+
+
+MIN_LETRAS_PALAVRA_ERRADA = 6
+
+
+def _ancorado(frase: str, nome: str) -> bool:
+    """Uma aproximação de várias palavras precisa de âncora: ao menos uma palavra
+    EXATA e distintiva (nem comum, nem de categoria), ou só palavras erradas
+    longas. 'magia tiea' (pista + 4 letras) não prende nenhum nome; 'bola de
+    fgoo' (âncora 'bola') e 'arma espiitual' (palavra errada longa) prendem."""
+    pares = list(zip(frase.split(), nome.split(), strict=True))
+    if len(pares) == 1:
+        return True
+    for escrita, esperada in pares:
+        distintiva = (escrita not in PALAVRAS_COMUNS and escrita not in PALAVRAS_VAZIAS
+                      and not _e_categoria(escrita))
+        if singular(escrita) == singular(esperada) and distintiva:
+            return True
+    erradas = [e for e, x in pares if singular(e) != singular(x)]
+    return all(len(e) >= MIN_LETRAS_PALAVRA_ERRADA for e in erradas)
+
+
 def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
     """(score, [nomes empatados]) do nome mais parecido acima do limiar, ou None."""
     if n_palavras == 1:
@@ -194,7 +226,8 @@ def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
                                or comparador.quick_ratio() < limiar):
             continue
         score = comparador.ratio()
-        if score >= limiar or uma_edicao:
+        if ((score >= limiar or uma_edicao) and _so_erro_de_digitacao(frase, nome, dicionario)
+                and _ancorado(frase, nome)):
             pontuados.append((score, nome))
     if not pontuados:
         return None

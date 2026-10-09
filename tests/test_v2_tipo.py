@@ -63,3 +63,13 @@ def test_palavra_de_build_com_dois_nomes_e_build_mesmo_sem_classe():
 
 def test_melhor_com_um_nome_so_nao_e_build():
     assert _tipo("qual a melhor adaga?", _lig("Armas", "Adaga")) == "direta"
+
+
+def test_dois_registros_distintos_da_mesma_tabela_e_multiparte():
+    texto = "qual a diferença entre Atordoado e Paralisado?"
+    assert _tipo(texto, _lig("Condições", "Atordoado"), _lig("Condições", "Paralisado")) == "multiparte"
+
+
+def test_o_mesmo_registro_ligado_duas_vezes_continua_direta():
+    texto = "como a Teia prende, a Teia dura quanto tempo"
+    assert _tipo(texto, _lig("Magias", "Teia"), _lig("Magias", "Teia")) == "direta"

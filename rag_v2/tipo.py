@@ -37,6 +37,9 @@ def classificar(texto: str, ligacoes: tuple[Ligacao, ...], restricoes: Restricoe
         return "build"
 
     tabelas = {lig.chave.tabela for lig in ligacoes}
-    if texto.count("?") >= 2 or _RE_CONECTIVO.search(norma) or len(tabelas) >= 2:
+    registros = {(lig.chave.tabela, lig.chave.nome) for lig in ligacoes}
+    # 2+ registros distintos (mesmo da mesma tabela, ex.: "A e B") são 2 necessidades
+    if (texto.count("?") >= 2 or _RE_CONECTIVO.search(norma) or len(tabelas) >= 2
+            or len(registros) >= 2):
         return "multiparte"
     return "direta"

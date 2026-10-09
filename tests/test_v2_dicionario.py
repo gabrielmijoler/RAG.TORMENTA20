@@ -142,3 +142,25 @@ def test_subhabilidade_nao_vence_o_registro_de_mesmo_nome_em_fonte_prioritaria()
             {"name": "Caminho", "subAbilities": [{"name": "Mago"}]}]}]}]}
     chaves = construir(dados).exato("mago")
     assert chaves[0].nome == "Arcanista" and chaves[0].sub == "Mago"
+
+
+def test_vocabulario_guarda_palavras_frequentes_do_texto_do_corpus():
+    dados = {"tabelas": [{"arquivo": "conditions.ts", "export": "conditions", "elementos": [
+        {"name": f"Cond {i}", "origin": JA,
+         "description": "Você sempre precisa gastar uma ação rara"} for i in range(3)]}]}
+    d = construir(dados)
+    assert {"precisa", "gastar", "acao"} <= d.vocabulario     # 3 ocorrências cada
+    assert "rara" in d.vocabulario
+    assert "zzzraro" not in d.vocabulario
+
+
+def test_palavra_rara_nao_entra_no_vocabulario():
+    dados = {"tabelas": [{"arquivo": "conditions.ts", "export": "conditions", "elementos": [
+        {"name": "A", "origin": JA, "description": "palavra unica"}]}]}
+    assert "unica" not in construir(dados).vocabulario
+
+
+def test_vocabulario_ignora_a_tabela_do_regreiro():
+    dados = {"tabelas": [{"arquivo": "regreiro.ts", "export": "regreiroQAs", "elementos": [
+        {"name": f"p{i}", "origin": "DB", "description": "xablau xablau"} for i in range(5)]}]}
+    assert "xablau" not in construir(dados).vocabulario

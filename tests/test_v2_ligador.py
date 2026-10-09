@@ -256,3 +256,66 @@ def test_janela_so_de_palavras_comuns_ou_de_categoria_continua_barrada():
     d = construir({"tabelas": [{"arquivo": "spells.ts", "export": "spells", "elementos": [
         {"name": "Arma Mágica", "origin": JA}]}]})
     assert ligar("quais as armas e a defesa", d) == ()
+
+
+# --- erro de digitação não é palavra que existe no corpus (rodada rotulada) ---
+
+def _d_vocab():
+    registros = [{"name": "Precisa", "origin": JA}, {"name": "Ataque Acrobático", "origin": JA},
+                 {"name": "Teia", "origin": JA}, {"name": "Machado Táurico", "origin": JA}]
+    texto = [{"name": f"Regra {i}", "origin": JA,
+              "description": "o personagem preciso crítico ataque machado magia"}
+             for i in range(4)]
+    return construir({"tabelas": [
+        {"arquivo": "rules.tsx", "export": "ruleSections", "elementos": registros + texto}]})
+
+
+@pytest.mark.parametrize("texto", [
+    "o que preciso saber?",            # 'preciso' existe no corpus: não é typo de 'Precisa'
+    "quanto dano causa um ataque crítico?",   # 'crítico' existe: não é typo de 'Acrobático'
+])
+def test_palavra_que_existe_no_corpus_nao_vira_aproximada(texto):
+    assert [lig for lig in ligar(texto, _d_vocab()) if lig.tipo == "aproximada"] == []
+
+
+def test_erro_de_digitacao_real_continua_ligando_com_vocabulario_ativo():
+    lig = ligar("o machado toureo e bom?", _d_vocab())[0]
+    assert lig.chave.nome == "Machado Táurico" and lig.tipo == "aproximada"
+
+
+def test_plural_de_palavra_do_nome_nao_conta_como_diferente():
+    d = construir({"tabelas": [{"arquivo": "weapons.ts", "export": "weapons", "elementos": [
+        {"name": "Machado Táurico", "origin": JA, "description": "machados machados machados"},
+        {"name": "Espada Curta", "origin": JA, "description": "espadas espadas espadas"}]}]})
+    lig = ligar("quanto custam os machados taurico", d)
+    assert [l.chave.nome for l in lig] == ["Machado Táurico"]
+
+
+# --- aproximada precisa de âncora: palavra exata distintiva OU palavra errada longa ---
+
+def _d_ancora():
+    return construir({"tabelas": [
+        {"arquivo": "races.ts", "export": "races", "elementos": [
+            {"name": "Elfo", "origin": JA, "abilities": [{"name": "Magia Antiga"}]}]},
+        {"arquivo": "spells.ts", "export": "spells", "elementos": [
+            {"name": "Teia", "origin": JA}, {"name": "Arma Espiritual", "origin": JA},
+            {"name": "Bola de Fogo", "origin": JA}]},
+        {"arquivo": "weapons.ts", "export": "weapons", "elementos": [
+            {"name": "Machado Táurico", "origin": JA}]},
+    ]})
+
+
+def test_palavra_de_categoria_mais_palavra_curta_errada_nao_liga():
+    # 'magia' é só pista; 'tiea' (4 letras) não sustenta sozinha uma aproximação
+    assert [l for l in ligar("oq faz a magia tiea", _d_ancora()) if l.tipo == "aproximada"] == []
+
+
+def test_palavra_comum_mais_palavra_errada_longa_liga():
+    lig = ligar("qual o alcance da magia arma espiitual", _d_ancora())[0]
+    assert lig.chave.nome == "Arma Espiritual"
+
+
+def test_palavra_exata_distintiva_ancora_a_aproximacao():
+    nomes = {l.chave.nome for l in ligar("qto de pm gasta a bola de fgoo", _d_ancora())}
+    assert "Bola de Fogo" in nomes
+    assert {l.chave.nome for l in ligar("o machado toureo e bom", _d_ancora())} == {"Machado Táurico"}
