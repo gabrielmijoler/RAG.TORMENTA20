@@ -610,12 +610,16 @@ def avaliar(
     estrategia: str = "baseline",
     limiar: float | None = None,
     juiz: bool = False,
+    ids: list[str] | None = None,
 ) -> dict:
     """Roda as CONSULTAS e devolve o resultado.
 
     Quando `saida` é informado, grava o JSON a cada query: uma falha de rede na
     última consulta não joga fora o trabalho das anteriores. `continuar` relê o
     `saida` parcial e pula as queries ja registradas (retomada em vez de zero).
+
+    `ids` filtra o goldenset por prefixo de id (ex.: ["13", "28"] roda só
+    as queries 13_* e 28_*). None = todas.
 
     Estratégias (Passo 2): `estrategia="hyde"` usa busca densa por documento
     hipotético; `limiar` corta pelo score do rerank (None = como antes);
@@ -640,6 +644,10 @@ def avaliar(
     cache = carregar_cache()
     cache_juiz = carregar_cache_juiz() if juiz else {}
     casos = carregar_goldenset()
+    if ids:
+        casos = [c for c in casos
+                 if any(c["id"].startswith(p) for p in ids)]
+        print(f" filtro --ids: {len(casos)} queries de {ids}")
     registros = carregar_parcial(saida) if continuar else []
     feitos = {r.get("id") for r in registros}
     pendentes = [c for c in casos if c["id"] not in feitos]
@@ -870,6 +878,9 @@ def criar_parser() -> argparse.ArgumentParser:
     ap.add_argument("--juiz", action="store_true",
                     help="LLM-as-Judge por query: score 0-10 + aprovação "
                          "(cache em juiz_cache.json)")
+    ap.add_argument("--ids", type=str, default=None,
+                    help="filtra queries por prefixo de id, separados por "
+                         "vírgula (ex.: --ids 13,28,49,53,64)")
     return ap
 
 
@@ -878,9 +889,10 @@ def main():
 
     llm = rag_core.criar_llm()
     saida = f"avaliacao_{args.etapa}.json"
+    ids = args.ids.split(",") if args.ids else None
     resultado = avaliar(llm, so_recuperacao=args.so_recuperacao, saida=saida,
                         continuar=args.continuar, estrategia=args.estrategia,
-                        limiar=args.limiar, juiz=args.juiz)
+                        limiar=args.limiar, juiz=args.juiz, ids=ids)
     resultado["etapa"] = args.etapa
     gravar(saida, resultado)
     print(f"\nResultado salvo em {saida}")

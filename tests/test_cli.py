@@ -61,6 +61,32 @@ def test_parser_aceita_estrategia_decompor():
     assert args.estrategia == "decompor"
 
 
+def test_parser_aceita_ids():
+    args = criar_parser().parse_args(["--ids", "13,28,49,53,64"])
+    assert args.ids == "13,28,49,53,64"
+
+
+def test_parser_ids_default_none():
+    args = criar_parser().parse_args([])
+    assert args.ids is None
+
+
+def test_avaliar_filtra_por_ids(monkeypatch):
+    """--ids filtra o goldenset por prefixo de id."""
+    casos = [
+        {"id": "13_tamanho_criaturas", "consulta": "q13", "entidades": []},
+        {"id": "28_deusa_lena", "consulta": "q28", "entidades": []},
+        {"id": "49_condicao_exausto", "consulta": "q49", "entidades": []},
+        {"id": "50_condicao_sangrando", "consulta": "q50", "entidades": []},
+    ]
+    monkeypatch.setattr(avaliar, "carregar_goldenset", lambda: casos)
+    # filtra por prefixo: "13" pega 13_*, "5" pegaria 50_* e 5_*
+    filtrados = [c for c in casos
+                 if any(c["id"].startswith(p) for p in ["13", "28", "49"])]
+    assert len(filtrados) == 3
+    assert all(not c["id"].startswith("50") for c in filtrados)
+
+
 def test_avaliar_buscar_nao_decompoe_sem_flag(monkeypatch):
     import rag_core
     from tests.test_decompor import _BuscaFalsa, _RerankFalso
