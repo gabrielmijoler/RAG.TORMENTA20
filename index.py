@@ -33,10 +33,12 @@ from rag_core import (
     reformular_pergunta,
     trocar_modelo,
 )
+from rag_v2 import sinais
 from rag_v2.dicionario import do_corpus
 from rag_v2.integracao import arquitetura, bloco_dicas, descrever, usar_v2
 from rag_v2.leitura import ler
 from rag_v2.recuperacao import indexar_registros, recuperar_v2
+from rag_v2.sessao import Sessao
 
 # ==========================================
 # 1. LLM + COLEÇÃO + RETRIEVER + CHAIN
@@ -75,6 +77,10 @@ else:
 # Última leitura e telemetria da recuperação v2 (mostradas pelo /entendi).
 ultima_leitura = None
 ultima_telemetria = None
+# Ficha (classe, raça, nível, itens) e foco (última entidade) da sessão v2.
+sessao = Sessao()
+# Último evento de sinal (SINAIS=1): alvo do /errado e do /parcial.
+ultimo_evento = None
 
 # APENAS HumanMessage (pergunta bruta) e AIMessage (resposta final).
 # Nunca o texto do {context} — o contexto é descartado a cada rodada.
@@ -111,7 +117,9 @@ COMANDOS = ("/filtro tabela=X [fonte=Y tipo=Z]  restringe a busca por metadados 
             "'/filtro' lista valores, 'limpar' desliga)  |  "
             "/salvar  arquiva a sessão atual (relato opcional)  |  "
             "/novo  limpa o histórico e começa outra sessão  |  "
-            "/entendi  mostra como a última pergunta foi lida (v2)  |  /sair  encerra")
+            "/entendi  mostra como a última pergunta foi lida (v2)  |  "
+            "/ficha [campo=valor]  mostra/corrige ficha e foco (v2)  |  "
+            "/errado, /parcial  avaliam a última resposta (SINAIS=1)  |  /sair  encerra")
 BANNER = """
 ==============================================================================
   RAG de Tormenta 20 — chat contínuo com memória de sessão
@@ -277,7 +285,7 @@ def tratar_filtro(arg: str) -> None:
 
 
 def processar(entrada: str) -> None:
-    global ultima_leitura, ultima_telemetria
+    global ultima_leitura, ultima_telemetria, ultimo_evento
     # Saudação pura: resposta fixa, sem LLM, sem busca e SEM gravar no
     # chat_history — a janela de memória fica só com o que é de regra.
     if eh_saudacao_pura(entrada):
@@ -297,7 +305,8 @@ def processar(entrada: str) -> None:
             print("    sem sessão em andamento no histórico — nada para arquivar.")
             return
         resumo = rag_core.salvar_sessao_campanha(
-            chat_history, entrada, llm, embeddings, client_qdrant, origem="auto"
+            chat_history, relato_com_ficha(entrada), llm, embeddings, client_qdrant,
+            origem="auto"
         )
         if resumo is None:
             print("    ⚠️  sessão NÃO arquivada (falha na extração do resumo).")
@@ -309,20 +318,28 @@ def processar(entrada: str) -> None:
         print("=" * 78)
         return
 
-    # v2: leitura sem LLM. Com /filtro ativo a v1 assume (o filtro é dela).
-    leitura = ler(entrada, dicionario_v2) if dicionario_v2 is not None else None
+    # v2: leitura sem LLM (com ficha e foco da sessão). Com /filtro ativo a
+    # v1 assume (o filtro é dela).
+    tempos: dict = {}
+    t0 = time.perf_counter()
+    leitura = ler(entrada, dicionario_v2, sessao) if dicionario_v2 is not None else None
+    tempos["leitura"] = time.perf_counter() - t0
     v2 = usar_v2(leitura) and not filtros_ativos
     ultima_leitura, ultima_telemetria = leitura, None
     if leitura is not None:
         print(f"\n  [v2] tipo={leitura.tipo} confiança={leitura.confianca} "
               f"k={leitura.k} -> {'v2' if v2 else 'v1 (fallback)'}  (/entendi detalha)")
+        if leitura.texto_resolvido:
+            print(f"    foco da sessão: {leitura.texto_resolvido}")
 
     print("\n  [1/4] reformulando com o histórico")
+    t0 = time.perf_counter()
     janela = historico_recente()
     print(f"    janela de memória: {len(janela)}/{len(chat_history)} mensagens")
     if v2:
-        # opção C: confiança média/alta dispensa a reformulação por LLM
-        reescrita = entrada
+        # opção C: confiança média/alta dispensa a reformulação por LLM; a
+        # referência ("e a CD dela?") já foi resolvida pelo foco da sessão
+        reescrita = leitura.texto_resolvido or entrada
         print("    -> v2: reformulação pulada")
     elif not janela:
         reescrita = entrada
@@ -340,7 +357,10 @@ def processar(entrada: str) -> None:
         else:
             print("    -> reformulação inválida, pergunta original mantida")
 
+    tempos["reformulacao"] = time.perf_counter() - t0
+
     print("  [2/4] traduzindo para termos do sistema")
+    t0 = time.perf_counter()
     if v2 and leitura.usar_llm == "nenhum":
         pergunta_t20 = reescrita
         print("    -> v2: tradução pulada (confiança alta)")
@@ -348,7 +368,10 @@ def processar(entrada: str) -> None:
         pergunta_t20 = traduzir_para_t20(reescrita)
         print(f"    -> {pergunta_t20}")
 
+    tempos["traducao"] = time.perf_counter() - t0
+
     print("  [3/4] recuperando (BM25 + denso + reranker)")
+    t0 = time.perf_counter()
     if v2:
         docs, ultima_telemetria = recuperar_v2(
             retriever_comprimido, leitura, registros_v2, pergunta_t20, reescrita)
@@ -358,9 +381,13 @@ def processar(entrada: str) -> None:
     else:
         docs = buscar(pergunta_t20, reescrita)
 
+    tempos["recuperacao"] = time.perf_counter() - t0
+
     print("  [4/4] gerando resposta")
+    t0 = time.perf_counter()
     # a lista de verificação vai só para a síntese; o histórico guarda a entrada real
     resposta = gerar_resposta(entrada + (bloco_dicas(leitura) if v2 else ""), docs)
+    tempos["geracao"] = time.perf_counter() - t0
     if resposta is None:
         print("\nNão consegui gerar uma resposta estável agora — "
               "tente reformular a pergunta.")
@@ -373,6 +400,38 @@ def processar(entrada: str) -> None:
 
     chat_history.append(HumanMessage(entrada))
     chat_history.append(AIMessage(resposta))
+    if leitura is not None:
+        sessao.atualizar(leitura)
+    if sinais.ativo():
+        ultimo_evento = sinais.montar_evento(
+            leitura, docs, resposta, tempos, ultima_telemetria, arquitetura(),
+            pergunta=entrada)
+        sinais.registrar(ultimo_evento)
+
+
+def relato_com_ficha(relato: str) -> str:
+    """A ficha da v2 vai junto do relato da memória longa (formato do resumo intacto)."""
+    if sessao.ficha.vazia():
+        return relato
+    return f"{relato}\nFicha do personagem na sessão: {sessao.ficha.resumo()}."
+
+
+def tratar_feedback(valor: str) -> None:
+    """/errado e /parcial: sinal FORTE sobre a última resposta."""
+    if not sinais.ativo():
+        print("Registro de sinais desligado: rode com SINAIS=1 para avaliar respostas.")
+        return
+    if ultimo_evento is None:
+        print("Nenhuma resposta para avaliar ainda.")
+        return
+    faltou = None
+    if valor == "parcial":
+        try:
+            faltou = input("  o que faltou? ").strip() or None
+        except (EOFError, KeyboardInterrupt):
+            faltou = None
+    if sinais.registrar(sinais.feedback(ultimo_evento, valor, faltou)):
+        print(f"Obrigado — marcado como {valor}.")
 
 
 def main() -> None:
@@ -394,7 +453,20 @@ def main() -> None:
         if cmd == "/novo":
             chat_history.clear()
             filtros_ativos.clear()
+            sessao.zerar()
             print("Histórico limpo — nova sessão de RPG.")
+            continue
+        if cmd == "/ficha" or cmd.startswith("/ficha "):
+            if dicionario_v2 is None:
+                print("A ficha da sessão é da v2: rode com ARQUITETURA=v2.")
+                continue
+            argumentos = entrada[len("/ficha"):].strip()
+            for erro in sessao.corrigir(argumentos) if argumentos else []:
+                print(f"  ⚠️  {erro}")
+            print(sessao.descrever())
+            continue
+        if cmd in ("/errado", "/parcial"):
+            tratar_feedback(cmd[1:])
             continue
         if cmd == "/entendi":
             if dicionario_v2 is None:
@@ -415,7 +487,8 @@ def main() -> None:
                 continue
             print("\n  arquivando sessão sob comando manual...")
             resumo = rag_core.salvar_sessao_campanha(
-                chat_history, relato, llm, embeddings, client_qdrant, origem="manual"
+                chat_history, relato_com_ficha(relato), llm, embeddings, client_qdrant,
+                origem="manual"
             )
             if resumo is None:
                 print("  ⚠️  sessão NÃO arquivada (falha na extração do resumo).")
