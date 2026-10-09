@@ -13,6 +13,7 @@ com três diferenças guiadas pela leitura:
    limiar e o 1-chunk-por-registro da v1, até o orçamento `leitura.k`.
 """
 
+import re
 from collections import defaultdict
 
 from langchain_core.documents import Document
@@ -25,11 +26,29 @@ from .tipos import Leitura, Necessidade
 VAGAS_POR_TABELA = 3
 
 
+# Cabeçalho de registro no corpo do chunk. A ingestão (`mesclar_pequenos`) funde
+# registros minúsculos no chunk do vizinho: a metadata passa a identificar só o
+# primeiro, e os demais só aparecem pelo "# Nome" no texto.
+_RE_CABECALHO = re.compile(r"^# (.+?)\s*$", re.MULTILINE)
+
+
+def _registros_do_doc(doc: Document) -> list[tuple[str, str]]:
+    """(Tabela, Nome) de TODOS os registros que o chunk contém, o primário primeiro."""
+    tabela = doc.metadata.get("Tabela")
+    nome_meta = doc.metadata.get("Nome")
+    saida = [(tabela, nome_meta.strip() if isinstance(nome_meta, str) else nome_meta)]
+    for nome in _RE_CABECALHO.findall(doc.page_content):
+        if (tabela, nome.strip()) not in saida:
+            saida.append((tabela, nome.strip()))
+    return saida
+
+
 def indexar_registros(chunks: list[Document]) -> dict[tuple[str, str], list[Document]]:
     """(Tabela, Nome) -> chunks do registro: a busca direta do registro ligado."""
     indice: dict[tuple[str, str], list[Document]] = defaultdict(list)
     for doc in chunks:
-        indice[(doc.metadata.get("Tabela"), doc.metadata.get("Nome"))].append(doc)
+        for chave in _registros_do_doc(doc):
+            indice[chave].append(doc)
     return dict(indice)
 
 
@@ -40,18 +59,17 @@ def _registro(doc: Document) -> tuple:
 def _atende(doc: Document, necessidade: Necessidade) -> bool:
     if doc.metadata.get("Tabela") != necessidade.tabela_alvo:
         return False
-    return necessidade.registro is None or doc.metadata.get("Nome") == necessidade.registro
-
-
-def _id(doc: Document) -> str:
-    """'Tabela|Nome': identifica o registro nos rastros (JSON-friendly)."""
-    return f"{doc.metadata.get('Tabela')}|{doc.metadata.get('Nome')}"
+    if necessidade.registro is None:
+        return True
+    return (necessidade.tabela_alvo, necessidade.registro.strip()) in _registros_do_doc(doc)
 
 
 def _unicos(docs) -> list[str]:
+    """'Tabela|Nome' de cada registro (inclusive os fundidos no chunk), sem repetir."""
     vistos: dict[str, None] = {}
     for doc in docs:
-        vistos.setdefault(_id(doc), None)
+        for tabela, nome in _registros_do_doc(doc):
+            vistos.setdefault(f"{tabela}|{nome}", None)
     return list(vistos)
 
 
@@ -85,7 +103,7 @@ def recuperar_v2(retriever, leitura: Leitura, registros: dict, consulta_busca: s
         juntar(busca.invoke(consulta_original))
     for nec in leitura.necessidades:
         if nec.registro is not None:
-            juntar(registros.get((nec.tabela_alvo, nec.registro), []))
+            juntar(registros.get((nec.tabela_alvo, nec.registro.strip()), []))
         else:
             juntar(d for d in busca.invoke(nec.descricao)
                    if d.metadata.get("Tabela") == nec.tabela_alvo)

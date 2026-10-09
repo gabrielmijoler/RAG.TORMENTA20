@@ -13,7 +13,7 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
-CONJUNTOS = ("dev", "teste")
+CONJUNTOS = ("dev", "teste", "sintetico")
 ETAPAS_PERDA = ("candidatos", "limiar", "orcamento")
 
 

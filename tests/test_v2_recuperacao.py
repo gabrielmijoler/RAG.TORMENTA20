@@ -158,3 +158,49 @@ def test_rastro_sem_rerank_nao_tem_etapa_limiar():
     _, tele = recuperar_v2(ret, _leitura(k=5), REGISTROS, "q", "q")
     assert tele["rastro"]["rerank"] == []
     assert len(tele["rastro"]["final"]) == 5
+
+
+# --- registros fundidos no chunk do vizinho (mesclar_pequenos da ingestão) ---
+
+def _fundido():
+    return Document(
+        page_content=("[Condições > F]\n# Doente\n\nDescrição: Sob efeito de uma doença.\n\n"
+                      "# Em Chamas\n\nDescrição: O personagem está pegando fogo."),
+        metadata={"Tabela": "Condições", "Nome": "Em Chamas", "Fonte": "F"})
+
+
+def test_indexar_registros_acha_o_registro_fundido_pelo_cabecalho():
+    fundido = _fundido()
+    indice = indexar_registros([fundido, *OUTROS])
+    assert indice[("Condições", "Doente")] == [fundido]
+    assert indice[("Condições", "Em Chamas")] == [fundido]
+
+
+def test_registro_fundido_e_buscado_direto_e_conta_como_atendido():
+    indice = indexar_registros([_fundido(), *OUTROS])
+    nec = Necessidade("registro de Doente", "Condições", "Doente", registro="Doente")
+    ret = RetrieverFalso(BuscaFalsa(padrao=OUTROS), RerankFalso({}))
+    top, tele = recuperar_v2(ret, _leitura(nec), indice, "q", "q")
+    assert any("# Doente" in d.page_content for d in top)
+    assert tele["necessidades"][0]["atendida"] is True
+    assert "Condições|Doente" in tele["rastro"]["final"]
+    assert "Condições|Em Chamas" in tele["rastro"]["final"]
+
+
+def test_cabecalho_no_meio_de_uma_linha_nao_vira_registro():
+    doc = Document(page_content="[Magias > F]\n# Voo\n\nDescrição: veja # Teia na página 3",
+                   metadata={"Tabela": "Magias", "Nome": "Voo", "Fonte": "F"})
+    assert ("Magias", "Teia") not in indexar_registros([doc])
+
+
+def test_nome_com_espaco_no_fim_casa_com_o_registro_da_necessidade():
+    doc = Document(page_content="[Poderes (Bárbaro) > F]\n# Crítico Brutal \n\nDescrição: x",
+                   metadata={"Tabela": "Poderes (Bárbaro)", "Nome": "Crítico Brutal ",
+                             "Fonte": "F"})
+    indice = indexar_registros([doc, *OUTROS])
+    nec = Necessidade("registro", "Poderes (Bárbaro)", "Crítico Brutal ",
+                      registro="Crítico Brutal ")
+    ret = RetrieverFalso(BuscaFalsa(padrao=OUTROS), RerankFalso({}))
+    _, tele = recuperar_v2(ret, _leitura(nec), indice, "q", "q")
+    assert tele["necessidades"][0]["atendida"] is True
+    assert "Poderes (Bárbaro)|Crítico Brutal" in tele["rastro"]["final"]
