@@ -436,49 +436,86 @@ def reformular(llm, consulta: str, cache: dict) -> str:
 
 
 def responder(llm, top: list, sintese, pergunta: str) -> tuple[str, dict]:
-    """Guard da Regra 2: sem citação OU com citação fora -> 2ª passada SÓ
-    na síntese (AVISO_CITACAO ou aviso_reparo listando as fontes inválidas).
+    """Guard da Regra 2: sem citação OU com citação fora -> reparo na síntese.
 
-    A 1ª geração e as re-invocações usam EXATAMENTE a lista `top` — os docs
-    do rag_core.recuperar() (parent-child, decompor e limiar ativos) — o
-    mesmo contexto das métricas e do juiz; a geração nunca refaz a busca
-    (query poluída derrubaria o recall e mascararia o groundedness, que
-    compara com o `top` de buscar()). Espelha o chat: index.gerar_resposta
-    também sintetiza sobre os docs já recuperados ("nunca mais de uma
-    busca por pergunta").
+    Teto de 3 passadas: a 2ª é revalidada; se ainda sem citação, 3ª com
+    AVISO_CITACAO. A 1ª com citação fora nunca é devolvida como fallback.
 
-    Telemetria: devolve `(resposta, guarda)` com `guard_reparo_disparado`
-    (citação fora -> aviso_reparo) e `guard_sem_citacao_disparado` (sem
-    nenhuma citação -> AVISO_CITACAO) — mede por rodada quantas 2ª passadas
-    cada gatilho acionou, em vez de inferir pelo histórico.
+    Telemetria: `(resposta, guarda)` com `guard_reparo_disparado`,
+    `guard_sem_citacao_disparado` e `passadas` (lista com `n`, `motivo`,
+    `citacoes`, `fora` de cada passada — a 1ª nunca mais some do log).
     """
     contexto = "\n".join(d.page_content for d in top)
     guarda = {"guard_reparo_disparado": False,
-              "guard_sem_citacao_disparado": False}
+              "guard_sem_citacao_disparado": False, "passadas": []}
     for modelo in MODELOS_GRATUITOS:
         trocar_modelo(llm, modelo)
         for _ in range(2):
             try:
                 guarda = {"guard_reparo_disparado": False,
-                          "guard_sem_citacao_disparado": False}
+                          "guard_sem_citacao_disparado": False,
+                          "passadas": []}
                 with get_openai_callback():
                     resposta = sintese.invoke({"input": pergunta,
                                                "context": top})
+                    c_atual = sorted(citacoes_em(resposta))
+                    _, fora_atual = partir_citacoes(resposta, contexto)
+                    guarda["passadas"].append({
+                        "n": 1, "motivo": "inicial",
+                        "citacoes": c_atual, "fora": sorted(fora_atual)})
                     if resposta_sem_citacoes(resposta):
                         guarda["guard_sem_citacao_disparado"] = True
                         resposta = sintese.invoke({
                             "input": pergunta + AVISO_CITACAO,
                             "context": top,
                         })
+                        c_atual = sorted(citacoes_em(resposta))
+                        _, fora_atual = partir_citacoes(resposta, contexto)
+                        guarda["passadas"].append({
+                            "n": 2, "motivo": "sem_citacao",
+                            "citacoes": c_atual, "fora": sorted(fora_atual)})
+                        if resposta_sem_citacoes(resposta):
+                            # 2ª ainda sem -> 3ª e última
+                            resposta = sintese.invoke({
+                                "input": pergunta + AVISO_CITACAO,
+                                "context": top,
+                            })
+                            c_atual = sorted(citacoes_em(resposta))
+                            _, fora_atual = partir_citacoes(resposta,
+                                                            contexto)
+                            guarda["passadas"].append({
+                                "n": 3, "motivo": "revalidacao",
+                                "citacoes": c_atual,
+                                "fora": sorted(fora_atual)})
                     else:
-                        _, fora = partir_citacoes(resposta, contexto)
-                        if fora:
+                        _, fora = fora_atual, None  # noqa: F841
+                        if fora_atual:
                             guarda["guard_reparo_disparado"] = True
                             resposta = sintese.invoke({
                                 "input": pergunta + aviso_reparo(
-                                    fora, citacoes_em(contexto)),
+                                    fora_atual, citacoes_em(contexto)),
                                 "context": top,
                             })
+                            c_atual = sorted(citacoes_em(resposta))
+                            _, fora_atual = partir_citacoes(resposta,
+                                                            contexto)
+                            guarda["passadas"].append({
+                                "n": 2, "motivo": "fora",
+                                "citacoes": c_atual,
+                                "fora": sorted(fora_atual)})
+                            if resposta_sem_citacoes(resposta):
+                                # 2ª reescreveu em prosa sem citação -> 3ª
+                                resposta = sintese.invoke({
+                                    "input": pergunta + AVISO_CITACAO,
+                                    "context": top,
+                                })
+                                c_atual = sorted(citacoes_em(resposta))
+                                _, fora_atual = partir_citacoes(
+                                    resposta, contexto)
+                                guarda["passadas"].append({
+                                    "n": 3, "motivo": "revalidacao",
+                                    "citacoes": c_atual,
+                                    "fora": sorted(fora_atual)})
                 return resposta, guarda
             except Exception as e:
                 if e_cota_esgotada(e):
@@ -490,7 +527,7 @@ def responder(llm, top: list, sintese, pergunta: str) -> tuple[str, dict]:
                 else:
                     raise
     return "", {"guard_reparo_disparado": False,
-                "guard_sem_citacao_disparado": False}
+                "guard_sem_citacao_disparado": False, "passadas": []}
 
 
 def buscar(retriever, consulta: str, consulta_real: str | None = None,
