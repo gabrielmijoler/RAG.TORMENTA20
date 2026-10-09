@@ -223,9 +223,9 @@ def test_exigir_citacoes_nao_reinvoca_se_ja_citou():
     assert "Magias" in final
 
 
-def test_exigir_citacoes_sem_laco_na_segunda_tentativa():
-    """2ª tentativa ainda sem citação -> devolve como está (métrica: 0.0),
-    no máximo DUAS chamadas — nunca loop."""
+def test_exigir_citacoes_sem_laco_na_terceira_tentativa():
+    """3ª tentativa ainda sem citação -> devolve como está (métrica: 0.0),
+    no máximo TRÊS chamadas — nunca loop."""
     from rag_core import exigir_citacoes
     chamadas = []
 
@@ -234,7 +234,7 @@ def test_exigir_citacoes_sem_laco_na_segunda_tentativa():
         return "insiste sem fonte"
 
     assert exigir_citacoes(gerar, "p") == "insiste sem fonte"
-    assert len(chamadas) == 2
+    assert len(chamadas) == 3
 
 
 # ---------- guard de reparo: citação FORA do contexto ----------

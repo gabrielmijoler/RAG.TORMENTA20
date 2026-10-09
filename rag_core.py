@@ -1688,13 +1688,17 @@ def resposta_sem_citacoes(resposta: str) -> bool:
 
 
 def exigir_citacoes(gerar, entrada: str, contexto: str | None = None) -> str:
-    """Guard da Regra 2: no máximo 2 chamadas de `gerar` — nunca loop.
+    """Guard da Regra 2: no máximo 3 chamadas de `gerar` — nunca loop.
 
-    Se a 1ª geração vier sem citação nenhuma, re-invoca com AVISO_CITACAO
-    anexado à entrada. Com `contexto`, a 2ª passada também dispara quando a
-    resposta citar fonte INEXISTENTE no contexto (`partir_citacoes` ->
-    `aviso_reparo`) — mesma contagem máxima de chamadas. A 2ª tentativa é
-    devolvida mesmo sem conserto (métrica zera em vez de ficar n/a).
+    Se a 1ª geração vier sem citação nenhuma, re-invoca com AVISO_CITACAO.
+    Com `contexto`, a 2ª passada também dispara quando a resposta citar
+    fonte INEXISTENTE no contexto (`partir_citacoes` -> `aviso_reparo`).
+
+    A 2ª passada é REVALIDADA: se ainda sem citação, faz uma 3ª chamada
+    com AVISO_CITACAO. Se a 3ª também falhar, devolve a última resposta
+    (o chamador detecta o estado via `resposta_sem_citacoes()`). A 1ª
+    resposta com citação FORA nunca é devolvida como fallback — o reparo
+    pode ter consertado, e pior seria voltar ao problema original.
     """
     resposta = gerar(entrada)
     if not resposta_sem_citacoes(resposta):
@@ -1705,7 +1709,11 @@ def exigir_citacoes(gerar, entrada: str, contexto: str | None = None) -> str:
                     entrada + aviso_reparo(fora, citacoes_em(contexto))
                 )
         return resposta
-    return gerar(entrada + AVISO_CITACAO)
+    # 1ª sem citação → AVISO_CITACAO (2ª); se 2ª ainda sem → 3ª
+    resposta = gerar(entrada + AVISO_CITACAO)
+    if resposta_sem_citacoes(resposta):
+        resposta = gerar(entrada + AVISO_CITACAO)  # 3ª e última
+    return resposta
 
 
 LINHA_PROVENIENCIA = re.compile(r"^\[([^\]]{3,60})\]\s*$")
