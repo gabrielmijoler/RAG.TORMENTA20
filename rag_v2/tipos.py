@@ -22,7 +22,7 @@ class Ligacao:
     fim: int
     chave: Chave
     score: float
-    tipo: str  # "exata" | "aproximada" | "apelido"
+    tipo: str  # "exata" | "aproximada" | "apelido" | "foco"
     alternativas: tuple[Chave, ...] = ()
 
 
@@ -61,3 +61,6 @@ class Leitura:
     confianca: str = "baixa"  # alta | media | baixa
     motivos: tuple[str, ...] = ()
     usar_llm: str = "completo"  # nenhum | traducao | completo
+    # Pergunta com a referência resolvida pelo foco ("e a CD dela? (Teia)");
+    # None = a própria pergunta original.
+    texto_resolvido: str | None = None
