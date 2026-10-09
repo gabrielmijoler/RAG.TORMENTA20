@@ -9,7 +9,9 @@ Status: **desenho aprovado no Ponto 1** (limiares, ordem de fontes e opção C f
 - sinais (`SINAIS=1`);
 - comandos `/entendi`, `/ficha`, `/errado` e `/parcial`.
 
-Ainda não foi feito: avaliação da v2 (Fase 2: suíte de 12, sintéticas, conjunto rotulado), gerador de propostas a partir dos sinais e leitura de feedback em linguagem natural (Fase 6).
+Fase 2 feita: suíte de 12 + sequências, avaliador absoluto com rastreio por etapa (`tools/avaliar_v2.py`), perguntas sintéticas sem LLM (`tools/gerar_sinteticas.py`) e conjunto rotulado provisório do analisador (`tools/medir_analisador.py`). Aguarda a correção do usuário nos `fatos_esperados` e nos rótulos.
+
+Ainda não foi feito: gerador de propostas a partir dos sinais e leitura de feedback em linguagem natural (Fase 6).
 Números entre colchetes vêm da Fase 0 (`.superpowers/medicoes/*.json`). "Não medido" quer dizer que ainda não há medição.
 
 ## 1. Ideia em uma frase
@@ -115,7 +117,7 @@ Motivo: a tradução apagou os nomes da pergunta semente ("Machado Touro", "Barb
 - Uma busca (ensemble atual) por necessidade, mais a pergunta original. **Um único rerank** da união, com a pergunta **original**, porque a combinada derrubou o FlashRank em inglês (docstring de `rag_core.recuperar`).
 - Vagas garantidas: o melhor candidato de cada necessidade obrigatória entra antes do preenchimento por score (estende `_diversificar(cota_tabelas)`).
 - Bloco de dicas **depois** do contexto, sem tocar o `SYSTEM_PROMPT`: "A pergunta pede: 1) ...; 2) .... Para cada item, responda com citação ou diga que a base não cobre." `exigir_citacoes` (teto 3) e `estado_citacao` ficam iguais.
-- Latência: hoje a recuperação leva [11,4 s] em média e [28,3 s] no máximo, dos quais [11,0 s] são do FlashRank. Orçamento: analisador < 50 ms; recuperação da v2 ≤ média atual. Acelerações candidatas, a medir: limitar os candidatos antes do rerank (hoje vão todos, `compressor.top_n = len(docs)`), revisar o limite de 2 threads do ONNX (`rag_core.py:60`), truncar o texto dos candidatos.
+- Latência: a recuperação leva [11,4 s] em média e [28,3 s] no máximo, dos quais [11,0 s] são do FlashRank. A v2 mediu ~7 s por pergunta nas suítes de avaliação (um só rerank). Analisador medido em 24 perguntas rotuladas: média 9 ms, máximo 24 ms; numa frase longa sem nomes chegou a 75 ms (acima da meta de 50 ms, desprezível ao lado do rerank). O dicionário carrega em ~1,1 s. Acelerações candidatas, a medir: limitar os candidatos antes do rerank (hoje vão todos, `compressor.top_n = len(docs)`), revisar o limite de 2 threads do ONNX (`rag_core.py:60`), truncar o texto dos candidatos.
 
 ## 8. Sessão, aprendizado e comandos
 - **Ficha** (classe, raça, nível, itens) e **foco** (última entidade) ficam num objeto de sessão ao lado do `chat_history`, zerados em `/novo` e anexados ao relato de `salvar_sessao_campanha` sem mudar o formato dela.
@@ -139,5 +141,6 @@ A v1 foi ajustada olhando as perguntas fixas, então compará-la com a v2 seria 
 As 68 perguntas antigas servem só de **alarme de fumaça** (recuperação, sem nota). A adoção da v2 se baseia em números absolutos por nível de dificuldade (cobertura por necessidade e por entidade, `fatos_esperados`, `sem_citacao`/`citacoes_fora`/`citacoes_ok`, chunks, caracteres, tempo) e na fila de falhas, com critérios de aceite fixados antes de rodar. A comparação de rerankers compara variantes **da v2** entre si, no dev.
 
 ## 10. Riscos e parâmetros a calibrar
-- **Riscos:** falso positivo de nome comum; empates no ligador; foco herdado errado; FlashRank em inglês derrubando alvos (caso 53); embedding `multilingual-e5-base` usado **sem** os prefixos `query:`/`passage:` que o modelo espera (corrigir exige reindexar, decisão do usuário).
+- **Riscos:** falso positivo de nome comum; empates no ligador; foco herdado errado; FlashRank em inglês derrubando alvos (caso 53); embedding `multilingual-e5-base` usado **sem** os prefixos `query:`/`passage:` que o modelo espera. Implementado atrás de `EMBEDDING_PREFIXOS=e5` (coleção paralela `tormenta20_e5p`, padrão desligado); o ganho ainda precisa ser medido no dev antes de virar padrão.
+- **Achados da avaliação (já corrigidos como classes de falha):** registros minúsculos fundidos no chunk do vizinho (62 de 4.466; a busca direta não os via); pronome entrando em nome; "erro de digitação" que é palavra real do corpus; aproximação sem âncora (pista de categoria + palavra curta); `subAbilities` do Arcanista (Feiticeiro, Bruxo, Mago) fora do dicionário.
 - **A calibrar:** limiares do ligador (0,80/0,90, valores iniciais), k por tipo, regra de confiança, lista de palavras-pista por tabela.
