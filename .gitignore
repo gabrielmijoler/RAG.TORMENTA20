@@ -11,3 +11,5 @@ traducoes_cache.json
 # Derivados de dados (regenerados do JSON de origem)
 *.md
 !README.md
+!docs/**/*.md
+!conhecimento/*.md
