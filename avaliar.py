@@ -435,6 +435,35 @@ def reformular(llm, consulta: str, cache: dict) -> str:
     return consulta
 
 
+def estado_citacao(registro: dict) -> str:
+    """Estado de citação de uma query: ok | fora | sem_citacao | vazia.
+
+    - `vazia`: resposta vazia (falha de geração — n/a legítimo)
+    - `sem_citacao`: resposta não vazia mas SEM nenhuma citação
+    - `fora`: tem citação mas alguma fora do contexto
+    - `ok`: tem citação e nenhuma fora
+
+    Uma resposta sem citação NÃO conta como "zero citações fora".
+    """
+    resposta = (registro.get("resposta") or "").strip()
+    if not resposta:
+        return "vazia"
+    c_resp = registro.get("citacoes_na_resposta", [])
+    if not c_resp:
+        return "sem_citacao"
+    if registro.get("citacoes_fora_do_contexto"):
+        return "fora"
+    return "ok"
+
+
+def contar_estados(registros: list[dict]) -> dict:
+    """Contagem de queries por estado_citacao: {ok, fora, sem_citacao, vazia}."""
+    contagem = {"ok": 0, "fora": 0, "sem_citacao": 0, "vazia": 0}
+    for r in registros:
+        contagem[estado_citacao(r)] += 1
+    return contagem
+
+
 def responder(llm, top: list, sintese, pergunta: str) -> tuple[str, dict]:
     """Guard da Regra 2: sem citação OU com citação fora -> reparo na síntese.
 
@@ -689,9 +718,13 @@ def avaliar(
                 "citacoes_fundamentadas": sorted(fundamentadas),
                 "citacoes_fora_do_contexto": sorted(fora),
                 "groundedness": round(grounding, 3) if grounding is not None else None,
-                # telemetria do guard: quantas 2ª passadas cada gatilho deu
+                # telemetria do guard: quantas 2ª/3ª passadas cada gatilho
                 "guard_reparo_disparado": guarda["guard_reparo_disparado"],
                 "guard_sem_citacao_disparado": guarda["guard_sem_citacao_disparado"],
+                # estado explícito: ok | fora | sem_citacao | vazia
+                "estado_citacao": estado_citacao(registro),
+                # passadas do guard: [{n, motivo, citacoes, fora}, ...]
+                "passadas": guarda.get("passadas", []),
             })
             print(f"  cobertura entidades: {hit:.0%} | groundedness: "
                   f"{'n/a' if grounding is None else f'{grounding:.0%}'} "
@@ -812,6 +845,10 @@ def resumir(resultado: dict) -> None:
     modos = Counter(r.get("reranker_usado") or "?" for r in regs)
     print("RERANK (modo por query): "
           + " | ".join(f"{m} {n}" for m, n in modos.most_common()))
+    # estados de citação separados: sem_citacao NÃO conta como "zero fora"
+    estados = contar_estados(regs)
+    print(f"CITAÇÕES: ok={estados['ok']} | fora={estados['fora']} | "
+          f"sem_citacao={estados['sem_citacao']} | vazia={estados['vazia']}")
     print("=" * 78)
 
 
