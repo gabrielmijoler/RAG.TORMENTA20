@@ -1,6 +1,15 @@
 # Arquitetura v2 — analisador de pergunta em Python
 
-Status: **desenho aprovado no Ponto 1** (limiares, ordem de fontes e opção C fixados). O núcleo (`rag_v2/`) está em construção; o plugue na v1 e o resto dependem das fases seguintes.
+Status: **desenho aprovado no Ponto 1** (limiares, ordem de fontes e opção C fixados). Implementado e plugado atrás de `ARQUITETURA=v2` (padrão `v1`):
+- analisador (`rag_v2/`);
+- recuperação por necessidade;
+- lista de verificação ao LLM;
+- ficha/foco da sessão;
+- apelidos aprovados (`tools/conhecimento.py`);
+- sinais (`SINAIS=1`);
+- comandos `/entendi`, `/ficha`, `/errado` e `/parcial`.
+
+Ainda não foi feito: avaliação da v2 (Fase 2: suíte de 12, sintéticas, conjunto rotulado), gerador de propostas a partir dos sinais e leitura de feedback em linguagem natural (Fase 6).
 Números entre colchetes vêm da Fase 0 (`.superpowers/medicoes/*.json`). "Não medido" quer dizer que ainda não há medição.
 
 ## 1. Ideia em uma frase
@@ -112,7 +121,12 @@ Motivo: a tradução apagou os nomes da pergunta semente ("Machado Touro", "Barb
 - **Ficha** (classe, raça, nível, itens) e **foco** (última entidade) ficam num objeto de sessão ao lado do `chat_history`, zerados em `/novo` e anexados ao relato de `salvar_sessao_campanha` sem mudar o formato dela.
 - **Aprendizado** (só interpretação, nunca regra): `conhecimento/propostas.yaml` guarda as pendentes; `conhecimento/apelidos.yaml` guarda só as aprovadas, cada apelido apontando para a chave completa; `conhecimento/APRENDIZADOS.md` é gerado do YAML. `tools/conhecimento.py aprovar` valida (registro existe, sem colisão, formato) e oferece rodar o teste fechado; `verificar` suspende apelidos órfãos após reingestão.
 - **Sinais:** JSONL local, fora do git, sem chaves. **Comandos:** `/entendi`, `/ficha [campo=valor]`, `/errado`, `/parcial`.
-- **Plugue (depois da T3):** `ARQUITETURA=v2` (padrão `v1`); edições mínimas em `index.processar` e na flag do `avaliar.py`. `pyyaml` entra no `pyproject.toml` nessa etapa, junto com `rag_v2` em `[tool.setuptools]`.
+- **Plugue (feito):** `ARQUITETURA=v2` (padrão `v1`).
+  - No chat (`index.processar`), a leitura usa a sessão. Com confiança baixa ou `/filtro` ativo, a v1 roda inteira.
+  - No avaliador, `ARQUITETURA=v2 make avaliar` grava `registro["v2"]` com a leitura e a telemetria da recuperação.
+  - Com a flag desligada, nada da v2 é montado.
+  - `pyyaml` e o pacote `rag_v2` estão declarados no `pyproject.toml`.
+- **Referências e ficha:** "e a CD dela?" sem nome herda o **foco** (ligação do tipo `foco`, confiança média). Uma pergunta em primeira pessoa ("combina comigo?") herda a **ficha**. Uma referência sem foco cai na reformulação da v1.
 
 ## 9. Avaliação: v2 em termos absolutos, sem v1 ao lado
 A v1 foi ajustada olhando as perguntas fixas, então compará-la com a v2 seria enviesado. Não há linha de base v1 nem tabela v1 × v2. A v2 é avaliada por:
