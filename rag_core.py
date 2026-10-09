@@ -17,6 +17,8 @@ import shutil
 import subprocess
 import time
 import unicodedata
+import urllib.error
+import urllib.request
 from collections import Counter
 from datetime import datetime, timezone
 from typing import Any
@@ -109,6 +111,8 @@ QDRANT_URL = os.environ.get("QDRANT_URL", "").strip()
 
 MODELO_EMBEDDING = "intfloat/multilingual-e5-base"
 MODELO_RERANK = "rerank-v3.5"
+MODELO_VOYAGE = "rerank-2"
+URL_VOYAGE_RERANK = "https://api.voyageai.com/v1/rerank"
 # FlashRank local: MiniLM-L-12 é o default documentado do flashrank e o único
 # que discrimina pt-BR neste corpus — MultiBERT-L-12 satura (top-12 todo em
 # 0,999±0,0003) e derrubou a cobertura de 99% para 85% no eval de 61 queries.
@@ -1875,6 +1879,74 @@ class RecuperadorDensoHyDE(BaseRetriever):
         return self.vectorstore.similarity_search(alvo, k=self.k)
 
 
+def _voyage_rerank_api(
+    query: str, documentos: list[str], model: str, api_key: str,
+    timeout: float = 60.0,
+) -> list[dict]:
+    """POST /v1/rerank da Voyage; devolve `[{index, relevance_score}]`.
+
+    A API não aceita `top_n` no corpo (HTTP 400): o corte para `top_n` é
+    local, em `VoyageRerank.compress_documents`. Chave ausente é erro de
+    uso (`ValueError`); falha de rede/HTTP sobe como está — `recuperar()`
+    captura e cai no `ensemble_fallback`.
+    """
+    if not api_key:
+        raise ValueError("VOYAGE_API_KEY ausente no ambiente")
+    corpo = json.dumps(
+        {"query": query, "documents": documentos, "model": model}
+    ).encode("utf-8")
+    requisicao = urllib.request.Request(
+        URL_VOYAGE_RERANK,
+        data=corpo,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(requisicao, timeout=timeout) as resposta:
+        return json.loads(resposta.read())["data"]
+
+
+class VoyageRerank(BaseDocumentCompressor):
+    """Reranker Voyage AI (multilíngue) — flag experimental `RERANK=voyage`.
+
+    Alternativa multilíngue ao FlashRank ms-marco (inglês) para o corpus
+    em pt-BR. A API devolve score para TODOS os documentos; ordena por
+    `relevance_score` decrescente e corta em `top_n` localmente. Sem chave
+    (`VOYAGE_API_KEY`) ou em erro, levanta — `recuperar()` degrada para a
+    ordem do ensemble (o mesmo fallback do Cohere).
+    """
+
+    model: str = MODELO_VOYAGE
+    top_n: int = 12
+    timeout: float = 60.0
+
+    def compress_documents(self, documents, query, callbacks=None):
+        docs = list(documents)
+        if not docs:
+            return []
+        api_key = os.environ.get("VOYAGE_API_KEY", "").strip()
+        if not api_key:
+            raise RuntimeError(
+                "VOYAGE_API_KEY ausente (RERANK=voyage exige a chave)"
+            )
+        dados = _voyage_rerank_api(query, [d.page_content for d in docs],
+                                   self.model, api_key, self.timeout)
+        dados = sorted(dados, key=lambda d: d["relevance_score"], reverse=True)
+        saida: list[Document] = []
+        for item in dados[: self.top_n]:
+            original = docs[item["index"]]
+            saida.append(Document(
+                page_content=original.page_content,
+                metadata={
+                    **original.metadata,
+                    "relevance_score": item["relevance_score"],
+                },
+            ))
+        return saida
+
+
 class CascataReranker(BaseDocumentCompressor):
     """Cascata inteligente: FlashRank local → escalada Cohere por confiança.
 
@@ -1952,6 +2024,7 @@ def criar_reranker(tipo: str | None = None) -> CascataReranker:
       resultado do FlashRank);
     - flashrank: só o local, nunca escalona;
     - cohere: só a API (comportamento legado pré-FlashRank);
+    - voyage: só a API Voyage multilíngue (flag experimental da T3);
     - desligado: pass-through na ordem do ensemble, sem score (limiar fica
       sem efeito);
 
@@ -1976,12 +2049,17 @@ def criar_reranker(tipo: str | None = None) -> CascataReranker:
             primario=CohereRerank(top_n=top_n, model=MODELO_RERANK),
             nome_primario="cohere",
         )
+    elif modo == "voyage":
+        cascata = CascataReranker(
+            primario=VoyageRerank(top_n=top_n),
+            nome_primario="voyage",
+        )
     elif modo == "desligado":
         cascata = CascataReranker(primario=None, nome_primario="nenhum")
     else:
         raise ValueError(
             f"RERANK desconhecido: {modo!r} "
-            "(use auto, flashrank, cohere ou desligado)"
+            "(use auto, flashrank, cohere, voyage ou desligado)"
         )
     cascata.top_n = top_n  # sincroniza wrapper e filhos
     return cascata
