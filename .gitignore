@@ -16,3 +16,6 @@ traducoes_cache.json
 
 # Sinais de uso real da v2 (local, nunca versionado)
 sinais/
+
+# Cache do juiz LLM: gerado localmente, nunca versionado
+juiz_cache.json
