@@ -86,3 +86,23 @@ def test_necessidade_de_tabela_nao_tem_registro_fixo():
                 Restricoes(nivel=4, classes=("Bárbaro",)), "build", TABELAS)
     poderes = [n for n in nec if n.tabela_alvo == "Poderes (Bárbaro)"]
     assert poderes and poderes[0].registro is None
+
+
+def test_classe_herdada_da_ficha_sem_ligacao_ganha_o_registro_e_as_habilidades():
+    r = Restricoes(nivel=4, classes=("Bárbaro",))
+    nec = gerar((_lig("Armas", "Machado Táurico"),), r, "build", TABELAS)
+    pares = _pares(nec)
+    assert ("Classes", "Bárbaro", True) in pares
+    assert any("até o nível 4" in n.descricao for n in nec)
+    assert ("Poderes (Bárbaro)", "Bárbaro", True) in pares
+
+
+def test_raca_herdada_da_ficha_sem_ligacao_ganha_o_registro():
+    nec = gerar((_lig("Armas", "Adaga"),), Restricoes(racas=("Bugbear",)), "build", TABELAS)
+    assert ("Raças", "Bugbear", True) in _pares(nec)
+
+
+def test_classe_ja_ligada_nao_duplica_necessidade():
+    r = Restricoes(nivel=4, classes=("Bárbaro",))
+    nec = gerar((_lig("Classes", "Bárbaro"),), r, "build", TABELAS)
+    assert sum(1 for n in nec if n.descricao == "registro da classe Bárbaro") == 1

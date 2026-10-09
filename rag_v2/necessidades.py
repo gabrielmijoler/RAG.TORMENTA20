@@ -48,6 +48,18 @@ def gerar(ligacoes: tuple[Ligacao, ...], restricoes: Restricoes, tipo: str,
             for necessidade in _do_registro(chave, restricoes):
                 adicionar(necessidade)
 
+    # classe/raça que vieram só da ficha da sessão (sem ligação na pergunta)
+    # também precisam do próprio registro
+    ligados = {chave.nome for lig in ligacoes for chave in (lig.chave, *lig.alternativas)}
+    for classe in restricoes.classes:
+        if classe not in ligados and "Classes" in tabelas:
+            for necessidade in _do_registro(Chave("Classes", classe, ""), restricoes):
+                adicionar(necessidade)
+    for raca in restricoes.racas:
+        if raca not in ligados and "Raças" in tabelas:
+            for necessidade in _do_registro(Chave("Raças", raca, ""), restricoes):
+                adicionar(necessidade)
+
     if tipo == "build":
         for classe in restricoes.classes:
             tabela = f"Poderes ({classe})"

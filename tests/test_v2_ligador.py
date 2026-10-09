@@ -1,5 +1,7 @@
 """Ligador da v2: nomes do jogo dentro da pergunta (exato, apelido, aproximado)."""
 
+import pytest
+
 from rag_v2.dicionario import construir
 from rag_v2.ligador import ambigua, ligar, refinar_por_restricoes
 from rag_v2.tipos import Chave, Restricoes
@@ -182,3 +184,27 @@ def test_tabela_de_categorias_perde_o_empate_para_a_entidade():
     lig = ligar("sou barbaro", d)[0]
     assert lig.chave.tabela == "Classes"
     assert not ambigua(lig)
+
+
+# --- pronomes não fazem parte de nome (achado na avaliação: 'resistência dela') ---
+
+def _d_resistencia():
+    return construir({"tabelas": [{"arquivo": "races.ts", "export": "races", "elementos": [
+        {"name": "Qareen", "origin": JA,
+         "abilities": [{"name": "Resistência Elemental"}]}]}]})
+
+
+@pytest.mark.parametrize("texto", [
+    "e qual a CD de resistência dela?",
+    "qual a resistência dele?",
+    "e a resistência deles?",
+    "a resistência disso",
+    "a resistência dessa",
+])
+def test_pronome_no_fim_da_janela_nao_forma_nome_aproximado(texto):
+    assert ligar(texto, _d_resistencia()) == ()
+
+
+def test_nome_real_com_a_mesma_palavra_continua_ligando():
+    ligs = ligar("o que faz a resistência elemental do qareen?", _d_resistencia())
+    assert {lig.chave.sub for lig in ligs} >= {"Resistência Elemental"}

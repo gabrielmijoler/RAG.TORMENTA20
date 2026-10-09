@@ -35,6 +35,10 @@ PALAVRAS_VAZIAS = frozenset([
     "dos", "e", "em", "no", "na", "nos", "nas", "que", "se", "com", "por", "para",
     "pra", "pro", "ao", "aos", "sou", "eu", "meu", "minha", "qual", "quais",
     "como", "quanto", "ou", "isso", "esse", "essa", "este", "esta", "ele", "ela",
+    # referências: apontam para algo já dito e nunca fazem parte de um nome
+    "eles", "elas", "dele", "dela", "deles", "delas", "nele", "nela", "neles", "nelas",
+    "desse", "dessa", "desses", "dessas", "nesse", "nessa", "deste", "desta", "disso",
+    "nisso", "disto", "isto", "aquele", "aquela", "mesmo", "mesma", "comigo",
 ])
 
 # Nomes do jogo que também são palavras comuns: só ligam por nome exato
