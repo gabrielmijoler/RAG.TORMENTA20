@@ -145,5 +145,12 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
 
 
 def do_corpus(apelidos: dict[str, Chave] | None = None) -> Dicionario:
-    """Dicionário dos registros reais (roda o extrator Node da ingestão, ~1 s)."""
+    """Dicionário dos registros reais (roda o extrator Node da ingestão, ~1 s).
+
+    Sem `apelidos`, carrega os APROVADOS de conhecimento/apelidos.yaml.
+    """
+    if apelidos is None:
+        # import tardio: conhecimento importa este módulo
+        from .conhecimento import apelidos_ativos
+        apelidos = apelidos_ativos()
     return construir(rag_core._extrair_fonte_ts(verbose=False), apelidos=apelidos)
