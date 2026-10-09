@@ -75,6 +75,7 @@ class Dicionario:
     exatos: dict[str, tuple[Chave, ...]] = field(default_factory=dict)
     apelidos: dict[str, tuple[Chave, ...]] = field(default_factory=dict)
     max_palavras: int = 1
+    _por_palavras: dict[int, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def exato(self, frase: str) -> tuple[Chave, ...]:
         chave = chave_texto(frase)
@@ -84,10 +85,14 @@ class Dicionario:
         chave = chave_texto(frase)
         return self.apelidos.get(chave) or self.apelidos.get(singular(chave)) or ()
 
-    @property
-    def nomes(self) -> tuple[str, ...]:
-        """Nomes normalizados indexados (base da ligação aproximada)."""
-        return tuple(self.exatos)
+    def nomes_com_palavras(self, n: int) -> tuple[str, ...]:
+        """Nomes normalizados com exatamente `n` palavras (base da ligação aproximada)."""
+        if not self._por_palavras:
+            grupos: dict[int, list[str]] = {}
+            for nome in self.exatos:
+                grupos.setdefault(len(nome.split()), []).append(nome)
+            self._por_palavras.update({k: tuple(v) for k, v in grupos.items()})
+        return self._por_palavras.get(n, ())
 
 
 def _adicionar(indice: dict[str, list[Chave]], nome: str, chave: Chave) -> None:
