@@ -75,6 +75,7 @@ class Dicionario:
     exatos: dict[str, tuple[Chave, ...]] = field(default_factory=dict)
     apelidos: dict[str, tuple[Chave, ...]] = field(default_factory=dict)
     max_palavras: int = 1
+    tabelas: frozenset[str] = frozenset()
     _por_palavras: dict[int, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def exato(self, frase: str) -> tuple[Chave, ...]:
@@ -108,8 +109,10 @@ def _ordenar(chaves: list[Chave]) -> tuple[Chave, ...]:
 def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionario:
     """Monta o dicionário a partir dos registros crus da extração."""
     indice: dict[str, list[Chave]] = {}
+    tabelas: set[str] = set()
     for bloco in dados["tabelas"]:
         tabela = rag_core._rotulo_tabela(bloco["arquivo"], bloco["export"])
+        tabelas.add(tabela)
         if tabela in TABELAS_IGNORADAS:
             continue
         for reg in bloco["elementos"]:
@@ -137,4 +140,10 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
     todas = list(exatos) + list(dic_apelidos)
     maior = max((len(k.split()) for k in todas), default=1)
     return Dicionario(exatos=exatos, apelidos=dic_apelidos,
-                      max_palavras=min(maior, MAX_PALAVRAS))
+                      max_palavras=min(maior, MAX_PALAVRAS),
+                      tabelas=frozenset(tabelas))
+
+
+def do_corpus(apelidos: dict[str, Chave] | None = None) -> Dicionario:
+    """Dicionário dos registros reais (roda o extrator Node da ingestão, ~1 s)."""
+    return construir(rag_core._extrair_fonte_ts(verbose=False), apelidos=apelidos)

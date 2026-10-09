@@ -115,3 +115,8 @@ def test_prioridade_segue_a_ordem_fixada():
     assert prioridade_fonte("Herois de Arton") < prioridade_fonte("Ameaças de Arton")
     assert prioridade_fonte("Deuses de Arton") < prioridade_fonte("Compendio T20")
     assert prioridade_fonte("Dragão Brasil - 212") == len(PRIORIDADE_FONTES)
+
+
+def test_dicionario_conhece_as_tabelas_do_corpus():
+    d = construir(_dados())
+    assert {"Armas", "Classes", "Condições"} <= d.tabelas
