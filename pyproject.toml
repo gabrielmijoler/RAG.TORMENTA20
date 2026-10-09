@@ -19,6 +19,7 @@ dependencies = [
     "qdrant-client>=1.19.0",
     "langchain-qdrant>=0.1.0",
     "langchain-classic>=1.0.0",
+    "pyyaml>=6.0",
 ]
 
 [project.scripts]
@@ -35,6 +36,7 @@ py-modules = [
     "index",
     "avaliar",
 ]
+packages = ["rag_v2"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
