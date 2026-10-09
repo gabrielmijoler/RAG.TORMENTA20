@@ -6,6 +6,7 @@ import pytest
 from langchain_core.documents import Document
 
 import avaliar
+import rag_v2.recuperacao
 from rag_v2.dicionario import construir
 
 DOCS = [Document(page_content="[Magias > Tormenta20 - Jogo do Ano]\n# Voo\nconteudo",
@@ -39,11 +40,12 @@ def ambiente(monkeypatch):
     dicionario = construir({"tabelas": [{"arquivo": "spells.ts", "export": "spells",
                                          "elementos": [{"name": "Voo", "origin": "X"}]}]})
     monkeypatch.setattr(avaliar, "buscar", fake_buscar)
-    monkeypatch.setattr(avaliar, "recuperar_v2", fake_recuperar_v2)
+    # avaliar importa a v2 dentro da função: o alvo do patch é o módulo de origem
+    monkeypatch.setattr(rag_v2.recuperacao, "recuperar_v2", fake_recuperar_v2)
     monkeypatch.setattr(avaliar, "reformular", fake_reformular)
     monkeypatch.setattr(avaliar, "responder", fake_responder)
     monkeypatch.setattr(avaliar, "_montar_v2",
-                        lambda chunks: (dicionario, {}) if avaliar.arquitetura() == "v2"
+                        lambda chunks: (dicionario, {}) if avaliar._arquitetura() == "v2"
                         else (None, None))
     monkeypatch.setattr(avaliar.rag_core, "montar_chunks", lambda verbose=True: [])
     monkeypatch.setattr(avaliar.rag_core, "montar_retriever",

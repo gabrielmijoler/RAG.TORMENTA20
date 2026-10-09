@@ -58,10 +58,6 @@ from rag_core import (
     resposta_sem_citacoes,
     trocar_modelo,
 )
-from rag_v2.dicionario import do_corpus
-from rag_v2.integracao import arquitetura, bloco_dicas, usar_v2
-from rag_v2.leitura import ler
-from rag_v2.recuperacao import indexar_registros, recuperar_v2
 
 ARQUIVO_CACHE = "traducoes_cache.json"
 
@@ -606,10 +602,20 @@ def _hyde_doc_do(retriever, consulta: str) -> str | None:
     return None
 
 
+def _arquitetura() -> str:
+    """ARQUITETURA do ambiente ('v2' ou 'v1'), lida sem importar rag_v2."""
+    return "v2" if os.environ.get("ARQUITETURA", "").strip().lower() == "v2" else "v1"
+
+
 def _montar_v2(chunks):
-    """Dicionário e índice de registros da v2; (None, None) com ARQUITETURA=v1."""
-    if arquitetura() != "v2":
+    """Dicionário e índice de registros da v2; (None, None) com ARQUITETURA=v1.
+
+    Os imports da v2 ficam aqui dentro: o caminho padrão (v1) não importa rag_v2.
+    """
+    if _arquitetura() != "v2":
         return None, None
+    from rag_v2.dicionario import do_corpus
+    from rag_v2.recuperacao import indexar_registros
     return do_corpus(), indexar_registros(chunks)
 
 
@@ -644,6 +650,10 @@ def avaliar(
         llm=llm,
     )
     dicionario, registros_v2 = _montar_v2(chunks)
+    if dicionario:
+        from rag_v2.integracao import bloco_dicas, usar_v2
+        from rag_v2.leitura import ler
+        from rag_v2.recuperacao import recuperar_v2
 
     sintese = None
     if not so_recuperacao:
@@ -670,7 +680,7 @@ def avaliar(
         print(f"\n[{caso['id']}] {caso['consulta'][:70]}...")
         # v2 (ARQUITETURA=v2): leitura sem LLM; confiança baixa cai na v1 inteira
         leitura = ler(caso["consulta"], dicionario) if dicionario else None
-        v2 = usar_v2(leitura)
+        v2 = leitura is not None and usar_v2(leitura)
         if v2 and leitura.usar_llm == "nenhum":
             reformulada = caso["consulta"]
             print("  reformulação: pulada (v2, confiança alta)")
@@ -820,7 +830,7 @@ def avaliar(
         "colecao": rag_core.COLECAO,
         "pontos_colecao": _pontos_colecao(),
         "estrategia": estrategia,
-        "arquitetura": arquitetura(),
+        "arquitetura": _arquitetura(),
         "reranker": rag_core.reranker_ativo(),
         "limiar": limiar,
         "n_consultas": len(registros),

@@ -33,12 +33,19 @@ from rag_core import (
     reformular_pergunta,
     trocar_modelo,
 )
-from rag_v2 import sinais
-from rag_v2.dicionario import do_corpus
-from rag_v2.integracao import arquitetura, bloco_dicas, descrever, usar_v2
-from rag_v2.leitura import ler
-from rag_v2.recuperacao import indexar_registros, recuperar_v2
-from rag_v2.sessao import Sessao
+
+# Flags lidas do ambiente SEM importar rag_v2: no caminho padrão (v1) nenhum módulo
+# da v2 é importado (tests/test_v1_inalterada.py confere sys.modules).
+V2_LIGADO = os.environ.get("ARQUITETURA", "").strip().lower() == "v2"
+SINAIS_LIGADO = os.environ.get("SINAIS", "").strip().lower() in ("1", "true", "sim", "on")
+if V2_LIGADO:
+    from rag_v2.dicionario import do_corpus
+    from rag_v2.integracao import bloco_dicas, descrever, usar_v2
+    from rag_v2.leitura import ler
+    from rag_v2.recuperacao import indexar_registros, recuperar_v2
+    from rag_v2.sessao import Sessao
+if SINAIS_LIGADO:
+    from rag_v2 import sinais
 
 # ==========================================
 # 1. LLM + COLEÇÃO + RETRIEVER + CHAIN
@@ -68,17 +75,17 @@ cadeia = rag_core.montar_cadeia_resposta(SYSTEM_PROMPT, llm, com_historico=True)
 
 # v2 (ARQUITETURA=v2): analisador de pergunta sem LLM. Com v1 (padrão) nada
 # disso é montado e o chat segue exatamente como antes.
-if arquitetura() == "v2":
+if V2_LIGADO:
     print("Arquitetura v2: montando o dicionário de nomes do corpus...")
     dicionario_v2 = do_corpus()
     registros_v2 = indexar_registros(chunks)
+    # Ficha (classe, raça, nível, itens) e foco (última entidade) da sessão v2.
+    sessao = Sessao()
 else:
-    dicionario_v2, registros_v2 = None, None
+    dicionario_v2, registros_v2, sessao = None, None, None
 # Última leitura e telemetria da recuperação v2 (mostradas pelo /entendi).
 ultima_leitura = None
 ultima_telemetria = None
-# Ficha (classe, raça, nível, itens) e foco (última entidade) da sessão v2.
-sessao = Sessao()
 # Último evento de sinal (SINAIS=1): alvo do /errado e do /parcial.
 ultimo_evento = None
 
@@ -117,9 +124,12 @@ COMANDOS = ("/filtro tabela=X [fonte=Y tipo=Z]  restringe a busca por metadados 
             "'/filtro' lista valores, 'limpar' desliga)  |  "
             "/salvar  arquiva a sessão atual (relato opcional)  |  "
             "/novo  limpa o histórico e começa outra sessão  |  "
-            "/entendi  mostra como a última pergunta foi lida (v2)  |  "
-            "/ficha [campo=valor]  mostra/corrige ficha e foco (v2)  |  "
-            "/errado, /parcial  avaliam a última resposta (SINAIS=1)  |  /sair  encerra")
+            + ("/entendi  mostra como a última pergunta foi lida (v2)  |  "
+               "/ficha [campo=valor]  mostra/corrige ficha e foco (v2)  |  "
+               if V2_LIGADO else "")
+            + ("/errado, /parcial  avaliam a última resposta (SINAIS=1)  |  "
+               if SINAIS_LIGADO else "")
+            + "/sair  encerra")
 BANNER = """
 ==============================================================================
   RAG de Tormenta 20 — chat contínuo com memória de sessão
@@ -199,11 +209,15 @@ def buscar(pergunta_t20: str, pergunta_real: str | None = None):
     if filtros_ativos:
         ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())
         print(f"    filtro: {ativo} -> {len(docs)} docs no top final")
-    mostrar_docs(docs)
+    for i, doc in enumerate(docs, 1):
+        score = doc.metadata.get("relevance_score", 0)
+        fonte = doc.metadata.get("Fonte") or doc.metadata.get("Tabela") or "Geral"
+        print(f"    {i:>2}. {score:.3f}  [{str(fonte)[:44]}]")
     return docs
 
 
-def mostrar_docs(docs) -> None:
+def mostrar_docs_v2(docs) -> None:
+    """Lista os documentos do caminho v2 (a buscar() da v1 não foi alterada)."""
     for i, doc in enumerate(docs, 1):
         score = doc.metadata.get("relevance_score", 0)
         fonte = doc.metadata.get("Fonte") or doc.metadata.get("Tabela") or "Geral"
@@ -305,8 +319,8 @@ def processar(entrada: str) -> None:
             print("    sem sessão em andamento no histórico — nada para arquivar.")
             return
         resumo = rag_core.salvar_sessao_campanha(
-            chat_history, relato_com_ficha(entrada), llm, embeddings, client_qdrant,
-            origem="auto"
+            chat_history, relato_com_ficha(entrada) if V2_LIGADO else entrada, llm,
+            embeddings, client_qdrant, origem="auto"
         )
         if resumo is None:
             print("    ⚠️  sessão NÃO arquivada (falha na extração do resumo).")
@@ -324,7 +338,7 @@ def processar(entrada: str) -> None:
     t0 = time.perf_counter()
     leitura = ler(entrada, dicionario_v2, sessao) if dicionario_v2 is not None else None
     tempos["leitura"] = time.perf_counter() - t0
-    v2 = usar_v2(leitura) and not filtros_ativos
+    v2 = leitura is not None and usar_v2(leitura) and not filtros_ativos
     ultima_leitura, ultima_telemetria = leitura, None
     if leitura is not None:
         print(f"\n  [v2] tipo={leitura.tipo} confiança={leitura.confianca} "
@@ -377,7 +391,7 @@ def processar(entrada: str) -> None:
             retriever_comprimido, leitura, registros_v2, pergunta_t20, reescrita)
         print(f"    v2: {ultima_telemetria['candidatos']} candidatos, "
               f"{ultima_telemetria['garantidos']} vagas garantidas")
-        mostrar_docs(docs)
+        mostrar_docs_v2(docs)
     else:
         docs = buscar(pergunta_t20, reescrita)
 
@@ -402,10 +416,10 @@ def processar(entrada: str) -> None:
     chat_history.append(AIMessage(resposta))
     if leitura is not None:
         sessao.atualizar(leitura)
-    if sinais.ativo():
+    if SINAIS_LIGADO:
         ultimo_evento = sinais.montar_evento(
-            leitura, docs, resposta, tempos, ultima_telemetria, arquitetura(),
-            pergunta=entrada)
+            leitura, docs, resposta, tempos, ultima_telemetria,
+            "v2" if V2_LIGADO else "v1", pergunta=entrada)
         sinais.registrar(ultimo_evento)
 
 
@@ -417,10 +431,7 @@ def relato_com_ficha(relato: str) -> str:
 
 
 def tratar_feedback(valor: str) -> None:
-    """/errado e /parcial: sinal FORTE sobre a última resposta."""
-    if not sinais.ativo():
-        print("Registro de sinais desligado: rode com SINAIS=1 para avaliar respostas.")
-        return
+    """/errado e /parcial: sinal FORTE sobre a última resposta (só com SINAIS=1)."""
     if ultimo_evento is None:
         print("Nenhuma resposta para avaliar ainda.")
         return
@@ -453,26 +464,21 @@ def main() -> None:
         if cmd == "/novo":
             chat_history.clear()
             filtros_ativos.clear()
-            sessao.zerar()
+            if sessao is not None:
+                sessao.zerar()
             print("Histórico limpo — nova sessão de RPG.")
             continue
-        if cmd == "/ficha" or cmd.startswith("/ficha "):
-            if dicionario_v2 is None:
-                print("A ficha da sessão é da v2: rode com ARQUITETURA=v2.")
-                continue
+        if V2_LIGADO and (cmd == "/ficha" or cmd.startswith("/ficha ")):
             argumentos = entrada[len("/ficha"):].strip()
             for erro in sessao.corrigir(argumentos) if argumentos else []:
                 print(f"  ⚠️  {erro}")
             print(sessao.descrever())
             continue
-        if cmd in ("/errado", "/parcial"):
+        if SINAIS_LIGADO and cmd in ("/errado", "/parcial"):
             tratar_feedback(cmd[1:])
             continue
-        if cmd == "/entendi":
-            if dicionario_v2 is None:
-                print("O /entendi mostra a leitura da v2: rode com ARQUITETURA=v2.")
-            else:
-                print(descrever(ultima_leitura, ultima_telemetria))
+        if V2_LIGADO and cmd == "/entendi":
+            print(descrever(ultima_leitura, ultima_telemetria))
             continue
         if cmd == "/filtro" or cmd.startswith("/filtro "):
             tratar_filtro(entrada[len("/filtro"):].strip())
@@ -487,8 +493,8 @@ def main() -> None:
                 continue
             print("\n  arquivando sessão sob comando manual...")
             resumo = rag_core.salvar_sessao_campanha(
-                chat_history, relato_com_ficha(relato), llm, embeddings, client_qdrant,
-                origem="manual"
+                chat_history, relato_com_ficha(relato) if V2_LIGADO else relato, llm,
+                embeddings, client_qdrant, origem="manual"
             )
             if resumo is None:
                 print("  ⚠️  sessão NÃO arquivada (falha na extração do resumo).")
