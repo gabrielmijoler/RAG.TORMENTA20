@@ -2,13 +2,15 @@
 
 Duas passadas sobre janelas de 1 a N palavras (da maior para a menor):
 1. exata: nome do dicionário ou apelido aprovado;
-2. aproximada (`difflib`), só nas palavras que a 1ª passada não usou.
+2. aproximada (`difflib`), só nas palavras que a 1ª passada não usou, sem
+   atravessar pontuação e sem palavra comum ou de categoria na janela.
 Cada palavra da pergunta entra em no máximo uma ligação.
 
 Empates (o mesmo nome em mais de um registro) seguem a política fixada:
 pista de tabela na pergunta → restrição já ligada (`refinar_por_restricoes`)
 → prioridade de fonte (o dicionário já devolve as chaves nessa ordem) →
 se nada desempata, a ligação fica ambígua e guarda as alternativas.
+Tabelas de categoria ("Categorias de Poder") perdem para a entidade.
 """
 
 import re
@@ -28,97 +30,23 @@ MARGEM_EMPATE = 0.02
 # Distância (em palavras) em que uma pista de tabela vale para um trecho.
 ALCANCE_PISTA = 3
 
-PALAVRAS_VAZIAS = frozenset(
-    [
-        "a",
-        "o",
-        "as",
-        "os",
-        "um",
-        "uma",
-        "uns",
-        "umas",
-        "de",
-        "da",
-        "do",
-        "das",
-        "dos",
-        "e",
-        "em",
-        "no",
-        "na",
-        "nos",
-        "nas",
-        "que",
-        "se",
-        "com",
-        "por",
-        "para",
-        "pra",
-        "pro",
-        "ao",
-        "aos",
-        "sou",
-        "eu",
-        "meu",
-        "minha",
-        "qual",
-        "quais",
-        "como",
-        "quanto",
-        "e",
-        "ou",
-        "isso",
-        "esse",
-        "essa",
-        "este",
-        "esta",
-        "ele",
-        "ela",
-    ]
-)
+PALAVRAS_VAZIAS = frozenset([
+    "a", "o", "as", "os", "um", "uma", "uns", "umas", "de", "da", "do", "das",
+    "dos", "e", "em", "no", "na", "nos", "nas", "que", "se", "com", "por", "para",
+    "pra", "pro", "ao", "aos", "sou", "eu", "meu", "minha", "qual", "quais",
+    "como", "quanto", "ou", "isso", "esse", "essa", "este", "esta", "ele", "ela",
+])
 
 # Nomes do jogo que também são palavras comuns: só ligam por nome exato
 # e com uma pista da tabela por perto.
-PALAVRAS_COMUNS = frozenset(
-    [
-        "cura",
-        "grande",
-        "acido",
-        "forca",
-        "luta",
-        "medo",
-        "fogo",
-        "gelo",
-        "luz",
-        "sorte",
-        "morte",
-        "terra",
-        "agua",
-        "vento",
-        "corte",
-        "golpe",
-        "escudo",
-        "grito",
-        "sono",
-        "dano",
-        "defesa",
-        "ataque",
-        "teste",
-        "alcance",
-        "tamanho",
-        "nivel",
-        "mestre",
-        "grupo",
-        "arma",
-        "armas",
-        "veneno",
-        "fome",
-        "sede",
-    ]
-)
+PALAVRAS_COMUNS = frozenset([
+    "cura", "grande", "acido", "forca", "luta", "medo", "fogo", "gelo", "luz",
+    "sorte", "morte", "terra", "agua", "vento", "corte", "golpe", "escudo",
+    "grito", "sono", "dano", "defesa", "ataque", "teste", "alcance", "tamanho",
+    "nivel", "mestre", "grupo", "arma", "armas", "veneno", "fome", "sede",
+])
 
-# palavra normalizada -> predicado sobre o rótulo da Tabela
+# palavra normalizada (singular) -> predicado sobre o rótulo da Tabela
 _PISTAS = {
     "magia": lambda t: t == "Magias",
     "condicao": lambda t: t == "Condições",
@@ -144,24 +72,42 @@ _PISTAS = {
     "montaria": lambda t: t == "Montarias",
 }
 
+# Palavras que nomeiam uma categoria ("a magia X", "a condição Y") e também
+# existem como nome de registro ou de habilidade (Arcanista > Magias, Regras >
+# Habilidades, Magias > Condição): sozinhas, são pista, nunca nome.
+PALAVRAS_DE_CATEGORIA = frozenset(_PISTAS) | frozenset(
+    ["habilidade", "regra", "item", "tipo", "efeito", "custo"])
+
+# Tabelas que descrevem categorias, não entidades: perdem o empate.
+_PREFIXOS_META = ("Categorias de",)
+
 _RE_PALAVRA = re.compile(r"\w+", re.UNICODE)
+_RE_PONTUACAO = re.compile(r"[,.;:?!()\[\]]")
 
 
-def _tokens(texto: str) -> list[tuple[str, int, int]]:
-    """Palavras normalizadas com a posição delas no texto original."""
+def _tokens(texto: str) -> list[tuple[str, int, int, int]]:
+    """(palavra normalizada, início, fim, trecho entre pontuações) de cada palavra."""
     saida = []
+    segmento, fim_anterior = 0, 0
     for m in _RE_PALAVRA.finditer(texto):
+        if _RE_PONTUACAO.search(texto, fim_anterior, m.start()):
+            segmento += 1
+        fim_anterior = m.end()
         norma = chave_texto(m.group())
         if norma:
-            saida.append((norma, m.start(), m.end()))
+            saida.append((norma, m.start(), m.end(), segmento))
     return saida
+
+
+def _e_categoria(norma: str) -> bool:
+    return norma in PALAVRAS_DE_CATEGORIA or singular(norma) in PALAVRAS_DE_CATEGORIA
 
 
 def _pistas_perto(tokens, inicio: int, fim: int) -> list:
     """Predicados de tabela cujas palavras-pista estão até ALCANCE_PISTA palavras."""
-    janela = tokens[max(0, inicio - ALCANCE_PISTA) : fim + ALCANCE_PISTA]
+    janela = tokens[max(0, inicio - ALCANCE_PISTA):fim + ALCANCE_PISTA]
     achadas = []
-    for norma, _, _ in janela:
+    for norma, *_ in janela:
         predicado = _PISTAS.get(singular(norma))
         if predicado is not None:
             achadas.append(predicado)
@@ -173,14 +119,15 @@ def ambigua(lig: Ligacao) -> bool:
     return any(a.tabela != lig.chave.tabela for a in lig.alternativas)
 
 
-def _escolher(
-    chaves: tuple[Chave, ...], pistas: list
-) -> tuple[Chave, tuple[Chave, ...]] | None:
-    """Aplica a pista de tabela; devolve (escolhida, alternativas não resolvidas)."""
+def _escolher(chaves: tuple[Chave, ...], pistas: list) -> tuple[Chave, tuple[Chave, ...]] | None:
+    """Aplica pista de tabela e descarta categorias; devolve (escolhida, alternativas)."""
     if pistas:
         filtradas = tuple(c for c in chaves if any(p(c.tabela) for p in pistas))
         if filtradas:
             chaves = filtradas
+    entidades = tuple(c for c in chaves if not c.tabela.startswith(_PREFIXOS_META))
+    if entidades:
+        chaves = entidades
     if not chaves:
         return None
     escolhida = chaves[0]
@@ -190,19 +137,23 @@ def _escolher(
 
 
 def _janela_utilizavel(normas: list[str]) -> bool:
-    if all(n in PALAVRAS_VAZIAS for n in normas):
-        return False
+    # "de machado" ou "machado de" nunca é um nome melhor que "machado"
     if normas[0] in PALAVRAS_VAZIAS or normas[-1] in PALAVRAS_VAZIAS:
-        return (
-            False  # "de machado" ou "machado de" nunca é um nome melhor que "machado"
-        )
-    return not (len(normas) == 1 and len(normas[0]) < 3)
+        return False
+    return not (len(normas) == 1 and (len(normas[0]) < 3 or _e_categoria(normas[0])))
+
+
+def _janela_aproximavel(tokens, i: int, j: int) -> bool:
+    """Aproximada só dentro de um trecho sem pontuação e sem palavra comum ou de categoria."""
+    if len({t[3] for t in tokens[i:j]}) > 1:
+        return False
+    return not any(t[0] in PALAVRAS_COMUNS or _e_categoria(t[0]) for t in tokens[i:j])
 
 
 def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
     """(score, [nomes empatados]) do nome mais parecido acima do limiar, ou None."""
     if n_palavras == 1:
-        if len(frase) < MIN_LETRAS_UMA_PALAVRA or frase in PALAVRAS_COMUNS:
+        if len(frase) < MIN_LETRAS_UMA_PALAVRA:
             return None
         limiar = LIMIAR_UMA_PALAVRA
     else:
@@ -212,6 +163,7 @@ def _melhor_aproximado(frase: str, n_palavras: int, dicionario: Dicionario):
     pontuados = []
     for nome in dicionario.nomes_com_palavras(n_palavras):
         comparador.set_seq1(nome)
+        # filtros baratos primeiro: só calcula o ratio() de quem pode passar
         if comparador.real_quick_ratio() < limiar or comparador.quick_ratio() < limiar:
             continue
         score = comparador.ratio()
@@ -232,34 +184,27 @@ def ligar(texto: str, dicionario: Dicionario) -> tuple[Ligacao, ...]:
 
     def registrar(i, j, chaves, score, tipo):
         pistas = _pistas_perto(tokens, i, j)
-        normas = [t[0] for t in tokens[i:j]]
-        if j - i == 1 and normas[0] in PALAVRAS_COMUNS and not pistas:
-            return False
+        if j - i == 1 and tokens[i][0] in PALAVRAS_COMUNS and not pistas:
+            return
         escolha = _escolher(chaves, pistas)
         if escolha is None:
-            return False
+            return
         escolhida, outras = escolha
         inicio, fim = tokens[i][1], tokens[j - 1][2]
-        ligacoes.append(
-            Ligacao(
-                texto[inicio:fim], inicio, fim, escolhida, round(score, 3), tipo, outras
-            )
-        )
+        ligacoes.append(Ligacao(texto[inicio:fim], inicio, fim, escolhida,
+                                round(score, 3), tipo, outras))
         for k in range(i, j):
             usados[k] = True
-        return True
 
     def janelas():
         for n in range(min(dicionario.max_palavras, len(tokens)), 0, -1):
             for i in range(len(tokens) - n + 1):
                 j = i + n
-                if any(usados[i:j]):
-                    continue
                 normas = [t[0] for t in tokens[i:j]]
-                if _janela_utilizavel(normas):
+                if not any(usados[i:j]) and _janela_utilizavel(normas):
                     yield i, j, " ".join(normas)
 
-    for i, j, frase in list(janelas()):
+    for i, j, frase in janelas():
         if any(usados[i:j]):
             continue
         if chaves := dicionario.apelido(frase):
@@ -267,8 +212,8 @@ def ligar(texto: str, dicionario: Dicionario) -> tuple[Ligacao, ...]:
         elif chaves := dicionario.exato(frase):
             registrar(i, j, chaves, 1.0, "exata")
 
-    for i, j, frase in list(janelas()):
-        if any(usados[i:j]):
+    for i, j, frase in janelas():
+        if any(usados[i:j]) or not _janela_aproximavel(tokens, i, j):
             continue
         achado = _melhor_aproximado(frase, j - i, dicionario)
         if achado is None:
@@ -280,9 +225,8 @@ def ligar(texto: str, dicionario: Dicionario) -> tuple[Ligacao, ...]:
     return tuple(sorted(ligacoes, key=lambda lig: lig.inicio))
 
 
-def refinar_por_restricoes(
-    ligacoes: tuple[Ligacao, ...], restricoes: Restricoes
-) -> tuple[Ligacao, ...]:
+def refinar_por_restricoes(ligacoes: tuple[Ligacao, ...],
+                           restricoes: Restricoes) -> tuple[Ligacao, ...]:
     """2º critério de desempate: 'Poderes (Classe)' da classe já ligada na pergunta."""
     classes = {rag_core.normalizar(c) for c in restricoes.classes}
     saida = []
@@ -291,18 +235,12 @@ def refinar_por_restricoes(
             saida.append(lig)
             continue
         todas = (lig.chave, *lig.alternativas)
-        alvo = [
-            c
-            for c in todas
-            if any(rag_core.normalizar(c.tabela) == f"poderes ({k})" for k in classes)
-        ]
+        alvo = [c for c in todas
+                if any(rag_core.normalizar(c.tabela) == f"poderes ({k})" for k in classes)]
         if len(alvo) == 1:
             # resolvida: as demais tabelas deixam de ser alternativa
-            saida.append(
-                Ligacao(
-                    lig.trecho, lig.inicio, lig.fim, alvo[0], lig.score, lig.tipo, ()
-                )
-            )
+            saida.append(Ligacao(lig.trecho, lig.inicio, lig.fim, alvo[0],
+                                 lig.score, lig.tipo, ()))
         else:
             saida.append(lig)
     return tuple(saida)

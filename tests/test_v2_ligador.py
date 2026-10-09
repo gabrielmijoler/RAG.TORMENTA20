@@ -142,3 +142,43 @@ def test_refinar_sem_restricao_util_mantem_a_ambiguidade():
     sem_pista = ligar("o esmagador", _d())[0]
     mantida = refinar_por_restricoes((sem_pista,), Restricoes())[0]
     assert mantida == sem_pista
+
+
+# --- classes de falha vistas no corpus real (checagem do caso semente) ---
+
+def _dados_reais_minimos():
+    return {"tabelas": [
+        {"arquivo": "classes.ts", "export": "classes", "elementos": [
+            {"name": "Bárbaro", "origin": JA},
+            {"name": "Arcanista", "origin": JA, "abilities": [{"name": "Magias"}]},
+            {"name": "Miragem (Caçador)", "origin": "Dragão Brasil - 211",
+             "abilities": [{"name": "Dança da Areia"}]}]},
+        {"arquivo": "powerCategories.ts", "export": "powerCategories", "elementos": [
+            {"name": "Bárbaro", "origin": "Compendio T20"}]},
+        {"arquivo": "spells.ts", "export": "spells", "elementos": [
+            {"name": "Condição", "origin": JA},
+            {"name": "Bola de Fogo", "origin": JA}]},
+        {"arquivo": "rules.tsx", "export": "ruleSections", "elementos": [
+            {"name": "Habilidades", "origin": "Compendio T20"}]},
+        {"arquivo": "conditions.ts", "export": "conditions", "elementos": [
+            {"name": "Caído", "origin": JA}]},
+    ]}
+
+
+def test_palavra_de_categoria_sozinha_nao_vira_nome():
+    d = construir(_dados_reais_minimos())
+    ligs = ligar("quais as penalidades da condição Caído e quais habilidades e magias", d)
+    assert [lig.chave.nome for lig in ligs] == ["Caído"]
+
+
+def test_aproximada_nao_atravessa_pontuacao_nem_usa_palavra_comum():
+    d = construir(_dados_reais_minimos())
+    ligs = ligar("Qual o dano, a área e a resistência da magia Bola de Fogo?", d)
+    assert [lig.chave.nome for lig in ligs] == ["Bola de Fogo"]
+
+
+def test_tabela_de_categorias_perde_o_empate_para_a_entidade():
+    d = construir(_dados_reais_minimos())
+    lig = ligar("sou barbaro", d)[0]
+    assert lig.chave.tabela == "Classes"
+    assert not ambigua(lig)
