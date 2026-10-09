@@ -213,3 +213,11 @@ def test_relatorio_em_texto_resume_o_que_foi_proposto_e_o_que_foi_ignorado(pasta
     texto = pr.renderizar(_gerar(pastas))
     for trecho in ("1 proposta", "machado toureo", "Machado Táurico", "tools/conhecimento.py aprovar"):
         assert trecho in texto
+
+
+def test_na_mesma_pergunta_o_feedback_com_faltou_vale_mais_que_o_sem_texto(pastas):
+    eventos = [_pergunta("e1"), _feedback("e1", None, id_="fraco"),     # ex.: "não era isso"
+               _feedback("e1", "faltou o machado toureo", valor="parcial", id_="forte"),
+               _pergunta("e2"), _feedback("e2", "faltou o machado toureo")]
+    _gravar(pastas["sinais"], eventos)
+    assert len(_gerar(pastas).propostas) == 1

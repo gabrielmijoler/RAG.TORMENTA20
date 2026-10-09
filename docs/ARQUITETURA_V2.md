@@ -11,7 +11,7 @@ Status: **desenho aprovado no Ponto 1** (limiares, ordem de fontes e opção C f
 
 Fase 2 feita: suíte de 12 + sequências, avaliador absoluto com rastreio por etapa (`tools/avaliar_v2.py`), perguntas sintéticas sem LLM (`tools/gerar_sinteticas.py`) e conjunto rotulado provisório do analisador (`tools/medir_analisador.py`). Aguarda a correção do usuário nos `fatos_esperados` e nos rótulos.
 
-Ainda não foi feito: gerador de propostas a partir dos sinais e leitura de feedback em linguagem natural (Fase 6).
+Fase 6 feita: `tools/conhecimento.py gerar-propostas` lê `sinais/sinais.jsonl` e propõe apelidos (sempre como proposta pendente, nunca aprovada), e `FEEDBACK_NATURAL=1` (junto com `SINAIS=1`) lê "deu certo", "em partes", "não era isso" como sinal fraco.
 Números entre colchetes vêm da Fase 0 (`.superpowers/medicoes/*.json`). "Não medido" quer dizer que ainda não há medição.
 
 ## 1. Ideia em uma frase
@@ -123,6 +123,8 @@ Motivo: a tradução apagou os nomes da pergunta semente ("Machado Touro", "Barb
 - **Ficha** (classe, raça, nível, itens) e **foco** (última entidade) ficam num objeto de sessão ao lado do `chat_history`, zerados em `/novo` e anexados ao relato de `salvar_sessao_campanha` sem mudar o formato dela.
 - **Aprendizado** (só interpretação, nunca regra): `conhecimento/propostas.yaml` guarda as pendentes; `conhecimento/apelidos.yaml` guarda só as aprovadas, cada apelido apontando para a chave completa; `conhecimento/APRENDIZADOS.md` é gerado do YAML. `tools/conhecimento.py aprovar` valida (registro existe, sem colisão, formato) e oferece rodar o teste fechado; `verificar` suspende apelidos órfãos após reingestão.
 - **Sinais:** JSONL local, fora do git, sem chaves. **Comandos:** `/entendi`, `/ficha [campo=valor]`, `/errado`, `/parcial`.
+- **Propostas a partir dos sinais** (`rag_v2/propostas.py`, sem LLM): quando o texto livre `faltou` de feedbacks negativos repete (em ≥ 2 perguntas distintas) um nome aproximado de um registro que o ligador não ligou na pergunta, vira uma proposta de apelido pendente em `conhecimento/propostas.yaml`, com os ids dos eventos em `observado` e `onde_confirmar: "a confirmar"`. Só `tools/conhecimento.py aprovar` ativa. Limite conhecido: o apelido proposto é o que o usuário escreveu no `faltou`, não necessariamente a frase da pergunta original; quem revisa pode aprovar ou criar outro à mão.
+- **Feedback em linguagem natural** (`rag_v2/feedback.py`, `FEEDBACK_NATURAL=1`, exige `SINAIS=1`): reconhece só frases claras e curtas, ignora perguntas e polaridades em conflito, grava `forca: fraco` com a confiança e o texto original; o silêncio nunca conta como acerto.
 - **Plugue (feito):** `ARQUITETURA=v2` (padrão `v1`).
   - No chat (`index.processar`), a leitura usa a sessão. Com confiança baixa ou `/filtro` ativo, a v1 roda inteira.
   - No avaliador, `ARQUITETURA=v2 make avaliar` grava `registro["v2"]` com a leitura e a telemetria da recuperação.

@@ -46,6 +46,12 @@ if V2_LIGADO:
     from rag_v2.sessao import Sessao
 if SINAIS_LIGADO:
     from rag_v2 import sinais
+# Feedback em linguagem natural ("deu certo", "em partes"): sinal FRACO, só junto com
+# SINAIS=1 (é preciso haver uma resposta registrada para avaliar).
+FEEDBACK_NATURAL_LIGADO = SINAIS_LIGADO and os.environ.get(
+    "FEEDBACK_NATURAL", "").strip().lower() in ("1", "true", "sim", "on")
+if FEEDBACK_NATURAL_LIGADO:
+    from rag_v2 import feedback as feedback_natural
 
 # ==========================================
 # 1. LLM + COLEÇÃO + RETRIEVER + CHAIN
@@ -88,6 +94,7 @@ ultima_leitura = None
 ultima_telemetria = None
 # Último evento de sinal (SINAIS=1): alvo do /errado e do /parcial.
 ultimo_evento = None
+ultimo_avaliado = False   # a última resposta já recebeu feedback (comando ou conversa)?
 
 # APENAS HumanMessage (pergunta bruta) e AIMessage (resposta final).
 # Nunca o texto do {context} — o contexto é descartado a cada rodada.
@@ -299,7 +306,21 @@ def tratar_filtro(arg: str) -> None:
 
 
 def processar(entrada: str) -> None:
-    global ultima_leitura, ultima_telemetria, ultimo_evento
+    global ultima_leitura, ultima_telemetria, ultimo_evento, ultimo_avaliado
+    # Feedback em linguagem natural sobre a resposta anterior. Reconhecido: vira sinal
+    # fraco e a mensagem NÃO vai ao RAG nem ao histórico. Não reconhecido: segue normal.
+    if FEEDBACK_NATURAL_LIGADO and ultimo_evento is not None:
+        lido = feedback_natural.interpretar(entrada)
+        if lido is not None:
+            if ultimo_avaliado:
+                print("\n  (essa resposta já foi avaliada — feedback não registrado de novo)")
+            elif sinais.registrar(sinais.feedback(
+                    ultimo_evento, lido.valor, lido.faltou, forca="fraco",
+                    confianca=lido.confianca, texto=lido.texto)):
+                ultimo_avaliado = True
+                print(f"\n  (feedback entendido: {lido.valor}, confiança {lido.confianca} — "
+                      "registrado como sinal fraco)")
+            return
     # Saudação pura: resposta fixa, sem LLM, sem busca e SEM gravar no
     # chat_history — a janela de memória fica só com o que é de regra.
     if eh_saudacao_pura(entrada):
@@ -421,6 +442,7 @@ def processar(entrada: str) -> None:
             leitura, docs, resposta, tempos, ultima_telemetria,
             "v2" if V2_LIGADO else "v1", pergunta=entrada)
         sinais.registrar(ultimo_evento)
+        ultimo_avaliado = False
 
 
 def relato_com_ficha(relato: str) -> str:
@@ -432,6 +454,7 @@ def relato_com_ficha(relato: str) -> str:
 
 def tratar_feedback(valor: str) -> None:
     """/errado e /parcial: sinal FORTE sobre a última resposta (só com SINAIS=1)."""
+    global ultimo_avaliado
     if ultimo_evento is None:
         print("Nenhuma resposta para avaliar ainda.")
         return
@@ -442,6 +465,7 @@ def tratar_feedback(valor: str) -> None:
         except (EOFError, KeyboardInterrupt):
             faltou = None
     if sinais.registrar(sinais.feedback(ultimo_evento, valor, faltou)):
+        ultimo_avaliado = True
         print(f"Obrigado — marcado como {valor}.")
 
 

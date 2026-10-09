@@ -111,3 +111,44 @@ def test_avaliador_a_unica_diferenca_de_formato_e_a_chave_aditiva_arquitetura(av
 def test_avaliador_registros_da_v1_nao_ganham_a_chave_v2(avaliar_atual):
     for registro in avaliar_atual["resultado"]["registros"]:
         assert "v2" not in registro
+
+
+# --- leitura de feedback em linguagem natural (Fase 6): só com SINAIS=1 + FEEDBACK_NATURAL=1 ---
+
+def _rodar_feedback(tmp_path, modo: str) -> dict:
+    ambiente = {k: v for k, v in os.environ.items()
+                if k not in ("ARQUITETURA", "SINAIS", "EMBEDDING_PREFIXOS", "RERANK",
+                             "FEEDBACK_NATURAL")}
+    proc = subprocess.run(
+        [sys.executable, os.path.join(RAIZ, "tests", "_harness_v1.py"), "feedback",
+         os.path.join(RAIZ, "index.py"), modo],
+        capture_output=True, text=True, env=ambiente, cwd=tmp_path, timeout=300, check=False)
+    linhas = [ln for ln in proc.stdout.splitlines() if ln.startswith("@@JSON@@")]
+    assert linhas, f"harness sem saída JSON:\n{proc.stdout[-1500:]}\n{proc.stderr[-1500:]}"
+    return json.loads(linhas[-1][len("@@JSON@@"):])
+
+
+def test_feedback_natural_registra_sinal_fraco_e_nao_roda_o_rag(tmp_path):
+    r = _rodar_feedback(tmp_path, "natural")
+    gerar = [c for c in r["chamadas"] if c[0] == "gerar"]
+    # "em partes, faltou a duração" e "deu certo" são feedback: só 2 perguntas chegaram ao RAG
+    assert [c[1] for c in gerar] == ["o que faz a magia Teia?", "e a CD dela?"]
+    feedbacks = [e for e in r["sinais"] if e["tipo"] == "feedback"]
+    assert len(feedbacks) == 1                      # o 2º ("deu certo") não duplica o mesmo evento
+    f = feedbacks[0]
+    assert (f["valor"], f["forca"], f["faltou"]) == ("parcial", "fraco", "a duração")
+    assert f["confianca"] == "alta" and f["texto"] == "em partes, faltou a duração"
+    perguntas = [e for e in r["sinais"] if e["tipo"] == "pergunta"]
+    assert f["ref"] == perguntas[0]["id"]           # aponta para a pergunta avaliada
+
+
+def test_sem_feedback_natural_a_mensagem_segue_o_fluxo_normal(tmp_path):
+    r = _rodar_feedback(tmp_path, "sem_natural")
+    gerar = [c for c in r["chamadas"] if c[0] == "gerar"]
+    assert len(gerar) == 4                          # todas viraram perguntas, como na v1
+    assert [e for e in r["sinais"] if e["tipo"] == "feedback"] == []
+
+
+def test_o_modulo_de_feedback_so_e_importado_com_a_flag(tmp_path):
+    assert "rag_v2.feedback" in _rodar_feedback(tmp_path, "natural")["modulos_rag_v2"]
+    assert "rag_v2.feedback" not in _rodar_feedback(tmp_path, "sem_natural")["modulos_rag_v2"]

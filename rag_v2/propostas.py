@@ -96,7 +96,11 @@ def gerar(caminho_sinais, dicionario: Dicionario,
     negativos: dict[str, dict] = {}
     for feedback in feedbacks:
         if feedback.get("valor") in FEEDBACK_NEGATIVO and feedback.get("ref"):
-            negativos.setdefault(feedback["ref"], feedback)
+            atual = negativos.get(feedback["ref"])
+            # o que traz o texto 'faltou' é o que interessa ao gerador
+            if atual is None or (not (atual.get("faltou") or "").strip()
+                                 and (feedback.get("faltou") or "").strip()):
+                negativos[feedback["ref"]] = feedback
     rel.feedbacks_negativos = len(negativos)
     rel.falhas_por_necessidade = _falhas_por_necessidade(negativos, perguntas)
 

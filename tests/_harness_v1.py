@@ -24,6 +24,12 @@ from langchain_core.documents import Document
 import rag_core
 
 alvo, caminho = sys.argv[1], sys.argv[2]
+# modo "feedback": liga SINAIS (+ FEEDBACK_NATURAL se pedido) para testar a leitura de
+# feedback; roda com cwd num diretório temporário (os sinais vão para lá)
+if alvo == "feedback":
+    os.environ["SINAIS"] = "1"
+    if len(sys.argv) > 3 and sys.argv[3] == "natural":
+        os.environ["FEEDBACK_NATURAL"] = "1"
 chamadas: list = []
 DOCS = [Document(page_content="[Magias > Tormenta20 - Jogo do Ano]\n# Teia\n\nconteudo",
                  metadata={"Tabela": "Magias", "Nome": "Teia", "Fonte": "Tormenta20 - Jogo do Ano",
@@ -55,7 +61,7 @@ rag_core.reranker_ativo = lambda: "flashrank"
 
 saida: dict = {"colecao": rag_core.COLECAO}
 
-if alvo == "index":
+if alvo in ("index", "feedback"):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
         m = carregar("index_alvo")
@@ -69,11 +75,24 @@ if alvo == "index":
     m.reformular_pergunta = lambda e, j, l=None: (
         chamadas.append(["reformular", e, len(j)]), "REESCRITA:" + e)[1]
 
+    mensagens = ("o que faz a magia Teia?", "em partes, faltou a duração", "deu certo",
+                 "e a CD dela?") if alvo == "feedback" else (
+        "o que faz a magia Teia?", "e a CD dela?", "oi")
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        for pergunta in ("o que faz a magia Teia?", "e a CD dela?", "oi"):
+        for pergunta in mensagens:
             m.processar(pergunta)
     saida["stdout_processar"] = buf.getvalue()
+    if alvo == "feedback":
+        arq = os.path.join("sinais", "sinais.jsonl")
+        saida["sinais"] = []
+        if os.path.exists(arq):
+            with open(arq, encoding="utf-8") as f:
+                saida["sinais"] = [json.loads(x) for x in f]
+        saida["modulos_rag_v2"] = rag_v2_importados()
+        saida["chamadas"] = chamadas
+        print("@@JSON@@" + json.dumps(saida, ensure_ascii=False, sort_keys=True, default=str))
+        sys.exit(0)
 
     entradas = iter(["/ficha", "/ficha nivel=5", "/errado", "/parcial", "/entendi",
                      "/comando_inexistente", "/novo", "/sair"])

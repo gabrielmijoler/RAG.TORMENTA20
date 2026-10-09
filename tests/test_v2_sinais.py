@@ -90,3 +90,19 @@ def test_registrar_nunca_derruba_o_chat(tmp_path):
     bloqueado = tmp_path / "arquivo"
     bloqueado.write_text("x")
     assert sinais.registrar({"tipo": "x"}, bloqueado / "sinais.jsonl") is False
+
+
+# --- feedback fraco (linguagem natural) ----------------------------------------------
+
+def test_feedback_forte_continua_igual_ao_de_antes():
+    evento = sinais.montar_evento(_leitura(), [DOC], "x", {}, TELE, "v2")
+    f = sinais.feedback(evento, "parcial", "faltou a CD")
+    assert f["forca"] == "forte" and f["faltou"] == "faltou a CD"
+    assert "confianca" not in f and "texto" not in f
+
+
+def test_feedback_fraco_registra_forca_confianca_e_texto_original():
+    evento = sinais.montar_evento(_leitura(), [DOC], "x", {}, TELE, "v2")
+    f = sinais.feedback(evento, "certo", None, forca="fraco", confianca="alta", texto="deu certo")
+    assert (f["forca"], f["confianca"], f["texto"], f["valor"]) == ("fraco", "alta", "deu certo", "certo")
+    assert f["ref"] == evento["id"]

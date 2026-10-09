@@ -81,11 +81,18 @@ def montar_evento(leitura: Leitura | None, docs: list, resposta: str, tempos: di
     }
 
 
-def feedback(evento: dict, valor: str, faltou: str | None = None) -> dict:
-    """Sinal FORTE (comando /errado ou /parcial) sobre a última pergunta."""
-    return {"tipo": "feedback", "id": uuid.uuid4().hex[:12], "ts": _agora(),
-            "ref": evento["id"], "valor": valor, "faltou": faltou, "forca": "forte",
-            "necessidades_nao_atendidas": evento.get("necessidades_nao_atendidas", [])}
+def feedback(evento: dict, valor: str, faltou: str | None = None, *, forca: str = "forte",
+             confianca: str | None = None, texto: str | None = None) -> dict:
+    """Feedback sobre a última pergunta. `forca="forte"`: comando (/errado, /parcial);
+    `"fraco"`: lido da conversa em linguagem natural, com `confianca` e o `texto` original."""
+    registro = {"tipo": "feedback", "id": uuid.uuid4().hex[:12], "ts": _agora(),
+                "ref": evento["id"], "valor": valor, "faltou": faltou, "forca": forca,
+                "necessidades_nao_atendidas": evento.get("necessidades_nao_atendidas", [])}
+    if confianca is not None:
+        registro["confianca"] = confianca
+    if texto is not None:
+        registro["texto"] = texto
+    return registro
 
 
 def registrar(evento: dict, caminho=CAMINHO) -> bool:
