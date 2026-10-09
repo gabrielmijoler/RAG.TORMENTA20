@@ -13,3 +13,6 @@ traducoes_cache.json
 !README.md
 !docs/**/*.md
 !conhecimento/*.md
+
+# Sinais de uso real da v2 (local, nunca versionado)
+sinais/
