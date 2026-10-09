@@ -1,0 +1,5084 @@
+{
+ "tabelas": {
+  "Acessórios": {
+   "registros": 146,
+   "exports": [
+    "acessorios.ts:accessories"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 65,
+    "Herois de Arton": 64,
+    "Dragão Brasil - 228": 6,
+    "Dragão Brasil - 200": 3,
+    "Ameaças de Arton": 3,
+    "Dragão Brasil - 214": 2,
+    "Uma visita a Vectora": 1,
+    "Dragão Brasil - 218": 1,
+    "Duelo de Dragões": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "price": 100,
+    "size": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 3.600",
+     "T$ 3.000",
+     "T$ 9.000"
+    ],
+    "size": [
+     "Menor",
+     "Maior",
+     "Médio"
+    ]
+   }
+  },
+  "Acessórios Mágicos Maiores": {
+   "registros": 23,
+   "exports": [
+    "magicos.ts:ACESSORIOS_MAIORES"
+   ],
+   "fontes": {
+    "Compendio T20": 23
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 30.000",
+     "T$ 51.000",
+     "T$ 60.000"
+    ]
+   }
+  },
+  "Acessórios Mágicos Menores": {
+   "registros": 21,
+   "exports": [
+    "magicos.ts:ACESSORIOS_MENORES"
+   ],
+   "fontes": {
+    "Compendio T20": 21
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 3.000",
+     "T$ 4.500",
+     "T$ 6.000"
+    ]
+   }
+  },
+  "Acessórios Mágicos Médios": {
+   "registros": 22,
+   "exports": [
+    "magicos.ts:ACESSORIOS_MEDIOS"
+   ],
+   "fontes": {
+    "Compendio T20": 22
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 10.500",
+     "T$ 15.000",
+     "T$ 16.500"
+    ]
+   }
+  },
+  "Acessórios por Grau": {
+   "registros": 1,
+   "exports": [
+    "magicos.ts:ACESSORIO_POR_GRAU"
+   ],
+   "fontes": {
+    "Compendio T20": 1
+   },
+   "campos": {},
+   "exemplos": {}
+  },
+  "Alimentos": {
+   "registros": 109,
+   "exports": [
+    "food.ts:food"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 29,
+    "Tormenta20": 20,
+    "Deuses de Arton": 20,
+    "Herois de Arton": 14,
+    "Dragão Brasil - Final Fantasy": 10,
+    "Ameaças de Arton": 7,
+    "Dragão Brasil - Dungeon Meshi": 6,
+    "Dragão Brasil - Culinária Sckharjagar": 2,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100,
+    "category": 100,
+    "cookingDC": 45,
+    "ingredients": 43,
+    "cookingCost": 25
+   },
+   "exemplos": {
+    "price": [
+     "T$ 2",
+     "T$ 18",
+     "T$ 6"
+    ],
+    "category": [
+     "Alimentação",
+     "Bebida",
+     "Ingrediente"
+    ]
+   }
+  },
+  "Alquímicos": {
+   "registros": 86,
+   "exports": [
+    "alchemys.ts:alchemy"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 30,
+    "Ameaças de Arton": 17,
+    "Herois de Arton": 17,
+    "Deuses de Arton": 13,
+    "Uma visita a Vectora": 6,
+    "Dragão Brasil - 200": 2,
+    "Dragão Brasil - 228": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "type": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "type": [
+     "Preparados",
+     "Catalisadores",
+     "Venenos"
+    ],
+    "price": [
+     "T$ 10",
+     "T$ 50",
+     "T$ 30"
+    ]
+   }
+  },
+  "Ameaças": {
+   "registros": 708,
+   "exports": [
+    "threats.ts:threats"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 430,
+    "Deuses de Arton": 76,
+    "Tormenta20 - Jogo do Ano": 64,
+    "Duelo de Dragões": 57,
+    "Fulgor dos Deuses": 38,
+    "Dragão Brasil": 34,
+    "Uma Visita a Vectora": 6,
+    "Expedição Escarlate": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "nd": 100,
+    "tipo": 100,
+    "tema": 100,
+    "tamanho": 100,
+    "papel": 100,
+    "origin": 100,
+    "iniciativa": 100,
+    "percepcao": 100,
+    "defesa": 100,
+    "fort": 100,
+    "ref": 100,
+    "von": 100,
+    "pv": 100,
+    "deslocamento": 100,
+    "for": 100,
+    "des": 100,
+    "con": 100,
+    "int": 100,
+    "sab": 100,
+    "car": 100,
+    "tesouro": 100,
+    "habilidades": 97,
+    "ataqueCorpoACorpo": 94,
+    "resistenciaDano": 93,
+    "image": 79,
+    "pericias": 69,
+    "equipamentos": 49,
+    "pm": 17,
+    "ataqueDistancia": 17
+   },
+   "exemplos": {
+    "nd": [
+     "7",
+     "11",
+     "15"
+    ],
+    "tipo": [
+     "Humanoide",
+     "Espírito (suraggel)",
+     "Morto-vivo"
+    ],
+    "tamanho": [
+     "Médio",
+     "Pequeno",
+     "Grande"
+    ],
+    "pm": [
+     "81",
+     "20",
+     "70"
+    ]
+   }
+  },
+  "Animais": {
+   "registros": 23,
+   "exports": [
+    "animals.ts:animals"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 9,
+    "Tormenta20 - Jogo do Ano": 8,
+    "Herois de Arton": 6
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 30",
+     "T$ 150",
+     "T$ 75"
+    ]
+   }
+  },
+  "Aparatos": {
+   "registros": 15,
+   "exports": [
+    "aparatos.ts:aparatos"
+   ],
+   "fontes": {
+    "Herois de Arton": 15
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 450",
+     "T$ 300",
+     "T$ 600"
+    ]
+   }
+  },
+  "Armaduras": {
+   "registros": 41,
+   "exports": [
+    "armors.ts:armors",
+    "itens.ts:EQUIPAMENTO_ARMADURA"
+   ],
+   "fontes": {
+    "Herois de Arton": 14,
+    "Tormenta20 - Jogo do Ano": 12,
+    "Compendio T20": 11,
+    "Ameaças de Arton": 4
+   },
+   "campos": {
+    "id": 73,
+    "name": 73,
+    "type": 73,
+    "description": 73,
+    "origin": 73,
+    "price": 73,
+    "defenseBonus": 73,
+    "armorPenalty": 73,
+    "spaces": 73,
+    "image": 39,
+    "min": 27,
+    "max": 27,
+    "result": 27
+   },
+   "exemplos": {
+    "type": [
+     "Leve",
+     "Pesada",
+     "Escudo"
+    ],
+    "price": [
+     "T$ 5",
+     "T$ 20",
+     "T$ 35"
+    ]
+   }
+  },
+  "Armaduras Específicas": {
+   "registros": 13,
+   "exports": [
+    "magicos.ts:ARMADURAS_ESPECIFICAS"
+   ],
+   "fontes": {
+    "Compendio T20": 13
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 30.000",
+     "T$ 36.000",
+     "T$ 45.000"
+    ]
+   }
+  },
+  "Armaduras Mágicas": {
+   "registros": 26,
+   "exports": [
+    "magicos.ts:ARMADURAS_MAGICAS"
+   ],
+   "fontes": {
+    "Compendio T20": 26
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "encanto": 100,
+    "efeito": 100
+   },
+   "exemplos": {}
+  },
+  "Armaduras Superiores": {
+   "registros": 12,
+   "exports": [
+    "itens.ts:SUPERIOR_ARMADURA"
+   ],
+   "fontes": {
+    "Compendio T20": 12
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100
+   },
+   "exemplos": {}
+  },
+  "Armas": {
+   "registros": 157,
+   "exports": [
+    "itens.ts:EQUIPAMENTO_ARMA",
+    "weapons.ts:weapons"
+   ],
+   "fontes": {
+    "Compendio T20": 48,
+    "Tormenta20 - Jogo do Ano": 44,
+    "Herois de Arton": 43,
+    "Ameaças de Arton": 16,
+    "Duelo de Dragões": 2,
+    "Dragão Brasil - 199": 1,
+    "Dragão Brasil - 205": 1,
+    "Dragão Brasil - 219": 1,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 69,
+    "name": 69,
+    "description": 69,
+    "origin": 69,
+    "purpose": 69,
+    "proficiency": 69,
+    "grip": 69,
+    "price": 69,
+    "damage": 69,
+    "critical": 69,
+    "range": 69,
+    "type": 69,
+    "spaces": 69,
+    "image": 38,
+    "min": 31,
+    "max": 31,
+    "result": 31
+   },
+   "exemplos": {
+    "proficiency": [
+     "Exótica",
+     "Simples",
+     "Marcial"
+    ],
+    "grip": [
+     "Uma Mão",
+     "Leve",
+     "Duas Mãos"
+    ],
+    "price": [
+     "T$ 750",
+     "T$ 50",
+     "T$ 75"
+    ],
+    "damage": [
+     "1d6",
+     "1d10",
+     "1d12"
+    ],
+    "critical": [
+     "19",
+     "x4",
+     "19/x3"
+    ],
+    "type": [
+     "Corte",
+     "Perfuração",
+     "Essência"
+    ]
+   }
+  },
+  "Armas Específicas": {
+   "registros": 18,
+   "exports": [
+    "magicos.ts:ARMAS_ESPECIFICAS"
+   ],
+   "fontes": {
+    "Compendio T20": 18
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 30.000",
+     "T$ 45.000",
+     "T$ 50.000"
+    ]
+   }
+  },
+  "Armas Mágicas": {
+   "registros": 29,
+   "exports": [
+    "magicos.ts:ARMAS_MAGICAS"
+   ],
+   "fontes": {
+    "Compendio T20": 29
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "encanto": 100,
+    "efeito": 100
+   },
+   "exemplos": {}
+  },
+  "Armas Mágicas Específicas": {
+   "registros": 25,
+   "exports": [
+    "magicarmor.ts:specificWeapons"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 13,
+    "Herois de Arton": 10,
+    "Ameaças de Arton": 1,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "price": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "price": [
+     "150.000",
+     "50.000",
+     "63.000"
+    ]
+   }
+  },
+  "Armas Superiores": {
+   "registros": 15,
+   "exports": [
+    "itens.ts:SUPERIOR_ARMA"
+   ],
+   "fontes": {
+    "Compendio T20": 15
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100
+   },
+   "exemplos": {}
+  },
+  "Artefatos": {
+   "registros": 45,
+   "exports": [
+    "artifacts.ts:artifacts"
+   ],
+   "fontes": {
+    "Dragão Brasil - 183": 10,
+    "Dragão Brasil - 222": 10,
+    "Herois de Arton": 8,
+    "Deuses de Arton": 6,
+    "Tormenta20 - Jogo do Ano": 5,
+    "Dragão Brasil - 204": 2,
+    "Ameaças de Arton": 2,
+    "Duelo de Dragões": 1,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "image": 27
+   },
+   "exemplos": {}
+  },
+  "Atributos": {
+   "registros": 6,
+   "exports": [
+    "attributes.ts:attributes"
+   ],
+   "fontes": {
+    "Compendio T20": 6
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "abbreviation": 100,
+    "icon": 100,
+    "description": 100
+   },
+   "exemplos": {}
+  },
+  "Atributos de Objetos": {
+   "registros": 1,
+   "exports": [
+    "rules.tsx:objectStats"
+   ],
+   "fontes": {
+    "Compendio T20": 1
+   },
+   "campos": {},
+   "exemplos": {}
+  },
+  "Aventuras": {
+   "registros": 70,
+   "exports": [
+    "adventures.ts:adventures"
+   ],
+   "fontes": {
+    "Compendio T20": 70
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "theme": 100,
+    "image": 100,
+    "summary": 100,
+    "sections": 100
+   },
+   "exemplos": {}
+  },
+  "Categorias de Equipamento": {
+   "registros": 23,
+   "exports": [
+    "equipamentos.ts:equipmentCategories",
+    "itens.ts:EQUIPAMENTO_CATEGORIAS"
+   ],
+   "fontes": {
+    "Compendio T20": 23
+   },
+   "campos": {
+    "id": 87,
+    "title": 87,
+    "description": 87,
+    "icon": 87,
+    "color": 87,
+    "href": 87,
+    "min": 13,
+    "max": 13,
+    "label": 13
+   },
+   "exemplos": {}
+  },
+  "Categorias de Item Mágico": {
+   "registros": 5,
+   "exports": [
+    "itensmagicos.ts:equipmentCategories",
+    "magicos.ts:MAGICO_CATEGORIAS"
+   ],
+   "fontes": {
+    "Compendio T20": 5
+   },
+   "campos": {
+    "min": 60,
+    "max": 60,
+    "label": 60,
+    "id": 40,
+    "title": 40,
+    "description": 40,
+    "icon": 40,
+    "color": 40,
+    "href": 40
+   },
+   "exemplos": {}
+  },
+  "Categorias de Item Superior": {
+   "registros": 3,
+   "exports": [
+    "itens.ts:SUPERIOR_CATEGORIAS"
+   ],
+   "fontes": {
+    "Compendio T20": 3
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "label": 100
+   },
+   "exemplos": {}
+  },
+  "Categorias de Poder": {
+   "registros": 26,
+   "exports": [
+    "power-categories.ts:powerCategories"
+   ],
+   "fontes": {
+    "tormenta20 - jogo do ano": 19,
+    "Dragão Brasil": 3,
+    "Herois de Arton": 3,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "slug": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {}
+  },
+  "Chefes": {
+   "registros": 86,
+   "exports": [
+    "bosses.ts:bosses"
+   ],
+   "fontes": {
+    "Compendio T20": 86
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "image": 100,
+    "tipo": 100,
+    "nd": 100,
+    "historia": 100,
+    "tamanho": 100,
+    "iniciativa": 100,
+    "percepcao": 100,
+    "defesa": 100,
+    "fort": 100,
+    "ref": 100,
+    "von": 100,
+    "pv": 100,
+    "deslocamento": 100,
+    "pm": 100,
+    "for": 100,
+    "des": 100,
+    "con": 100,
+    "int": 100,
+    "sab": 100,
+    "car": 100,
+    "tesouro": 100,
+    "habilidades": 99,
+    "dicas": 95,
+    "ataqueCorpoACorpo": 93,
+    "pericias": 92,
+    "resistenciaDano": 91,
+    "equipamentos": 71,
+    "ataqueDistancia": 12
+   },
+   "exemplos": {
+    "tipo": [
+     "Monstro Enorme",
+     "Humanoide",
+     "Espírito"
+    ],
+    "nd": [
+     "12",
+     "7",
+     "15"
+    ],
+    "tamanho": [
+     "Enorme",
+     "Médio",
+     "Grande"
+    ],
+    "pm": [
+     "0",
+     "21",
+     "120"
+    ]
+   }
+  },
+  "Classes": {
+   "registros": 39,
+   "exports": [
+    "classes.ts:classes"
+   ],
+   "fontes": {
+    "Herois de Arton": 15,
+    "tormenta20 - jogo do ano": 14,
+    "A Lenda de Ghanor": 2,
+    "Dragão Brasil - 199": 2,
+    "Dragão Brasil - 222": 2,
+    "Dragão Brasil - 223": 2,
+    "Dragão Brasil - 211": 1,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "origin": 100,
+    "image": 100,
+    "powersUrl": 100,
+    "description": 100,
+    "characteristics": 100,
+    "skills": 100,
+    "proficiency": 100,
+    "abilities": 100,
+    "levelProgression": 100,
+    "famousExamples": 38,
+    "extras": 36
+   },
+   "exemplos": {
+    "skills": [
+     "{\"mandatory\": [\"Misticismo (Int)\", \"Vontade (Sab)\"], \"optional\": {\"sk…",
+     "{\"mandatory\": [\"Luta (For) ou Pontaria (Des)\", \"Fortitude (Con)\"], \"o…",
+     "{\"mandatory\": [\"Fortitude (Con)\", \"Luta (For)\"], \"optional\": {\"skills…"
+    ],
+    "proficiency": [
+     "Nenhuma",
+     "Armas marciais e escudos",
+     "Armas marciais"
+    ],
+    "levelProgression": [
+     "[{\"level\": 1, \"abilities\": \"Magias (1º círculo), tradição arcana\"}, {…",
+     "[{\"level\": 1, \"abilities\": \"Ataque disciplinado (+1d6)\"}, {\"level\": 2…",
+     "[{\"level\": 1, \"abilities\": \"Caminhos do arcanista, magias (1º círculo…"
+    ]
+   }
+  },
+  "Complicações": {
+   "registros": 54,
+   "exports": [
+    "complicacoes.ts:complications"
+   ],
+   "fontes": {
+    "Herois de Arton": 54
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "efeito": 100
+   },
+   "exemplos": {}
+  },
+  "Complicações de Idade": {
+   "registros": 19,
+   "exports": [
+    "rules.tsx:ageComplications"
+   ],
+   "fontes": {
+    "Compendio T20": 19
+   },
+   "campos": {
+    "name": 100,
+    "effect": 100
+   },
+   "exemplos": {}
+  },
+  "Condições": {
+   "registros": 56,
+   "exports": [
+    "conditions.ts:conditions"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 35,
+    "Dragão Brasil - 219": 21
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "efeito": 59
+   },
+   "exemplos": {}
+  },
+  "Deuses": {
+   "registros": 92,
+   "exports": [
+    "gods.ts:gods"
+   ],
+   "fontes": {
+    "Guia de Deuses Menores": 60,
+    "Tormenta20 - Jogo do Ano": 20,
+    "Compendio T20": 8,
+    "Dragão Brasil": 4
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "image": 100,
+    "status": 100,
+    "sacredSymbol": 100,
+    "channelEnergy": 100,
+    "preferredWeapon": 100,
+    "history": 100,
+    "beliefs": 100,
+    "devotees": 100,
+    "obligationsRestrictions": 100,
+    "grantedPowers": 98,
+    "subtitle": 91,
+    "rank": 68,
+    "otherNames": 32,
+    "areasOfInfluence": 22,
+    "significantColors": 22,
+    "motto": 22,
+    "motivations": 22,
+    "relationships": 22,
+    "churchAndClergy": 22
+   },
+   "exemplos": {}
+  },
+  "Dificuldades de Teste": {
+   "registros": 7,
+   "exports": [
+    "rules.tsx:difficulties"
+   ],
+   "fontes": {
+    "Compendio T20": 7
+   },
+   "campos": {
+    "task": 100,
+    "cd": 100,
+    "example": 100
+   },
+   "exemplos": {}
+  },
+  "Dinheiro Inicial": {
+   "registros": 20,
+   "exports": [
+    "equipamentos.ts:initialMoneyTable"
+   ],
+   "fontes": {
+    "Compendio T20": 20
+   },
+   "campos": {
+    "level": 100,
+    "money": 100
+   },
+   "exemplos": {
+    "level": [
+     "1",
+     "2",
+     "3"
+    ]
+   }
+  },
+  "Distinções": {
+   "registros": 70,
+   "exports": [
+    "distinctions.ts:distinctions"
+   ],
+   "fontes": {
+    "Herois de Arton": 36,
+    "Deuses de Arton": 23,
+    "Dragão Brasil - 215": 3,
+    "Dragão Brasil": 3,
+    "Dragão Brasil - 206": 2,
+    "Duelo de Dragões": 1,
+    "Dragão Brasil - 205": 1,
+    "Dragão Brasil - 208": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "origin": 100,
+    "image": 100,
+    "introduction": 100,
+    "admission": 100,
+    "mark": 100,
+    "powers": 100,
+    "extras": 46
+   },
+   "exemplos": {}
+  },
+  "Dádivas de Aharadak": {
+   "registros": 5,
+   "exports": [
+    "dadivas-aharadak.ts:aharadak"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 5
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 54.000",
+     "T$ 27.000",
+     "T$ 33.000"
+    ]
+   }
+  },
+  "Encantamentos Amaldiçoados": {
+   "registros": 32,
+   "exports": [
+    "curseds.ts:enchantments"
+   ],
+   "fontes": {
+    "Herois de Arton": 32
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "type": 100
+   },
+   "exemplos": {
+    "type": [
+     "Armas",
+     "Armaduras e Escudos"
+    ]
+   }
+  },
+  "Encantamentos de Acessórios": {
+   "registros": 8,
+   "exports": [
+    "acessorios.ts:enchantments"
+   ],
+   "fontes": {
+    "Herois de Arton": 8
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {}
+  },
+  "Encantamentos de Armaduras": {
+   "registros": 45,
+   "exports": [
+    "magicarmor.ts:enchantments"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 25,
+    "Herois de Arton": 20
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {}
+  },
+  "Encantamentos de Esotéricos": {
+   "registros": 26,
+   "exports": [
+    "magicesoterics.ts:enchantments"
+   ],
+   "fontes": {
+    "Herois de Arton": 26
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {}
+  },
+  "Encantamentos de Itens Mágicos": {
+   "registros": 50,
+   "exports": [
+    "magics.ts:enchantments"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 28,
+    "Herois de Arton": 22
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {}
+  },
+  "Equipamentos": {
+   "registros": 75,
+   "exports": [
+    "gear.ts:gear"
+   ],
+   "fontes": {
+    "Herois de Arton": 25,
+    "Tormenta20 - Jogo do Ano": 17,
+    "Uma visita a Vectora": 14,
+    "Deuses de Arton": 13,
+    "Ameaças de Arton": 4,
+    "Dragão Brasil - 183": 1,
+    "Dragão Brasil - 228": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 150",
+     "T$ 300",
+     "T$ 90"
+    ]
+   }
+  },
+  "Esotéricos": {
+   "registros": 39,
+   "exports": [
+    "esoterics.ts:esoteric",
+    "itens.ts:EQUIPAMENTO_ESOTER"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 10,
+    "Compendio T20": 10,
+    "Deuses de Arton": 9,
+    "Herois de Arton": 4,
+    "Ameaças de Arton": 3,
+    "Dragão Brasil - 228": 2,
+    "Duelo de Dragões": 1
+   },
+   "campos": {
+    "id": 74,
+    "name": 74,
+    "description": 74,
+    "origin": 74,
+    "price": 74,
+    "spaces": 74,
+    "min": 26,
+    "max": 26,
+    "result": 26
+   },
+   "exemplos": {
+    "price": [
+     "T$ 300",
+     "T$ 250",
+     "T$ 750"
+    ]
+   }
+  },
+  "Esotéricos Mágicos Específicos": {
+   "registros": 4,
+   "exports": [
+    "magicesoterics.ts:specificWeapons"
+   ],
+   "fontes": {
+    "Herois de Arton": 4
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "price": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "price": [
+     "27.000",
+     "150.000",
+     "60.000"
+    ]
+   }
+  },
+  "Esotéricos Superiores": {
+   "registros": 10,
+   "exports": [
+    "itens.ts:SUPERIOR_ESOTER"
+   ],
+   "fontes": {
+    "Compendio T20": 10
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100
+   },
+   "exemplos": {}
+  },
+  "Faixas Etárias": {
+   "registros": 7,
+   "exports": [
+    "rules.tsx:ageGroups"
+   ],
+   "fontes": {
+    "Compendio T20": 7
+   },
+   "campos": {
+    "name": 100,
+    "age": 100,
+    "modifiers": 100
+   },
+   "exemplos": {}
+  },
+  "Ferramentas": {
+   "registros": 16,
+   "exports": [
+    "tools.ts:tool"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 8,
+    "Herois de Arton": 6,
+    "Dragão Brasil - 183": 1,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 75",
+     "T$ 10",
+     "T$ 50"
+    ]
+   }
+  },
+  "Instrumentos Musicais": {
+   "registros": 18,
+   "exports": [
+    "music.ts:music"
+   ],
+   "fontes": {
+    "Herois de Arton": 11,
+    "Tormenta20 - Jogo do Ano": 4,
+    "Dragão Brasil - 209": 1,
+    "Dragão Brasil - 228": 1,
+    "Deuses de Arton": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 19000",
+     "T$ 175",
+     "T$ 35"
+    ]
+   }
+  },
+  "Itens Diversos": {
+   "registros": 49,
+   "exports": [
+    "itens.ts:DIVERSO"
+   ],
+   "fontes": {
+    "Compendio T20": 49
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100
+   },
+   "exemplos": {}
+  },
+  "Itens Litúrgicos": {
+   "registros": 35,
+   "exports": [
+    "liturgical.ts:liturgico"
+   ],
+   "fontes": {
+    "Deuses de Arton": 35
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "type": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100
+   },
+   "exemplos": {
+    "type": [
+     "Acessório Maior",
+     "Acessório menor",
+     "Arma específica menor"
+    ],
+    "price": [
+     "T$ 37000",
+     "T$ 45000",
+     "T$ 9000"
+    ]
+   }
+  },
+  "Itens Mágicos Específicos": {
+   "registros": 49,
+   "exports": [
+    "magics.ts:specificWeapons"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 18,
+    "Herois de Arton": 17,
+    "Dragão Brasil - 183": 7,
+    "Dragão Brasil - 228": 2,
+    "Ameaças de Arton": 2,
+    "Dragão Brasil": 1,
+    "Dragão Brasil - 221": 1,
+    "Duelo de Dragões": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "price": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "price": [
+     "30.000",
+     "60.000",
+     "135.000"
+    ]
+   }
+  },
+  "Magias": {
+   "registros": 264,
+   "exports": [
+    "spells.ts:spells"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 198,
+    "Deuses de Arton": 29,
+    "Herois de Arton": 22,
+    "Ameaças de Arton": 7,
+    "Dragão Brasil - 219": 6,
+    "Dragão Brasil - 199": 1,
+    "Dragão Brasil - 228": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "type": 100,
+    "school": 100,
+    "circle": 100,
+    "execution": 100,
+    "range": 100,
+    "target": 100,
+    "duration": 100,
+    "resistance": 100,
+    "description": 100,
+    "origin": 100,
+    "enhancements": 93
+   },
+   "exemplos": {
+    "type": [
+     "Divina",
+     "Arcana",
+     "Universal"
+    ],
+    "school": [
+     "Transmutação",
+     "Encantamento",
+     "Abjuração"
+    ],
+    "circle": [
+     "1",
+     "2",
+     "5"
+    ]
+   }
+  },
+  "Melhorias de Item": {
+   "registros": 58,
+   "exports": [
+    "superior_items.ts:improvements"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 29,
+    "Herois de Arton": 12,
+    "Uma visita a Vectora": 5,
+    "Deuses de Arton": 5,
+    "Dragão Brasil - 183": 3,
+    "Ameaças de Arton": 2,
+    "Duelo de Dragões": 1,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "effect": 100,
+    "category": 100,
+    "description": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "category": [
+     "[\"Vestuário\"]",
+     "[\"Ferramenta\", \"Vestuário\", \"Aventura\"]",
+     "[\"Armadura\", \"Escudo\"]"
+    ]
+   }
+  },
+  "Montarias": {
+   "registros": 54,
+   "exports": [
+    "mounts.ts:mounts"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 41,
+    "Tormenta20 - Jogo do Ano": 4,
+    "Deuses de Arton": 4,
+    "Duelo de Dragões": 1,
+    "Dragão Brasil - 205": 1,
+    "Dragão Brasil - 208": 1,
+    "Dragão Brasil - 212": 1,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "size": 100,
+    "description": 100,
+    "origin": 100,
+    "benefits": 100,
+    "extra": 4
+   },
+   "exemplos": {
+    "size": [
+     "Grande",
+     "Enorme",
+     "Médio / Pequeno"
+    ]
+   }
+  },
+  "Nota de Dificuldades": {
+   "registros": 1,
+   "exports": [
+    "rules.tsx:difficultiesNote"
+   ],
+   "fontes": {
+    "Compendio T20": 1
+   },
+   "campos": {},
+   "exemplos": {}
+  },
+  "Nota de Tamanho de Criaturas": {
+   "registros": 1,
+   "exports": [
+    "caracteristicas.ts:creatureSizeTableFootnote"
+   ],
+   "fontes": {
+    "Compendio T20": 1
+   },
+   "campos": {},
+   "exemplos": {}
+  },
+  "Objetivos Heroicos": {
+   "registros": 7,
+   "exports": [
+    "rules.tsx:heroicGoals"
+   ],
+   "fontes": {
+    "Compendio T20": 7
+   },
+   "campos": {
+    "name": 100,
+    "description": 100,
+    "benefit": 100,
+    "penalty": 100,
+    "conclusion": 100
+   },
+   "exemplos": {}
+  },
+  "Organizações": {
+   "registros": 20,
+   "exports": [
+    "organizations.ts:organizations"
+   ],
+   "fontes": {
+    "Compendio T20": 20
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "summary": 100,
+    "lore": 100,
+    "membros": 100,
+    "comoUsar": 100,
+    "mecanica": 100,
+    "image": 30
+   },
+   "exemplos": {}
+  },
+  "Origens": {
+   "registros": 89,
+   "exports": [
+    "origins.ts:origins"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 35,
+    "Herois de Arton": 30,
+    "A Lenda de Ghanor": 18,
+    "Dragão Brasil - God of War": 4,
+    "Dragão Brasil - 214": 1,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "items": 100,
+    "benefits": 100,
+    "uniquePower": 100,
+    "source": 100
+   },
+   "exemplos": {}
+  },
+  "Papéis no Grupo": {
+   "registros": 9,
+   "exports": [
+    "rules.tsx:groupRoles"
+   ],
+   "fontes": {
+    "Compendio T20": 9
+   },
+   "campos": {
+    "name": 100,
+    "description": 100,
+    "benefit": 100
+   },
+   "exemplos": {}
+  },
+  "Parceiros": {
+   "registros": 57,
+   "exports": [
+    "partners.ts:partners"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 19,
+    "Deuses de Arton": 13,
+    "Tormenta20 - Jogo do Ano": 12,
+    "Dragão Brasil - 229": 5,
+    "Dragão Brasil - 228": 3,
+    "Uma visita a Vectora": 2,
+    "Dragão Brasil - 220": 1,
+    "Dragão Brasil - 216": 1,
+    "Dragão Brasil - 204": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "benefits": 100,
+    "category": 19,
+    "archetype": 14
+   },
+   "exemplos": {
+    "category": [
+     "especifico",
+     "arquetipo"
+    ]
+   }
+  },
+  "Perigos": {
+   "registros": 41,
+   "exports": [
+    "dangers.ts:dangers"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 27,
+    "Tormenta20 - Jogo do Ano": 14
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "content": 100,
+    "category": 100
+   },
+   "exemplos": {
+    "category": [
+     "Tormenta20 - Jogo do Ano",
+     "Ameaças de Arton"
+    ]
+   }
+  },
+  "Perícias": {
+   "registros": 29,
+   "exports": [
+    "pericias.ts:skills"
+   ],
+   "fontes": {
+    "Compendio T20": 29
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "attribute": 100,
+    "trainedOnly": 100,
+    "armorPenalty": 100,
+    "description": 100,
+    "functions": 79
+   },
+   "exemplos": {}
+  },
+  "Poderes (Arcanista)": {
+   "registros": 52,
+   "exports": [
+    "powers-arcanista.ts:powersArcanista"
+   ],
+   "fontes": {
+    "Tormenta20 - jogo do ano": 21,
+    "Herois de Arton": 20,
+    "A Lenda de Ghanor": 6,
+    "Dragão Brasil - 212": 3,
+    "Dragão Brasil - 200": 2
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 81
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Mago (A Lenda de Ghanor), treinado em Conhecimento.",
+     "Mago (A Lenda de Ghanor)",
+     "Mago (A Lenda de Ghanor), Raio Arcano."
+    ]
+   }
+  },
+  "Poderes (Bardo)": {
+   "registros": 47,
+   "exports": [
+    "powers-bardo.ts:powersBardo"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 20,
+    "Herois de Arton": 20,
+    "A Lenda de Ghanor": 4,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 55
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Int 2, 6° nível de bardo.",
+     "Esgrima Mágica, 10º nível de bardo.",
+     "6º nível de bardo."
+    ]
+   }
+  },
+  "Poderes (Bucaneiro)": {
+   "registros": 48,
+   "exports": [
+    "powers-bucaneiro.ts:powersBucaneiro"
+   ],
+   "fontes": {
+    "Herois de Arton": 21,
+    "Tormenta20 - Jogo do Ano": 19,
+    "A Lenda de Ghanor": 4,
+    "Dragão Brasil - 212": 3,
+    "Dragão Brasil - 200": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 65
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Car 3.",
+     "Flagelo dos Mares.",
+     "Car 1, 6º nível de bucaneiro."
+    ]
+   }
+  },
+  "Poderes (Bárbaro)": {
+   "registros": 44,
+   "exports": [
+    "powers-barbaro.ts:powersBarbaro"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 20,
+    "Herois de Arton": 20,
+    "Dragão Brasil - 212": 3,
+    "A Lenda de Ghanor": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 57
+   },
+   "exemplos": {
+    "prerequisite": [
+     "5º nível de bárbaro, treinado em Vontade.",
+     "For 1.",
+     "Alma de Bronze"
+    ]
+   }
+  },
+  "Poderes (Cavaleiro)": {
+   "registros": 46,
+   "exports": [
+    "powers-cavaleiro.ts:powersCavaleiro"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 20,
+    "Herois de Arton": 20,
+    "Dragão Brasil - 212": 3,
+    "Dragão Brasil - 200": 2,
+    "A Lenda de Ghanor": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 39
+   },
+   "exemplos": {
+    "prerequisite": [
+     "6º nível de cavaleiro.",
+     "12º nível de cavaleiro.",
+     "Título, 14º nível de cavaleiro."
+    ]
+   }
+  },
+  "Poderes (Caçador)": {
+   "registros": 53,
+   "exports": [
+    "powers-cacador.ts:powersCacador"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 23,
+    "Herois de Arton": 22,
+    "Dragão Brasil - 211": 5,
+    "Dragão Brasil - 212": 2,
+    "A Lenda de Ghanor": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 58
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Armadilheiro, dois poderes de armadilha.",
+     "Des 2",
+     "Um poder de armadilha, 5º nível de caçador."
+    ]
+   }
+  },
+  "Poderes (Clérigo)": {
+   "registros": 43,
+   "exports": [
+    "powers-clerigo.ts:powersClerigo"
+   ],
+   "fontes": {
+    "Herois de Arton": 20,
+    "Tormenta20 - Jogo do Ano": 18,
+    "A Lenda de Ghanor": 3,
+    "Dragão Brasil - 212": 2
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 60
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Canalizar Energia",
+     "Car 1, 5º nível de clérigo.",
+     "Fiéis"
+    ]
+   }
+  },
+  "Poderes (Druida)": {
+   "registros": 53,
+   "exports": [
+    "powers-druida.ts:powersDruida"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 22,
+    "Herois de Arton": 22,
+    "Dragão Brasil": 6,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 75
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Car 1, treinado em Adestramento.",
+     "Companheiro Animal, 6º nível de druida.",
+     "Companheiro Animal, 18º nível de druida."
+    ]
+   }
+  },
+  "Poderes (Frade)": {
+   "registros": 29,
+   "exports": [
+    "powers-frade.ts:powersFrade"
+   ],
+   "fontes": {
+    "Deuses de Arton": 29
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 55
+   },
+   "exemplos": {
+    "prerequisite": [
+     "5º nível de frade.",
+     "10º nível de frade.",
+     "5º nível de frade, devoto de um deus maior."
+    ]
+   }
+  },
+  "Poderes (Guerreiro)": {
+   "registros": 49,
+   "exports": [
+    "powers-guerreiro.ts:powersGuerreiro"
+   ],
+   "fontes": {
+    "Herois de Arton": 21,
+    "Tormenta20 - Jogo do Ano": 19,
+    "A Lenda de Ghanor": 6,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 65
+   },
+   "exemplos": {
+    "prerequisite": [
+     "5º nível de soldado.",
+     "Especialista em Armadura, Especialização em Arma.",
+     "Treinado em Luta."
+    ]
+   }
+  },
+  "Poderes (Inventor)": {
+   "registros": 52,
+   "exports": [
+    "powers-inventor.ts:powersInventor"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 30,
+    "Herois de Arton": 20,
+    "Dragão Brasil - 212": 2
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 94
+   },
+   "exemplos": {
+    "prerequisite": [
+     "treinado em Ofício (alquimista).",
+     "Balística.",
+     "Alquimista Iniciado."
+    ]
+   }
+  },
+  "Poderes (Ladino)": {
+   "registros": 45,
+   "exports": [
+    "powers-ladino.ts:powersLadino"
+   ],
+   "fontes": {
+    "tormenta20 - jogo do ano": 20,
+    "Herois de Arton": 20,
+    "Dragão Brasil - 212": 3,
+    "A Lenda de Ghanor": 2
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 80
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Car 1, treinado em Enganação.",
+     "Camaleão, 11º nível de ladino.",
+     "5º nível de ladino"
+    ]
+   }
+  },
+  "Poderes (Lutador)": {
+   "registros": 46,
+   "exports": [
+    "powers-lutador.ts:powersLutador"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 23,
+    "Herois de Arton": 20,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 54
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Int 1, Lutador de Chão, 4º nível de lutador.",
+     "8º nível de lutador.",
+     "Chave, 8º nível de lutador."
+    ]
+   }
+  },
+  "Poderes (Místico)": {
+   "registros": 47,
+   "exports": [
+    "powers-mistico.ts:powersMistico"
+   ],
+   "fontes": {
+    "Dragão Brasil - 199": 47
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 85
+   },
+   "exemplos": {
+    "prerequisite": [
+     "12º nível de místico, Afinidade Expandida.",
+     "Afinidade (terra).",
+     "4º nível de místico, Afinidade (terra)."
+    ]
+   }
+  },
+  "Poderes (Nobre)": {
+   "registros": 41,
+   "exports": [
+    "powers-nobre.ts:powersNobre"
+   ],
+   "fontes": {
+    "Herois de Arton": 20,
+    "Tormenta20 - Jogo do Ano": 18,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 73
+   },
+   "exemplos": {
+    "prerequisite": [
+     "8º nível de nobre.",
+     "6º nível de nobre.",
+     "Int 1, treinado em Guerra, 6º nível de nobre."
+    ]
+   }
+  },
+  "Poderes (Paladino)": {
+   "registros": 47,
+   "exports": [
+    "powers-paladino.ts:powersPaladino"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 22,
+    "Herois de Arton": 22,
+    "Dragão Brasil - 212": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 47
+   },
+   "exemplos": {
+    "prerequisite": [
+     "devoto de uma divindade (exceto Lena e Marah).",
+     "14º nível de paladino.",
+     "10º nível de paladino."
+    ]
+   }
+  },
+  "Poderes (Samurai)": {
+   "registros": 68,
+   "exports": [
+    "powers-samurai.ts:powersSamurai"
+   ],
+   "fontes": {
+    "Dragão Brasil - 201": 42,
+    "Dragão Brasil - 199": 26
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 88
+   },
+   "exemplos": {
+    "prerequisite": [
+     "10º nível de samurai, arma ancestral profana ou sagrada.",
+     "10º nível de samurai, arma ancestral dançarina.",
+     "arma ancestral macabra."
+    ]
+   }
+  },
+  "Poderes (Treinador)": {
+   "registros": 21,
+   "exports": [
+    "powers-treinador.ts:powersTreinador"
+   ],
+   "fontes": {
+    "Herois de Arton": 21
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 33
+   },
+   "exemplos": {
+    "prerequisite": [
+     "11º nível de treinador",
+     "5º nível de treinador.",
+     "Domador Cativante, 17º nível de treinador."
+    ]
+   }
+  },
+  "Poderes (Vampiro)": {
+   "registros": 10,
+   "exports": [
+    "powers-vampiro.ts:powersVampiro"
+   ],
+   "fontes": {
+    "Dragão Brasil": 10
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 20
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Presença Majestosa."
+    ]
+   }
+  },
+  "Poderes Concedidos": {
+   "registros": 230,
+   "exports": [
+    "powers-gerais-concedido.ts:powersGeraisConcedido"
+   ],
+   "fontes": {
+    "Deuses de Arton": 78,
+    "Tormenta20 - Jogo do Ano": 72,
+    "Guia dos Deuses Menores": 60,
+    "Dragão Brasil - 183": 10,
+    "Dragão Brasil - 203": 9,
+    "Dragão Brasil - 228": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 0
+   },
+   "exemplos": {
+    "prerequisite": [
+     "habilidade de classe Magias."
+    ]
+   }
+  },
+  "Poderes Gerais": {
+   "registros": 105,
+   "exports": [
+    "powers-gerais.ts:powersGerais"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 40,
+    "Dragão Brasil - 227": 38,
+    "Herois de Arton": 25,
+    "Ameaças de Arton": 2
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 96
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Des 1",
+     "Estilo de Duas Armas.",
+     "For 1, Estilo de Arremesso"
+    ]
+   }
+  },
+  "Poderes da Tormenta": {
+   "registros": 28,
+   "exports": [
+    "powers-gerais-tormenta.ts:powersGeraisTormenta"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 22,
+    "Herois de Arton": 6
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 39
+   },
+   "exemplos": {
+    "prerequisite": [
+     "outro poder da Tormenta.",
+     "quatro outros poderes da Tormenta.",
+     "Dentes Afiados."
+    ]
+   }
+  },
+  "Poderes de Destino": {
+   "registros": 73,
+   "exports": [
+    "powers-gerais-destino.ts:powersGeraisDestino"
+   ],
+   "fontes": {
+    "Tormenta20 - Jogo do Ano": 20,
+    "Deuses de Arton": 20,
+    "Herois de Arton": 15,
+    "Dragão Brasil - 200": 12,
+    "Ameaças de Arton": 3,
+    "Dragão Brasil - 228": 2,
+    "Dragão Brasil - 199": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 85
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Des 2.",
+     "6º nível de personagem.",
+     "Car 1."
+    ]
+   }
+  },
+  "Poderes de Grupo": {
+   "registros": 20,
+   "exports": [
+    "powers-gerais-grupo.ts:powersGeraisGrupo"
+   ],
+   "fontes": {
+    "Herois de Arton": 20
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 25
+   },
+   "exemplos": {
+    "prerequisite": [
+     "treinado em Luta ou Pontaria",
+     "treinado em Iniciativa",
+     "Exército de Um Grupo Só, outro poder de grupo"
+    ]
+   }
+  },
+  "Poderes de Magia": {
+   "registros": 22,
+   "exports": [
+    "powers-gerais-magia.ts:powersGeraisMagia"
+   ],
+   "fontes": {
+    "Herois de Arton": 14,
+    "Tormenta20 - Jogo do Ano": 8
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "prerequisite": 50
+   },
+   "exemplos": {
+    "prerequisite": [
+     "treinado em Misticismo ou Religião, 8º nível de personagem.",
+     "habilidade de classe Magias, treinado em Ofício (escriba).",
+     "lançar magias de 2º círculo."
+    ]
+   }
+  },
+  "Poderes de Raça": {
+   "registros": 77,
+   "exports": [
+    "powers-gerais-raca.ts:powersGeraisRaca"
+   ],
+   "fontes": {
+    "Herois de Arton": 77
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "prerequisite": 100,
+    "origin": 100
+   },
+   "exemplos": {
+    "prerequisite": [
+     "Qareen",
+     "Anão, Hobgoblin",
+     "arma natural fornecida por uma habilidade de raça"
+    ]
+   }
+  },
+  "Poções": {
+   "registros": 38,
+   "exports": [
+    "magicos.ts:POCOES"
+   ],
+   "fontes": {
+    "Compendio T20": 38
+   },
+   "campos": {
+    "min": 100,
+    "max": 100,
+    "result": 100,
+    "preco": 100
+   },
+   "exemplos": {
+    "preco": [
+     "T$ 30",
+     "T$ 120",
+     "T$ 270"
+    ]
+   }
+  },
+  "Preços de Materiais": {
+   "registros": 17,
+   "exports": [
+    "superior_items.ts:materialPrices"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 8,
+    "Tormenta20 - Jogo do Ano": 7,
+    "Dragão Brasil - 183": 2
+   },
+   "campos": {
+    "material": 100,
+    "Arma": 100,
+    "Armadura Leve": 100,
+    "Armadura Pesada": 100,
+    "Escudo": 100,
+    "Esotéricos": 100,
+    "description": 100,
+    "origin": 100,
+    "description_arma": 88,
+    "description_esoterico": 88,
+    "description_armadura": 82,
+    "description_escudo": 53
+   },
+   "exemplos": {}
+  },
+  "Preços de Melhorias": {
+   "registros": 4,
+   "exports": [
+    "superior_items.ts:priceImprovements"
+   ],
+   "fontes": {
+    "Compendio T20": 4
+   },
+   "campos": {
+    "level": 100,
+    "priceIncrease": 100,
+    "cdIncrease": 100
+   },
+   "exemplos": {
+    "level": [
+     "1",
+     "2",
+     "3"
+    ]
+   }
+  },
+  "Progressão de Dano": {
+   "registros": 8,
+   "exports": [
+    "weapons.ts:damageProgressionTable"
+   ],
+   "fontes": {
+    "Compendio T20": 8
+   },
+   "campos": {
+    "0": 100,
+    "1": 100,
+    "2": 100,
+    "3": 100,
+    "4": 100,
+    "5": 100
+   },
+   "exemplos": {}
+  },
+  "Raças": {
+   "registros": 74,
+   "exports": [
+    "races.ts:races"
+   ],
+   "fontes": {
+    "Ameaças de Arton": 29,
+    "Tormenta20 - jogo do ano": 17,
+    "A Lenda de Ghanor": 6,
+    "Dragão Brasil - 224": 6,
+    "Herois de Arton": 5,
+    "Dragão Brasil - God of War Ragnarok": 4,
+    "Dragão Brasil - Zelda": 3,
+    "Dragão Brasil - 220": 1,
+    "Duelo de Dragões": 1,
+    "Dragão Brasil - Dragon Age": 1,
+    "Dragão Brasil": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "origin": 100,
+    "image": 100,
+    "description": 100,
+    "abilities": 100,
+    "attributeModifiers": 100,
+    "longevidade": 49,
+    "devotos": 49,
+    "extra": 9
+   },
+   "exemplos": {
+    "attributeModifiers": [
+     "[{\"attribute\": \"car\", \"modifier\": -2}, {\"description\": \"Mutações pode…",
+     "[{\"attribute\": \"con\", \"modifier\": 2}, {\"attribute\": \"int\", \"modifier\"…",
+     "[{\"attribute\": \"sab\", \"modifier\": 2}, {\"attribute\": \"des\", \"modifier\"…"
+    ]
+   }
+  },
+  "Regras": {
+   "registros": 12,
+   "exports": [
+    "rules.tsx:ruleSections"
+   ],
+   "fontes": {
+    "Compendio T20": 12
+   },
+   "campos": {
+    "id": 100,
+    "title": 100,
+    "content": 100
+   },
+   "exemplos": {}
+  },
+  "Regreiro (Perguntas e Respostas)": {
+   "registros": 72,
+   "exports": [
+    "regreiro.ts:regreiroQAs"
+   ],
+   "fontes": {
+    "DB - 228": 26,
+    "DB - 229": 24,
+    "DB - 227": 22
+   },
+   "campos": {
+    "id": 100,
+    "question": 100,
+    "answer": 100,
+    "magazineNumber": 100
+   },
+   "exemplos": {}
+  },
+  "Riquezas": {
+   "registros": 13,
+   "exports": [
+    "magicos.ts:RIQUEZAS"
+   ],
+   "fontes": {
+    "Compendio T20": 13
+   },
+   "campos": {
+    "menor": 100,
+    "media": 100,
+    "maior": 100,
+    "valor": 100,
+    "exemplos": 100
+   },
+   "exemplos": {}
+  },
+  "Serviços": {
+   "registros": 50,
+   "exports": [
+    "services.ts:services"
+   ],
+   "fontes": {
+    "Herois de Arton": 22,
+    "Uma visita a Vectora": 14,
+    "Tormenta20 - Jogo do Ano": 11,
+    "Deuses de Arton": 3
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 2.000",
+     "T$ 200",
+     "T$ 250"
+    ]
+   }
+  },
+  "Situações Especiais de Combate": {
+   "registros": 1,
+   "exports": [
+    "rules.tsx:specialSituations"
+   ],
+   "fontes": {
+    "Compendio T20": 1
+   },
+   "campos": {},
+   "exemplos": {}
+  },
+  "Tamanho de Criaturas": {
+   "registros": 6,
+   "exports": [
+    "caracteristicas.ts:creatureSizeTable"
+   ],
+   "fontes": {
+    "Compendio T20": 6
+   },
+   "campos": {
+    "category": 100,
+    "examples": 100,
+    "spaceAndReach": 100,
+    "stealthAndManeuverModifier": 100
+   },
+   "exemplos": {
+    "category": [
+     "Minúsculo",
+     "Pequeno",
+     "Médio"
+    ]
+   }
+  },
+  "Tesouros": {
+   "registros": 22,
+   "exports": [
+    "tesouros.ts:tesouros"
+   ],
+   "fontes": {
+    "Compendio T20": 22
+   },
+   "campos": {
+    "nd": 100,
+    "dinheiro": 100,
+    "itens": 100
+   },
+   "exemplos": {
+    "nd": [
+     "1/4",
+     "1/2",
+     "1"
+    ]
+   }
+  },
+  "Testes Estendidos": {
+   "registros": 3,
+   "exports": [
+    "rules.tsx:extendedTests"
+   ],
+   "fontes": {
+    "Compendio T20": 3
+   },
+   "campos": {
+    "successes": 100,
+    "complexity": 100,
+    "example": 100
+   },
+   "exemplos": {}
+  },
+  "Vestuário": {
+   "registros": 62,
+   "exports": [
+    "clothing.ts:clothing"
+   ],
+   "fontes": {
+    "Herois de Arton": 24,
+    "Tormenta20 - Jogo do Ano": 21,
+    "Deuses de Arton": 11,
+    "Ameaças de Arton": 5,
+    "Uma visita a Vectora": 1
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 300",
+     "T$ 1",
+     "T$ 5"
+    ]
+   }
+  },
+  "Veículos": {
+   "registros": 9,
+   "exports": [
+    "vehicles.ts:vehicles"
+   ],
+   "fontes": {
+    "Herois de Arton": 5,
+    "Tormenta20 - Jogo do Ano": 4
+   },
+   "campos": {
+    "id": 100,
+    "name": 100,
+    "description": 100,
+    "origin": 100,
+    "price": 100,
+    "spaces": 100
+   },
+   "exemplos": {
+    "price": [
+     "T$ 200",
+     "T$ 150",
+     "T$ 500"
+    ]
+   }
+  }
+ },
+ "fontes": {
+  "Tormenta20 - Jogo do Ano": 1186,
+  "Herois de Arton": 1060,
+  "Compendio T20": 737,
+  "Ameaças de Arton": 646,
+  "Deuses de Arton": 393,
+  "Dragão Brasil - 199": 78,
+  "Duelo de Dragões": 67,
+  "Dragão Brasil": 67,
+  "Guia de Deuses Menores": 60,
+  "Guia dos Deuses Menores": 60,
+  "A Lenda de Ghanor": 54,
+  "tormenta20 - jogo do ano": 53,
+  "Uma visita a Vectora": 43,
+  "Dragão Brasil - 201": 42,
+  "Dragão Brasil - 212": 40,
+  "Tormenta20 - jogo do ano": 38,
+  "Dragão Brasil - 227": 38,
+  "Fulgor dos Deuses": 38,
+  "Dragão Brasil - 183": 34,
+  "Dragão Brasil - 219": 28,
+  "DB - 228": 26,
+  "DB - 229": 24,
+  "Dragão Brasil - 200": 22,
+  "DB - 227": 22,
+  "Dragão Brasil - 228": 20,
+  "Tormenta20": 20,
+  "Dragão Brasil - 222": 12,
+  "Dragão Brasil - Final Fantasy": 10,
+  "Dragão Brasil - 203": 9,
+  "Dragão Brasil - 211": 6,
+  "Dragão Brasil - Dungeon Meshi": 6,
+  "Dragão Brasil - 224": 6,
+  "Uma Visita a Vectora": 6,
+  "Dragão Brasil - 229": 5,
+  "Dragão Brasil - God of War": 4,
+  "Dragão Brasil - God of War Ragnarok": 4,
+  "Dragão Brasil - 214": 3,
+  "Dragão Brasil - 204": 3,
+  "Dragão Brasil - 205": 3,
+  "Dragão Brasil - 215": 3,
+  "Dragão Brasil - Zelda": 3,
+  "Expedição Escarlate": 3,
+  "Dragão Brasil - 223": 2,
+  "Dragão Brasil - 206": 2,
+  "Dragão Brasil - 208": 2,
+  "Dragão Brasil - Culinária Sckharjagar": 2,
+  "Dragão Brasil - 220": 2,
+  "Dragão Brasil - 218": 1,
+  "Dragão Brasil - 221": 1,
+  "Dragão Brasil - 209": 1,
+  "Dragão Brasil - 216": 1,
+  "Dragão Brasil - Dragon Age": 1
+ },
+ "variantes_de_fonte": {
+  "tormenta20 - jogo do ano": [
+   "Tormenta20 - Jogo do Ano",
+   "Tormenta20 - jogo do ano",
+   "tormenta20 - jogo do ano"
+  ],
+  "uma visita a vectora": [
+   "Uma Visita a Vectora",
+   "Uma visita a Vectora"
+  ]
+ },
+ "nomes_repetidos": {
+  "a espada-deus": [
+   {
+    "tabela": "Artefatos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "A Espada-Deus",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Deuses",
+    "fonte": "Guia de Deuses Menores",
+    "nome": "A Espada-Deus",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "abencoado": [
+   {
+    "tabela": "Condições",
+    "fonte": "Dragão Brasil - 219",
+    "nome": "Abençoado",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Encantamentos de Armaduras",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Abençoado",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "acessorios": [
+   {
+    "tabela": "Categorias de Equipamento",
+    "fonte": "Compendio T20",
+    "nome": "Acessórios",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Categorias de Item Mágico",
+    "fonte": "Compendio T20",
+    "nome": "Acessórios",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "acido": [
+   {
+    "tabela": "Alquímicos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ácido",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Perigos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ácido",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "acquarella": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Dragão Brasil",
+    "nome": "Acquarella",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Dragão Brasil - 208",
+    "nome": "Acquarella",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "acrobatico": [
+   {
+    "tabela": "Encantamentos de Armaduras",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Acrobático",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Destino",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Acrobático",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "agua benta": [
+   {
+    "tabela": "Alquímicos",
+    "fonte": "Deuses de Arton",
+    "nome": "Água Benta",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Equipamentos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Água benta",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "agulha": [
+   {
+    "tabela": "Armas",
+    "fonte": "Dragão Brasil - 219",
+    "nome": "Agulha",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Melhorias de Item",
+    "fonte": "Dragão Brasil",
+    "nome": "Agulha",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "ajudante": [
+   {
+    "tabela": "Encantamentos de Acessórios",
+    "fonte": "Herois de Arton",
+    "nome": "Ajudante",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ajudante",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "alquimista de batalha": [
+   {
+    "tabela": "Poderes (Inventor)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Alquimista de Batalha",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Serviços",
+    "fonte": "Herois de Arton",
+    "nome": "Alquimista de Batalha",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "amaldicoados": [
+   {
+    "tabela": "Categorias de Equipamento",
+    "fonte": "Compendio T20",
+    "nome": "Amaldiçoados",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Categorias de Item Mágico",
+    "fonte": "Compendio T20",
+    "nome": "Amaldiçoados",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "ambidestria": [
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ambidestria",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ambidestria",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "arcanista": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Arcanista",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Arcanista",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "areia movedica": [
+   {
+    "tabela": "Perigos",
+    "fonte": "Ameaças de Arton",
+    "nome": "Areia Movediça",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Perigos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Areia Movediça",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "arqueiro": [
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Arqueiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Arqueiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de allihanna": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Allihanna",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Allihanna",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de kallyadranoch": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Kallyadranoch",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Kallyadranoch",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de khalmyr": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Khalmyr",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Khalmyr",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de lin-wu": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Lin-Wu",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Lin-Wu",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de marah": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Marah",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Marah",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aspecto de valkaria": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Valkaria",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Aspecto de Valkaria",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "aumento de atributo": [
+   {
+    "tabela": "Poderes (Arcanista)",
+    "fonte": "Tormenta20 - jogo do ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bardo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bárbaro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Clérigo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Druida)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Frade)",
+    "fonte": "Deuses de Arton",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Inventor)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Ladino)",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Lutador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Místico)",
+    "fonte": "Dragão Brasil - 199",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Nobre)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Paladino)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Treinador)",
+    "fonte": "Herois de Arton",
+    "nome": "Aumento de Atributo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "autoridade eclesiastica": [
+   {
+    "tabela": "Poderes (Clérigo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Autoridade Eclesiástica",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Frade)",
+    "fonte": "Deuses de Arton",
+    "nome": "Autoridade Eclesiástica",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "autoridade feudal": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Autoridade Feudal",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Nobre)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Autoridade Feudal",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "avatar de aharadak": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Avatar de Aharadak",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Avatar de Aharadak",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "avatar de kallyadranoch": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Avatar de Kallyadranoch",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Avatar de Kallyadranoch",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "baleote": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Baleote",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Baleote",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "barbaro": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bárbaro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bárbaro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "bardo": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bardo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bardo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "batedor": [
+   {
+    "tabela": "Origens",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Batedor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Serviços",
+    "fonte": "Herois de Arton",
+    "nome": "Batedor",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "brontoterio": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Brontotério",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Brontotério",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "bruxo da tormenta": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Bruxo da Tormenta",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Herois de Arton",
+    "nome": "Bruxo da Tormenta",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "bucaneiro": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bucaneiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Bucaneiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "bufalo-de-guerra": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Búfalo-de-Guerra",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Búfalo-de-Guerra",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "bulette": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Bulette",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Bulette",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Bulette",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cacador": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Caçador",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Caçador",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "canto da sereia": [
+   {
+    "tabela": "Poderes (Bardo)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Canto da Sereia",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Canto da Sereia",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cao de caca": [
+   {
+    "tabela": "Animais",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Cão de Caça",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Cão de caça",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "capanga": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Capanga",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Origens",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Capanga",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "capitao do conclave pirata": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Capitão do Conclave Pirata",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Herois de Arton",
+    "nome": "Capitão do Conclave Pirata",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "capivara": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Capivara",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Capivara",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Capivara",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavaleiro": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Cavaleiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Cavaleiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavalo": [
+   {
+    "tabela": "Animais",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Cavalo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Cavalo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavalo de guerra": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo de Guerra",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Cavalo de Guerra",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavalo de namalkah": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo de Namalkah",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo de Namalkah",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavalo esqueleto": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo Esqueleto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo Esqueleto",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cavalo glacial": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo Glacial",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cavalo Glacial",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "centuriao": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Centurião",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Dragão Brasil - 215",
+    "nome": "Centurião",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "chapeu-preto": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Chapéu-Preto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Herois de Arton",
+    "nome": "Chapéu-Preto",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "chefe de gangue": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Chefe de Gangue",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Ladino)",
+    "fonte": "Herois de Arton",
+    "nome": "Chefe de Gangue",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "clerigo": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Clérigo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Clérigo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "cocatriz-real": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cocatriz-Real",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Cocatriz-real",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "companheiro animal": [
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Companheiro Animal",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Druida)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Companheiro Animal",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "comunhao vital": [
+   {
+    "tabela": "Poderes (Clérigo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Comunhão Vital",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Frade)",
+    "fonte": "Deuses de Arton",
+    "nome": "Comunhão Vital",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "conhecimento magico": [
+   {
+    "tabela": "Poderes (Arcanista)",
+    "fonte": "Tormenta20 - jogo do ano",
+    "nome": "Conhecimento Mágico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Clérigo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Conhecimento Mágico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Frade)",
+    "fonte": "Deuses de Arton",
+    "nome": "Conhecimento Mágico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "corcel de comando": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel de Comando",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Duelo de Dragões",
+    "nome": "Corcel de Comando",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "corcel de kally": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel de Kally",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel de Kally",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "corcel do deserto": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel do Deserto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel do Deserto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Corcel do Deserto",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "curandeiro": [
+   {
+    "tabela": "Origens",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Curandeiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Serviços",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Curandeiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "dai-kabuto": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dai-Kabuto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dai-Kabuto",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "deinonico": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Deinonico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Deinonico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "destruidor": [
+   {
+    "tabela": "Parceiros",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Destruidor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bárbaro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Destruidor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Destruidor",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "diligente": [
+   {
+    "tabela": "Melhorias de Item",
+    "fonte": "Deuses de Arton",
+    "nome": "Diligente",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Destino",
+    "fonte": "Herois de Arton",
+    "nome": "Diligente",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "doencas": [
+   {
+    "tabela": "Perigos",
+    "fonte": "Ameaças de Arton",
+    "nome": "Doenças",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Perigos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Doenças",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "dragao jovem": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Dragão Jovem",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dragão Jovem",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "dragonete": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Dragonete",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Dragonete",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "dromedario": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dromedário",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dromedário",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Dromedário",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "druida": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Druida",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Druida",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "duro como aco": [
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Duro Como Aço",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Duro Como Aço",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "elefante": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Elefante",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Elefante",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Elefante",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "elemental do veneno": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Duelo de Dragões",
+    "nome": "Elemental do Veneno",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Ameaças de Arton",
+    "nome": "Elemental do Veneno",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "emboscar": [
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Emboscar",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Ladino)",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Emboscar",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "escudeiro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Escudeiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Origens",
+    "fonte": "A Lenda de Ghanor",
+    "nome": "Escudeiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Escudeiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "escuridao": [
+   {
+    "tabela": "Magias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Escuridão",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Perigos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Escuridão",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "esgrima elfica": [
+   {
+    "tabela": "Poderes (Bardo)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Esgrima Élfica",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Esgrima Élfica",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "esgrimista": [
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Esgrimista",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Esgrimista",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "especializacao em armadura": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Especialização em Armadura",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Especialização em Armadura",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "estandarte": [
+   {
+    "tabela": "Ferramentas",
+    "fonte": "Herois de Arton",
+    "nome": "Estandarte",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Estandarte",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "estilo classico": [
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Estilo Clássico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Estilo Clássico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "estrategista": [
+   {
+    "tabela": "Papéis no Grupo",
+    "fonte": "Compendio T20",
+    "nome": "Estrategista",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Nobre)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Estrategista",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "exaltacao do rejeitado": [
+   {
+    "tabela": "Poderes (Clérigo)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Exaltação do Rejeitado",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Exaltação do Rejeitado",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "executor": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Uma Visita a Vectora",
+    "nome": "Executor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Herois de Arton",
+    "nome": "Executor",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "forjador liturgico": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Forjador Litúrgico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Deuses de Arton",
+    "nome": "Forjador Litúrgico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "formidavel": [
+   {
+    "tabela": "Dificuldades de Teste",
+    "fonte": "Compendio T20",
+    "nome": "Formidável",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Encantamentos de Itens Mágicos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Formidável",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "frade": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "Deuses de Arton",
+    "nome": "Frade",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "Deuses de Arton",
+    "nome": "Frade",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "galhada femea": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Galhada Fêmea",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Galhada Fêmea",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "galhada macho": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Galhada Macho",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Galhada Macho",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "gargula": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gárgula",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Gárgula",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Encantamentos de Itens Mágicos",
+    "fonte": "Herois de Arton",
+    "nome": "Gárgula",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "gatuno": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gatuno",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Ladino)",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Gatuno",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "ginete de javali": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Ginete de Javali",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Ginete de Javali",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "gorlogg": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gorlogg",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gorlogg",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "gorlogg alfa": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gorlogg Alfa",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Gorlogg Alfa",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "grifo": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Grifo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Grifo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "guarda": [
+   {
+    "tabela": "Melhorias de Item",
+    "fonte": "Herois de Arton",
+    "nome": "Guarda",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Origens",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Guarda",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "guardiao": [
+   {
+    "tabela": "Encantamentos de Armaduras",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Guardião",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Guardião",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "guerreiro": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Guerreiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Guerreiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "heranca erudita": [
+   {
+    "tabela": "Poderes (Arcanista)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Herança Erudita",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Herança Erudita",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "hiena": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hiena",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hiena",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "hienodonte": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hienodonte",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hienodonte",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "hippossauro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hippossauro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Hippossauro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "homunculo": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Homúnculo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Inventor)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Homúnculo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "impeto": [
+   {
+    "tabela": "Poderes (Bárbaro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ímpeto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Caçador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ímpeto",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Ímpeto",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "inercia do aco": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Herois de Arton",
+    "nome": "Inércia do Aço",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Herois de Arton",
+    "nome": "Inércia do Aço",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "inventor": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Inventor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Inventor",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "ladino": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Ladino",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Ladino",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "leao": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Leão",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Leão",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Leão",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "lendas e historias": [
+   {
+    "tabela": "Magias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Lendas e Histórias",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bardo)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Lendas e Histórias",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "lobo do mar": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Lobo do Mar",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "Herois de Arton",
+    "nome": "Lobo do Mar",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "lobo-das-cavernas": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Lobo-das-Cavernas",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Lobo-das-cavernas",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "luminar": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Luminar",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Luminar",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "lutador": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Lutador",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Lutador",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "magia performatica": [
+   {
+    "tabela": "Poderes (Arcanista)",
+    "fonte": "Herois de Arton",
+    "nome": "Magia Performática",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bardo)",
+    "fonte": "Herois de Arton",
+    "nome": "Magia Performática",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "mamute": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Mamute",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Mamute",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "mao amiga": [
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "A Lenda de Ghanor",
+    "nome": "Mão Amiga",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Grupo",
+    "fonte": "Herois de Arton",
+    "nome": "Mão Amiga",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "mensageiro": [
+   {
+    "tabela": "Origens",
+    "fonte": "Herois de Arton",
+    "nome": "Mensageiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Serviços",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Mensageiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "mistico": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "Dragão Brasil",
+    "nome": "Místico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "Dragão Brasil - 199",
+    "nome": "Místico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "nobre": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Nobre",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Nobre",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "ogro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Ogro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Raças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Ogro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "oleo": [
+   {
+    "tabela": "Alimentos",
+    "fonte": "Tormenta20",
+    "nome": "Óleo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Equipamentos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Óleo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "paladino": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Paladino",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Paladino",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "pegaso": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Pégaso",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Deuses de Arton",
+    "nome": "Pégaso",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "pegaso de khalmyr": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Pégaso de Khalmyr",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Deuses de Arton",
+    "nome": "Pégaso de Khalmyr",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "pilly": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Pilly",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Deuses de Arton",
+    "nome": "Pilly",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "pirata oceanico": [
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Pirata Oceânico",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes de Raça",
+    "fonte": "Herois de Arton",
+    "nome": "Pirata Oceânico",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "pistoleiro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Pistoleiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Bucaneiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Pistoleiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "platan": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Platan",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Platan",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "poderoso": [
+   {
+    "tabela": "Condições",
+    "fonte": "Dragão Brasil - 219",
+    "nome": "Poderoso",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Melhorias de Item",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Poderoso",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "presenca majestosa": [
+   {
+    "tabela": "Poderes (Nobre)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Presença Majestosa",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Vampiro)",
+    "fonte": "Dragão Brasil",
+    "nome": "Presença Majestosa",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "protetor": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Deuses de Arton",
+    "nome": "Protetor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Encantamentos de Armaduras",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Protetor",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Paladino)",
+    "fonte": "Dragão Brasil - 212",
+    "nome": "Protetor",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "refugio": [
+   {
+    "tabela": "Aventuras",
+    "fonte": "Compendio T20",
+    "nome": "Refúgio",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Magias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Refúgio",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "rinoceronte": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Rinoceronte",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Rinoceronte",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Rinoceronte",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "rinoceronte lanoso": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Rinoceronte Lanoso",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Rinoceronte Lanoso",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "samurai": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "Dragão Brasil",
+    "nome": "Samurai",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "Dragão Brasil - 199",
+    "nome": "Samurai",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "sapo atroz": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Sapo Atroz",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Sapo Atroz",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "selako": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Selako",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Selako",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "solidez": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Solidez",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Solidez",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "sombra": [
+   {
+    "tabela": "Poderes (Ladino)",
+    "fonte": "tormenta20 - jogo do ano",
+    "nome": "Sombra",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Serviços",
+    "fonte": "Herois de Arton",
+    "nome": "Sombra",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "sono": [
+   {
+    "tabela": "Magias",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Sono",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Perigos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Sono",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tatu-montanha": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tatu-Montanha",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tatu-Montanha",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tigre": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tigre",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tigre",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tirano do terceiro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Tirano do Terceiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Distinções",
+    "fonte": "Deuses de Arton",
+    "nome": "Tirano do Terceiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "titulo": [
+   {
+    "tabela": "Poderes (Cavaleiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Título",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Nobre)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Título",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tomo de guerra": [
+   {
+    "tabela": "Esotéricos",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tomo de Guerra",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Esotéricos",
+    "fonte": "Duelo de Dragões",
+    "nome": "Tomo de Guerra",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "treinador": [
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "Herois de Arton",
+    "nome": "Treinador",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Classes",
+    "fonte": "Herois de Arton",
+    "nome": "Treinador",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "trobo": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Trobo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Trobo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Trobo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "trog": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Trog",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Raças",
+    "fonte": "Tormenta20 - jogo do ano",
+    "nome": "Trog",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "troll": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Troll",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Troll",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "trombeta do cruzado": [
+   {
+    "tabela": "Ferramentas",
+    "fonte": "Deuses de Arton",
+    "nome": "Trombeta do Cruzado",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Instrumentos Musicais",
+    "fonte": "Deuses de Arton",
+    "nome": "Trombeta do Cruzado",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tumarkhan": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tumarkhân",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tumarkhân",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "tuntram": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tuntram",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Tuntram",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "unicornio": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Unicórnio",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Unicórnio",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "urso das cavernas": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso das Cavernas",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso das Cavernas",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "urso das neves": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso das Neves",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso das Neves",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "urso panda": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso Panda",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso Panda",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "urso pardo": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso Pardo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Animais",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso Pardo",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Urso Pardo",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "valentao": [
+   {
+    "tabela": "Poderes (Guerreiro)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Valentão",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Poderes (Lutador)",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Valentão",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "vampiro": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Vampiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Categorias de Poder",
+    "fonte": "Dragão Brasil",
+    "nome": "Vampiro",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Raças",
+    "fonte": "Dragão Brasil - 220",
+    "nome": "Vampiro",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "veloz": [
+   {
+    "tabela": "Condições",
+    "fonte": "Dragão Brasil - 219",
+    "nome": "Veloz",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Encantamentos de Itens Mágicos",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Veloz",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "vigilante": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Uma Visita a Vectora",
+    "nome": "Vigilante",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Melhorias de Item",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Vigilante",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Parceiros",
+    "fonte": "Tormenta20 - Jogo do Ano",
+    "nome": "Vigilante",
+    "so_grafia_de_fonte": false
+   }
+  ],
+  "warg": [
+   {
+    "tabela": "Ameaças",
+    "fonte": "Ameaças de Arton",
+    "nome": "Warg",
+    "so_grafia_de_fonte": false
+   },
+   {
+    "tabela": "Montarias",
+    "fonte": "Ameaças de Arton",
+    "nome": "Warg",
+    "so_grafia_de_fonte": false
+   }
+  ]
+ }
+}
