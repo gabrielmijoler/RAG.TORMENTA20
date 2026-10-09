@@ -33,6 +33,10 @@ from rag_core import (
     reformular_pergunta,
     trocar_modelo,
 )
+from rag_v2.dicionario import do_corpus
+from rag_v2.integracao import arquitetura, bloco_dicas, descrever, usar_v2
+from rag_v2.leitura import ler
+from rag_v2.recuperacao import indexar_registros, recuperar_v2
 
 # ==========================================
 # 1. LLM + COLEÇÃO + RETRIEVER + CHAIN
@@ -59,6 +63,18 @@ retriever_comprimido = rag_core.montar_retriever(
 # Só a SÍNTESE: a busca acontece uma vez na etapa 3 com a pergunta reformulada,
 # e a síntese recebe a ENTRADA REAL do usuário (formatos: 'liste em 3 colunas').
 cadeia = rag_core.montar_cadeia_resposta(SYSTEM_PROMPT, llm, com_historico=True)
+
+# v2 (ARQUITETURA=v2): analisador de pergunta sem LLM. Com v1 (padrão) nada
+# disso é montado e o chat segue exatamente como antes.
+if arquitetura() == "v2":
+    print("Arquitetura v2: montando o dicionário de nomes do corpus...")
+    dicionario_v2 = do_corpus()
+    registros_v2 = indexar_registros(chunks)
+else:
+    dicionario_v2, registros_v2 = None, None
+# Última leitura e telemetria da recuperação v2 (mostradas pelo /entendi).
+ultima_leitura = None
+ultima_telemetria = None
 
 # APENAS HumanMessage (pergunta bruta) e AIMessage (resposta final).
 # Nunca o texto do {context} — o contexto é descartado a cada rodada.
@@ -94,7 +110,8 @@ def eh_relato_sucesso(texto: str) -> bool:
 COMANDOS = ("/filtro tabela=X [fonte=Y tipo=Z]  restringe a busca por metadados ("
             "'/filtro' lista valores, 'limpar' desliga)  |  "
             "/salvar  arquiva a sessão atual (relato opcional)  |  "
-            "/novo  limpa o histórico e começa outra sessão  |  /sair  encerra")
+            "/novo  limpa o histórico e começa outra sessão  |  "
+            "/entendi  mostra como a última pergunta foi lida (v2)  |  /sair  encerra")
 BANNER = """
 ==============================================================================
   RAG de Tormenta 20 — chat contínuo com memória de sessão
@@ -174,11 +191,15 @@ def buscar(pergunta_t20: str, pergunta_real: str | None = None):
     if filtros_ativos:
         ativo = " ".join(f"{k}={v}" for k, v in filtros_ativos.items())
         print(f"    filtro: {ativo} -> {len(docs)} docs no top final")
+    mostrar_docs(docs)
+    return docs
+
+
+def mostrar_docs(docs) -> None:
     for i, doc in enumerate(docs, 1):
         score = doc.metadata.get("relevance_score", 0)
         fonte = doc.metadata.get("Fonte") or doc.metadata.get("Tabela") or "Geral"
         print(f"    {i:>2}. {score:.3f}  [{str(fonte)[:44]}]")
-    return docs
 
 
 def gerar_resposta(entrada: str, docs):
@@ -256,6 +277,7 @@ def tratar_filtro(arg: str) -> None:
 
 
 def processar(entrada: str) -> None:
+    global ultima_leitura, ultima_telemetria
     # Saudação pura: resposta fixa, sem LLM, sem busca e SEM gravar no
     # chat_history — a janela de memória fica só com o que é de regra.
     if eh_saudacao_pura(entrada):
@@ -287,10 +309,22 @@ def processar(entrada: str) -> None:
         print("=" * 78)
         return
 
+    # v2: leitura sem LLM. Com /filtro ativo a v1 assume (o filtro é dela).
+    leitura = ler(entrada, dicionario_v2) if dicionario_v2 is not None else None
+    v2 = usar_v2(leitura) and not filtros_ativos
+    ultima_leitura, ultima_telemetria = leitura, None
+    if leitura is not None:
+        print(f"\n  [v2] tipo={leitura.tipo} confiança={leitura.confianca} "
+              f"k={leitura.k} -> {'v2' if v2 else 'v1 (fallback)'}  (/entendi detalha)")
+
     print("\n  [1/4] reformulando com o histórico")
     janela = historico_recente()
     print(f"    janela de memória: {len(janela)}/{len(chat_history)} mensagens")
-    if not janela:
+    if v2:
+        # opção C: confiança média/alta dispensa a reformulação por LLM
+        reescrita = entrada
+        print("    -> v2: reformulação pulada")
+    elif not janela:
         reescrita = entrada
         print("    -> sem histórico, pergunta mantida")
     elif not precisa_de_historico(entrada):
@@ -307,14 +341,26 @@ def processar(entrada: str) -> None:
             print("    -> reformulação inválida, pergunta original mantida")
 
     print("  [2/4] traduzindo para termos do sistema")
-    pergunta_t20 = traduzir_para_t20(reescrita)
-    print(f"    -> {pergunta_t20}")
+    if v2 and leitura.usar_llm == "nenhum":
+        pergunta_t20 = reescrita
+        print("    -> v2: tradução pulada (confiança alta)")
+    else:
+        pergunta_t20 = traduzir_para_t20(reescrita)
+        print(f"    -> {pergunta_t20}")
 
     print("  [3/4] recuperando (BM25 + denso + reranker)")
-    docs = buscar(pergunta_t20, reescrita)
+    if v2:
+        docs, ultima_telemetria = recuperar_v2(
+            retriever_comprimido, leitura, registros_v2, pergunta_t20, reescrita)
+        print(f"    v2: {ultima_telemetria['candidatos']} candidatos, "
+              f"{ultima_telemetria['garantidos']} vagas garantidas")
+        mostrar_docs(docs)
+    else:
+        docs = buscar(pergunta_t20, reescrita)
 
     print("  [4/4] gerando resposta")
-    resposta = gerar_resposta(entrada, docs)
+    # a lista de verificação vai só para a síntese; o histórico guarda a entrada real
+    resposta = gerar_resposta(entrada + (bloco_dicas(leitura) if v2 else ""), docs)
     if resposta is None:
         print("\nNão consegui gerar uma resposta estável agora — "
               "tente reformular a pergunta.")
@@ -349,6 +395,12 @@ def main() -> None:
             chat_history.clear()
             filtros_ativos.clear()
             print("Histórico limpo — nova sessão de RPG.")
+            continue
+        if cmd == "/entendi":
+            if dicionario_v2 is None:
+                print("O /entendi mostra a leitura da v2: rode com ARQUITETURA=v2.")
+            else:
+                print(descrever(ultima_leitura, ultima_telemetria))
             continue
         if cmd == "/filtro" or cmd.startswith("/filtro "):
             tratar_filtro(entrada[len("/filtro"):].strip())
