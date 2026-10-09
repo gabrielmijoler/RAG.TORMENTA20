@@ -9,6 +9,7 @@ Uso (da raiz):
   .venv/bin/python tools/conhecimento.py recusar a0001 --motivo "ambíguo"
   .venv/bin/python tools/conhecimento.py verificar      # após reindexar/reingerir
   .venv/bin/python tools/conhecimento.py gerar-md
+  .venv/bin/python tools/conhecimento.py gerar-propostas [--sinais sinais/sinais.jsonl] [--minimo 2] [--simular]
 
 Toda mudança regenera conhecimento/APRENDIZADOS.md a partir do YAML.
 """
@@ -20,6 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from rag_v2 import conhecimento as k
+from rag_v2 import propostas as gerador
 from rag_v2.dicionario import do_corpus
 from rag_v2.tipos import Chave
 
@@ -57,6 +59,12 @@ def _parser() -> argparse.ArgumentParser:
     recusar.add_argument("--motivo", required=True)
     sub.add_parser("verificar")
     sub.add_parser("gerar-md")
+    gp = sub.add_parser("gerar-propostas",
+                        help="propõe apelidos a partir de sinais/sinais.jsonl (SINAIS=1)")
+    gp.add_argument("--sinais", default=str(gerador.CAMINHO_SINAIS))
+    gp.add_argument("--minimo", type=int, default=gerador.MIN_OCORRENCIAS,
+                    help="eventos distintos que precisam repetir o apelido (padrão: %(default)s)")
+    gp.add_argument("--simular", action="store_true", help="mostra o que seria proposto sem gravar")
     return ap
 
 
@@ -94,6 +102,12 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{args.id} não está pendente")
             return 1
         print(f"{args.id} recusada (fica registrada, nunca é aplicada)")
+    elif args.comando == "gerar-propostas":
+        relatorio = gerador.gerar(args.sinais, carregar_dicionario(), propostas, apelidos,
+                                  minimo=args.minimo, simular=args.simular)
+        print(gerador.renderizar(relatorio))
+        if args.simular:
+            return 0
     elif args.comando == "verificar":
         suspensas = k.verificar(carregar_dicionario(), apelidos)
         if suspensas:
