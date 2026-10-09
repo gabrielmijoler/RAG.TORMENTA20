@@ -58,6 +58,10 @@ from rag_core import (
     resposta_sem_citacoes,
     trocar_modelo,
 )
+from rag_v2.dicionario import do_corpus
+from rag_v2.integracao import arquitetura, bloco_dicas, usar_v2
+from rag_v2.leitura import ler
+from rag_v2.recuperacao import indexar_registros, recuperar_v2
 
 ARQUIVO_CACHE = "traducoes_cache.json"
 
@@ -602,6 +606,13 @@ def _hyde_doc_do(retriever, consulta: str) -> str | None:
     return None
 
 
+def _montar_v2(chunks):
+    """Dicionário e índice de registros da v2; (None, None) com ARQUITETURA=v1."""
+    if arquitetura() != "v2":
+        return None, None
+    return do_corpus(), indexar_registros(chunks)
+
+
 def avaliar(
     llm,
     so_recuperacao: bool = False,
@@ -632,6 +643,7 @@ def avaliar(
         estrategia="hyde" if estrategia == "hyde" else "hibrida",
         llm=llm,
     )
+    dicionario, registros_v2 = _montar_v2(chunks)
 
     sintese = None
     if not so_recuperacao:
@@ -656,11 +668,24 @@ def avaliar(
 
     for caso in pendentes:
         print(f"\n[{caso['id']}] {caso['consulta'][:70]}...")
-        reformulada = reformular(llm, caso["consulta"], cache)
-        print(f"  reformulação: {reformulada[:95]}")
+        # v2 (ARQUITETURA=v2): leitura sem LLM; confiança baixa cai na v1 inteira
+        leitura = ler(caso["consulta"], dicionario) if dicionario else None
+        v2 = usar_v2(leitura)
+        if v2 and leitura.usar_llm == "nenhum":
+            reformulada = caso["consulta"]
+            print("  reformulação: pulada (v2, confiança alta)")
+        else:
+            reformulada = reformular(llm, caso["consulta"], cache)
+            print(f"  reformulação: {reformulada[:95]}")
 
-        top = buscar(retriever, reformulada, caso["consulta"], limiar=limiar,
-                     decompor=estrategia == "decompor")
+        telemetria_v2 = None
+        if v2:
+            top, telemetria_v2 = recuperar_v2(retriever, leitura, registros_v2,
+                                              reformulada, caso["consulta"],
+                                              limiar=limiar)
+        else:
+            top = buscar(retriever, reformulada, caso["consulta"], limiar=limiar,
+                         decompor=estrategia == "decompor")
 
         # --- 1. cobertura de entidades ---
         esperadas = {normalizar(e) for e in caso["entidades"]}
@@ -706,6 +731,20 @@ def avaliar(
             } for d in top],
         }
         anotar_expansao(registro, top)
+        if leitura is not None:
+            registro["v2"] = {
+                "tipo": leitura.tipo,
+                "confianca": leitura.confianca,
+                "usar_llm": leitura.usar_llm,
+                "k": leitura.k,
+                "motivos": list(leitura.motivos),
+                "ligacoes": [{"trecho": lig.trecho, "tabela": lig.chave.tabela,
+                              "nome": lig.chave.nome, "sub": lig.chave.sub,
+                              "score": lig.score, "tipo": lig.tipo}
+                             for lig in leitura.ligacoes],
+                "necessidades": [n.descricao for n in leitura.necessidades],
+                "recuperacao": telemetria_v2,
+            }
 
         # --- 2. fidelidade à base (citações Nome [Fonte]) ---
         contexto = "\n".join(d.page_content for d in top)
@@ -713,7 +752,8 @@ def avaliar(
         # procedência incluso): insumo para re-julgar sem regerar recuperação.
         registro["contexto"] = [d.page_content for d in top]
         if not so_recuperacao:
-            resposta, guarda = responder(llm, top, sintese, reformulada)
+            pergunta_sintese = reformulada + (bloco_dicas(leitura) if v2 else "")
+            resposta, guarda = responder(llm, top, sintese, pergunta_sintese)
             c_resp = citacoes_em(resposta)
             c_ctx = citacoes_em(contexto)
             grounding = groundedness(resposta, contexto)
@@ -780,6 +820,7 @@ def avaliar(
         "colecao": rag_core.COLECAO,
         "pontos_colecao": _pontos_colecao(),
         "estrategia": estrategia,
+        "arquitetura": arquitetura(),
         "reranker": rag_core.reranker_ativo(),
         "limiar": limiar,
         "n_consultas": len(registros),

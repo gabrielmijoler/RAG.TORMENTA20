@@ -26,3 +26,10 @@ class CompressorFalso(BaseDocumentCompressor):
 def construtores_de_reranker_falsos(monkeypatch):
     monkeypatch.setattr(rag_core, "FlashrankRerank", CompressorFalso, raising=False)
     monkeypatch.setattr(rag_core, "CohereRerank", CompressorFalso, raising=False)
+
+
+@pytest.fixture(autouse=True)
+def _arquitetura_padrao(monkeypatch):
+    """Cada teste começa na v1: um ARQUITETURA=v2 exportado no terminal não
+    pode trocar o caminho dos testes da v1. Testes da v2 ligam a flag no corpo."""
+    monkeypatch.delenv("ARQUITETURA", raising=False)
