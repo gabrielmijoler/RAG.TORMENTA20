@@ -120,3 +120,25 @@ def test_prioridade_segue_a_ordem_fixada():
 def test_dicionario_conhece_as_tabelas_do_corpus():
     d = construir(_dados())
     assert {"Armas", "Classes", "Condições"} <= d.tabelas
+
+
+def test_subhabilidade_de_dois_niveis_aponta_para_a_classe():
+    dados = {"tabelas": [{"arquivo": "classes.ts", "export": "classes", "elementos": [
+        {"name": "Arcanista", "origin": JA, "abilities": [
+            {"name": "Caminho do Arcanista", "description": "x", "subAbilities": [
+                {"name": "Feiticeiro", "description": "poder inato"},
+                {"name": "Bruxo", "description": "foco"}]}]}]}]}
+    d = construir(dados)
+    chave = d.exato("feiticeiro")[0]
+    assert (chave.tabela, chave.nome, chave.sub) == ("Classes", "Arcanista", "Feiticeiro")
+    assert d.exato("bruxo")[0].sub == "Bruxo"
+    assert d.exato("caminho do arcanista")[0].sub == "Caminho do Arcanista"
+
+
+def test_subhabilidade_nao_vence_o_registro_de_mesmo_nome_em_fonte_prioritaria():
+    dados = {"tabelas": [{"arquivo": "classes.ts", "export": "classes", "elementos": [
+        {"name": "Mago (A Lenda de Ghanor)", "origin": "A Lenda de Ghanor"},
+        {"name": "Arcanista", "origin": JA, "abilities": [
+            {"name": "Caminho", "subAbilities": [{"name": "Mago"}]}]}]}]}
+    chaves = construir(dados).exato("mago")
+    assert chaves[0].nome == "Arcanista" and chaves[0].sub == "Mago"

@@ -102,6 +102,22 @@ def _adicionar(indice: dict[str, list[Chave]], nome: str, chave: Chave) -> None:
             indice[forma].append(chave)
 
 
+def _subnomes(habilidades) -> list[str]:
+    """Nomes das habilidades e, dentro delas, das `subAbilities` (ex.: Arcanista >
+    Caminho do Arcanista > Feiticeiro)."""
+    nomes: list[str] = []
+    if not isinstance(habilidades, list):
+        return nomes
+    for hab in habilidades:
+        if not isinstance(hab, dict):
+            continue
+        nome = hab.get("name")
+        if isinstance(nome, str) and nome.strip():
+            nomes.append(nome)
+        nomes.extend(_subnomes(hab.get("subAbilities")))
+    return nomes
+
+
 def _ordenar(chaves: list[Chave]) -> tuple[Chave, ...]:
     return tuple(sorted(chaves, key=lambda c: prioridade_fonte(c.fonte)))
 
@@ -125,12 +141,8 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
             sem_parentese = _RE_PARENTESE.sub(" ", nome).strip()
             if sem_parentese and sem_parentese != nome:
                 _adicionar(indice, sem_parentese, chave)
-            habilidades = reg.get("abilities")
-            if isinstance(habilidades, list):
-                for hab in habilidades:
-                    sub = hab.get("name") if isinstance(hab, dict) else None
-                    if isinstance(sub, str) and sub.strip():
-                        _adicionar(indice, sub, Chave(tabela, nome, fonte, sub))
+            for sub in _subnomes(reg.get("abilities")):
+                _adicionar(indice, sub, Chave(tabela, nome, fonte, sub))
 
     dic_apelidos: dict[str, tuple[Chave, ...]] = {}
     for apelido, chave in (apelidos or {}).items():
