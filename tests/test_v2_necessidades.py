@@ -73,3 +73,16 @@ def test_mesma_chave_duas_vezes_nao_duplica_necessidade():
 def test_raca_nao_pede_campo_de_tamanho_que_nao_existe():
     nec = gerar((_lig("Raças", "Bugbear"),), Restricoes(racas=("Bugbear",)), "build", TABELAS)
     assert all("tamanho" not in n.descricao.lower() for n in nec)
+
+
+def test_necessidade_de_registro_aponta_o_nome_do_registro():
+    nec = gerar((_lig("Classes", "Bárbaro", sub="Fúria"), _lig("Armas", "Adaga")),
+                Restricoes(), "direta", TABELAS)
+    assert [n.registro for n in nec] == ["Bárbaro", "Adaga"]
+
+
+def test_necessidade_de_tabela_nao_tem_registro_fixo():
+    nec = gerar((_lig("Classes", "Bárbaro"),),
+                Restricoes(nivel=4, classes=("Bárbaro",)), "build", TABELAS)
+    poderes = [n for n in nec if n.tabela_alvo == "Poderes (Bárbaro)"]
+    assert poderes and poderes[0].registro is None

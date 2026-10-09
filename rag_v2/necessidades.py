@@ -12,21 +12,21 @@ def _do_registro(chave: Chave, restricoes: Restricoes) -> list[Necessidade]:
     tabela, nome = chave.tabela, chave.nome
     if chave.sub is not None:
         return [Necessidade(f"habilidade {chave.sub} de {nome}", tabela,
-                            f"{nome} > {chave.sub}")]
+                            f"{nome} > {chave.sub}", registro=nome)]
     if tabela == "Classes":
-        saida = [Necessidade(f"registro da classe {nome}", tabela, nome)]
+        saida = [Necessidade(f"registro da classe {nome}", tabela, nome, registro=nome)]
         if restricoes.nivel is not None:
             saida.append(Necessidade(
                 f"habilidades de {nome} até o nível {restricoes.nivel} "
-                "(progressão por nível)", tabela, nome))
+                "(progressão por nível)", tabela, nome, registro=nome))
         return saida
     if tabela == "Raças":
         return [Necessidade(f"registro da raça {nome} (habilidades e modificadores "
-                            "de atributo)", tabela, nome)]
+                            "de atributo)", tabela, nome, registro=nome)]
     if tabela.startswith("Armas"):
         return [Necessidade(f"registro da arma {nome} (dano, crítico, empunhadura, "
-                            "proficiência)", tabela, nome)]
-    return [Necessidade(f"registro de {nome} ({tabela})", tabela, nome)]
+                            "proficiência)", tabela, nome, registro=nome)]
+    return [Necessidade(f"registro de {nome} ({tabela})", tabela, nome, registro=nome)]
 
 
 def gerar(ligacoes: tuple[Ligacao, ...], restricoes: Restricoes, tipo: str,

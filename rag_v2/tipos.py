@@ -43,6 +43,9 @@ class Necessidade:
     tabela_alvo: str
     entidade: str
     obrigatoria: bool = True
+    # Nome do registro exato em `tabela_alvo` (busca direta); None = qualquer
+    # registro da tabela serve (ex.: "poderes de Bárbaro").
+    registro: str | None = None
 
 
 @dataclass(frozen=True)
