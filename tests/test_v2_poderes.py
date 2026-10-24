@@ -125,7 +125,8 @@ def test_escolha_so_inclui_irrelevantes_quando_ha_poucos_relevantes():
 def test_sem_tema_a_escolha_cai_nos_primeiros_pegaveis():
     lista = listar(_cat(), "Inventor", _ficha(), frozenset())
     nomes = [p.nome for p in escolher_para_contexto(lista)]
-    assert 1 <= len(nomes) <= 4 and all(p.status != "indisponivel"
+    # 4 pegáveis + os pré-requisitos que eles puxam (cadeia explicada na resposta)
+    assert 1 <= len(nomes) <= 6 and all(p.status != "indisponivel"
                                         for p in escolher_para_contexto(lista))
 
 
@@ -147,3 +148,15 @@ def test_oficio_nao_gera_nota_de_pericia_opcional():
     ]})
     r = listar(cat, "Inventor", _ficha(todos_oficios=False))[0]
     assert r.status == "indeterminado" and r.notas == ()
+
+
+def test_poder_escolhido_leva_junto_o_poder_que_e_seu_pre_requisito():
+    lista = listar(_cat(), "Inventor", _ficha(), tema_da_pergunta("ferreiro arma fabricada", "Inventor"))
+    nomes = [p.nome for p in escolher_para_contexto(lista, maximo=2)]
+    assert "Ferreiro" in nomes and "Armeiro" in nomes     # o texto do pré-requisito entra junto
+
+
+def test_pre_requisito_ja_escolhido_nao_duplica_nem_estoura_muito_o_maximo():
+    lista = listar(_cat(), "Inventor", _ficha(), tema_da_pergunta("fabricar armas", "Inventor"))
+    nomes = [p.nome for p in escolher_para_contexto(lista, maximo=8)]
+    assert len(nomes) == len(set(nomes)) and len(nomes) <= 8 + 2

@@ -93,3 +93,10 @@ def test_bloco_de_dicas_lista_as_situacoes_e_o_que_falta():
 def test_entendi_mostra_o_resumo_dos_poderes():
     texto = descrever(ler(PERGUNTA, _d()), None)
     assert "Poderes de Inventor" in texto and "disponíveis" in texto
+
+
+def test_dicas_de_poder_pedem_resposta_curta_e_nao_enumeram_cada_poder_como_necessidade():
+    dicas = bloco_dicas(ler(PERGUNTA, _d()))
+    assert "recomend" in dicas.lower() and "curta" in dicas.lower()
+    assert "(elegível:" not in dicas                      # sem despejo "poder X (elegível: ...)"
+    assert "poderes gerais" not in dicas.lower()          # necessidade opcional que confundia o LLM

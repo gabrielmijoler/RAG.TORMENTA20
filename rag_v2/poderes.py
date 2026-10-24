@@ -73,11 +73,23 @@ def escolher_para_contexto(poderes: list[PoderAvaliado],
                            maximo: int = MAX_NO_CONTEXTO) -> list[PoderAvaliado]:
     """Os poderes que merecem texto completo no contexto: pegáveis (não indisponíveis) e
     relevantes ao tema da pergunta. Com poucos relevantes, completa com os primeiros
-    pegáveis (até MIN_NO_CONTEXTO) para a resposta não ficar vazia."""
+    pegáveis (até MIN_NO_CONTEXTO) para a resposta não ficar vazia. Cada poder escolhido
+    leva junto o texto dos poderes que são seu pré-requisito (a resposta precisa explicar a
+    cadeia), por isso o total pode passar de `maximo`."""
     pegaveis = [p for p in poderes if p.status != "indisponivel"]
     pegaveis.sort(key=lambda p: (-p.relevancia, _ORDEM[p.status], p.nome))
     relevantes = [p for p in pegaveis if p.relevancia > 0]
     if len(relevantes) >= MIN_NO_CONTEXTO:
-        return relevantes[:maximo]
-    resto = [p for p in pegaveis if p.relevancia == 0]
-    return (relevantes + resto)[:max(MIN_NO_CONTEXTO + 1, len(relevantes))]
+        escolhidos = relevantes[:maximo]
+    else:
+        resto = [p for p in pegaveis if p.relevancia == 0]
+        escolhidos = (relevantes + resto)[:max(MIN_NO_CONTEXTO + 1, len(relevantes))]
+    por_nome = {rag_core.normalizar(p.nome).strip(): p for p in poderes}
+    nomes = {p.nome for p in escolhidos}
+    for poder in list(escolhidos):
+        for exigido in poder.encadeados:
+            pre = por_nome.get(exigido)
+            if pre is not None and pre.nome not in nomes and pre.status != "indisponivel":
+                escolhidos.append(pre)
+                nomes.add(pre.nome)
+    return escolhidos
