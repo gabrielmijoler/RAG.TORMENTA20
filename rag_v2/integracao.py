@@ -11,10 +11,10 @@ MAX_INDISPONIVEIS = 8
 # Em pergunta de "qual poder pegar" o LLM tende a despejar todos os registros: pede-se
 # uma resposta curta, com recomendação, e a admissão do que a base não cobre.
 FORMATO_PODERES = (
-    "Formato da resposta (curta, sem repetir o texto dos registros): 1) recomende 3 a 5 poderes "
-    "para o que o jogador quer, com o motivo em uma linha cada e a situação (pode pegar agora, "
-    "depois de qual poder, ou o que confirmar); 2) responda os demais pontos da pergunta; "
-    "3) diga o que a base não cobre.")
+    "Formato da resposta (curta, sem repetir o texto dos registros): explique em uma linha por "
+    "poder da RECOMENDAÇÃO, usando o registro dele no contexto. PROIBIDO citar, recomendar ou "
+    "listar qualquer poder que não esteja na RECOMENDAÇÃO, ou mudar a situação de algum; depois responda os demais pontos da pergunta e diga o que a "
+    "base não cobre.")
 
 ARQUITETURAS = ("v1", "v2")
 
@@ -92,7 +92,8 @@ def bloco_dicas(leitura: Leitura) -> str:
     ficha = _ficha(leitura)
     linha_ficha = f"Personagem/contexto da pergunta: {ficha}.\n" if ficha else ""
     poderes = secao_poderes(leitura)
-    linha_poderes = f"{poderes}\n{FORMATO_PODERES}\n" if poderes else ""
+    linha_poderes = (f"{poderes}\n{leitura.recomendacao}\n{FORMATO_PODERES}\n"
+                     if poderes else "")
     return (
         "\n\n[LISTA DE VERIFICAÇÃO DA PERGUNTA — gerada pelo sistema, não pelo usuário]\n"
         f"{linha_ficha}{linha_poderes}A resposta deve cobrir:\n{itens}\n"

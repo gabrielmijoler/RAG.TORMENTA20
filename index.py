@@ -421,6 +421,8 @@ def processar(entrada: str) -> None:
     print("  [4/4] gerando resposta")
     t0 = time.perf_counter()
     # a lista de verificação vai só para a síntese; o histórico guarda a entrada real
+    if v2 and leitura.recomendacao:
+        print("\n" + leitura.recomendacao)
     resposta = gerar_resposta(entrada + (bloco_dicas(leitura) if v2 else ""), docs)
     tempos["geracao"] = time.perf_counter() - t0
     if resposta is None:

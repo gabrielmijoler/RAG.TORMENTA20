@@ -60,7 +60,8 @@ class PoderAvaliado:
     pendencias: tuple[str, ...] = ()
     encadeados: tuple[str, ...] = ()
     notas: tuple[str, ...] = ()
-    relevancia: int = 0
+    relevancia: float = 0.0
+    resumo: str = ""
 
 
 @dataclass(frozen=True)
@@ -81,3 +82,5 @@ class Leitura:
     texto_resolvido: str | None = None
     # Poderes da classe avaliados para a ficha (só em perguntas "qual poder pegar").
     poderes: tuple[PoderAvaliado, ...] = ()
+    # Recomendação já escrita pelo código (poderes + situação); o LLM só a explica.
+    recomendacao: str = ""

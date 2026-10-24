@@ -17,7 +17,13 @@ from .dicionario import Dicionario, chave_texto
 from .ligador import PALAVRAS_COMUNS, ambigua, ligar, refinar_por_restricoes
 from .necessidades import gerar
 from .orcamento import calcular
-from .poderes import escolher_para_contexto, listar, tema_da_pergunta
+from .poderes import (
+    escolher_para_contexto,
+    escrever_recomendacao,
+    listar,
+    recomendar,
+    tema_da_pergunta,
+)
 from .requisitos import Ficha as FichaBuild
 from .restricoes import extrair_restricoes
 from .sessao import Sessao, precisa_de_foco, primeira_pessoa
@@ -79,14 +85,14 @@ _RE_PEDE_PODER = re.compile(r"\bpoder(?:es)?\b")
 
 
 def _poderes_da_classe(texto: str, restricoes: Restricoes, dicionario: Dicionario,
-                       sessao: Sessao | None) -> tuple[tuple[PoderAvaliado, ...], list[Necessidade]]:
+                       sessao: Sessao | None) -> tuple[tuple[PoderAvaliado, ...], list[Necessidade], str]:
     """'Qual poder pegar?': avalia TODOS os poderes da classe contra a ficha (não por busca)."""
     if not (restricoes.classes and restricoes.nivel is not None
             and _RE_PEDE_PODER.search(chave_texto(texto))):
-        return (), []
+        return (), [], ""
     classe = restricoes.classes[0]
     if dicionario.catalogo.tabela_de_poderes(classe) is None:
-        return (), []
+        return (), [], ""
     extra = ficha_texto.extrair(texto)
     guardada = sessao.ficha if sessao is not None else None
     ficha = FichaBuild(
@@ -101,7 +107,10 @@ def _poderes_da_classe(texto: str, restricoes: Restricoes, dicionario: Dicionari
     necessidades = [
         Necessidade(f"poder {p.nome} (elegível: {p.status})", p.tabela, p.nome, registro=p.nome)
         for p in escolher_para_contexto(avaliados)]
-    return tuple(avaliados), necessidades
+    recomendacao = escrever_recomendacao(
+        recomendar(avaliados), avaliados, ficha,
+        dicionario.catalogo.niveis_com_poder(classe, restricoes.nivel))
+    return tuple(avaliados), necessidades, recomendacao
 
 
 def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Leitura:
@@ -120,7 +129,7 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
     ligacoes = refinar_por_restricoes(ligacoes, restricoes)
     tipo = classificar(texto_lido, ligacoes, restricoes)
     necessidades = gerar(ligacoes, restricoes, tipo, dicionario.tabelas)
-    poderes, extras_poder = _poderes_da_classe(texto_lido, restricoes, dicionario, sessao)
+    poderes, extras_poder, recomendacao = _poderes_da_classe(texto_lido, restricoes, dicionario, sessao)
     ja_pedidos = {(n.tabela_alvo, n.registro) for n in necessidades}
     necessidades = necessidades + tuple(n for n in extras_poder
                                         if (n.tabela_alvo, n.registro) not in ja_pedidos)
@@ -138,4 +147,5 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
         usar_llm=LLM_POR_CONFIANCA[confianca],
         texto_resolvido=resolvido,
         poderes=poderes,
+        recomendacao=recomendacao,
     )

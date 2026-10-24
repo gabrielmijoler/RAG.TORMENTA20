@@ -160,3 +160,24 @@ def test_pre_requisito_ja_escolhido_nao_duplica_nem_estoura_muito_o_maximo():
     lista = listar(_cat(), "Inventor", _ficha(), tema_da_pergunta("fabricar armas", "Inventor"))
     nomes = [p.nome for p in escolher_para_contexto(lista, maximo=8)]
     assert len(nomes) == len(set(nomes)) and len(nomes) <= 8 + 2
+
+
+def test_resumo_e_a_primeira_frase_da_descricao():
+    r = _por_nome(listar(_cat(), "Inventor", _ficha()))
+    assert r["Armeiro"].resumo == "Proficiência com armas marciais e fabricar armas."
+
+
+def test_palavra_rara_pesa_mais_que_palavra_comum_e_o_nome_pesa_dobrado():
+    tema = tema_da_pergunta("fabricar armas", "Inventor")
+    r = _por_nome(listar(_cat(), "Inventor", _ficha(), tema))
+    assert r["Armeiro"].relevancia > r["Ferreiro"].relevancia > r["Resistente"].relevancia == 0
+
+
+def test_recomendar_traz_os_mais_relevantes_pegaveis_e_deixa_de_fora_indisponiveis():
+    from rag_v2.poderes import recomendar
+    tema = tema_da_pergunta("quero fabricar armas e alquimia", "Inventor")
+    todos = listar(_cat(), "Inventor", _ficha(), tema)
+    nomes = [p.nome for p in recomendar(todos, maximo=3)]
+    assert len(nomes) == 3
+    assert "Gênio Inovador" not in nomes and "Resistente" not in nomes
+    assert recomendar(listar(_cat(), "Inventor", _ficha()), maximo=3) == []   # sem tema: não chuta

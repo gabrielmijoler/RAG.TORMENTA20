@@ -100,3 +100,19 @@ def test_dicas_de_poder_pedem_resposta_curta_e_nao_enumeram_cada_poder_como_nece
     assert "recomend" in dicas.lower() and "curta" in dicas.lower()
     assert "(elegível:" not in dicas                      # sem despejo "poder X (elegível: ...)"
     assert "poderes gerais" not in dicas.lower()          # necessidade opcional que confundia o LLM
+
+
+def test_a_recomendacao_sai_pronta_do_codigo_com_a_situacao_de_cada_poder():
+    texto = ler(PERGUNTA, _d()).recomendacao
+    assert "Couraceiro" in texto and "pode pegar agora" in texto
+    assert "Ferreiro" in texto and "depois de" in texto and "Armeiro" in texto
+    assert "Mestre Cuca" not in texto and "Gênio Inovador" not in texto
+
+
+def test_a_recomendacao_explica_que_o_numero_do_atributo_ja_e_o_modificador():
+    texto = ler(PERGUNTA, _d()).recomendacao
+    assert "INT 6" in texto and "modificador" in texto
+
+
+def test_sem_pergunta_de_poder_nao_ha_recomendacao():
+    assert ler("O que faz a perícia Ofício?", _d()).recomendacao == ""

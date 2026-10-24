@@ -6,6 +6,7 @@ cada um conferido contra a ficha, e só então os mais relevantes ao tema. Este 
 faz essa conta em Python, a partir do texto do próprio livro (pré-requisitos).
 """
 
+import math
 import re
 
 import rag_core
@@ -22,6 +23,9 @@ _PALAVRAS_VAZIAS = frozenset(["para", "qual", "quais", "como", "quero", "queria"
 _SINONIMOS = {"craft": "fabri", "craftar": "fabri", "criar": "fabri", "construir": "fabri",
               "forjar": "ferre", "consertar": "repar"}
 _RE_PALAVRA = re.compile(r"[a-z]{4,}")
+_RE_FRASE = re.compile(r"(.+?[.!?])(?:\s|$)")
+MAX_RESUMO = 220
+MAX_RECOMENDADOS = 5
 
 
 def _radicais(texto: str) -> set[str]:
@@ -32,6 +36,23 @@ def _radicais(texto: str) -> set[str]:
 def tema_da_pergunta(texto: str, classe: str) -> frozenset[str]:
     """Radicais (5 letras) das palavras que dizem O QUE o jogador quer (sem o nome da classe)."""
     return frozenset(_radicais(texto) - _radicais(classe))
+
+
+def _resumo(descricao: str) -> str:
+    """Primeira frase da descrição (o suficiente para o LLM explicar sem despejar o registro)."""
+    m = _RE_FRASE.match(descricao or "")
+    frase = m.group(1) if m else (descricao or "")
+    return frase if len(frase) <= MAX_RESUMO else frase[:MAX_RESUMO].rstrip() + "…"
+
+
+def _pesos(catalogo_poderes) -> dict[str, float]:
+    """Peso de cada radical = log(N/df) entre os poderes da classe: palavra rara pesa mais."""
+    radicais = [_radicais(f"{p.nome} {p.descricao}") for p in catalogo_poderes]
+    contagem: dict[str, int] = {}
+    for conjunto in radicais:
+        for r in conjunto:
+            contagem[r] = contagem.get(r, 0) + 1
+    return {r: math.log(len(radicais) / n) + 0.1 for r, n in contagem.items()}
 
 
 def _ficha_efetiva(ficha: Ficha, pericias_classe: dict[str, set[str]]) -> Ficha:
@@ -53,6 +74,7 @@ def listar(catalogo: Catalogo, classe: str, ficha: Ficha,
     efetiva = _ficha_efetiva(ficha, pericias)
     opcionais = pericias.get("opcionais", set())
     saida = []
+    pesos = _pesos(catalogo.poderes[tabela])
     for poder in catalogo.poderes[tabela]:
         itens = interpretar(poder.prerequisito, catalogo.nomes_poderes, catalogo.racas)
         resultado = avaliar(itens, efetiva)
@@ -61,11 +83,13 @@ def listar(catalogo: Catalogo, classe: str, ficha: Ficha,
             for alternativas in itens for r in alternativas
             if r.tipo == "treinado" and r.a != "oficio" and r.a in opcionais
             and r.a not in efetiva.pericias)
-        relevancia = len(tema & _radicais(f"{poder.nome} {poder.descricao}"))
+        # o nome vale o dobro: um poder chamado "Armeiro" é sobre armeiro
+        relevancia = (sum(pesos[r] for r in tema & _radicais(poder.descricao))
+                      + 2 * sum(pesos[r] for r in tema & _radicais(poder.nome)))
         saida.append(PoderAvaliado(
             nome=poder.nome, tabela=poder.tabela, fonte=poder.fonte, status=resultado.status,
             prerequisito=poder.prerequisito, pendencias=tuple(resultado.pendencias),
-            encadeados=tuple(resultado.encadeados), notas=notas, relevancia=relevancia))
+            encadeados=tuple(resultado.encadeados), notas=notas, relevancia=round(relevancia, 3), resumo=_resumo(poder.descricao)))
     return sorted(saida, key=lambda p: (_ORDEM[p.status], -p.relevancia, p.nome))
 
 
@@ -93,3 +117,38 @@ def escolher_para_contexto(poderes: list[PoderAvaliado],
                 escolhidos.append(pre)
                 nomes.add(pre.nome)
     return escolhidos
+
+
+def recomendar(poderes: list[PoderAvaliado], maximo: int = MAX_RECOMENDADOS) -> list[PoderAvaliado]:
+    """Os melhores poderes para o tema: relevantes, não indisponíveis, mais relevante primeiro.
+    Sem tema (relevância 0 em todos) não recomenda nada: não chuta."""
+    candidatos = [p for p in poderes if p.status != "indisponivel" and p.relevancia > 0]
+    candidatos.sort(key=lambda p: (-p.relevancia, _ORDEM[p.status], p.nome))
+    return candidatos[:maximo]
+
+
+def _situacao(p: PoderAvaliado, todos: list[PoderAvaliado]) -> str:
+    if p.status == "disponivel":
+        return "pode pegar agora"
+    if p.status == "encadeado":
+        por_nome = {rag_core.normalizar(t.nome).strip(): t.nome for t in todos}
+        return "só depois de escolher " + ", ".join(por_nome.get(e, e) for e in p.encadeados)
+    return "depende da ficha: " + "; ".join(p.pendencias + p.notas)
+
+
+def escrever_recomendacao(recomendados: list[PoderAvaliado], todos: list[PoderAvaliado],
+                          ficha: Ficha, niveis_com_escolha: list[int] | None) -> str:
+    """Texto fechado da recomendação: o código decide QUAIS poderes e a situação de cada um."""
+    if not recomendados:
+        return ""
+    linhas = ["RECOMENDAÇÃO (calculada pelo sistema; explique, não troque os poderes):"]
+    if niveis_com_escolha:
+        linhas.append(f"Até o nível {ficha.nivel} você escolhe {len(niveis_com_escolha)} poderes "
+                      f"de {ficha.classe} (níveis {', '.join(map(str, niveis_com_escolha))}).")
+    if ficha.atributos:
+        valores = ", ".join(f"{k.upper()} {v}" for k, v in ficha.atributos.items())
+        linhas.append(f"Atributo informado: {valores} — no livro esse número já é o modificador "
+                      "(teste = 1d20 + atributo), não o valor bruto.")
+    for i, p in enumerate(recomendados, 1):
+        linhas.append(f"{i}. {p.nome} — {_situacao(p, todos)}. {p.resumo}")
+    return "\n".join(linhas)
