@@ -9,16 +9,20 @@ Com a `Sessao` do chat, a leitura também resolve referências pelo foco
 em primeira pessoa ("isso combina comigo?").
 """
 
+import re
 from dataclasses import replace
 
+from . import ficha_texto
 from .dicionario import Dicionario, chave_texto
 from .ligador import PALAVRAS_COMUNS, ambigua, ligar, refinar_por_restricoes
 from .necessidades import gerar
 from .orcamento import calcular
+from .poderes import escolher_para_contexto, listar, tema_da_pergunta
+from .requisitos import Ficha as FichaBuild
 from .restricoes import extrair_restricoes
 from .sessao import Sessao, precisa_de_foco, primeira_pessoa
 from .tipo import classificar
-from .tipos import Leitura, Ligacao, Restricoes
+from .tipos import Leitura, Ligacao, Necessidade, PoderAvaliado, Restricoes
 
 # Aproximada abaixo disso não sustenta confiança alta (Ponto 1).
 SCORE_CONFIANCA_ALTA = 0.85
@@ -71,6 +75,35 @@ def _herdar_ficha(restricoes: Restricoes, sessao: Sessao) -> Restricoes:
     )
 
 
+_RE_PEDE_PODER = re.compile(r"\bpoder(?:es)?\b")
+
+
+def _poderes_da_classe(texto: str, restricoes: Restricoes, dicionario: Dicionario,
+                       sessao: Sessao | None) -> tuple[tuple[PoderAvaliado, ...], list[Necessidade]]:
+    """'Qual poder pegar?': avalia TODOS os poderes da classe contra a ficha (não por busca)."""
+    if not (restricoes.classes and restricoes.nivel is not None
+            and _RE_PEDE_PODER.search(chave_texto(texto))):
+        return (), []
+    classe = restricoes.classes[0]
+    if dicionario.catalogo.tabela_de_poderes(classe) is None:
+        return (), []
+    extra = ficha_texto.extrair(texto)
+    guardada = sessao.ficha if sessao is not None else None
+    ficha = FichaBuild(
+        classe=classe, nivel=restricoes.nivel,
+        atributos={**(guardada.atributos if guardada else {}), **extra["atributos"]},
+        oficios=(guardada.oficios if guardada else set()) | extra["oficios"],
+        todos_oficios=bool(guardada and guardada.todos_oficios) or extra["todos_oficios"],
+        pericias=(guardada.pericias if guardada else set()) | extra["pericias"],
+        raca=restricoes.racas[0] if restricoes.racas else None,
+        devoto=extra["devoto"] or (guardada.devoto if guardada else None))
+    avaliados = listar(dicionario.catalogo, classe, ficha, tema_da_pergunta(texto, classe))
+    necessidades = [
+        Necessidade(f"poder {p.nome} (elegível: {p.status})", p.tabela, p.nome, registro=p.nome)
+        for p in escolher_para_contexto(avaliados)]
+    return tuple(avaliados), necessidades
+
+
 def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Leitura:
     ligacoes = ligar(texto, dicionario)
     texto_lido, resolvido = texto, None
@@ -80,12 +113,17 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
 
     restricoes = extrair_restricoes(texto_lido, ligacoes)
     extras = []
-    if sessao is not None and not sessao.ficha.vazia() and primeira_pessoa(texto):
+    pede_poder = bool(_RE_PEDE_PODER.search(chave_texto(texto)))
+    if sessao is not None and not sessao.ficha.vazia() and (primeira_pessoa(texto) or pede_poder):
         restricoes = _herdar_ficha(restricoes, sessao)
         extras.append(f"ficha da sessão herdada: {sessao.ficha.resumo()}")
     ligacoes = refinar_por_restricoes(ligacoes, restricoes)
     tipo = classificar(texto_lido, ligacoes, restricoes)
     necessidades = gerar(ligacoes, restricoes, tipo, dicionario.tabelas)
+    poderes, extras_poder = _poderes_da_classe(texto_lido, restricoes, dicionario, sessao)
+    ja_pedidos = {(n.tabela_alvo, n.registro) for n in necessidades}
+    necessidades = necessidades + tuple(n for n in extras_poder
+                                        if (n.tabela_alvo, n.registro) not in ja_pedidos)
     confianca, motivos = _confianca(tipo, ligacoes)
     motivos = motivos + tuple(extras)
     return Leitura(
@@ -99,4 +137,5 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
         motivos=motivos,
         usar_llm=LLM_POR_CONFIANCA[confianca],
         texto_resolvido=resolvido,
+        poderes=poderes,
     )

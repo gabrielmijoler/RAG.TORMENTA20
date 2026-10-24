@@ -49,6 +49,21 @@ class Necessidade:
 
 
 @dataclass(frozen=True)
+class PoderAvaliado:
+    """Um poder da classe e se o personagem pode pegá-lo (calculado, não buscado)."""
+
+    nome: str
+    tabela: str
+    fonte: str
+    status: str        # disponivel | encadeado | indeterminado | indisponivel
+    prerequisito: str
+    pendencias: tuple[str, ...] = ()
+    encadeados: tuple[str, ...] = ()
+    notas: tuple[str, ...] = ()
+    relevancia: int = 0
+
+
+@dataclass(frozen=True)
 class Leitura:
     """Resultado do analisador. Os padrões são o comportamento da v1 (fallback total)."""
 
@@ -64,3 +79,5 @@ class Leitura:
     # Pergunta com a referência resolvida pelo foco ("e a CD dela? (Teia)");
     # None = a própria pergunta original.
     texto_resolvido: str | None = None
+    # Poderes da classe avaliados para a ficha (só em perguntas "qual poder pegar").
+    poderes: tuple[PoderAvaliado, ...] = ()

@@ -9,6 +9,7 @@ Aprende só interpretação da conversa; regra do jogo vem sempre do corpus.
 import re
 from dataclasses import dataclass, field
 
+from . import ficha_texto
 from .dicionario import chave_texto
 from .restricoes import NIVEL_MAX, NIVEL_MIN
 from .tipos import Chave, Leitura
@@ -41,9 +42,15 @@ class Ficha:
     raca: str | None = None
     nivel: int | None = None
     itens: list[str] = field(default_factory=list)
+    atributos: dict[str, int] = field(default_factory=dict)
+    oficios: set[str] = field(default_factory=set)
+    todos_oficios: bool = False
+    pericias: set[str] = field(default_factory=set)
+    devoto: str | None = None
 
     def vazia(self) -> bool:
-        return not (self.classe or self.raca or self.nivel or self.itens)
+        return not (self.classe or self.raca or self.nivel or self.itens or self.atributos
+                    or self.oficios or self.todos_oficios or self.pericias or self.devoto)
 
     def resumo(self) -> str:
         partes = []
@@ -53,6 +60,13 @@ class Ficha:
             partes.append(self.raca)
         if self.nivel is not None:
             partes.append(f"nível {self.nivel}")
+        partes += [f"{a.capitalize()} {v}" for a, v in self.atributos.items()]
+        if self.todos_oficios:
+            partes.append("todos os Ofícios")
+        partes += [f"Ofício ({o})" for o in sorted(self.oficios)]
+        partes += [f"treinado em {p}" for p in sorted(self.pericias)]
+        if self.devoto:
+            partes.append(f"devoto de {self.devoto}")
         return ", ".join(partes + self.itens)
 
 
@@ -73,6 +87,12 @@ class Sessao:
         for item in r.itens:
             if item not in self.ficha.itens:
                 self.ficha.itens.append(item)
+        extra = ficha_texto.extrair(leitura.texto_original)
+        self.ficha.atributos.update(extra["atributos"])
+        self.ficha.oficios |= extra["oficios"]
+        self.ficha.todos_oficios = self.ficha.todos_oficios or extra["todos_oficios"]
+        self.ficha.pericias |= extra["pericias"]
+        self.ficha.devoto = extra["devoto"] or self.ficha.devoto
         if leitura.ligacoes:
             self.foco = leitura.ligacoes[-1].chave
 

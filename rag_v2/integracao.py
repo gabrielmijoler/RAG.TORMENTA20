@@ -1,8 +1,13 @@
 """Ponte entre a v2 e o chat/avaliador: flag, dicas ao LLM e o texto do /entendi."""
 
 import os
+from collections import Counter
+
+import rag_core
 
 from .tipos import Leitura
+
+MAX_INDISPONIVEIS = 8
 
 ARQUITETURAS = ("v1", "v2")
 
@@ -27,6 +32,40 @@ def _ficha(leitura: Leitura) -> str:
     return ", ".join(partes)
 
 
+def _exibicao(normalizado: str, poderes) -> str:
+    return next((p.nome for p in poderes if rag_core.normalizar(p.nome).strip() == normalizado),
+                normalizado.capitalize())
+
+
+def secao_poderes(leitura: Leitura) -> str:
+    """Todos os poderes da classe e a situação de cada um (calculado, não buscado)."""
+    if not leitura.poderes:
+        return ""
+    classe = leitura.restricoes.classes[0]
+    por_status = {s: [p for p in leitura.poderes if p.status == s]
+                  for s in ("disponivel", "encadeado", "indeterminado", "indisponivel")}
+    linhas = [(f"PODERES DE {classe.upper()} (nível {leitura.restricoes.nivel}) — calculado pelo "
+               "sistema a partir dos pré-requisitos do livro, para a ficha informada. Use esta lista "
+               "para dizer QUAIS poderes existem e quais o personagem pode pegar; o efeito de um poder "
+               "só pode ser descrito se o texto dele estiver no contexto.")]
+    if por_status["disponivel"]:
+        linhas.append("Pode pegar agora: " + ", ".join(p.nome for p in por_status["disponivel"]))
+    if por_status["encadeado"]:
+        linhas.append("Pode pegar depois de escolher outro poder: " + "; ".join(
+            f"{p.nome} (precisa de {', '.join(_exibicao(e, leitura.poderes) for e in p.encadeados)})"
+            for p in por_status["encadeado"]))
+    if por_status["indeterminado"]:
+        linhas.append("Depende de confirmar a ficha: " + "; ".join(
+            f"{p.nome} ({'; '.join(p.pendencias + p.notas)})" for p in por_status["indeterminado"]))
+    if por_status["indisponivel"]:
+        mostrados = por_status["indisponivel"][:MAX_INDISPONIVEIS]
+        resto = len(por_status["indisponivel"]) - len(mostrados)
+        linhas.append("Não pode pegar ainda: " + "; ".join(
+            f"{p.nome} ({'; '.join(p.pendencias)})" for p in mostrados)
+            + (f"; e mais {resto}" if resto else ""))
+    return "\n".join(linhas)
+
+
 def bloco_dicas(leitura: Leitura) -> str:
     """Lista de verificação anexada à entrada da síntese (o SYSTEM_PROMPT não muda).
 
@@ -39,9 +78,11 @@ def bloco_dicas(leitura: Leitura) -> str:
                       for i, n in enumerate(leitura.necessidades, 1))
     ficha = _ficha(leitura)
     linha_ficha = f"Personagem/contexto da pergunta: {ficha}.\n" if ficha else ""
+    poderes = secao_poderes(leitura)
+    linha_poderes = f"{poderes}\n" if poderes else ""
     return (
         "\n\n[LISTA DE VERIFICAÇÃO DA PERGUNTA — gerada pelo sistema, não pelo usuário]\n"
-        f"{linha_ficha}A resposta deve cobrir:\n{itens}\n"
+        f"{linha_ficha}{linha_poderes}A resposta deve cobrir:\n{itens}\n"
         "Para cada item, use SOMENTE o contexto, com a citação [Tabela > Fonte] "
         "copiada dele; se o contexto não trouxer o item, diga explicitamente que "
         "a base consultada não cobre esse ponto. Nunca complete com conhecimento externo.]"
@@ -69,6 +110,12 @@ def descrever(leitura: Leitura | None, telemetria: dict | None) -> str:
     atendidas = {}
     if telemetria:
         atendidas = {n["descricao"]: n["atendida"] for n in telemetria["necessidades"]}
+    if leitura.poderes:
+        contagem = Counter(p.status for p in leitura.poderes)
+        linhas.append(
+            f"Poderes de {leitura.restricoes.classes[0]}: {len(leitura.poderes)} avaliados — "
+            f"{contagem['disponivel']} disponíveis, {contagem['encadeado']} encadeados, "
+            f"{contagem['indeterminado']} a confirmar, {contagem['indisponivel']} indisponíveis")
     if leitura.necessidades:
         linhas.append("Necessidades:")
     for n in leitura.necessidades:

@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 
 import rag_core
 
+from .catalogo import Catalogo, construir_catalogo
 from .tipos import Chave
 
 # Tabela onde o "Nome" é a pergunta inteira de um leitor: não é nome do jogo.
@@ -81,6 +82,7 @@ class Dicionario:
     max_palavras: int = 1
     tabelas: frozenset[str] = frozenset()
     vocabulario: frozenset[str] = frozenset()
+    catalogo: Catalogo = field(default_factory=Catalogo)
     _por_palavras: dict[int, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def exato(self, frase: str) -> tuple[Chave, ...]:
@@ -175,7 +177,8 @@ def construir(dados: dict, apelidos: dict[str, Chave] | None = None) -> Dicionar
                       max_palavras=min(maior, MAX_PALAVRAS),
                       tabelas=frozenset(tabelas),
                       vocabulario=frozenset(p for p, n in palavras.items()
-                                            if n >= VOCAB_MIN_OCORRENCIAS))
+                                            if n >= VOCAB_MIN_OCORRENCIAS),
+                      catalogo=construir_catalogo(dados))
 
 
 def do_corpus(apelidos: dict[str, Chave] | None = None) -> Dicionario:
