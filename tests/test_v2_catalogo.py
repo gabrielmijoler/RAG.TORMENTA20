@@ -56,3 +56,26 @@ def test_tabela_dos_poderes_de_uma_classe_pelo_nome_da_classe():
 
 def test_dicionario_expoe_o_catalogo():
     assert construir(_dados()).catalogo.tabela_de_poderes("Inventor") == "Poderes (Inventor)"
+
+
+# --- quantas escolhas de poder a classe dá até o nível N (pela progressão do livro) ---------
+
+def _dados_progressao():
+    return {"tabelas": [{"arquivo": "classes.ts", "export": "classes", "elementos": [
+        {"name": "Inventor", "origin": JA, "levelProgression": [
+            {"level": 1, "abilities": "Engenhosidade, protótipo"},
+            {"level": 2, "abilities": "Fabricar item superior (1 melhoria), poder de inventor"},
+            {"level": 3, "abilities": "Comerciante, poder de inventor"},
+            {"level": 4, "abilities": "Poder de inventor"},
+            {"level": 8, "abilities": "Poder de inventor"}]}]}]}
+
+
+def test_niveis_com_escolha_de_poder_ate_o_nivel():
+    cat = construir_catalogo(_dados_progressao())
+    assert cat.niveis_com_poder("Inventor", 4) == [2, 3, 4]
+    assert cat.niveis_com_poder("inventor", 7) == [2, 3, 4]
+    assert cat.niveis_com_poder("Inventor", 1) == []
+
+
+def test_classe_sem_progressao_devolve_none():
+    assert construir_catalogo(_dados_progressao()).niveis_com_poder("Bardo", 5) is None
