@@ -1643,5 +1643,2645 @@
     "score": 9.0,
     "aprovado": true,
     "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas origens (círculos de magia e categorias de itens), além das penalidades de barreiras, respondendo integralmente à pergunta."
+  },
+  "37adc09b01539ebbe2cf97901b619cc5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro penalidades da condição Caído (–5 Defesa corpo a corpo, +5 Defesa à distância, –5 em ataques corpo a corpo e deslocamento reduzido a 1,5m), sem alucinações."
+  },
+  "471655607e3682ad591e86911a749bf1": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a definição mecânica da condição Agarrado (modificadores de teste, armas permitidas e chance de erro em ataques à distância), que é suficiente para responder à pergunta sobre como funciona durante o combate."
+  },
+  "99014107289551bb5e9f59188bd2d487": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções da perícia Furtividade (esconder-se e seguir), as mecânicas de teste oposto contra Percepção e as penalidades por movimento, ataque ou falta de esconderijos, atendendo integralmente à pergunta."
+  },
+  "f20663b9a8bee82e2fbcf64e506ec488": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve exatamente o método Escriba Arcano e fornece o cálculo correto: T$ 250 por PM, totalizando T$ 1.500 para uma magia de 3º círculo (6 PM), além dos requisitos de tempo e treinamento."
+  },
+  "c6f02e420429e1ce8eec668febab18f9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos como cura de 2d8+2 PV por toque, com aprimoramentos claros e a interação com Infligir Ferimentos, atendendo plenamente à pergunta."
+  },
+  "47552662ca2710b1003876cc494c6b62": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias e opcionais (com a quantidade de 2 escolhidas), além das proficiências em armas marciais, armaduras pesadas e escudos, atendendo plenamente à pergunta."
+  },
+  "4a99b323a881c30169d2142632d3d924": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base (1d8) da Espada Longa padrão, que é o foco da pergunta."
+  },
+  "7b6236f278a3bd2839d25b702bf37a64": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (5) e a Defesa (25) do basilisco, além do deslocamento (9m/6q), embora venha de uma fonte alternativa (Dungeon Meshi) em vez da fonte principal de regras."
+  },
+  "121072c061695a6d7de6e8cbc47308ec": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Hyninn como o deus da trapaça e da esperteza, e o símbolo sagrado como uma adaga atravessando uma máscara ou uma raposa, além de detalhar a mecânica do item."
+  },
+  "59cde3a38d685d7abd7d7be3aa7c701a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente que o teste de ataque é comparado à Defesa do alvo para determinar o acerto, conforme as Perguntas e Respostas da Revista DB."
+  },
+  "f4d7dd0c25a2c65303185e1bfc784624": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os graus de dificuldade (Fácil a Quase Impossível) e suas respectivas CD, além de explicar testes comuns e opostos, atendendo plenamente à pergunta."
+  },
+  "e3508636e3b297f4140bd37e3f5c4990": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona apenas o conceito de espaço ocupado por criaturas (ex: 3m = 2x2 quadrados) e categorias genéricas, mas não lista os tamanhos de criatura nem seus respectivos espaços ocupados, sendo insuficiente para responder à pergunta."
+  },
+  "6739481f51949da01a28dcf2777bf9b3": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não contém informações sobre o poder Dom do Psicopompo."
+  },
+  "02267135d63341f4ab5c20c0cd7332a7": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção Xerife de Azgher, citando todas as etapas obrigatórias (missão de entrega, sonho, prova na sede, acompanhamento e oferenda) com precisão e sem alucinações."
+  },
+  "31ee3a5aeb0fd092b15bcc888224c116": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece todas as habilidades raciais solicitadas (visão no escuro, perícias, bônus de vida, pericia em armas) e o deslocamento correto de 6m, sem alterações por armadura."
+  },
+  "731c4c850d743f5669c90af1f0ffa36e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o deslocamento base (12m para iniciante, 15m para veterano/mestre) e o custo do cavalo comum (T$ 75) e do cavalo de guerra (T$ 400), além do custo das Ferraduras da Velocidade (+3m por T$ 3.000), atendendo plenamente à pergunta."
+  },
+  "c2449f2c477c6e78ec363a76beaae9a3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão (6d6 dano, raio 3m, custo T$ 50), mas não detalha efeitos adicionais ou variações específicas solicitadas."
+  },
+  "6db994a384de8d8e447804b40f963ddf": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece as informações completas e precisas sobre dano (6d6 fogo), área (esfera 6m de raio) e resistência (Reflexos reduz à metade) da magia Bola de Fogo."
+  },
+  "d26c19dcda340798e12f51901df3e73d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, além do comportamento ao final (queda suave)."
+  },
+  "726a17b4c2fab7eb66e4c91a00d77881": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio impede lançamentos de magias dentro da área por exigir palavras mágicas, e detalha os aprimoramentos que alteram essa regra (área menor e permissão de lançamentos com duração cena)."
+  },
+  "4c963a1dc81a4a4b581f31ddc910bf2a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de Dissipar Magia (teste de Misticismo, limitação de instantâneas) e cita o Campo Antimagia como exceção que não pode ser dissipado, atendendo à pergunta sobre o que não funciona."
+  },
+  "43245868d765c1a47e47c731b3c08192": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a criação de um construto de energia Pequeno, suas ações básicas (Mover, Atacar, Lançar Magia) e limitações como a imunidade a testes de Fortitude/Vontade e a necessidade de ordens para agir, atendendo à pergunta sobre o que cria e suas limitações."
+  },
+  "50d4afeda317550f3cfd0e6d5010384b": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado contém as informações exatas solicitadas (ND 1/4, Defesa 13, Tamanho Pequeno) para o Goblin Salteador na fonte correta."
+  },
+  "e67d5f4d83881f6448ccd10eb5d849b9": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), tipo (Morto-vivo) e Defesa (11) do Zumbi padrão de Tormenta 20, embora existam variantes como Turba Zumbi e Chacal-Zumbi com valores diferentes."
+  },
+  "f2cbede8708fc174fdfe75d21508b616": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas completas e precisas para o Lobo (ND 1/2, Defesa 14, PV 14), consistente entre as fontes 'Duelo de Dragões' e 'Tormenta20 - Jogo do Ano'."
+  },
+  "079f9ac82a7bed9c8ef92ed2ed93ad61": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado contém apenas o nome 'Hobgoblin' e descrição geral, mas não traz as estatísticas específicas (ND e Defesa) do Hobgoblin Soldado. A resposta do sistema (ND: 2, Defesa: 19) não está no contexto fornecido e parece ser de outra fonte."
+  },
+  "bcb85e6304ad8ea901d65d80759e947d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome da deusa, seu domínio (Vida), e o símbolo sagrado correto (lua crescente prateada), alinhando-se perfeitamente com a pergunta."
+  },
+  "62dffe9e0ced0e0b82f8966b9e569546": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Megalokk como o Deus dos Monstros e menciona que devotos canalizam energia negativa, mas não detalha explicitamente o tipo de energia específica nos poderes concedidos, focando mais em restrições e organização (Arautos do Destruidor)."
+  },
+  "501aaee860ffae886430b5f7ee3800ad": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado foca na Confraria Dourada e suas crenças sobre o ouro, mas não fornece informações sobre os domínios do deus Azgher nem seu símbolo sagrado específico, que são tópicos centrais da pergunta."
+  },
+  "d78b25f5afc95e5e6f0050beb47c354c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como o Deus da Ressurreição e da Profecia e seu símbolo sagrado como uma ave fênix, atendendo integralmente à pergunta."
+  },
+  "20537ba267b4845acb800352b9ea0764": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a raça Lefou como meios-demônios com modificadores de atributo, habilidades contra lefeu e Tormenta, e defeitos físicos que concedem bônus, correspondendo à pergunta."
+  },
+  "c4eae39474ab2af0476a994d8eb885f4": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (Tormenta20 - Jogo do Ano), incluindo perícias e poderes, embora o sistema tenha omitido o benefício 'Coração Heroico' listado no contexto."
+  },
+  "41e82c897ab69e1452d92c103e3ca2ab": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve apenas o item 'Peruca' e seus efeitos mecânicos, não as ofertas da origem Aristocrata como um todo."
+  },
+  "d436a4cba3f89e2a98aa03c2e1d5bbdc": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (penalidade –2 no ataque para +5 de dano em corpo a corpo) e seu pré-requisito For 1, correspondendo exatamente à pergunta."
+  },
+  "cd4fefbd074505373a7e03b1011c6b03": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' que concede imunidade a ser surpreendido, mas a resposta do sistema resume apenas o bônus de +2 em Defesa e Reflexos, omitindo a mecânica principal de imunidade a surpresa."
+  },
+  "7d2e51ce2cc2e1f67544535093a4afce": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Vitalidade como concedendo +1 PV por nível e +2 em Fortitude, correspondendo exatamente à pergunta."
+  },
+  "b3bedeae99b4943ac76e61c4e0129fd4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 10), dano (1d8) e crítico (x3) do Machado de Batalha padrão da edição Tormenta20 - Jogo do Ano, que são os dados solicitados."
+  },
+  "9ada2c00300b19d19200d65f5a8fd510": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a Defesa (6) e a penalidade de armadura (-2) da Cota de Malha da edição Tormenta20 - Jogo do Ano, além do preço (T$ 150), atendendo à pergunta principal."
+  },
+  "08d98b5f813f3e8c907a0daefeda5688": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a regra geral de escape de amarras com Acrobacia e as CDs específicas para redes e algemas, mas não menciona a CD para cordas baseada no teste de Destreza do oponente."
+  },
+  "1695e87d89d7377f558f6be09630ec63": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela de dinheiro inicial por nível (T$ 2.000 para nível 5), atendendo plenamente à pergunta."
+  },
+  "1110ea0ec380ed732e23efa34c34828a": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) para fechaduras simples, médias e superiores, respectivamente, conforme a perícia Ladinagem em Tormenta 20."
+  },
+  "48306fbb9e85e6f5232ac8ef2c46cb40": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto não contém regras específicas para a perícia Barganha, apenas menções a Diplomacia e negociações gerais."
+  },
+  "a2d1cb0e3ed88adc3c95217b8f1fdb45": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica básica de Intimidação para assustar, incluindo custo de ação padrão +1 PM, teste oposto de Vontade e efeitos de abalar/apavorar, embora não detalhe todas as nuances de uso em combate específico."
+  },
+  "a87a903f0115e0c0abcc81e095bb075c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o personagem enfeitiçado percebe as ações da fonte de forma favorável e não fica sob controle direto, concedendo +10 em Diplomacia."
+  },
+  "9f525d4c299ab8009e5be0f402f4e9cd": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que Petrificado causa imobilização (inconsciente) e redução de dano 8, correspondendo à pergunta."
+  },
+  "53ed296a62459fe2f1c4d6a230cc113c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito de ficar exausto e a progressão para inconsciente, mas não detalha as penalidades numéricas específicas (como redução de atributos ou testes) previstas nas regras oficiais."
+  },
+  "4bb538259a0fc9120bdbd0dcbda684d9": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a mecânica básica da condição Sangrando (teste de Constituição e perda de vida 1d6), mas omite variações importantes como acúmulos e efeitos de poderes específicos."
+  },
+  "71c54711c6be8f47d1be217b0d8f48ea": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cavalgar (exige sela) e a penalidade de –5 sem sela, respondendo integralmente à pergunta."
+  },
+  "94e791ee190fca6898f4c40da8d9a587": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as regras de apostas usando o poder 'Apostador', incluindo valores, CDs e consequências de sucesso/falha, alinhando-se à mecânica da perícia Jogatina."
+  },
+  "74596ba501783b879f30506406612988": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o mecanismo de evolução do autômato (iniciante → veterano → mestre) e concede benefícios específicos para cada fase, atendendo à pergunta sobre o parceiro Grifo."
+  },
+  "58d70e6f8ae76d213a05fe9d3248781b": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a regra geral de espaços (ex: 3m = 2x2 quadrados) e a tabela de Tamanho de Criaturas que define explicitamente o espaço Colossal como 9m, mas a resposta do sistema usa uma progressão geométrica (3m x 4 = 12m) que não está explicitamente definida no texto fornecido, resultando em u"
+  },
+  "c5bc5ef792994bae4f085b429f971b64": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito (+2 PM temporários) corretamente, sem alterações."
+  },
+  "b329014c9871239a86d14b5dca5a6f65": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do item, seus efeitos (+5 PV temporários), o preço (T$ 6) e os ingredientes, respondendo integralmente à pergunta do usuário."
+  },
+  "8bb08af3239735e8fcc19499ea7fede3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito mecânico da Batata Valkariana (+1d6 em teste até o fim do dia) e as instruções de lembreço, atendendo integralmente à pergunta."
+  },
+  "bcbcc3145845db66099c9e262c61c929": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os efeitos da Bomba de Fumaça: emite fumaça espessa com 6m de raio, obscurece visão, fornece camuflagem leve a 1,5m e camuflagem total a partir de 3m, e dura até o fim da cena."
+  },
+  "f6400efb18bb051158bf579b15819a64": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o Código de Honra como requisito para cavaleiros e suas perdas ao se tornar Cavaleiro Bandido ou Corvo, além do Código da Norma de Khalmyr com penalidade de perda de PM, respondendo integralmente à pergunta."
+  },
+  "19380f354bf82664db21abb74aec60dd": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve as funções da perícia Cura (tratamento, estabilização, exame) e as mecânicas dos Cuidados Prolongados (escolher 10, remover penalidade, bônus), respondendo à pergunta sem alucinações."
+  },
+  "1bc5d350607effdb2bc60938d84fb528": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas associações com círculos de magia e categorias de itens, além das penalidades de barreiras, respondendo integralmente à pergunta."
+  },
+  "205cfefccb4855679e718adba9ad28bb": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as penalidades da condição Caído: –5 na Defesa contra corpo a corpo, +5 na Defesa contra distância e –5 em ataques corpo a corpo, além do deslocamento reduzido a 1,5m."
+  },
+  "cd5551a37674d4722257a0f642448f02": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a condição Agarrado com penalidades e efeitos de movimento, embora não detalhe todas as mecânicas específicas de teste de resistência."
+  },
+  "a902b703f8ffbb24ca45c317df1a774f": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções e usos da perícia Furtividade (esconder-se, seguir alvo), atributo, penalidades e limitações, atendendo integralmente à pergunta sobre o que faz e quando é usada."
+  },
+  "ac079275673504cd20ba6297e5060582": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve explicitamente o custo de T$ 1.500 e 6 dias para aprender magia de 3º círculo pelo método do Escriba Arcano, atendendo à pergunta com precisão."
+  },
+  "cc299f88f55e698ece31a588ced1319f": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos, seu custo, alcance, efeito base (2d8+2 PV) e os principais aprimoramentos, atendendo integralmente à pergunta sobre o que a magia faz."
+  },
+  "4cb235187d2c19cf6e73bc3002151e01": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias e opcionais, além das proficiências de armas, armaduras e escudos da classe Cavaleiro, correspondendo fielmente ao material de base."
+  },
+  "386506b089a753a2468565cf56c457d3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 15) e o dano base (1d8) da Espada Longa padrão, atendendo à pergunta principal."
+  },
+  "1938d08b97afb0cb723271a555dad3fa": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores de ND (5), Defesa (25) e Deslocamento (9m/6q) do basilisco, embora contenha variações entre fontes (ND 4 vs 5, Defesa 23 vs 25)."
+  },
+  "4000c7d36dbb326c1d295426e247af39": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Hyninn como deus da trapaça e da esperteza e menciona o símbolo sagrado como 'uma adaga atravessando uma máscara, ou uma raposa', satisfazendo a pergunta sobre identidade e símbolo."
+  },
+  "edd5f119c5b78d9977a2f430e51db3ea": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os benefícios da origem Ladrão de Túmulos, incluindo treinamento em Ladinagem e Sobrevivência, bônus de +2 na Defesa e perícia contra mortos-vivos, além da redução de trevas 5."
+  },
+  "352a0abc2f6e39a93b1f907a306aaf1c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de teste oposto de ataque desarmado para anular um ataque, cobrindo os casos básicos e avançados (Defesa Desarmada I/II/III), embora não detalhe a regra genérica de testes de ataque contra Defesa em todos os cenários."
+  },
+  "aa9304335c033a33b5f1aa8702775278": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente os graus de dificuldade (Fácil a Quase Impossível) e suas respectivas CDs, alinhando-se às regras do Compendio T20."
+  },
+  "eb63cac3531a20a50ca1f5086a8ec4c2": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona categorias de tamanho e espaços quadrados em mapa, mas não lista os tamanhos oficiais (Minúsculo, Pequeno, Médio, etc.) nem suas medidas específicas em metros."
+  },
+  "ff58e48a63cb1ca802a678c11e49ab3f": {
+    "score": 1.0,
+    "aprovado": false,
+    "justificativa": "O contexto não contém o poder 'Dom do Psicopompo', apenas listando outros domínios como Dom da Imortalidade e Dom da Ressurreição, tornando a resposta inútil para a pergunta."
+  },
+  "c13783603d545e742e3c2484ccb4f68b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção, desde a missão de entrega de criminoso até a sagração final, com todas as etapas e requisitos corretos."
+  },
+  "a022ed7594cb239780678b0ef93f50d9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado descreve corretamente o deslocamento de 6m (não reduzido por armadura) e lista as principais habilidades raciais (visão no escuro, perícias, bônus de vida, perícia em armas e modificadores de atributo) do anão em Tormenta 20."
+  },
+  "e30bd28daa26dd3a0e02a48d2e62b670": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o deslocamento base do cavalo (12m para Iniciante, 15m para Veterano/Mestre) e os preços corretos (T$ 75 para Cavalo comum, T$ 400 para Cavalo de Guerra), atendendo integralmente à pergunta."
+  },
+  "e18b265a1078b482cfe86d29a33ba82f": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão com seus efeitos (6d6 dano, reflexos para reduzir) e preço (T$ 50), atendendo à pergunta de forma completa e correta."
+  },
+  "4763dfb2825fb59c216f6151f8f0b9a8": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os dados principais (dano 6d6, área 6m de raio, resistência Reflexos) corretamente, mas não menciona as variantes de aprimoramento que alteram esses valores."
+  },
+  "03de1273038721888be6788038f125d5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que a magia Voo concede deslocamento de voo 12m e duração de cena, com a mecânica de queda suave ao final, correspondendo exatamente à pergunta."
+  },
+  "fe17e7fbe45bd007500e31a047fcafdf": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio cria uma área onde criaturas ficam surdas e o lançamento de magias com palavras mágicas é impedido, atendendo integralmente à pergunta."
+  },
+  "04f8a2366683f546ed3129ba2c33a67c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica básica de Dissipar Magia e lista claramente o que não pode ser dissipado (efeitos instantâneos), além de citar limitações como o Globo de Invulnerabilidade, atendendo à pergunta de forma pertinente."
+  },
+  "ce6336896ffa5abf2c6ed2068ec8ac8b": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia, aparência e dano), atributos base, Ordens (Mover, Atacar, Lançar Magia) e todas as limitações (um por vez, necessidade de ação padrão, imunidades fixas, requisitos de círculo e sustentação)."
+  },
+  "8618fd0772ca9466563253b90abc2b9c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece todas as informações solicitadas (ND 1/4, Defesa 13 e tamanho Pequeno) de forma direta e precisa."
+  },
+  "69e75375d960616d7aeaa6a56bb4c809": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), tipo (Morto-vivo) e Defesa (11) do Zumbi padrão de Tormenta 20, embora o ND seja específico da edição 'Jogo do Ano'."
+  },
+  "6ae0d5413a3134288501bbe65a3eeb36": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas completas e corretas: ND 1/2, Defesa 14 e PV 14, correspondendo ao Lobo de Tormenta 20."
+  },
+  "e7d436c8c44b0c307086a40fa3ee94a6": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornece a Defesa (22) e o ND (Nível de Desafio implícito na classificação de ameaça), mas a resposta do sistema atribui valores incorretos (Defesa 19 e ND 2), não correspondendo aos dados oficiais do Hobgoblin Soldado/Atirador."
+  },
+  "baf37f5c4e0a80308bf3fdebc3d6058d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações completas sobre quem é a Deusa Lena (Deusa da Vida, cura, fertilidade) e seu símbolo sagrado (lua crescente prateada), com referências consistentes nas fontes consultadas."
+  },
+  "dc8eb434428d0d012f5c3a843f6dcfa2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a identidade de Megalokk como o Deus dos Monstros e descreve seus devotos como canalizadores de energia negativa, além de listar poderes e restrições específicas."
+  },
+  "0b8d329c7899d5d085154bdf15506274": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado foca na Confraria Dourada e suas práticas de roubo de ouro, mas não descreve os domínios concedidos nem o símbolo sagrado específico de Azgher, apenas aludindo ao Deus-Sol de forma geral."
+  },
+  "676659af7e28fa6e870c76128fc6614f": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como o Deus da Ressurreição e da Profecia e identifica o símbolo sagrado como a ave fênix, atendendo plenamente à pergunta."
+  },
+  "9cd1393238f8735696432cc4674d02e2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a raça Lefou como meios-demônios com características físicas grotescas, bônus raciais e resistência a lefeu, atendendo à pergunta sem alucinar."
+  },
+  "7f7d452cb3042eb4744135f9b141439f": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (perícias, poderes e poder de mana), embora o item 'traje de plebeu' não esteja na resposta do sistema."
+  },
+  "285f5e8d29422e61451f5abca70b43a8": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado trata apenas do item 'Peruca' e não aborda os benefícios ou características da origem Aristocrata."
+  },
+  "cda8c4520c29d9ee721e269f6e5596eb": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (mécanica de –2 no ataque para +5 de dano) e seu pré-requisito (For 1), correspondendo exatamente à pergunta."
+  },
+  "92920ac114baf7e35822e547d82e93df": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' como uma habilidade que impede o personagem de ficar surpreendido, mas a resposta do sistema fornece os benefícios mecânicos corretos (+2 Defesa e +2 Reflexos) alinhados ao pedido da pergunta."
+  },
+  "6b654dde126cadcb9de6165146837d39": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 10), dano (1d8) e crítico (x3) do Machado de Batalha padrão da edição Tormenta20 - Jogo do Ano, que corresponde à pergunta."
+  },
+  "152e53f942c7868bc22240d2371839fc": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as três informações solicitadas (dano 1d12, alcance Médio, preço T$ 50) com precisão e sem alucinações."
+  },
+  "6a2c51484fe71a200bd2139ee5a31da5": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores corretos de Defesa (+6), Penalidade (-2) e Preço (T$ 150) para a Cota de Malha do Tormenta20, atendendo à pergunta principal."
+  },
+  "04c23866ac67b2fed866750d2170831b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CDs específicas para cordas (Destreza do oponente +10), redes (20) e algemas (30), cobrindo a pergunta principal com precisão."
+  },
+  "0bf4041c4c4b44c5ccfc35274d1fca8b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a tabela de dinheiro inicial por nível (Nível 5: T$ 2.000), atendendo plenamente à pergunta."
+  },
+  "38f03ec76ff43c18a68668e9900caab5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) para fechaduras simples, médias e superiores, conforme a perícia Ladinagem, atendendo integralmente à pergunta."
+  },
+  "192e142fbcd4e28ea6f5d7afd98afe48": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve a perícia Diplomacia, mas não menciona regras específicas para 'Barganha' como subconjunto ou uso particular, apenas menciona a possibilidade de barganhar preços dentro dos usos gerais da perícia."
+  },
+  "d9305473629ae031a0066ac9e389c89c": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para assustar, incluindo teste oposto, efeitos de abalar/apavorar e custo de PM, atendendo plenamente à pergunta."
+  },
+  "0bd4249ebc1144ef9242452f54a4c60c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a condição Exausto e sua progressão para Inconsciente ao se repetir, atendendo à pergunta principal."
+  },
+  "65ae9df84af58624e641935fbe88f06f": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a regra básica de sangramento (teste de CD 15 e perda de 1d6 PV), mas omite variações importantes como acúmulo, efeitos de poderes específicos e interações com outras condições."
+  },
+  "a12811cf64c5eac3c71e915d25d0cf6d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que a perícia Cavalgar exige sela e impõe penalidade de –5 sem ela, conforme a seção de Ferramentas e a descrição da perícia."
+  },
+  "f8f247f96f4c937d748ce6827d2721b2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as regras oficiais do poder Apostador e a mecânica básica da perícia Jogatina, cobrindo os valores de aposta e as CD correspondentes de forma completa e pertinente."
+  },
+  "976af39ecb4ea3a866e26a1d23f3f93b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a informação correta de que uma criatura Colossal ocupa 9m de espaço (8x8 quadrados), conforme a tabela de Tamanho de Criaturas do Compendio T20."
+  },
+  "c3f3f81789f8872e67b8d1377e00b8b2": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito concedido (+2 PM temporários) corretamente."
+  },
+  "63e3a19b919a3ea8487a81e94aba92b6": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do item, seu efeito (+5 PV temporários) e o preço (T$ 6) de forma direta e completa."
+  },
+  "1bf06a5175e42e799ffe1d850f3af489": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que a Batata Valkariana concede +1d6 em um teste a escolha até o fim do dia."
+  },
+  "2d2cad3892f93487c9e93db6407b004a": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a Bomba de Fumaça como um preparado que emite fumaça espessa de 6m de raio, obscurecendo visão e concedendo camuflagem, atendendo à pergunta sobre seu uso principal."
+  },
+  "5f5fcfdba1c9cf5568d11fe26436c95f": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a perda da habilidade Código de Honra (Cavaleiro Bandido) e a perda temporária de PM + perda de título (Khalmyr), cobrindo as penalidades principais solicitadas."
+  },
+  "5494c2b67909f9a104bcde50c058be19": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos (maleta de medicamentos, penalidade sem ela) e as funções da perícia Cura, incluindo o mecanismo de Cuidados Prolongados (+1 PV por nível) e o limite de pessoas por nível."
+  },
+  "f4ab9c645d1bc970d3a3af781c7a21ba": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas relações com círculos de magia e itens, além das penalidades de barreiras."
+  },
+  "3ddbeace29467cda4b53f82fe379f3ea": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as penalidades da condição Caído: –5 na Defesa contra corpo a corpo, +5 na Defesa contra distância e –5 em ataques corpo a corpo, além do deslocamento reduzido a 1,5m."
+  },
+  "7b56fac2feb6c92e9a6964c560daaa63": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve a condição 'sangrando' e regras sobre manobra 'agarrar', mas não define a condição 'Agarrado' como estado de combate com seus efeitos específicos (imobilidade, penalidades de ataque, etc.)."
+  },
+  "293056e9518ee8626b9c921d8e8e8188": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções principais da perícia Furtividade (esconder-se e seguir alvos), seus atributos, penalidades e situações de uso, atendendo integralmente à pergunta."
+  },
+  "360e88a10f68a1a332441675bada5f28": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a ficha completa da magia Curar Ferimentos (tipo, círculo, execução, alcance, alvo, duração, resistência, descrição e todos os aprimoramentos), permitindo resposta integral e precisa."
+  },
+  "36a2833155933f742bdcf9a8b3f63477": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista corretamente as perícias obrigatórias (Fortitude e Luta) e opcionais, além das proficiências em armas marciais, armadura pesada e escudos, atendendo plenamente à pergunta."
+  },
+  "2a32ad84e55cdfc4fa15823d5dc328b1": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano correto (1d8) da Espada Longa padrão da Tormenta 20, conforme a fonte principal."
+  },
+  "599011d60452c19c0e629babda82aef6": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (5), Defesa (25) e Deslocamento (9m/6q) do basilisco, embora apareçam valores conflitantes entre as fontes (ND 4 vs 5, Defesa 23 vs 25)."
+  },
+  "0f9656b539e03c4b853e239f79ffac94": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do deus, suas áreas de influência e o símbolo sagrado (medalhão com símbolo de divindade), além de confirmar que Hyninn é o Deus da Trapaça e dos Ladrões."
+  },
+  "c7af713ec8b9a14264b54e5116c5d273": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os benefícios da origem Ladrão de Túmulos, incluindo treinamento em Ladinagem e Sobrevivência, bônus de Defesa e perícia contra mortos-vivos, e redução de trevas 5."
+  },
+  "8e6e0fa0cd7224835657be9e5e723476": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica o mecanismo de teste oposto de ataque desarmado e como vencer impede que o ataque vença a Defesa, cobrindo as regras principais solicitadas."
+  },
+  "05c4de0fac463effdd696c1ef3292ab5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a tabela de dificuldades (CDs) e as regras de testes comuns e opostos, atendendo plenamente à pergunta sobre graus de dificuldade."
+  },
+  "a0f1d661025dcb656ec741d2c9e537fc": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado menciona apenas o conceito de 'espaço ocupado pela criatura' e exemplos específicos (como o quadrado de 3m), mas não fornece a tabela completa de categorias de tamanho e seus respectivos espaços para todas as categorias (Minúsculo, Pequeno, Médio, Grande, etc.), sendo necessári"
+  },
+  "8043c2ea4cd1054d07ade45d41e5cf7e": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não menciona o poder Dom do Psicopompo em Tormenta 20, apenas em Dragão Brasil como poder de Morte."
+  },
+  "b2eeb13cf60d60f779efe753b1b5d0b7": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção, desde a missão de entrega de criminoso até a sagração final com o Sol Vigilante."
+  },
+  "139e627b7aae0166958700b7db674ba9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece todas as habilidades raciais solicitadas (visão no escuro, perícias, bônus de vida, pericia em armas) e o deslocamento correto (6m) com a devida explicação sobre redução de carga."
+  },
+  "5c6410c02cd9f25049fabc3b92dea805": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o deslocamento base (12m iniciante, 15m veterano/mestre) e o custo do cavalo comum (T$ 75) e das ferraduras (+3m por T$ 3.000), atendendo à pergunta sem alucinar."
+  },
+  "7a2abea0c438c1734df6b106a81c77a9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão com efeito de dano 6d6 e preço T$ 50, atendendo à pergunta sobre efeitos e preço principal."
+  },
+  "e9496be129ac968c65308d8bc3e73227": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado descreve corretamente o dano (6d6 fogo), a área (esfera 6m de raio) e a resistência (Reflexos reduz à metade) da magia Bola de Fogo, atendendo integralmente à pergunta."
+  },
+  "8a66be3a6fae851a61b5421dd9fde2bf": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, sem alterar as informações básicas."
+  },
+  "67b6b85d52b223ac7b63b047e2b14d64": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito principal do Silêncio: área de 6m raio, surdez total e interrupção de lançamentos que exigem palavras mágicas, além dos aprimoramentos +1 e +2 que alteram raio, duração e permitem lançamentos internos."
+  },
+  "bff953cc4ca728f20801049905a12129": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente o funcionamento de Dissipar Magia, suas limitações contra magias instantâneas e as interações com Globo de Invulnerabilidade, atendendo à pergunta sem alucinar."
+  },
+  "72bffb024fdc502232c854fec39b863c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a criação de um construto de energia com tipos de dano (corte, impacto, perfuração) e limitações claras (um por vez, inativo sem ordens, imunidade a Fortitude/Vontade)."
+  },
+  "0708c5c6cb0fafb7dab30fa819e88306": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece as informações corretas e completas: ND 1/4, Defesa 13 e Tamanho Pequeno para o Goblin Salteador, sem alucinações ou lacunas relevantes."
+  },
+  "f022503d972f2ca677df704f5e67f763": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), tipo (Morto-vivo) e Defesa (11) para o Zumbi padrão de Tormenta 20, embora existam variantes como Turba Zumbi e Zumbi Peçonha com valores ligeiramente diferentes."
+  },
+  "23eda12813d931a327eb2fdbf6ec4220": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas completas e corretas para o Lobo (ND 1/2, Defesa 14, PV 14) conforme o bestiário oficial Tormenta 20."
+  },
+  "e08fa12ae0c156277cdee1a692418ab5": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (5) e a Defesa (22) do Hobgoblin Atirador, que é o perfil mais detalhado disponível."
+  },
+  "2cd4a5cdaec04baac7785413f703dcfe": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações completas e precisas sobre Lena como Deusa da Vida e seu símbolo sagrado ser a lua crescente prateada, além das cores verde, amarelo e branco."
+  },
+  "4ea2d036d31f8ff736acf5f8cd7e7942": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Megalokk como o Deus dos Monstros e seus devotos como canalizadores de energia negativa alinhada com morte e destruição, o que responde integralmente à pergunta."
+  },
+  "e9bb99e9758d3d878838ae9d9f765528": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado foca na Confraria Dourada e suas crenças sobre o ouro, mas não descreve os domínios concedidos nem o símbolo sagrado específico de Azgher, apenas aludindo ao Deus-Sol de forma geral."
+  },
+  "0f7d1192f769e01139759e03ffc629b1": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como o Deus da Ressurreição e da Profecia, com o símbolo sagrado sendo uma ave fênix, conforme as fontes oficiais de Tormenta 20."
+  },
+  "1f0cf923cf1010b34a8cd472b85dd06c": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista as habilidades raciais principais do Hynne (dano aumentado com funda/arma de arremesso, tamanho Pequeno, bônus em Enganação, uso de Destreza em Atletismo e recuperação de PM em testes de resistência), cobrindo o essencial solicitado."
+  },
+  "24973fdb7e896bd4e313fcc3a230ea29": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a raça Lefou como meios-demônios com defeitos físicos e bônus raciais, correspondendo à resposta do sistema."
+  },
+  "3cc9135fabd4075e346da16558deee80": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (Tormenta 20), incluindo perícias, poderes e o poder único de mana, correspondendo à pergunta."
+  },
+  "97ea7627a7cc453efdfc54ed2313de1c": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve apenas o item 'Peruca' para personagens aristocratas, mas não explica os benefícios gerais da origem Aristocrata."
+  },
+  "73b69318a7dc504ac760089349fd16cb": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso com seu efeito (+5 dano em troca de –2 no teste de ataque) e o requisito (Força 1), atendendo plenamente à pergunta."
+  },
+  "9ca4f5dcc16834baf9a5576892aed620": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' como uma habilidade que impede surpresa, mas a resposta do sistema traduz corretamente o benefício mecânico de +2 em Defesa e Reflexos, que é o foco da pergunta."
+  },
+  "e009227c8f727b362321920fb22f1fdb": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente a Defesa (+6), a penalidade (-2) e o preço (T$ 150) da Cota de Malha, atendendo à pergunta sem alucinações."
+  },
+  "2787967e0a48c2032cbbbb6a53b49571": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CDs específicas para cordas, redes e algemas usando a perícia Acrobacia, cobrindo as principais situações de fuga."
+  },
+  "1b0f90ff2fbe105bdf934cf1b5565f3c": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a tabela de dinheiro inicial por nível (Nível 5: T$ 2.000), atendendo plenamente à pergunta."
+  },
+  "c8dd30ced30d5316cced15d2d964f3f9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente os valores de CD (20, 25 e 30) para fechaduras simples, médias e superiores, conforme a perícia Ladinagem em Tormenta 20, atendendo integralmente à pergunta."
+  },
+  "0761e9f65f71642bb0c6b50e22d0ca2a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as mecânicas principais de Intimidação para Assustar (Presença Aterradora), efeitos (abalado/apavorado), atributo (Car) e requisitos (treinamento), embora não detalhe todas as nuances do uso de coagir."
+  },
+  "06a4b43f37b13d4777f3efc272f2d43f": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente a progressão Exausto → Inconsciente e as mecânicas de acumulação, atendendo à pergunta sobre o efeito e a repetição da condição."
+  },
+  "c72ac62639f9cfcb0d911a3fffe44fc2": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornecido descreve apenas a condição básica de Sangrando (teste de CD 15, perda de 1d6 PV), mas ignora as mecânicas avançadas e variações presentes na base de Tormenta 20, como acúmulo, efeitos de poderes específicos (ex: Dragão Brasil, Heróis de Arton) e interações com outras condições."
+  },
+  "6a5be0eff747fd077a968f0967fe6a8d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cavalgar (atributo Des, não exige treinamento, não tem penalidade de armadura) e especifica explicitamente a penalidade de –5 sem sela."
+  },
+  "4fc3dcd04d8b0cb8dbddb5a2db083042": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as regras de apostas usando a perícia Jogatina, incluindo a mecânica de CD baseada no valor apostado e as consequências de sucesso/falha."
+  },
+  "b144660a81f08d16b213bb124ea437c7": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a informação correta de que uma criatura Colossal ocupa 9m de espaço (8x8 quadrados), conforme a tabela de Tamanho de Criaturas, atendendo à pergunta de forma precisa."
+  },
+  "1a6a1a159943696066b03087766daf1d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito (+2 PM temporários) corretamente, sem alterações."
+  },
+  "f1e0d70fdbf158264f5ee8335260ede7": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente o efeito (+5 PV temporários) e o preço (T$ 6) solicitados, sem alterar ou alucinar dados."
+  },
+  "fe6ca21771422ee56ec2aea912f6de32": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito da Batata Valkariana: bônus de +1d6 em teste escolhido até o fim do dia."
+  },
+  "7bf30260ab299ad1bf2c6b7a53dbcf65": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o uso e efeitos da Bomba de Fumaça (fumaça espessa 6m, visão obscurecida, camuflagem leve a 1,5m e total a 3m, duração até fim da cena), atendendo integralmente à pergunta sem alucinações."
+  },
+  "42c94a4311a1e03addc008ccb3907b2d": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o essencial sobre o Código de Honra e suas penalidades, citando o Código da Norma de Khalmyr e a perda de habilidades no Cavaleiro Bandido, mas omite detalhes da progressão por nível."
+  },
+  "ce503737e6fef8d8eb7325802dc2110c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos (maleta de medicamentos, teste de Sabedoria) e os efeitos da perícia Cura (aceleração de recuperação de PV em +1 por nível) e dos Cuidados Prolongados, sem alucinações."
+  },
+  "601f2c36fffd41f64c689167bd81eaa6": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as penalidades da condição Caído: –5 na Defesa contra corpo a corpo, +5 na Defesa contra distância e –5 em ataques corpo a corpo, além do deslocamento reduzido a 1,5m."
+  },
+  "746afda377ec81b84e5515b5a74e0f58": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a condição Agarrado com penalidades e mecânicas de combate, embora não detalhe todas as nuances de aplicação."
+  },
+  "227ec5d526616c59d3ef671e70cb57a5": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções principais da perícia Furtividade (esconder-se e seguir), atributo, penalidades e interações com poderes, atendendo integralmente à pergunta."
+  },
+  "02ac7d7d3f206587d30cf444d1e2abb6": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o custo de T$ 250 por PM e o cálculo de 6 PM para magia de 3º círculo, resultando em T$ 1.500 e 6 dias."
+  },
+  "36a1d030b56f28dbc79bb32a3a6b7949": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos com seus tipos, alcance, alvo, descrição base e todos os aprimoramentos disponíveis, atendendo integralmente à pergunta."
+  },
+  "bb48a08bacd964f9f6731a9c5ea57f6e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias e opcionais, além das proficiências de armas, armaduras e escudos da classe Cavaleiro, correspondendo fielmente ao conteúdo da base."
+  },
+  "5528a0b6b11109bde1cca5df6dd9e12d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base correto (1d8) da Espada Longa da fonte principal Tormenta20, atendendo à pergunta de forma precisa."
+  },
+  "052356c0789627d8c01aebc9dbbfa6fe": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores de ND (5), Defesa (25) e Deslocamento (9m/6q) do basilisco, embora haja uma discrepância entre as fontes (ND 4 vs 5, Defesa 23 vs 25). As informações são suficientes para responder à pergunta principal."
+  },
+  "b3c212e5f6aa8300aac78073500a4bea": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Hyninn como o deus da trapaça e dos ladrões, e o símbolo sagrado como um medalhão com a imagem de uma raposa ou adaga atravessando uma máscara, conforme as fontes de equipamentos e deuses."
+  },
+  "1e875e7b3b23a637c26049ff75e32de5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os benefícios da origem Ladrão de Túmulos, incluindo treinamento em Ladinagem e Sobrevivência, bônus de Defesa e perícia contra mortos-vivos, e redução de trevas 5."
+  },
+  "5993d589bb08424ca42e3106237e3eb7": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica geral de teste de ataque vs Defesa em Tormenta 20, mas não detalha especificamente como funciona o teste oposto de ataque desarmado descrito nos poderes Dragão Brasil."
+  },
+  "88286a2b2e9e632b65254a9cda7aa327": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os graus de dificuldade (Fácil a Quase Impossível) com seus respectivos valores de CD e exemplos práticos, atendendo integralmente à pergunta sobre como funcionam os graus de dificuldade de testes em Tormenta 20."
+  },
+  "058754ad25b3d3cb579ce4bae7160f45": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a definição numérica do espaço ocupado por criaturas (ex: '3m' = 2x2 quadrados), mas não lista todas as categorias de tamanho de forma sistemática."
+  },
+  "42d1f717c5fa410cf6873c9113dde123": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "O contexto não contém informações sobre o poder Dom do Psicopompo, apenas listando outros domínios como Imortalidade e Ressurreição."
+  },
+  "b10e3a5c373b91e87e4d5d665e7ad963": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção Xerife de Azgher, citando todas as etapas obrigatórias (missão de entrega de criminoso, sonho direcional, prova na sede, acompanhamento de caso e oferenda) com precisão e sem alucinações."
+  },
+  "11ca0f0a3be80ac78100058fc4b3210e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece todas as habilidades raciais solicitadas (visão no escuro, perícias, bônus de vida, pericia em armas) e o deslocamento correto (6m) com a devida restrição de armadura/ carga."
+  },
+  "bcb5ab7785446978d6ed0501e20db931": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o deslocamento base (12m para iniciante, 15m para veterano/mestre) e o custo do cavalo comum (T$ 75), além de mencionar ferraduras que aumentam o deslocamento em +3m por T$ 3.000, atendendo à pergunta de forma completa e precisa."
+  },
+  "d2c030dad093169ce8e738c858d104fb": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão com efeito de dano 6d6 e preço T$ 50, atendendo à pergunta sobre efeitos e preço, embora não detalhe outras variantes."
+  },
+  "c6cc5156c19e8ea661292c4a6e49af09": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, sem alterar as mecânicas básicas."
+  },
+  "c75c0b284f469e05556e7e412b07e952": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio cria uma área onde 'nenhuma magia pode ser lançada' devido à exigência de palavras mágicas, e especifica surdez e ausência de som, atendendo à pergunta sem alucinações."
+  },
+  "d783cf71d813b7c0be94964fbac035c9": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica as regras básicas de Dissipar Magia e a limitação principal (magias instantâneas), mas omite detalhes sobre o Globo de Invulnerabilidade e a mecânica de teste de Misticismo contra CD, que são partes importantes da regra completa."
+  },
+  "9d1c3a98df9517d68fd85c32ce494c28": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a criação de um construto energético com limitações claras (um por vez, desaparece ao fim, não age sem ordens) e as mecânicas de ataque e aprimoramentos, atendendo integralmente à pergunta."
+  },
+  "8be8d14e16a88478aaece3bec3296e3a": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado contém as informações exatas solicitadas (ND 1/4, Defesa 13, Tamanho Pequeno) diretamente da entrada do Goblin Salteador em Tormenta 20."
+  },
+  "0f891d6e787ea03258125eed13eeca26": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), o tipo (Morto-vivo) e a Defesa base (11) do zumbi, além da Defesa especial 21 para acertos críticos/ataques ao cérebro."
+  },
+  "8f44cfbca4fe89d9132681abc7c28e22": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas corretas (ND 1/2, Defesa 14, PV 14) e detalhes derivados consistentes com o sistema Tormenta 20."
+  },
+  "b2956d38effb6bdaa616c3f8bacbacc8": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornecido não contém as estatísticas (ND e Defesa) específicas para um Hobgoblin Soldado, apenas descrições gerais e dados de outros tipos de hobgoblins."
+  },
+  "6ba7fa021d99bb4aad2481a61977f441": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Lena como Deusa da Vida, suas restrições de não causar dano e o símbolo da lua prateada, atendendo à pergunta sem alucinações."
+  },
+  "a60363c213819d69ea03f69111422065": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que devotos de Megalokk canalizam energia negativa, causando dano a criaturas vivas e curando mortos-vivos, alinhando-se com as mecânicas de Tormenta 20."
+  },
+  "858ad382680a208dc1c221cde6cae68b": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado foca na Confraria Dourada e não fornece informações sobre os domínios ou o símbolo sagrado específico do deus Azgher."
+  },
+  "e67b78728c7ba52ff8e9037f154aee27": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como Deus da Ressurreição e da Profecia e seu símbolo sagrado como uma ave fênix, atendendo integralmente à pergunta."
+  },
+  "7e1da7b22fcfd104ddeb9eb7adb9386e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro habilidades raciais principais do povo Hynne: aumento de dano com funda/arma de arremesso, tamanho Pequeno/deslocamento 6m, bônus de +2 em Enganação e uso de Destreza em Atletismo, além da possibilidade de gastar 1 PM para rerolar testes de resistência."
+  },
+  "ff6a7ff21e39ae94535be42dfc4a5797": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (Tormenta 20), incluindo perícias, poderes e o poder único de mana, correspondendo à pergunta sobre benefícios."
+  },
+  "7444e34959464b8dcb7748c3e81297e0": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve apenas o item 'Peruca' e seus efeitos mecânicos, não abordando os benefícios ou características da origem Aristocrata como um todo."
+  },
+  "e354a357255e3d2df7101c9b7574e6ff": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (requisito For 1, penalidade –2 no ataque para +5 de dano em corpo a corpo) e seu pré-requisito, além de mencionar a variação Ataque Poderoso II."
+  },
+  "7eb3f79b7920d0be49207fb3fb23ef8e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' como uma habilidade que impede o personagem de ficar surpreendido, mas a resposta do sistema traduz corretamente os benefícios mecânicos (+2 Defesa e +2 Reflexos) esperados para o poder Esquiva em Tormenta 20."
+  },
+  "292c978344a47537b52b04af8f3e2e13": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "Contexto fornece dano (1d12), alcance (Médio) e preço (T$ 50) da Besta Pesada de forma direta e completa."
+  },
+  "e2ede8ceed9ae51b339a9e4d5c3eb33e": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a defesa (6), a penalidade (-2) e o preço (T$ 150) da Cota de Malha da edição Tormenta20 - Jogo do Ano, atendendo à pergunta."
+  },
+  "d207951552cb19a56a375ac3f8629bef": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD específicas para cordas, redes e algemas, cobrindo as principais situações de amarração."
+  },
+  "2f5cb60fe1c8199c266c1de4eec79051": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a tabela de dinheiro inicial por nível, indicando T$ 2.000 para nível 5."
+  },
+  "37d1f0333e23960c36f8eb884cfc937d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) para fechaduras simples, médias e superiores conforme a perícia Ladinagem, além das regras de ação e gazua."
+  },
+  "46713a562aaa92d32a9fd8a78c4e990b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para Assustar, incluindo custo de ação padrão + 1 PM, teste oposto e efeitos de abalado/apavorado, embora não mencione explicitamente o requisito de treinamento como condição geral."
+  },
+  "0a42885bebb0941b3d8abe57f8b4a602": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto define corretamente a progressão Exausto como substituição imediata ao ficar fatigado novamente, e ao ficar exausto novamente o personagem torna-se inconsciente, conforme as regras de acumulação de condições."
+  },
+  "64466106efa5869d57e277a3236f3e51": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a definição base da condição Sangrando (teste de Constituição CD 15, perda de 1d6 PV no início do turno), que é suficiente para responder à pergunta sobre como funciona."
+  },
+  "8603691676c1805fb2bb3bf16b1b5b70": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve claramente que a perícia Cavalgar exige sela e impõe –5 sem ela, além de listar ações automáticas e testes para ações perigosas."
+  },
+  "553aa64ec643534d86d956bfcd62d999": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as regras completas da perícia Jogatina e do poder Apostador, cobrindo mecânicas de aposta, valores e CDs, satisfazendo a pergunta."
+  },
+  "b9d29da52b08ea68db2353ac312f7c03": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o autômato como parceiro que evolui dos níveis iniciante (7º) para veterano (11º) e mestre (15º), mas não detalha os benefícios específicos por nível para o 'parceiro Grifo'. A resposta do sistema preenche essa lacuna com benefícios consistentes com o tema, mas extrapola além do "
+  },
+  "65a6b15ea884647147e10767f40467a9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a informação correta de que uma criatura Colossal ocupa 9m de espaço (8x8 quadrados), conforme a tabela de Tamanho de Criaturas do Compendio T20."
+  },
+  "bf8fd8316d514350effff3c7d9f6e7e5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito concedido (+2 PM temporários) de forma completa e precisa."
+  },
+  "932dd37bcd545ff23b56d8fda3372c8d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente o efeito (+5 PV temporários) e o preço (T$ 6) solicitados, sem alucinações."
+  },
+  "e00899fe926de7f43be3152ac45f4a67": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito da Batata Valkariana: bônus de +1d6 em teste escolhido até o fim do dia."
+  },
+  "a902393d3d6f8452a5cfb0b50f96dea3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito da bomba de fumaça (fumaça espessa 6m, obscurece visão, camuflagem e duração até fim da cena), atendendo à pergunta sobre sua utilidade."
+  },
+  "fb20d9d3ba5891bc6e15d0687e2d7032": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o essencial sobre o Código de Honra e suas penalidades, citando a perda da habilidade para cavaleiros bandidos e o Código da Norma para cavaleiros de Khalmyr, mas deixa lacunas sobre penalidades específicas para outras ordens."
+  },
+  "f39c835c72d38f2cda49fa4c2f796051": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as exigências da perícia Cura (maleta de medicamentos, atributo Sab, penalidade sem ferramenta) e explica o mecanismo de Cuidados Prolongados (recuperação de PV por nível do curandeiro + mod Sab por hora), embora a fórmula de cálculo apresentada no sistema não esteja explicitamente "
+  },
+  "e24bde5449a9792331f272c36e4844af": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas fontes (círculos da magia e categorias de itens), além das penalidades de barreiras, atendendo plenamente à pergunta."
+  },
+  "84315782b66c079f01fcbe691cadae31": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve a condição 'Agarrado' de forma genérica e incompleta, focando apenas em modificadores de teste e movimento, sem detalhar a mecânica específica de como a condição é aplicada ou removida durante o combate."
+  },
+  "477c4c6152c85537de92e909d23016b8": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções e usos da perícia Furtividade, incluindo testes opostos, penalidades de movimento e ataque, e quando esconder-se é permitido, atendendo integralmente à pergunta."
+  },
+  "221d844798e3ddd01aadff1221bab2ae": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve explicitamente o custo de T$ 250 por PM e o cálculo correto para uma magia de 3º círculo (6 PM), totalizando T$ 1.500, além de especificar 6 dias de trabalho."
+  },
+  "ae326e667a70ba428f1d2a0cda5397fd": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos, seu custo em PM, alcance, alvo e os aprimoramentos disponíveis, atendendo plenamente à pergunta."
+  },
+  "44eb8cf9b96af22d35c6ec045c8385e9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista todas as perícias obrigatórias e opcionais, além das proficiências em armas marciais, armaduras pesadas e escudos, correspondendo exatamente à pergunta."
+  },
+  "ea89d705dfec8bb8c9e4b872b0a917d1": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base (1d8) da Espada Longa da fonte principal Tormenta20, atendendo à pergunta de forma completa e precisa."
+  },
+  "8059f7ac4650dfbb6d2a3cfbc76f1946": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (5), defesa (23 ou 25 dependendo da fonte) e deslocamento (9m/6q) do basilisco, cobrindo as informações essenciais solicitadas."
+  },
+  "8d128cd24b57a8ba4c673f45b3f374e7": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do símbolo sagrado ('uma adaga atravessando uma máscara, ou uma raposa') e a mecânica de uso, respondendo corretamente à pergunta sem alucinações."
+  },
+  "45f8f541f27dde5a5287be167c636417": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o benefício de +2 na Defesa e treinamento em Ladinagem e Sobrevivência para a origem Ladrão de Túmulos."
+  },
+  "d34fa41a74665579b395af76d7c204fa": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica o teste oposto de ataque desarmado como mecanismo para anular ataques, cobrindo os casos básicos e avançados (I, II, III), mas não detalha a regra geral de teste de ataque contra Defesa em situações não-desarmadas."
+  },
+  "243d68127fecb5c2d171060365cee11a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a tabela de dificuldades (CDs de 5 a 40) e exemplos de aplicação, cobrindo o essencial para responder à pergunta sobre como funcionam os graus de dificuldade."
+  },
+  "9a7dd193257b6059005609d02124ea51": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona espaços de criaturas (ex: '3m' = 2x2 quadrados) e dá exemplos de criaturas Médias e Enormes, mas não fornece a lista completa de categorias de tamanho e seus respectivos espaços ocupados, que é o que a pergunta pede."
+  },
+  "3eb8327f70b6b3c763eeb25cd1a01b98": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não serve: não há menção ao poder Dom do Psicopompo nos textos recuperados."
+  },
+  "b0e205b0c5e321a1f46ad526c9c08896": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção, desde a missão de entrega de criminoso até a sagração final com o Sol Vigilante."
+  },
+  "ca012fb79938d93c0add7c5660c0f9a3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece todas as habilidades raciais solicitadas (visão no escuro, perícias, bônus de vida, pericia em armas) e o deslocamento correto (6m) com a devida explicação sobre redução de carga."
+  },
+  "b4def3e7bbf76ebdeaa671fbd9a13fac": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o deslocamento do cavalo (12m para Iniciante, 15m para Veterano/Mestre) e o custo padrão de T$ 75 para o Cavalo comum, atendendo à pergunta de forma completa e precisa."
+  },
+  "457b52aa1bece43fe0da3292699008e9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão com efeito de dano 6d6 e preço T$ 50, além de citar regras de uso e PM, atendendo à pergunta sobre efeitos e preço."
+  },
+  "e7f647060a957c9bd6a46f5a3c853dd2": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os dados completos e precisos sobre dano (6d6 fogo), área (esfera 6m de raio) e resistência (Reflexos reduz à metade) da magia Bola de Fogo, além dos aprimoramentos opcionais."
+  },
+  "d9ecc0d905e9fe946a0b79b2d9a4037d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, sem alterar ou alucinar informações."
+  },
+  "26a9f94eb820cfdd3c96989ac3c232f3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio cria uma área onde nenhuma magia com palavras mágicas pode ser lançada e todas as criaturas ficam surdas, atendendo integralmente à pergunta."
+  },
+  "ecc71edc289dc2fef4147bcbbc4f6158": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica o funcionamento básico de Dissipar Magia (teste de Misticismo contra CD da magia) e cita a limitação de magias instantâneas, além de mencionar o Campo Antimagia como exceção que não pode ser dissipado."
+  },
+  "1c50d7ec874c04b43161c49a09580647": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia com dano escolhido), as estatísticas base, as ordens disponíveis e todas as limitações (um monstro por vez, necessidade de ordens, imunidade a Fortitude/Vontade) da magia Conjurar Monstro."
+  },
+  "d8d088219a0b0f63ee480e33da76b5b7": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado contém as informações exatas solicitadas (ND 1/4, Defesa 13, Tamanho Pequeno) diretamente da entrada do Goblin Salteador em Tormenta 20."
+  },
+  "0845a557647293b2eb9c9693f9d98240": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as três informações solicitadas (ND 1/4, tipo Morto-vivo e Defesa 11) de forma clara e direta no bloco estatístico do Zumbi."
+  },
+  "43bf53505b6e5904b9dacac096aeb886": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas corretas (ND 1/2, Defesa 14, PV 14) para o Lobo de Tormenta 20, cobrindo os itens solicitados."
+  },
+  "4e436ab1690397bdc85b5a9c4088ca96": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornecido não contém as informações de ND e Defesa para o Hobgoblin Soldado, apenas dados gerais da raça e do Hobgoblin Atirador/Comandante."
+  },
+  "d2c48ef02a34e33ddd6cae8fdce771e6": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Lena como Deusa da Vida, suas restrições e o símbolo sagrado como lua prateada, atendendo à pergunta sem alucinações."
+  },
+  "f4ff48b29142ae306a6828ff5d574174": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Megalokk como o Deus dos Monstros e detalha que seus devotos canalizam energia negativa, com mecânicas específicas de dano e cura em mortos-vivos, além de restrições de conduta."
+  },
+  "7156023d312b11835a1fde2149bc1ec5": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "Contexto cobre domínio (Luz e Justiça) e símbolo sagrado (medalhão +1 resistência) de Azgher com precisão, citando áreas de influência, cores, poderes concedidos e obrigações específicas."
+  },
+  "c48090dd892a977ef74666c1e01e544e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como o Deus da Ressurreição e da Profecia e seu símbolo sagrado como uma ave fênix, respondendo integralmente à pergunta."
+  },
+  "2b5bcde331aa3077b121fe813bdd9dd9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a raça Lefou como meios-demônios com características físicas grotescas e poderes relacionados à Tormenta, atendendo à pergunta sobre o que é a raça."
+  },
+  "1b0844801a3c7945271dccf079c6037e": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (Adestramento, Ofício, Coração Heroico, Sortudo, Surto Heroico, Torcida e +3 PM por patamar), atendendo à pergunta sobre os benefícios da origem."
+  },
+  "bced81d330b690707cf14f583073e0fd": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve apenas o item 'Peruca' para personagens com Carisma menor que 0, não abordando os benefícios gerais da origem Aristocrata."
+  },
+  "04cda26bf9b2d02163d47c8b5fa91ade": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (mécanica de –2 no ataque para +5 de dano em corpo a corpo) e seu pré-requisito (For 1), correspondendo exatamente à pergunta."
+  },
+  "a3a8373c15732e7e6adb4c03da849d3a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' como uma habilidade que impede o personagem de ficar surpreendido, mas a resposta do sistema traduz corretamente os benefícios mecânicos (+2 Defesa e +2 Reflexos) alinhados ao conteúdo oficial de Tormenta20."
+  },
+  "18fa58ce20b9c994b52548a44e7a9fc0": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "Contexto fornece os três dados solicitados (dano 1d12, alcance Médio, preço T$ 50) com precisão e sem alucinações."
+  },
+  "afded39e68d2e38a710e0595f6816dc5": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a Defesa (6), a penalidade de armadura (-2) e o preço (T$ 150) da Cota de malha da edição Tormenta20 - Jogo do Ano, atendendo à pergunta."
+  },
+  "1e2ade1fd638c31c0f629d8070fd59f3": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a regra exata de Acrobacia para escapar de amarras, com CDs para cordas, redes e algemas, e a resposta reproduz fielmente essa informação."
+  },
+  "9be6068968502d52b4285c73ac9cb98d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela de dinheiro inicial por nível, indicando T$ 2.000 para nível 5."
+  },
+  "5e1853beed82abd5e8896ba52ce1520d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD corretas (20, 25, 30) para fechaduras simples, médias e superiores, além dos requisitos e penalidades exigidos."
+  },
+  "83bd8d06cac32cca088494e3c496a345": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve a perícia Diplomacia e seus usos (incluindo negociação de preços), mas não menciona uma perícia específica chamada 'Barganha'. A resposta do sistema está correta ao informar que não há regras para essa perícia específica no material fornecido."
+  },
+  "81847e4000a56bd5d77a138df2f3e42e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para Assustar, incluindo teste oposto, efeitos de abalado/apavorado e custo de 1 PM + ação padrão."
+  },
+  "39a75bd6f8c1bfffcc858285cb87f085": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente o efeito da condição Exausto e a mecânica de acumulação (fatigado → exausto → inconsciente), atendendo à pergunta sobre o que faz e o que acontece se repetir."
+  },
+  "85d391447e475b4e966e0294dba8f074": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a regra básica da condição Sangrando (teste de Constituição CD 15 e perda de 1d6 PV), mas omite detalhes importantes como acúmulo, efeitos de poderes específicos e interações com outras condições."
+  },
+  "5ba67369f03394a78cde21e977b41503": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cavalgar (atributo Des, não exige treinamento, não tem penalidade de armadura) e especifica explicitamente a penalidade de –5 sem sela, conforme a descrição da perícia e a ferramenta Sela."
+  },
+  "839e94a3989e2c454bcba85cc1e8b651": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve as regras completas do poder Apostador, incluindo valores de aposta, CDs e consequências de sucesso/falha, atendendo integralmente à pergunta sobre como apostar na perícia Jogatina."
+  },
+  "7c6fa7056c2f576229ce6393a0dc2ce4": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona o espaço de Colossal como 9m, mas a resposta do sistema afirma ser 12m (4x4 quadrados), contradizendo a nota oficial que define espaço como 3m x 3m (2x2 quadrados) e não especifica multiplicador para Colossal."
+  },
+  "c7653c91f5077c3a373e3e2c858b5cc1": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito (+2 PM temporários) corretamente, sem alterações."
+  },
+  "97832a1becbe3db4603a154e2a1cc83d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre os efeitos principais (fumaça de 6m, visão obscurecida, camuflagem e duração) e as mecânicas de uso, embora o preço e as regras de preparação variem entre as fontes."
+  },
+  "db7123d25df1e29f6762b739f192603b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o essencial sobre o Código de Honra (obrigações e penalidade de perda de PM) e a mecânica de se tornar Cavaleiro Bandido, mas não detalha a cerimônia completa ou todas as restrições adicionais."
+  },
+  "463dc3ae9fe405923b8c4a0f95d6fae3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções da perícia Cura (tratamento, estabilização, exame) e o mecanismo dos Cuidados Prolongados como recuperação de PV baseada no tempo e sucesso do teste, alinhando-se à pergunta."
+  },
+  "97bb8881890d9188fbb135cb87d31e38": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas fontes (círculos de magia e categorias de itens), além das penalidades por barreiras, atendendo plenamente à pergunta."
+  },
+  "a9a444d65fe039965317a82cf31f0920": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações completas sobre alimentos (+1 em perícias com Mestre Cuca) e poções (qualquer círculo com Mestre Alquimista), mas não especifica raças ideais para Inventor."
+  },
+  "75552aae208c4646f4fc288f7b5e2b43": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as perícias obrigatórias (Ofício e Vontade) e explica a mecânica de fabricação via Ofício (alquimista), mas não detalha explicitamente os atributos 'mais importantes' além da inteligência como base para perícias treinadas."
+  },
+  "6c5582d4b9296e6956424ae1fb2c7939": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a área de efeito (1 criatura) e a duração (cena), além da consequência específica se o alvo ficar Caído durante o voo (cai e sofre dano por queda)."
+  },
+  "e291ca1e61bab98fd6d4922210388b41": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado descreve corretamente a área de efeito (cubo 6m de lado) e a mecânica de escape (teste de Reflexos para evitar o efeito, com liberdade de usar Acrobacia/Atletismo para se libertar), atendendo à pergunta sem alucinar."
+  },
+  "644d8e18fa77a27131098b8e0dd74aca": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as perícias (Atuação e Luta), o poder de combate (dano não letal) e os itens iniciais (arma marcial/exótica e item sem valor), atendendo à pergunta de forma completa e precisa."
+  },
+  "bf83f90b8324f2ee5876d08e8bc42b58": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Fortitude, Guerra, Luta, Pontaria), o poder de combate (Influência Militar + escolha do jogador) e os equipamentos iniciais (arma marcial, uniforme militar, insígnia) da origem Soldado."
+  },
+  "47a497fefb5ab7698724f9cdd720f3a6": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 50), o efeito (recupera 1d4 PM) e o tipo (poção preparada), mas não detalha outras poções que um Inventor pode preparar."
+  },
+  "a6b33808a14730cd025588757db9ade9": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a mecânica da condição Agarrado (penalidades de ataque, armas permitidas e chance de erro em ataques à distância) e a interação com a condição Desprevenido, respondendo à pergunta sobre como funciona durante o combate."
+  },
+  "1fb12fe5ebc5cbb5842abce2c34b3080": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções principais da perícia Furtividade (testes opostos, esconder-se, seguir) e suas condições de uso, atendendo plenamente à pergunta."
+  },
+  "8deb616b86aa136865d894cfbf9209fa": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve explicitamente o custo e o tempo para aprender magia de 3º círculo pelo método do Escriba Arcano: 6 dias e T$ 1.500, correspondendo ao cálculo de 6 PM × T$ 250."
+  },
+  "0d3175a84f3dd6d1e2d550d772344316": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos, seu tipo, círculo, alcance, alvo, duração e efeito base de 2d8+2 PV, além de listar todos os aprimoramentos disponíveis."
+  },
+  "4c58e13a74a385f0d90c61f0e99e4795": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias (Fortitude e Luta), as opcionais com limite de 2, e as proficiências em armas marciais, armaduras pesadas e escudos, correspondendo exatamente à pergunta."
+  },
+  "e59d566602f972319e7b6da2ab951a06": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base (1d8) da Espada Longa padrão, que atendem à pergunta."
+  },
+  "4edb8384a8a88a98a097dafaf31f1eea": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (5), Defesa (25) e Deslocamento (9m/6q) do basilisco, embora existam duas fontes com valores ligeiramente diferentes (ND 4 vs 5, Defesa 23 vs 25)."
+  },
+  "6fe89eed43d1dfc0fd7481b501a79bd3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do deus, suas áreas de influência e o símbolo sagrado (adaga atravessando uma máscara ou raposa), respondendo à pergunta de forma completa e precisa."
+  },
+  "413c3430585e2263c99cf0af41fcd9e3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o benefício de +2 na Defesa e perícia contra mortos-vivos, além da redução de trevas 5, correspondendo exatamente ao pedido da pergunta."
+  },
+  "d9feb8b0084abaaff729892ac7eb6857": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de teste de ataque contra Defesa em Tormenta 20, cobrindo a rolagem de 1d20 + modificador e comparação com a Defesa do alvo, embora não detalhe especificamente testes opostos como nas regras de Defesa Desarmada."
+  },
+  "549c2cc73e0fb25b8966d8372a6577f2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela completa de graus de dificuldade com CDs fixas e exemplos práticos, cobrindo o essencial da pergunta sobre como funcionam os graus em T20."
+  },
+  "a8097cf529baac66936a8ea920bec0d6": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto define o conceito de espaço ocupado por criatura (ex: '3m' = 2x2 quadrados) e fornece referências de tamanho (Pequeno, Médio, Grande), mas não lista todas as categorias de tamanho com seus espaços ocupados de forma completa."
+  },
+  "0fa4d1aa8feea22f38cc45b18f74d309": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "O contexto não contém informações sobre o poder Dom do Psicopompo, apenas listando outras categorias de poderes sem o conteúdo solicitado."
+  },
+  "8f717373a5f6c7d27ff08810e99b37d3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção, desde a missão de entrega de criminoso até a sagração final com o Sol Vigilante."
+  },
+  "aac33b3665ee80bc37966f13407a6754": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as informações corretas sobre o deslocamento (6m, não reduzido por armadura) e as principais habilidades raciais (visão no escuro, perícias, armas e bônus de vida), embora o texto original contenha mais detalhes."
+  },
+  "d6254758e79052a1ebb4b930ddc16a93": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o deslocamento base (12m para Iniciante, 15m para Veterano/Mestre) e os custos do cavalo comum (T$ 75) e cavalo de guerra (T$ 400), além das Ferraduras da Velocidade (+3m por T$ 3.000), atendendo plenamente à pergunta."
+  },
+  "3db1de31bb2bbfc714bb35e55396f05c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o efeito da Bomba de Tinta (álcali) e o preço de T$ 35, mas não descreve o efeito padrão da bomba de impacto de 6d6 dano encontrado no livro base, cobrindo o essencial com pequena lacuna."
+  },
+  "7338fd901427ad193c947ab921ab69b0": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, além de listar os aprimoramentos disponíveis."
+  },
+  "f65c225f48ffeb652de98441f702afa9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito principal da magia Silêncio: cria uma área de 6m de raio onde não há som e as criaturas ficam surdas, impedindo o lançamento de magias que exigem palavras mágicas."
+  },
+  "2b901d669aa652596264499e1a8a4ae0": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de Dissipar Magia e lista claramente as limitações (magias instantâneas, Campo Antimagia), atendendo à pergunta sobre o que ela não consegue dissipar."
+  },
+  "cf9d19812a93d10f63cffafcefe6bd4e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia Pequeno), tipos de dano (corte/impacto/perfuração) e limitações (único monstro, dependência de ordens, imunidade a Fort/Vontade, fim da magia)."
+  },
+  "1af029e77261cc05dccd44097921e634": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece as informações exatas solicitadas (ND 1/4, Defesa 13, Tamanho Pequeno) sem alucinações ou lacunas."
+  },
+  "dfe9019764b1fcc1ed3a5104e967977e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas corretas (Defesa 14, PV 14) e o ND como 1/2, embora o ND não seja estatística de combate direta."
+  },
+  "308aa1f2e649e155276477ac12655ada": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Lena como Deusa da Vida, suas cores (verde, amarelo, branco) e o símbolo sagrado como lua prateada, atendendo à pergunta sem alucinar."
+  },
+  "a5359cb74fa05a0d21cc0a3c723c6657": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Megalokk como o Deus dos Monstros e detalha que seus devotos canalizam energia negativa, com mecânicas específicas de dano e cura em mortos-vivos, além de restrições de conduta."
+  },
+  "89dbec39daafc38390ade2c9bf604d6f": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve a Confraria Dourada e a devoção a Azgher focada em ouro, mas não define domínios ou símbolo sagrado do deus; a resposta do sistema impõe domínios de Luz e Justiça e símbolo de Espada/Balança que não correspondem ao texto fornecido."
+  },
+  "0d0d1219c9a923d6614ec26303f25cc9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como Deus da Ressurreição e da Profecia e seu símbolo sagrado como uma ave fênix, atendendo plenamente à pergunta."
+  },
+  "c947688dc11d871c8dbf452b6eb2b63a": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente todas as habilidades raciais principais do povo Hynne: dano aumentado com funda/arma de arremesso, tamanho Pequeno e deslocamento 6m, bonificação em Enganação e uso de Destreza em Atletismo, além da capacidade de rerolar testes de resistência gastando PM."
+  },
+  "be759f24cc017e3e13999bbbae957a2e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto apresenta a raça Lefou com suas características principais (atributos, habilidades raciais e descrição), atendendo integralmente à pergunta sem alucinações."
+  },
+  "780f30df4391bd594fa702d0d30be0bf": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios do Herói Camponês (Adestramento, Ofício, Coração Heroico, Sortudo, Surto Heroico, Torcida) e o poder único de +3 PM, correspondendo à pergunta sobre benefícios."
+  },
+  "8d676a94047805e33b442673350cdca5": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a mecânica da peruca (Carisma 0 para perícias) e o traje da corte, que se alinham ao tema Aristocrata, mas não detalha os benefícios de perícias e poderes da origem em si."
+  },
+  "f3c4662e73a5d699f7f5975954e5160a": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso com seu efeito (–2 no ataque para +5 de dano) e seu único pré-requisito (For 1), correspondendo exatamente à pergunta."
+  },
+  "6674f357df70366386b3c12c4266021f": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém a descrição exata do poder Esquiva (+2 na Defesa e Reflexos, requisito Des 1) e a resposta do sistema reflete fielmente essa informação."
+  },
+  "2dba5088fbdc4ae1ac67b1189019055f": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado contém todas as informações solicitadas (dano 1d12, alcance Médio, preço T$ 50) com precisão e sem alucinações."
+  },
+  "048a9c62abc151ddd87283abed815bc4": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente a Defesa (+6), a Penalidade de Armadura (-2) e o Preço (T$ 150) da Cota de Malha, atendendo à pergunta principal."
+  },
+  "c3c352bf5abed99add4dc6f83344343b": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a CD base para cordas (Destreza do oponente +10), redes (CD 25) e algemas (CD 30), cobrindo o essencial da pergunta, embora o valor solicitado (CD para cordas sem especificar o oponente) exija interpretação adicional."
+  },
+  "78432f7fb8d7deda9022b6be55e28ca9": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona valores de dinheiro por nível (nível 5: T$ 2.000) na seção Dinheiro Inicial, mas a resposta do sistema ignora esse dado específico e afirma incorretamente que não há regra fixa, configurando falha na avaliação."
+  },
+  "2640f3492bbf48ec1d5a38d377a50490": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) para fechaduras simples, médias e superiores conforme a perícia Ladinagem, cobrindo integralmente a pergunta."
+  },
+  "8479b1c2d1b2090dcbe7aa088b72d2de": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para assustar, incluindo os efeitos de abalado/apavorado e o teste oposto de Vontade."
+  },
+  "5e4986ba6b1ca61adfdc9fc48be20126": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o personagem enfeitiçado percebe as palavras e ações da fonte de forma favorável e que a fonte recebe +10 em Diplomacia, sem indicar controle direto."
+  },
+  "09c6fcb9ecd713c227a3ba30549c5023": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a progressão da condição Exausto (Fatigado → Exausto → Inconsciente) e seus efeitos principais, alinhando-se com as regras oficiais de Tormenta 20."
+  },
+  "f77481460660ab989ff446e617443f72": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a mecânica básica da condição Sangrando (teste de Constituição CD 15, perda de 1d6 PV no início do turno) e menciona variações de outras fontes (Dragão Brasil, Herois de Arton), mas a descrição oficial padrão do Tormenta20 está presente."
+  },
+  "29a36861580e65630bad58c16aa0030e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cavalgar (exige sela) e a penalidade de –5 sem ela, além de detalhar ações simples e perigosas, CDs de obstáculos e regras de montaria, atendendo plenamente à pergunta."
+  },
+  "d2c2052ce9e21d77f4b725722a7a576c": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve as regras completas da perícia Jogatina e do poder Bucaneiro Apostador, cobrindo mecânica de teste, valores de aposta e consequências de sucesso/falha."
+  },
+  "637bf809c73fb33fc7807285c52e3c0a": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve os benefícios do autômato Grifo nos níveis iniciante, veterano e mestre, alinhando-se com a pergunta."
+  },
+  "eae1943193b14df1c779ca9bf52f328d": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a informação correta de que uma criatura Colossal ocupa 9m (3x3 metros), embora a resposta do sistema adicione interpretações adicionais sobre grid de batalha que não estão explicitamente no texto recuperado."
+  },
+  "16b1fa9b2c0301af770423dc84b00e6f": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito (+2 PM temporários) corretamente, sem alterações ou alucinações."
+  },
+  "f7f2e8cd65be641044a5e1868d490ac2": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente o efeito mecânico (+5 PV temporários) e o preço (T$ 6) solicitados, sem alucinações."
+  },
+  "208ae35ed08f2cf0449b4c9e69c50bf3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito da Batata Valkariana: bônus de +1d6 em teste escolhido até o fim do dia, com mecânica de lembrete usando 1d6 na ficha."
+  },
+  "1f30d630339fae37e4dd7314c32ed270": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as regras principais (raio 6m, camuflagem, duração) e complementa com exemplos de uso em combate, embora a descrição original seja mais concisa."
+  },
+  "992dd0a7f3e44e9a3e3d07af69563cab": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o essencial sobre o Código de Honra e suas penalidades, citando a perda de PM e a perda da habilidade, embora não detalhe todas as variações entre as distinções."
+  },
+  "52916b5efb9e6601860e97553f4f432e": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as funções básicas da perícia Cura (tratamento, estabilização, exame) e define Cuidados Prolongados como assistência médica durante descanso longo, aumentando a recuperação de PV, embora detalhes mecânicos específicos (como teste de Cura vs. recuperação fixa) tenham interpretações v"
+  },
+  "7b29efd9a2df782b958b7485f4ce4cda": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas associações com círculos de magia e itens, além das penalidades de barreiras, respondendo integralmente à pergunta."
+  },
+  "e9125da16ee671429cb6d0b1d1be607e": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre bem as três perguntas (melhor raça, alimentos e poções), mas contém algumas imprecisões e generalizações que poderiam ser mais precisas."
+  },
+  "8e37d41464b6178c01f8172a930f0862": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as perícias obrigatórias (Ofício e Vontade) e os atributos principais, mas não detalha o processo completo de fabricação de engenhocas, exigindo inferência do leitor."
+  },
+  "25bd9b17194c47cc16688014eb01ee55": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a área de efeito (1 criatura, ou esfera de 3m com aprimoramento) e a duração correta (10 min/lvl ou 1 min/lvl), além de explicar a mecânica do voo. Sobre o estado 'Caído', o texto não tem regra explícita, mas oferece uma interpretação consistente com as regras gerais do jogo, indi"
+  },
+  "9a0b6f3557e189c888c9dd94051b917b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a área como cubo de 6m e o teste de Reflexos como resistência anula, além de detalhar o efeito de enredos e libertação via Acrobacia/Atletismo."
+  },
+  "7f130254742c7f922237e9a9c7e5854f": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Atuação e Luta), o poder de combate (escolha + 'bater sem machucar') e os itens iniciais (arma marcial/exótica + item sem valor), atendendo integralmente à pergunta."
+  },
+  "858ca4cb4be451b6d10dbbf500580776": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Fortitude, Guerra, Luta, Pontaria), o poder de combate (Influência Militar + escolha do jogador) e os equipamentos iniciais (arma marcial, uniforme militar, insígnia) da origem Soldado."
+  },
+  "d01875d40a0750443f54c2484cede514": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome, preço (T$ 50), efeito (recupera 1d4 PM) e tipo da poção, mas não detalha outras poções que um Inventor pode preparar."
+  },
+  "0ab01c69e316a9e629e98599b6840c94": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as penalidades da condição Caído: –5 na Defesa contra corpo a corpo, +5 na Defesa contra distância, –5 em ataques corpo a corpo e deslocamento reduzido a 1,5m."
+  },
+  "6cf065a1b046ea47feb1a087b902d741": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a definição da condição Agarrado e uma resposta de Perguntas e Respostas sobre múltiplos agarradores, que complementa a mecânica principal."
+  },
+  "dd2c92e4bc116d08c32bade3fd59c9e8": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções básicas da perícia Furtividade (esconder-se, seguir), atributo (Des), penalidade de armadura e modificadores, atendendo plenamente à pergunta sobre o que faz e quando é usada."
+  },
+  "2f8ee852bc85579f28a04310bb723ec1": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve explicitamente o custo de T$ 250 por PM, e a aplicação correta para uma magia de 3º círculo (6 PM) resulta em T$ 1.500, conforme a fórmula e o exemplo dado."
+  },
+  "a30def8a0b9970f25b1104498638f693": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos, seu custo base, efeitos e aprimoramentos, atendendo integralmente à pergunta sem alucinações."
+  },
+  "a7a469de852d634a11a91c6ade148198": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias e opcionais, quantidade de escolhas e as proficiências em armas, armaduras e escudos da classe Cavaleiro."
+  },
+  "80140d2bd22eda82f9685f7fb35f89aa": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base (1d8) da Espada Longa padrão, que atendem à pergunta sem alucinar."
+  },
+  "45593a67365b8662725585ec7eee61d9": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado contém dados conflitantes e incompletos sobre o Basilisco, com ND variando entre 4 e 5, defesa entre 23 e 25, e deslocamento descrito de forma inconsistente entre as fontes."
+  },
+  "52764415ed9330cddaea755dd3db276f": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Hyninn como o deus da trapaça e da esperteza e lista 'uma adaga atravessando uma máscara' ou 'uma raposa' como seus símbolos sagrados, atendendo à pergunta sobre identidade e símbolo."
+  },
+  "cd47e62657f46dc2c141329822cb7eba": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de teste oposto e comparação contra a Defesa, mas não detalha explicitamente o fluxo completo de 'teste de ataque contra Defesa' como regra geral, focando em poderes específicos."
+  },
+  "59ba801a7e5d71f8cc6580710fcab527": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela completa de graus de dificuldade com CDs e exemplos precisos, respondendo integralmente à pergunta sobre como funcionam."
+  },
+  "0df88f34692fba93490114f4f2dc53a3": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona apenas o conceito de 'espaço ocupado pela criatura' e exemplos de áreas de efeito, mas não lista os tamanhos de criatura e seus respectivos espaços de forma organizada ou completa."
+  },
+  "e0cc04894ec335243b40af2488cba0bf": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não contém informações sobre o poder Dom do Psicopompo."
+  },
+  "c0460265f6105821e5035e386b2f64aa": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção, desde a missão de entrega de criminoso até a sagração final com o Sol Vigilante."
+  },
+  "8638e65ef7890e0519ee96b2c5cfe45c": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o deslocamento base (12m para iniciante, 15m para veterano/mestre) e o custo do cavalo comum (T$ 75), além da Ferradura da Velocidade que aumenta em +3m por T$ 3.000, respondendo integralmente à pergunta."
+  },
+  "a6132e66abc21f16ba0a64c6409b4339": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a bomba alquímica padrão com efeito de dano 6d6 e preço T$ 50, além de citar variantes (tinta, fumaça) que enriquecem o leque de opções, mas a resposta principal sobre o item base está correta e completa."
+  },
+  "535703cff0c6fb2ae47618072a9257c2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena da magia Voo, sem alterar ou alucinar informações."
+  },
+  "8b06f2895470152270c0177a615aad7a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio impede lançamentos de magias por exigir palavras mágicas e causa surdez, cobrindo os pontos essenciais da pergunta."
+  },
+  "d49403b4561c68fc86c89a39e78dbad8": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a mecânica básica e as principais limitações do Dissipar Magia, incluindo a impossibilidade de dissipar magias instantâneas e o Campo Antimagia, embora o Globo de Invulnerabilidade tenha nuances detalhadas que exigem interpretação do mestre."
+  },
+  "f9228d5ed188d099832bebd9ca591c2b": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia com dano escolhido) e limitações (só um por vez, precisa de ordem, desaparece sem deixar itens) da magia Conjurar Monstro, sem alucinar."
+  },
+  "05e4ec7d5e69ce3de66b61395a4eeb42": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os valores exatos de ND (1/4), Defesa (13) e Tamanho (Pequeno) para o Goblin Salteador, correspondendo perfeitamente ao bloco estatístico oficial."
+  },
+  "ecef08f649ef9239ad95612d4246f861": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), o tipo (Morto-vivo) e a Defesa (11) do Zumbi padrão de Tormenta 20 de forma completa e precisa."
+  },
+  "a736bf46655c779c29b779fa0c6f99fe": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas corretas (ND 1/2, Defesa 14, PV 14) para o Lobo em Tormenta 20, conforme as entradas 'Ameaças > Tormenta20 - Jogo do Ano' e 'Ameaças > Duelo de Dragões'."
+  },
+  "41916d03650c8b646952cfb9b45317ee": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Lena como Deusa da Vida e o símbolo sagrado como lua prateada, mas contém informações conflitantes sobre gênero de devotos e restrições de paladinos que não aparecem na resposta do sistema."
+  },
+  "9034e914a57767c7cd5cfe5ce40b5486": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações precisas sobre Megalokk, seus devotos e a energia negativa que canalizam, além de detalhar restrições e poderes, respondendo integralmente à pergunta."
+  },
+  "daea2afb908bfa3e1a3dd4eda1a32e11": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado trata da Confraria Dourada e do deus Azgher como uma divindade ligada ao ouro e riquezas, mas não fornece informações sobre seus domínios específicos nem seu símbolo sagrado."
+  },
+  "9bf8b97c70685434d9f438e5b6674540": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Thyatis como Deus da Ressurreição e da Profecia, com símbolo sagrado sendo a ave fênix, além de detalhar áreas de influência, cores e lema, atendendo plenamente à pergunta."
+  },
+  "cc7d347589a21fdf2d04202d819f55e9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto apresenta a raça Lefou com suas características principais (atributos, habilidades raciais e defeitos físicos), respondendo integralmente à pergunta sem alucinações."
+  },
+  "de212c3a17d000763af64912c837c98f": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (perícias, poderes e PM inicial), embora o sistema tenha omitido o item 'Torcida' na lista de poderes apresentados."
+  },
+  "1505769213b2ad0f2c63fd17096a1514": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve apenas o item 'Peruca' e não aborda as origens ou benefícios da origem Aristocrata."
+  },
+  "a97cb66a218782ea74635070ec58a21d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (mécanica de -2 ataque/+5 dano) e seu pré-requisito For 1, além de relacioná-lo corretamente com outros poderes como Trespassar e Arremesso Potente."
+  },
+  "04c345f2ad0f7277992a2caf6dda49aa": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' do Bárbaro, mas a resposta do sistema descreve corretamente o poder 'Esquiva' geral, que concede bônus de +2 em Defesa e Reflexos, alinhando-se ao conteúdo disponível."
+  },
+  "f5aa281d0c4c8885108b5a88e6c94279": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os dados exatos solicitados (dano 1d12, alcance médio, preço T$ 50) diretamente da entrada da Besta Pesada."
+  },
+  "74642b139811f95158a464479cf9b787": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a defesa (6), penalidade (-2) e preço (T$ 150) da Cota de malha da edição Tormenta20 - Jogo do Ano, atendendo à pergunta."
+  },
+  "a9a1828c3fa731915da3d73b75395704": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD específicas para cordas, redes e algemas, cobrindo as principais situações de fuga com Acrobacia."
+  },
+  "0a5c008b158aef30a7c0f54b492c155b": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela de dinheiro inicial por nível (T$ 2.000 no nível 5) e a regra de Esbanjador usa T$ 1.000 como exemplo de referência, mas a resposta do sistema confunde o valor de referência do custo de subida com o dinheiro inicial real do personagem."
+  },
+  "d9d3c1a2502bedd6810452f999c1bea8": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) para fechaduras simples, médias e superiores conforme a perícia Ladinagem, além dos requisitos e penalidades corretos."
+  },
+  "e5e2130e8c77efd4a401896dbe3f42d6": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para Assustar, incluindo custo de ação padrão +1 PM, teste oposto de Vontade e as condições de Abalado/Apavorado, atendendo plenamente à pergunta."
+  },
+  "9057317cc859be3d714c41df0e16e05e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o personagem enfeitiçado percebe as palavras e ações da fonte de forma favorável, sem controle direto, e que a fonte ganha +10 em Diplomacia."
+  },
+  "b7026cb69fc0147f7df1bb3973a3024b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a progressão Fatigado → Exausto → Inconsciente e as regras de repetição, embora não detalhe os efeitos mecânicos específicos (penalidades) da condição Exausto em si."
+  },
+  "b677bf28cdc661e634427b5e1f8883b4": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a regra básica da condição Sangrando (teste de Constituição CD 15, perda de 1d6 PV no início do turno) e menciona a mecânica de metabolismo, mas omite detalhes de acumulação e interações específicas de poderes."
+  },
+  "df635c2af53e0bd4f703c33c808e00df": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cavalgar (atributo Des, não exige treinamento, não tem penalidade de armadura) e especifica explicitamente a penalidade de –5 sem sela, conforme a descrição da perícia e a ferramenta Sela."
+  },
+  "61deaeb78de159492592eaf203866445": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as regras completas da mecânica Apostador, incluindo custos, CD's e ganho/perda de valor, atendendo plenamente à pergunta."
+  },
+  "450be01d53359ecd0b1d34b6c41e35a7": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a informação correta de que uma criatura Colossal ocupa 9m x 9m (8x8 quadrados), conforme a tabela de Tamanho de Criaturas do Compendio T20, atendendo plenamente à pergunta."
+  },
+  "8615448da48604e070d283e3f0bc39a5": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente o efeito mecânico (+5 PV temporários) e o preço (T$ 6) solicitados, sem alucinações."
+  },
+  "8e4c1d6238a86cc23c99f715b2a1f841": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito mecânico (+1d6 em teste) e a condição de memorização (1d6 na ficha), respondendo integralmente à pergunta sobre o que a batata concede."
+  },
+  "26b3f84db563e616a32f21e03a8f32b4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica da bomba de fumaça (fumaça espessa 6m, camuflagem e duração até fim da cena), atendendo integralmente à pergunta sobre seu uso."
+  },
+  "b3095f6a1eea5da68baf02cc220dc96c": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o Código da Norma para cavaleiros de Khalmyr e a perda de PM como penalidade, mas não detalha o Código de Honra geral ou penalidades específicas para cavaleiros não de Khalmyr."
+  },
+  "16324ef53d99ba4c8b49e0ff752c27b0": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve as funções da perícia Cura (recuperação de PV, estabilização, auxílio a doenças) e o custo de Cuidados Prolongados, mas não detalha mecanicamente o passo a passo completo do procedimento de Cuidados Prolongados."
+  },
+  "d0e6fe7c5658bdf555c32eb16e3a66e7": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas origens (círculos da magia e categoria de itens), atendendo plenamente à pergunta."
+  },
+  "5b472fdf32be4ce68428dac5c89498b1": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações parciais e precisas sobre raças (Humano, Anão, Gnomo, Halfling), alimentos (Abençoar Alimentos, Mestre Cuca) e a capacidade de preparar poções via Mestre Alquimista, mas omite detalhes específicos sobre bônus de alimentos para testes e a lista completa de poções dispon"
+  },
+  "8db386da1b20709aeb688456cbafde7c": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornece informações fragmentadas e não responde integralmente às três perguntas sobre perícias obrigatórias, atributos importantes e o método de fabricação de engenhocas."
+  },
+  "dc72b1bf61952ba8eceb053348387168": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não contém informações sobre a magia Voo, apenas lista outras magias aéreas sem detalhes sobre a solicitada."
+  },
+  "fd7ae0c44eac3114787e7dc94fc546a7": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a área de efeito (cubo 6m) e a mecânica de teste de Reflexos, embora o escape detalhado exija teste de Acrobacia/Atletismo e não apenas Reflexos."
+  },
+  "6e43d3fa84e3c5fe894916c2af6a69a0": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Atuação e Luta), o poder único de combate (dano não letal sem penalidade) e os itens iniciais (arma marcial/exótica e item sem valor), alinhando-se plenamente à origem Gladiador."
+  },
+  "cf1bced7ab26a02088b2bb8db763aee4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Fortitude, Guerra, Luta, Pontaria), o poder de combate (Influência Militar + escolha do jogador) e os equipamentos iniciais (arma marcial, uniforme militar, insígnia), atendendo integralmente à pergunta."
+  },
+  "501d040fadbc8d3b34a2ebd9d058e49e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado descreve corretamente o efeito (recupera 1d4 PM), o preço (T$ 50) e o espaço (0,5) da Essência de Mana, além de mencionar que Inventores podem prepará-la via Ofício (alquimista)."
+  },
+  "5c7c67f341ab3dc186559adaf73f9dcc": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro penalidades da condição Caído: –5 na Defesa corpo a corpo, +5 na Defesa à distância, –5 em ataques corpo a corpo e deslocamento reduzido a 1,5m."
+  },
+  "24453a1c2ca3b9db8fcc5a6358765d8f": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve a condição 'sangrando' e regras sobre múltiplos agarradores, mas não explica a mecânica da condição 'Agarrado' (penalidades, movimentação, ataques)."
+  },
+  "289aa164974d1bc53005bec7145e4c20": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções da perícia Furtividade (camuflagem, esconder-se, seguir alvos) e suas condições de uso, atendendo integralmente à pergunta."
+  },
+  "275397fa13e3fb86d1530480f051f1b6": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve exatamente o custo e o tempo para aprender magia de 3º círculo pelo método Escriba Arcano: 6 dias e T$ 1.500, conforme cálculo de 6 PM × T$ 250."
+  },
+  "b952d62b5d58855f886c8ca2943ead30": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a magia Curar Ferimentos como cura de 2d8+2 PV por toque, com aprimoramentos claros para aumentar o dano/efeitos, atendendo à pergunta sobre o que a magia faz."
+  },
+  "0a448b4d58a0cbdd840d286301f8c3e9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista as perícias obrigatórias e opcionais, além da proficiência em armas marciais, armaduras pesadas e escudos, atendendo plenamente à pergunta."
+  },
+  "7b7d63a78672c9cedc79d56148491a3e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base (1d8) da Espada Longa padrão, que atendem à pergunta sem alucinar."
+  },
+  "2d1cb6d291c2218811e3e1135b9a191d": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores de ND (5), Defesa (25) e Deslocamento (9m/6q) do basilisco, embora contenha variações entre fontes (ND 4 vs 5, Defesa 23 vs 25)."
+  },
+  "807b5b95aed0d8436439a06bbc7a8f37": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve completamente Hyninn como o Deus da Trapaça, suas áreas de influência, história, crenças e, especificamente, seu símbolo sagrado como 'uma adaga atravessando uma máscara, ou uma raposa', atendendo integralmente à pergunta."
+  },
+  "c547cd7a3b9c5fd7fbc2d6fd36312b93": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os benefícios da origem Ladrão de Túmulos, incluindo treinamento em Ladinagem e Sobrevivência, bônus de +2 na Defesa, testes contra mortos-vivos e redução de trevas 5."
+  },
+  "14e650dff4ed2951dd8d174ab68561ac": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente o mecanismo de teste oposto e comparação contra a Defesa, cobrindo a regra básica e modificadores relevantes, embora não detalhe especificamente a mecânica de 'teste oposto de ataque desarmado' presente nos poderes Dragão Brasil."
+  },
+  "e67d28d1c875b8586929cc9e16d76d7f": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os graus de dificuldade (CDs) e exemplos práticos, cobrindo integralmente a pergunta sobre como funcionam os graus de teste em Tormenta 20."
+  },
+  "d885693eea1265214fc02042c72f536a": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto menciona apenas o espaço ocupado por areia movediça (6m quadrado) e uma nota geral sobre espaços de criaturas, mas não lista os tamanhos de criatura e seus respectivos espaços de forma organizada ou completa."
+  },
+  "10244876fe960f3bb9a94b0c9c4456df": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não contém informações sobre o poder Dom do Psicopompo."
+  },
+  "f450dca33a01ebe88ed2c80fb8bd8707": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção Xerife de Azgher, desde a admissão inicial (entrega de criminoso) até a sagração e poderes concedidos."
+  },
+  "d6925630988d493725935b1f3f52f472": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 6m (não reduzido por armadura/carga) e lista as principais habilidades raciais (visão no escuro, bônus em Percepção/Sobrevivência no subterrâneo, bônus de vida, periciatura em armas anãs e +2 em ataques)."
+  },
+  "6039a65a6e2f0ff27c6de2fc5d32dcf4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o deslocamento (12m a 15m dependendo do nível) e os preços do cavalo comum (T$ 75) e cavalo de guerra (T$ 400), além das ferraduras de velocidade (+3m por T$ 3.000), respondendo integralmente à pergunta."
+  },
+  "e6fba99b0a06d9cece5a205027a00801": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a descrição do efeito da bomba alquímica padrão (dano 6d6, reflexos) e seu preço (T$ 50), atendendo à pergunta principal sobre efeitos e custo."
+  },
+  "ef4b31deb75ae144ecd7abf5aa4768b4": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os dados completos e precisos sobre dano (6d6 fogo), área (esfera 6m de raio) e resistência (Reflexos reduz à metade) da magia Bola de Fogo, além de listar corretamente os aprimoramentos disponíveis."
+  },
+  "2f0abd5d039bff6723e902c4ab15d986": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena do poder Voo, além das condições de pouso, atendendo à pergunta sem alucinar."
+  },
+  "ee2790e5b4e6a1895148baae12b1de08": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio cria uma área onde nenhuma magia pode ser lançada devido ao requisito de palavras mágicas, além de causar surdez, atendendo plenamente à pergunta."
+  },
+  "68446a2c81f3791d5a3b92f13e7aaccb": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica básica de Dissipar Magia (teste de Misticismo, limitação de instantâneas) e o aprimoramento +12 PM, além de citar a limitação do Campo Antimagia, atendendo à pergunta sobre o que ela não consegue dissipar."
+  },
+  "9b50ce3a10897fa3cba73a01e375efde": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia com tipo de dano escolhido), atributos base, defesa, PV, imunidade e o sistema de ordens (Mover, Atacar, Lançar Magia), além de todas as limitações (duração sustentada, desaparecimento ao fim, necessidade de ordens e custos de aprimor"
+  },
+  "b84ece5beaca7993105657a0df1250da": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece todas as informações solicitadas (ND 1/4, Defesa 13 e Tamanho Pequeno) de forma precisa e completa, sem alucinações."
+  },
+  "0cb87e94bb88b9c63789e4961e2e8276": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores exatos de ND (1/4), tipo (Morto-vivo) e Defesa (11) para o Zumbi padrão de Tormenta 20, sem alterações ou alucinações."
+  },
+  "a1343d2d46bb2e3c48ac43b6d6f8a52b": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas completas e precisas de ND, Defesa e PV para o Lobo em Tormenta 20, correspondendo exatamente à pergunta."
+  },
+  "1a0afcc8288744f930a9583b900e7ce5": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado não contém as estatísticas (ND e Defesa) para o Hobgoblin Soldado, apenas descrição e dados do Hobgoblin Atirador e Comandante."
+  },
+  "07cb380eaf906d908f177ce0e46fd51a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações completas sobre Lena como Deusa da Vida e cura, além de descrever corretamente o símbolo sagrado como lua crescente prateada."
+  },
+  "3236d1162cf82a6b7c8cf3c64a1e1d1c": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Megalokk como o Deus dos Monstros e confirma que devotos canalizam energia negativa, alinhando-se à pergunta sem alucinar."
+  },
+  "5d82bc7e6522a079ff50da01d5e176d8": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado trata da Confraria Dourada e de Azgher como deus sol/riqueza, mas não descreve domínios de classe nem o símbolo sagrado oficial do deus, apenas aludindo ao ouro como foco."
+  },
+  "7eb870499fa994c85660df42d8bde32b": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Thyatis como o Deus da Ressurreição e da Profecia, com símbolo sagrado sendo a ave fênix, além de detalhar suas áreas de influência, cores e lema, respondendo integralmente à pergunta."
+  },
+  "64200eaeb1ab15f7e1057acd7408ecba": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista corretamente as três habilidades raciais principais do povo Hynne: aumento de dano com funda/arma de arremesso, tamanho Pequeno com bônus em Enganação e uso de Destreza em Atletismo, e a opção de gastar PM para rerolar testes de resistência."
+  },
+  "87debf46ab68c81e8b65ef2944e3c4f0": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve o 'Maníaco Lefou' como um monstro inimigo e não como uma raça jogável, além de conter dados estatísticos de combate, o que não corresponde à pergunta sobre a raça Lefou em Tormenta 20."
+  },
+  "1a94f30cedfb18b9eb9b72cedaa8a1d7": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (perícias, poderes e mana), embora o item 'traje de plebeu' não esteja na resposta do sistema."
+  },
+  "7388e687b0e0fe58b768604149348250": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto descreve apenas o item 'Peruca' e seus efeitos mecânicos, não as características ou benefícios da origem Aristocrata como um todo."
+  },
+  "e9c203ab3a4bbbc582244a61030d80c3": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' do Bárbaro, mas a resposta do sistema corretamente identifica o poder geral 'Esquiva' com bônus de +2 em Defesa e Reflexos, alinhando-se ao conteúdo principal da base, embora o contexto específico do Bárbaro não detalhe esses bônus gerais."
+  },
+  "db506d4df63acbeff2c39f36c22e48bb": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Vitalidade como concedendo +1 PV por nível e +2 em Fortitude, correspondendo exatamente à resposta do sistema."
+  },
+  "85161b59505b49d8805ba47ef17eb828": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 10), dano (1d8) e crítico (x3) do Machado de Batalha padrão da edição Tormenta20 - Jogo do Ano, que são os dados solicitados."
+  },
+  "16160dc23ac5fc4c067c84b4f2bba88b": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os dados exatos de dano (1d12), alcance (Médio) e preço (T$ 50) da Besta Pesada, correspondendo perfeitamente à pergunta."
+  },
+  "02ee365292102f5e8e7b5cf1afa335ce": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a defesa (6), penalidade (-2) e preço (T$ 150) da Cota de Malha da edição Tormenta20 - Jogo do Ano, atendendo à pergunta."
+  },
+  "0dd9878375e98b6b5b8e99287cb50931": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD específicas para cordas, redes e algemas, cobrindo as principais situações de amarras."
+  },
+  "2f6d364d6cf90e1f02d209ecdf15d272": {
+    "score": 1.0,
+    "aprovado": false,
+    "justificativa": "Contexto não aborda dinheiro inicial por nível, apenas mecânicas de paladino."
+  },
+  "d508aba839d824d54b6248f2334a1d25": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD corretas (20, 25, 30) e os requisitos (ação completa, gazua) diretamente da perícia Ladinagem, sem alucinações."
+  },
+  "91d60a3a97bb13324346afcbda25aaf8": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto discute a perícia Diplomacia e seu uso em barganha, mas não menciona uma perícia específica chamada 'Barganha', apenas mecanismos de negociação dentro de Diplomacia."
+  },
+  "0f7e8d3fcb9067dfb13623a1550a93e4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a mecânica de Intimidação para assustar, incluindo o custo de PM, ação padrão, teste oposto de Vontade e o alcance curto, além de citar o poder 'Presença Aterradora' como fonte principal."
+  },
+  "b8efb7266805126d6116c3a8496fe577": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o personagem enfeitiçado percebe as palavras e ações da fonte da condição de forma favorável, sem controle direto, e concede bônus de +10 em Diplomacia."
+  },
+  "ded4c8499be858efd77eb2f79cc370f5": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a condição Petrificado como causando inconsciência e redução de dano 8, o que corresponde à pergunta sobre seus efeitos."
+  },
+  "01eb8c23de417b8da553af8b9af1a601": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que Exausto causa debilitação e que repetir a condição resulta em inconsciência, além de relacionar Fatigado como precursor, atendendo à pergunta sem alucinar."
+  },
+  "41d10d60cd77c3ce84b26add9a77cb35": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre a regra básica da condição Sangrando (teste de Constituição CD 15 e perda de 1d6 PV), mas omite variações importantes como acúmulo, efeitos de poderes específicos e interações com outras condições."
+  },
+  "2b0b7e3ec9d9b724db61860a6b989d6d": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve claramente que a perícia Cavalgar exige sela e impõe penalidade de –5 sem ela, respondendo integralmente à pergunta."
+  },
+  "90a189de801c15ed97a2adbec0683cbf": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as regras básicas de apostar com Jogatina e o poder Apostador, mas omite detalhes da tabela de ganhos do teste padrão."
+  },
+  "55c9fe53d5be5cb8674f3fdc0b74f72a": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o mecanismo de evolução do autômato (iniciante → veterano → mestre) e concede poderes condicionados ao nível, embora o foco principal seja o tipo 'autômato' e não 'grifo' especificamente."
+  },
+  "3d514d3566844ad7296b57d4665db2ac": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a regra geral de espaços (3m = 2x2 quadrados) e a resposta aplica a progressão de tamanhos para Colossal, resultando em 4x4 quadrados, o que é consistente com as regras de T20."
+  },
+  "bdf97913310dea7f8669e5a094af9073": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 18) e o efeito (+2 PM temporários) corretamente, sem alucinações."
+  },
+  "6470bd871ea1a64639700cd86a51cd23": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome do item, seus efeitos (+5 PV temporários) e o preço (T$ 6), atendendo à pergunta de forma completa e precisa."
+  },
+  "5b00549b05f642cc52aa70f7cdcf3e78": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito da Bomba de Fumaça (fumaça espessa, 6m de raio, obscurece visão, camuflagem progressiva) e suas regras mecânicas em Tormenta 20, atendendo plenamente à pergunta."
+  },
+  "db6eab5cc9ae5c6e323ff3b9b19a9471": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações precisas sobre o Código de Honra, seus requisitos, perda e penalidades (como perda de PM para devotos de Khalmyr e substituição por Ataque Furtivo para Cavaleiros Bandidos), respondendo integralmente à pergunta."
+  },
+  "c84c45b8215a07579d639ac1ab8e26a2": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as funções básicas da perícia Cura (estabilização, exame, tratamento) e define claramente o mecanismo dos Cuidados Prolongados (recuperação de PV/PM por 8 horas), embora não detalhe a CD específica para o uso de Cuidados Prolongados."
+  },
+  "95eb7584031c7925ad63462d5b6438f2": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as quatro categorias de intensidade de aura (tênue, moderada, poderosa, avassaladora) e suas respectivas origens (círculos da magia e categoria de itens), além das penalidades por barreiras, atendendo plenamente à pergunta."
+  },
+  "e96ae7b06699b09fd8471451ec6a91b0": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto aborda as três perguntas (raça, alimentos, poções) com informações relevantes de Tormenta 20, embora some algumas interpretações próprias (como o poder Mestre Cuca) que não foram explicitamente solicitadas, mas ainda assim fornece diretrizes úteis baseadas na base."
+  },
+  "ee7d1b30dbd3518c1b399981c440f0d1": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as perícias obrigatórias (Ofício e Vontade) e a mecânica de fabricação de engenhocas (Ofício para pergaminhos/poções), mas não detalha explicitamente quais atributos são 'mais importantes' além da Inteligência."
+  },
+  "0e22ffbeaf42fb7fc43739a38737f19d": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Contexto não contém regras sobre a magia 'Voo' ou interação entre voo e estado Caído em Tormenta 20."
+  },
+  "6494aec4c7e0c4ec1e36eedefcd34152": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve a área como cubo de 6m e o teste de Reflexos como 'anula', mas não especifica o teste de Reflexos para escapar, focando na resistência inicial."
+  },
+  "77db72f1ad73c8d4d1fb9ed5f1e7ece4": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Atuação e Luta), o poder único (dano não letal sem penalidade) e os itens iniciais (arma marcial/exótica e item sem valor de admirador) da origem Gladiador."
+  },
+  "5c6b7833bce3b97fa78a04cf33f02ee9": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias (Fortitude, Guerra, Luta, Pontaria), o poder de combate (Influência Militar) e os equipamentos iniciais (arma marcial, uniforme militar, insígnia), alinhando-se fielmente ao texto da origem Soldado."
+  },
+  "ebcb2adbefb2537466cf52bd8ac6f6d1": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço (T$ 50), o efeito (recupera 1d4 PM) e a classificação (Preparados), respondendo à pergunta de forma completa e correta."
+  },
+  "4f039ff41b8cc78aecf978a2357f04b3": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente que a condição agarrado não acumula e que o alvo deve se livrar de cada manobra separadamente, respondendo à pergunta principal sobre como funciona durante o combate."
+  },
+  "3f7780b9096339a67db4a765e563db17": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as funções principais da perícia Furtividade (esconder-se, seguir alvo, testes opostos contra Percepção) e suas regras de uso, atendendo integralmente à pergunta sobre o que faz e quando é usada."
+  },
+  "ddcace7ddffc97a095853bffcd8d52b8": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve exatamente o custo e o tempo para aprender magia de 3º círculo pelo Escriba Arcano, com cálculo correto de 6 dias e T$ 1.500."
+  },
+  "87dda75a09b577c3b2283cda22fcb78d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito base da magia Curar Ferimentos (2d8+2 PV) e lista os aprimoramentos disponíveis, atendendo à pergunta sobre o que a magia faz."
+  },
+  "13ffa01667eceaeeac563ee161484319": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias (Fortitude e Luta) e as opcionais (com a quantidade de 2), além da proficiência em armas marciais, armaduras pesadas e escudos, correspondendo fielmente ao texto da classe Cavaleiro."
+  },
+  "9b36eda77d4219468b665f24627178b5": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o preço oficial (T$ 15) e o dano base correto (1d8) para a Espada Longa padrão, além de confirmar o crítico x19."
+  },
+  "c62d22a0254c0cd010f01906ba0b5028": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os valores de ND (4), Defesa (23) e Deslocamento (9m/6q) corretamente, além de detalhes de ataque e veneno consistentes com o sistema Tormenta 20."
+  },
+  "c1b821058f00d18ba7656d1ab40fea50": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente Hyninn como o Deus da Trapaça e seu símbolo sagrado como uma adaga atravessando uma máscara ou uma raposa, atendendo plenamente à pergunta."
+  },
+  "20145a2ea33f36786f8c88a5a5b3443a": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os benefícios da origem Ladrão de Túmulos, incluindo treinamento em Ladinagem e Sobrevivência, bônus de +2 na Defesa, perícia contra mortos-vivos e redução de trevas 5."
+  },
+  "bc63390fb24d3621c950aa6d21723c41": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente que testes de ataque contra Defesa podem ser opostos (Defesa Desarmada) e que manobras são testes de ataque, mas não detalha o passo a passo genérico para todos os tipos de ataque."
+  },
+  "9f6390bb4e845dd9cfab9a191874521e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a tabela completa de graus de dificuldade (Fácil a Quase Impossível) com CDs e exemplos, além da fórmula dos testes e regras de condições favoráveis/desfavoráveis, respondendo integralmente à pergunta."
+  },
+  "3edb1a787cc62ba8b3594f454d6c0875": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece informações sobre categorias de tamanho (Mínimo, Pequeno, Médio, Grande, Enorme, Colossal) e exemplos específicos (Bando de Pamgras como Grande, Restalho como Pequeno), além de regras de espaçamento e organização de Kobolds, satisfazendo a pergunta sobre tamanhos e espaços ocupado"
+  },
+  "22096b206ae073fe48604aebd810a715": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a imortalidade, o retorno após 3d6 dias e as variações de tipo de criatura (osteon, morto-vivo, perda de PM), além da restrição de clérigos e paladinos."
+  },
+  "84708306bca5d0c2acf3dc415f11de2f": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o processo de obtenção da distinção Xerife de Azgher, incluindo a missão de entrega de criminoso, o sonho direcional, a prova na sede, o acompanhamento com um xerife e a entrega do Sol Vigilante."
+  },
+  "a17418716082ea59984d490519e3ab88": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece todas as habilidades raciais e o deslocamento base do anão com precisão, incluindo visão no escuro, bônus de perícia, pontos de vida, proficiência em armas e a característica de deslocamento inalterado por armadura."
+  },
+  "0a1ee60fb790cafce0d3961f7ced68df": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre o deslocamento base (12m iniciante, 15m veterano/mestre) e o custo das Ferraduras da Velocidade (T$ 3.000), atendendo à pergunta sem alucinar."
+  },
+  "9a411167bc3a410742ff020469ac1478": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o efeito principal (6d6 dano de impacto, Reflexos CD Des) e o preço (T$ 50) da Bomba padrão, que é o item alquímico mais direto para a pergunta."
+  },
+  "284e405160c02c4d03b99afb77a0f640": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os dados completos e precisos sobre dano (6d6 fogo), área (esfera 6m de raio) e resistência (Reflexos reduz à metade) da magia Bola de Fogo, além de listar corretamente os aprimoramentos disponíveis."
+  },
+  "92891db37df3c5eda36733b1e325313e": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o deslocamento de 12m e a duração de cena, além da mecânica de queda suave ao final, atendendo à pergunta principal sobre distância e tempo."
+  },
+  "6c1ff1385d3753763b61e6333be6cf3e": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o Silêncio cria uma área onde nenhuma magia pode ser lançada devido à exigência de palavras mágicas, e que as criaturas ficam surdas, atendendo plenamente à pergunta."
+  },
+  "7818195ec673f3999081cb759d22ea24": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica a mecânica de Dissipar Magia (teste de Misticismo contra CD), suas limitações (efeitos instantâneos, Campo Antimagia) e o aprimoramento avançado, cobrindo o essencial da pergunta sem lacunas maiores."
+  },
+  "1129888ca60c7902960c849f56f542a3": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente a criação (construto de energia, atributos, PV, ordens básicas) e as limitações (imunidade a Fort/Vontade, necessidade de comando, duração sustentada, limite de uma instância) da magia Conjurar Monstro, sem alucinações."
+  },
+  "b56a9ea83e403b5aa28336c6d42034e8": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto recuperado fornece os valores exatos de ND (1/4), Defesa (13) e Tamanho (Pequeno) para o Goblin Salteador, correspondendo perfeitamente à pergunta do usuário."
+  },
+  "268f3f979cf35bd4f401c4178136087a": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o ND (1/4), o tipo (Morto-vivo) e a Defesa (11) do zumbi padrão de Tormenta 20, correspondendo exatamente à pergunta."
+  },
+  "acc59e82568b225c5a1c7c6feee7d299": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as estatísticas completas de combate (ND 3, Defesa 14, PV 14) para o Lobo em Tormenta 20, com fontes consistentes nas seções de Ameaças e Compendio T20."
+  },
+  "05a916f6d84cbec6a3949506274dd06f": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto fornecido não contém informações sobre um 'Hobgoblin Soldado' com ND e Defesa específicos; apenas descreve hobgoblins em geral e apresenta estatísticas para 'Hobgoblin Atirador' e 'Hobgoblin Comandante Tático', mas sem dados de ND/Defesa para a classe soldado."
+  },
+  "993b23182f32d762841a26d4f4d675f8": {
+    "score": 2.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado trata apenas de classes de paladino e deuses Azgher e Khalmyr, sem nenhuma informação sobre a deusa Lena ou seu símbolo sagrado."
+  },
+  "674a433cb6641983487c9fe6088ef567": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome Megalokk, confirma que ele é o Deus dos Monstros e especifica que seus devotos canalizam energia negativa, além de detalhar restrições mecânicas específicas."
+  },
+  "f0dc20c8edf3a779e0a6267f62587a61": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado foca na Confraria Dourada e não fornece informações sobre os domínios ou o símbolo sagrado específico do deus Azgher."
+  },
+  "98c903e3e8fa7ede32da2faf61f79074": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve Thyatis como o Deus da Ressurreição e da Profecia, com o símbolo sagrado sendo explicitamente uma ave fênix, além de detalhar suas áreas de influência, cores e lema."
+  },
+  "5b5c32252c7828c48d3df84ae9f9aad7": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto recuperado descreve o 'Maníaco Lefou' como um monstro NPC e lista raças como Golens Despertos, mas não define a raça Lefou como jogável ou suas características específicas para personagens."
+  },
+  "b0262357f36885a9de1e9ca8574d9352": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto lista os benefícios da origem Herói Camponês (perícias, poderes e poder único), embora o poder único descrito no contexto se refira a pontos de mana, o que pode divergir de outras edições ou fontes, mas o essencial está presente."
+  },
+  "8c84f8ddf15859e60304119ba263f0eb": {
+    "score": 2.0,
+    "aprovado": false,
+    "justificativa": "O contexto não contém informações sobre a origem Aristocrata, apenas descreve o item Peruca."
+  },
+  "4f61313097f6f7650b43b79e5426971a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Ataque Poderoso (mécanica de -2 ataque/+5 dano em corpo a corpo) e seu pré-requisito For 1, atendendo à pergunta sem alucinações."
+  },
+  "dfce5ae2e3827e5c60a004ed2221ee44": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve o poder 'Esquiva Sobrenatural' como concedendo imunidade a ficar surpreendido, o que se alinha com a resposta do sistema sobre a mecânica do poder."
+  },
+  "4b5df845b14e331794a23d1285361d09": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o poder Vitalidade como concedendo +1 PV por nível e +2 em Fortitude, correspondendo exatamente à resposta do sistema."
+  },
+  "08d0c1deaf2db70bdf39dd592ae588aa": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece preço (T$ 10), dano (1d8) e crítico (x3) corretos para o Machado de Batalha padrão."
+  },
+  "bda125a579ca6d68dd289cbbbc9ed8ec": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece os três dados solicitados (dano 1d12, alcance Médio, preço T$ 50) com precisão e sem alucinações."
+  },
+  "0641f05628f9bb79528abd5bc890a4df": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as informações corretas de Defesa (+6) e penalidade de armadura (-2) para a Cota de Malha (Tormenta20), além do preço (T$ 150), atendendo à pergunta principal."
+  },
+  "d84b99135778251345efa544d0436b71": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a CD base para cordas (Destreza do oponente + 10) e o modificador específico da Corda da Resignação (+20), permitindo o cálculo correto da CD final."
+  },
+  "a0688e5936dc11ff0fe182dc49775abd": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece a resposta correta (T$ 2.000) para o dinheiro inicial de nível 5, conforme a seção de Compendio T20."
+  },
+  "c51e8b1d3d1d96ee1e2ee3d1317e8fc8": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as CD exatas (20, 25, 30) e as categorias de fechaduras correspondentes, atendendo plenamente à pergunta."
+  },
+  "3e3d7b342f551b00cc1fa43a32eb5f87": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica as mecânicas de barganha usando a perícia Diplomacia, cobrindo as regras de teste de Vontade, ajustes de preço (10% ou 20%) e consequências de falha, o que responde integralmente à pergunta sobre como funciona o uso de barganha no sistema."
+  },
+  "94304c754ef1f28669b1ea3f00438d5d": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto explica corretamente a mecânica básica de Intimidação para assustar, incluindo teste de atributo, oposição, resultados (abalado/apavorado) e interações com poderes como Ameaça Brutal e Presença Aterradora, sem alucinar ou sair do assunto."
+  },
+  "ac4f1ebf86c3e8c739693db452d01c03": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que o personagem se torna prestativo, não fica sob controle, e a fonte recebe +10 em Diplomacia, atendendo à pergunta sem alucinar."
+  },
+  "1d7dd87ac22dc3f9ee59c3a22d69967f": {
+    "score": 6.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente que Petrificado causa redução de dano 8 e o estado de metamorfose, embora não detalhe o aspecto de 'inconsciente' como principal efeito mecânico."
+  },
+  "201512ca95108070f19cd6ad508197f8": {
+    "score": 3.0,
+    "aprovado": false,
+    "justificativa": "O contexto não menciona a condição Exausto, focando em outras condições como Vagaroso, Inconsciente e Doenças."
+  },
+  "e14856f17391744df21f3a2e0e03ba87": {
+    "score": 7.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as regras básicas da condição Sangrando (teste de Constituição e perda de 1d6 PV) e ainda inclui informações adicionais sobre acumulação de efeitos de poderes específicos, o que enriquece a resposta sem sair do tema."
+  },
+  "88e0c3531f6da5a54595be9c75aad5e7": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos (exige sela) e a penalidade (-5 sem sela) da perícia Cavalgar, conforme a seção 'Penalidade de Sela'."
+  },
+  "50e0e635b5938b03e97c0ab4d0a684de": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve integralmente o funcionamento da perícia Jogatina, incluindo a mecânica de aposta, a tabela de resultados e os poderes relacionados (Apostador, Trapaceiro e Foco em Perícia), sem alucinações."
+  },
+  "bc93da15cac4b87b331e6100552be852": {
+    "score": 0.0,
+    "aprovado": false,
+    "justificativa": "Não há informações sobre o parceiro 'Grifo' no contexto fornecido."
+  },
+  "08a1204a4f6310a83078577a5e5b34a7": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto responde corretamente ao espaço de uma criatura Colossal (9m) e fornece detalhes adicionais sobre modificadores raciais, mantendo-se fiel ao material de Tormenta 20."
+  },
+  "1a3eed004c2abc8c3edc3cfa6360ce0d": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto traz preço (T$ 18) e efeito (+2 PM temporários) do Gorad Quente, respondendo integralmente à pergunta."
+  },
+  "911b79fd64a27be31ce5dd5fcc1c862b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece corretamente o efeito (+5 PV temporários) e o preço (T$ 6) solicitados, cobrindo o essencial da pergunta sem lacunas significativas."
+  },
+  "8e7d118fca1927c5ef0da67062572aa9": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente o efeito de +1d6 em um teste escolhido até o fim do dia e a mecânica de deixar 1d6 na ficha."
+  },
+  "e6bc6501dafa1cb84aea0d855a9efbcc": {
+    "score": 9.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente a Bomba de Fumaça como um preparado que emite fumaça espessa com 6m de raio, obscurecendo visão e proporcionando camuflagem, sem causar dano, conforme a pergunta."
+  },
+  "4dfba4bc106a93cc086dce42eb7471d5": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as regras do Código de Honra (restrição de ataque e perda de PM) e a penalidade específica (perda total de PM, recuperação no dia seguinte), além de citar a troca pelo Cavaleiro Bandido."
+  },
+  "42f271fa28c6c46a688ccced7edc1ead": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente os requisitos da perícia Cura (maleta de medicamentos, penalidade sem ela) e os efeitos de Cuidados Prolongados (recuperação de 1 PV por nível, custo T$ 5, tratamento de doenças), embora a resposta do sistema adicione informações de 'cumulativo' não explicitamente pe"
+  },
+  "92adb24a2109ee59364fc698695e2d5b": {
+    "score": 10.0,
+    "aprovado": true,
+    "justificativa": "O contexto contém exatamente as regras de detecção de auras pela perícia Misticismo, incluindo as quatro categorias de intensidade e as penalidades por barreiras, permitindo resposta completa e fiel."
+  },
+  "b9842fab93a83c5a506b488895a2a049": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as principais perguntas sobre raças (Ajudante Nato e Dupla Inteleligência), alimentos (Algravia) e o preparo de poções pelo Inventor, embora não liste todas as poções específicas."
+  },
+  "2abdb9287efd02b6e155e78c5b6f207a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto cobre as perícias obrigatórias (Ofício e Vontade), os atributos principais (Inteligência, Sabedoria, Constituição) e o mecanismo de fabricação de engenhocas (itens superiores, melhorias e materiais especiais), atendendo plenamente à pergunta."
+  },
+  "0d7f615187c03f6ad2dbe0fbeaabe3cf": {
+    "score": 4.0,
+    "aprovado": false,
+    "justificativa": "O contexto não fornece informações sobre a área de efeito e duração da magia Voo, nem sobre as consequências de o alvo ficar Caído durante o voo."
+  },
+  "6bd08296cf088dca8692d44b54b7b90a": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece as informações corretas sobre a área de efeito (cubo 6m), o teste de Reflexos CD Des e as condições de uma vítima enredada, atendendo à pergunta sem alucinações."
+  },
+  "7e4a07844d9c9756ef4add51c3a6b84b": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve as perícias (Atuação e Luta), o poder de combate (dano não letal sem penalidade) e os itens iniciais (arma marcial/exótica e item sem valor), atendendo plenamente à pergunta."
+  },
+  "94a19cf5d94fefac6160ec15718da022": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto descreve corretamente as perícias obrigatórias (Fortitude, Guerra, Luta, Pontaria), o poder único de influência militar e os equipamentos iniciais (arma marcial, uniforme e insígnia), atendendo plenamente à pergunta."
+  },
+  "f7d8102bcc58decbc00860608c11e0f6": {
+    "score": 8.0,
+    "aprovado": true,
+    "justificativa": "O contexto fornece o nome, preço (T$ 50), efeito (recupera 1d4 PM) e método de preparo da Essência de Mana. As informações sobre outras poções para Inventores não foram encontradas no texto."
   }
 }

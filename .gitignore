@@ -19,3 +19,6 @@ sinais/
 
 # Cache do juiz LLM: gerado localmente, nunca versionado
 juiz_cache.json
+.superpowers
+propostas
+*.txt

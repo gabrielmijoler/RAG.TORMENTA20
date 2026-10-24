@@ -1653,8 +1653,12 @@ def limiar_confianca_flashrank() -> float:
 
 
 def reranker_ativo() -> str:
-    """Modo do RERANK do ambiente (auto, flashrank, cohere, desligado)."""
-    return os.environ.get("RERANK", "").strip().lower() or "auto"
+    """Modo do RERANK do ambiente (auto, flashrank, cohere, bge, voyage, desligado).
+
+    Sem RERANK explícito: `auto` (FlashRank, o da v1) ou, com ARQUITETURA=v2, o `bge`
+    multilíngue — o FlashRank em inglês derrubava alvos certos (caso do Grifo)."""
+    padrao = "bge" if os.environ.get("ARQUITETURA", "").strip().lower() == "v2" else "auto"
+    return os.environ.get("RERANK", "").strip().lower() or padrao
 
 
 def modo_estrategia() -> str:
@@ -1899,6 +1903,50 @@ def gerar_documento_hipotetico(llm, consulta: str, cache: dict | None = None) ->
     return ""
 
 
+MODELO_BGE = "BAAI/bge-reranker-v2-m3"   # multilíngue, Apache-2.0, ~2,3 GB (baixa na 1ª vez)
+BGE_MAX_LENGTH = 512                     # tokens por par (pergunta + trecho); o resto é truncado
+BGE_THREADS_PADRAO = 8                   # o resto do projeto limita a 2; o chat real aguenta mais
+
+
+def _carregar_cross_encoder(nome: str, max_length: int, threads: int):
+    """Carrega o cross-encoder (import e peso só na 1ª pergunta; isolado para os testes)."""
+    import torch
+    from sentence_transformers import CrossEncoder
+    torch.set_num_threads(threads)
+    return CrossEncoder(nome, max_length=max_length)
+
+
+class CrossEncoderRerank(BaseDocumentCompressor):
+    """Reranker multilíngue local (bge-reranker-v2-m3) — flag `RERANK=bge`.
+
+    O FlashRank padrão é ms-marco em INGLÊS: com perguntas em português ele derrubou
+    alvos certos (caso do Grifo) e dá notas pouco separadas. Aqui um cross-encoder
+    multilíngue lê (pergunta, trecho) e dá uma nota de 0 a 1. É bem mais pesado que o
+    FlashRank (568M de parâmetros contra ~33M): cada pergunta leva mais tempo de CPU.
+    O corte por nota não é aplicado (a escala não foi calibrada); vale só o `top_n`.
+    """
+
+    model: str = MODELO_BGE
+    top_n: int = 12
+    max_length: int = BGE_MAX_LENGTH
+    batch_size: int = 16
+    _modelo: object = PrivateAttr(default=None)
+
+    def compress_documents(self, documents, query, callbacks=None):
+        docs = list(documents)
+        if not docs:
+            return []
+        if self._modelo is None:
+            threads = int(os.environ.get("RERANK_THREADS", BGE_THREADS_PADRAO))
+            self._modelo = _carregar_cross_encoder(self.model, self.max_length, threads)
+        scores = self._modelo.predict([(query, d.page_content) for d in docs],
+                                      batch_size=self.batch_size, show_progress_bar=False)
+        ordem = sorted(range(len(docs)), key=lambda i: (-float(scores[i]), i))
+        return [Document(page_content=docs[i].page_content,
+                         metadata={**docs[i].metadata, "relevance_score": float(scores[i])})
+                for i in ordem[: self.top_n]]
+
+
 class RecuperadorDensoHyDE(BaseRetriever):
     """Leg densa do ensemble buscando pelo VETOR do documento hipotético.
 
@@ -2064,6 +2112,7 @@ def criar_reranker(tipo: str | None = None) -> CascataReranker:
       resultado do FlashRank);
     - flashrank: só o local, nunca escalona;
     - cohere: só a API (comportamento legado pré-FlashRank);
+    - bge: cross-encoder multilíngue local bge-reranker-v2-m3 (mais lento, sem API);
     - voyage: só a API Voyage multilíngue (flag experimental da T3);
     - desligado: pass-through na ordem do ensemble, sem score (limiar fica
       sem efeito);
@@ -2089,6 +2138,11 @@ def criar_reranker(tipo: str | None = None) -> CascataReranker:
             primario=CohereRerank(top_n=top_n, model=MODELO_RERANK),
             nome_primario="cohere",
         )
+    elif modo == "bge":
+        cascata = CascataReranker(
+            primario=CrossEncoderRerank(top_n=top_n),
+            nome_primario="bge",
+        )
     elif modo == "voyage":
         cascata = CascataReranker(
             primario=VoyageRerank(top_n=top_n),
@@ -2099,7 +2153,7 @@ def criar_reranker(tipo: str | None = None) -> CascataReranker:
     else:
         raise ValueError(
             f"RERANK desconhecido: {modo!r} "
-            "(use auto, flashrank, cohere, voyage ou desligado)"
+            "(use auto, flashrank, cohere, bge, voyage ou desligado)"
         )
     cascata.top_n = top_n  # sincroniza wrapper e filhos
     return cascata
