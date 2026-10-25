@@ -461,11 +461,12 @@ def tratar_feedback(valor: str) -> None:
         print("Nenhuma resposta para avaliar ainda.")
         return
     faltou = None
-    if valor == "parcial":
-        try:
-            faltou = input("  o que faltou? ").strip() or None
-        except (EOFError, KeyboardInterrupt):
-            faltou = None
+    pergunta = "  por que está errado (o que faltou ou o que está errado)? " if valor == "errado" \
+        else "  o que faltou? "
+    try:
+        faltou = input(pergunta).strip() or None
+    except (EOFError, KeyboardInterrupt):
+        faltou = None
     if sinais.registrar(sinais.feedback(ultimo_evento, valor, faltou)):
         ultimo_avaliado = True
         print(f"Obrigado — marcado como {valor}.")
