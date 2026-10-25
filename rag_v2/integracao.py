@@ -73,6 +73,21 @@ def secao_poderes(leitura: Leitura) -> str:
     return "\n".join(linhas)
 
 
+def _dicas_da_lista(leitura: Leitura) -> str:
+    """Pergunta em camadas: lista só o que o contexto prova e diz quantos achou."""
+    c = leitura.camadas
+    pedido = f"{c.quantidade} " if c.quantidade else ""
+    buscas = "; ".join(c.subconsultas)
+    return (
+        "\n\n[LISTA DE VERIFICAÇÃO DA PERGUNTA — gerada pelo sistema, não pelo usuário]\n"
+        f"O jogador pediu {pedido}itens de {c.tabela} com um efeito. O sistema buscou: {buscas}.\n"
+        "Liste SOMENTE os itens do contexto cujo texto traz esse efeito (ex.: \"PM temporários\", "
+        "recuperação de PM), cada um com o efeito e a citação [Tabela > Fonte] copiada dele. "
+        "Se achar menos do que o pedido, diga quantos achou — não complete a lista com itens "
+        "sem esse efeito nem com conhecimento externo.]"
+    )
+
+
 def bloco_dicas(leitura: Leitura) -> str:
     """Lista de verificação anexada à entrada da síntese (o SYSTEM_PROMPT não muda).
 
@@ -87,6 +102,8 @@ def bloco_dicas(leitura: Leitura) -> str:
                              if not n.descricao.startswith("poder ")
                              and "poderes gerais" not in n.descricao.lower()
                              and not (n.registro is None and n.tabela_alvo.startswith("Poderes (")))
+    if leitura.camadas:
+        return _dicas_da_lista(leitura)
     itens = "\n".join(f"{i}) {n.descricao}" + ("" if n.obrigatoria else " (se houver)")
                       for i, n in enumerate(necessidades, 1))
     ficha = _ficha(leitura)

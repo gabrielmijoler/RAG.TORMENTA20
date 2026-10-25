@@ -12,9 +12,14 @@ K_MIN_MULTIPARTE = 8
 K_POR_NECESSIDADE = 4
 K_BUILD = 15
 K_MAX = 15
+K_LISTA_MIN = 8
+K_LISTA_FOLGA = 3   # itens a mais que o pedido: parte do que a busca traz não serve
 
 
-def calcular(tipo: str, necessidades: tuple[Necessidade, ...], confianca: str) -> int:
+def calcular(tipo: str, necessidades: tuple[Necessidade, ...], confianca: str,
+             quantidade: int | None = None) -> int:
+    if tipo == "lista":
+        return min(K_MAX, max(K_LISTA_MIN, (quantidade or 0) + K_LISTA_FOLGA))
     if confianca == "baixa" or tipo in ("sem_nome", "fora_de_escopo"):
         return K_FALLBACK
     if tipo == "build":

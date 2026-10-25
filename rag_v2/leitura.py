@@ -13,6 +13,7 @@ import re
 from dataclasses import replace
 
 from . import ficha_texto
+from .camadas import camadas as ler_camadas
 from .dicionario import Dicionario, chave_texto
 from .ligador import PALAVRAS_COMUNS, ambigua, ligar, refinar_por_restricoes
 from .necessidades import gerar
@@ -36,6 +37,8 @@ LLM_POR_CONFIANCA = {"alta": "nenhum", "media": "traducao", "baixa": "completo"}
 
 
 def _confianca(tipo: str, ligacoes: tuple[Ligacao, ...]) -> tuple[str, tuple[str, ...]]:
+    if tipo == "lista":
+        return "media", ("pergunta em camadas (tabela x efeito)",)
     if tipo in ("sem_nome", "fora_de_escopo"):
         return "baixa", (f"tipo {tipo}",)
     comuns = [lig.trecho for lig in ligacoes if chave_texto(lig.trecho) in PALAVRAS_COMUNS]
@@ -128,7 +131,12 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
         extras.append(f"ficha da sessão herdada: {sessao.ficha.resumo()}")
     ligacoes = refinar_por_restricoes(ligacoes, restricoes)
     tipo = classificar(texto_lido, ligacoes, restricoes)
+    pedido = ler_camadas(texto_lido, dicionario.tabelas) if not ligacoes else None
+    if pedido and tipo in ("sem_nome", "fora_de_escopo"):
+        tipo = "lista"
     necessidades = gerar(ligacoes, restricoes, tipo, dicionario.tabelas)
+    if tipo == "lista":
+        necessidades = tuple(Necessidade(s, pedido.tabela, pedido.tabela) for s in pedido.subconsultas)
     poderes, extras_poder, recomendacao = _poderes_da_classe(texto_lido, restricoes, dicionario, sessao)
     ja_pedidos = {(n.tabela_alvo, n.registro) for n in necessidades}
     necessidades = necessidades + tuple(n for n in extras_poder
@@ -141,11 +149,12 @@ def ler(texto: str, dicionario: Dicionario, sessao: Sessao | None = None) -> Lei
         restricoes=restricoes,
         tipo=tipo,
         necessidades=necessidades,
-        k=calcular(tipo, necessidades, confianca),
+        k=calcular(tipo, necessidades, confianca, pedido.quantidade if tipo == "lista" else None),
         confianca=confianca,
         motivos=motivos,
         usar_llm=LLM_POR_CONFIANCA[confianca],
         texto_resolvido=resolvido,
         poderes=poderes,
         recomendacao=recomendacao,
+        camadas=pedido if tipo == "lista" else None,
     )

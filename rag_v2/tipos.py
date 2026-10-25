@@ -65,13 +65,22 @@ class PoderAvaliado:
 
 
 @dataclass(frozen=True)
+class Camadas:
+    """Pergunta em camadas ("comidas que ajudam com mana"): tabela x efeito, já no vocabulário do livro."""
+
+    tabela: str
+    subconsultas: tuple[str, ...]
+    quantidade: int | None = None   # "liste 5" -> 5
+
+
+@dataclass(frozen=True)
 class Leitura:
     """Resultado do analisador. Os padrões são o comportamento da v1 (fallback total)."""
 
     texto_original: str
     ligacoes: tuple[Ligacao, ...] = ()
     restricoes: Restricoes = Restricoes()
-    tipo: str = "sem_nome"  # direta | multiparte | build | sem_nome | fora_de_escopo
+    tipo: str = "sem_nome"  # direta | multiparte | build | lista | sem_nome | fora_de_escopo
     necessidades: tuple[Necessidade, ...] = ()
     k: int = 12
     confianca: str = "baixa"  # alta | media | baixa
@@ -84,3 +93,5 @@ class Leitura:
     poderes: tuple[PoderAvaliado, ...] = ()
     # Recomendação já escrita pelo código (poderes + situação); o LLM só a explica.
     recomendacao: str = ""
+    # Só no tipo "lista": a tabela pedida e as sub-consultas por camada.
+    camadas: Camadas | None = None

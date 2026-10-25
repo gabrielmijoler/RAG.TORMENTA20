@@ -108,6 +108,9 @@ def recuperar_v2(retriever, leitura: Leitura, registros: dict, consulta_busca: s
             juntar(d for d in busca.invoke(nec.descricao)
                    if d.metadata.get("Tabela") == nec.tabela_alvo)
 
+    # lista em camadas: a frase do jogador ("mana") pontua mal contra o livro ("PM temporários")
+    if leitura.camadas:
+        consulta_original = leitura.camadas.subconsultas[0]
     top_n = compressor.top_n
     compressor.top_n = len(candidatos)
     try:
@@ -124,7 +127,8 @@ def recuperar_v2(retriever, leitura: Leitura, registros: dict, consulta_busca: s
     garantidos: list[Document] = []
     escolhidos: set = set()
     for nec in (n for n in leitura.necessidades if n.obrigatoria):
-        vagas = 1 if nec.registro is not None else VAGAS_POR_TABELA
+        vagas = 1 if nec.registro is not None else (
+            leitura.k if leitura.camadas else VAGAS_POR_TABELA)
         vagas -= sum(1 for d in garantidos if _atende(d, nec))
         for doc in ranked:
             if vagas <= 0:
